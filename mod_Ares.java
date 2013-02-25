@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import java.util.ArrayList;
+import java.math;
 
 import net.minecraft.client.Minecraft;
 
@@ -235,19 +236,28 @@ public class mod_Ares extends BaseMod {
 		}
 
 	}
-
-	private double getKD() {
-		return this.kills > this.deaths ? (this.deaths == 0.0D ? this.kills
-				: this.kills / this.deaths)
-				: (this.deaths > this.kills ? (this.kills == 0.0D ? 0.0D
-						: this.kills / this.deaths) : 0.0D);
+	private double getKD()
+	{
+		if(kills == deaths)
+		{
+			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);;
+		}
+		else
+		{
+			return new BigDecimal(String.valueOf(kills / deaths)).setScale(2, BigDecimal.ROUND_HALF_UP);
+		}
 	}
 
-	private double getKK() {
-		return this.kills > this.killed ? (this.killed == 0.0D ? this.kills
-				: this.kills / this.killed)
-				: (this.killed > this.kills ? (this.kills == 0.0D ? 0.0D
-						: this.kills / this.killed) : 0.0D);
+	private double getKK() 
+	{
+		if(kills == killed)
+		{
+			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);;
+		}
+		else
+		{
+			return new BigDecimal(String.valueOf(kills / killed)).setScale(2, BigDecimal.ROUND_HALF_UP);
+		}
 	}
     private void endKillStreak(){
     	this.killStreak = 0;
