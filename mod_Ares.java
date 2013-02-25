@@ -1,7 +1,7 @@
 package net.minecraft.src;
 
 import java.util.ArrayList;
-import java.math;
+import java.math.BigDecimal;
 
 import net.minecraft.client.Minecraft;
 
@@ -68,10 +68,7 @@ public class mod_Ares extends BaseMod {
     EntityPlayer player = null;
 
 	// TODO: Check for captured wools
-	// TODO: Check for monuments
-	// TODO: Kills/Deaths
-	// TODO: Chat Handling
-	// TODO: Display FPS
+
 
 	@Override
 	public String getVersion() {
@@ -236,11 +233,11 @@ public class mod_Ares extends BaseMod {
 		}
 
 	}
-	private double getKD()
+	private BigDecimal getKD()
 	{
 		if(kills == deaths)
 		{
-			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);;
+			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);
 		}
 		else
 		{
@@ -248,11 +245,11 @@ public class mod_Ares extends BaseMod {
 		}
 	}
 
-	private double getKK() 
+	private BigDecimal getKK() 
 	{
 		if(kills == killed)
 		{
-			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);;
+			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);
 		}
 		else
 		{
@@ -334,7 +331,7 @@ if(showGUI){
 							+ this.team, 2, 18, 0x00FFFF);
 				}
 			}
-			
+			// Friend display:
 		if(this.showFriends.toString().equals("true")){
 			mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73"
 					+ this.friendCount, 2, 34, 16777215);
@@ -374,7 +371,7 @@ if(showGUI){
 			mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + this.deaths, 2, 90,
 					16777215);
 		}
-			// Friend display:
+
 		if(this.showStreak.toString().equals("true")){
 
 				//Kill Streak display
