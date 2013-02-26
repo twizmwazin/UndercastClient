@@ -2,16 +2,15 @@ package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
 
-public class AresCustomMethods 
+public static class AresCustomMethods
 {
-  mod_Ares ares = new mod_Ares();
 	public void getMap(Minecraft mc)
 	{
 		if(mc.getServerData().serverMOTD != null)
 		{
-			ares.map = mc.getServerData().serverMOTD;
-			ares.map = ares.map.replace(">>", "");
-			ares.map = ares.map.replace("<<", "");
+			mod_Ares.map = mc.getServerData().serverMOTD;
+			mod_Ares.map = mod_Ares.map.replace(">>", "");
+			mod_Ares.map = mod_Ares.map.replace("<<", "");
 		}
 	}
 	private static double round(double d)
@@ -24,31 +23,31 @@ public class AresCustomMethods
 	
 	protected double getKD()
 	{
-		if(ares.kills == ares.deaths)
+		if(mod_Ares.kills == mod_Ares.deaths)
 		{
-			return ares.kills;
+			return 1.00D;
 		}
 		else
 		{
-			return round(ares.kills / ares.deaths);
+			return round(mod_Ares.kills / mod_Ares.deaths);
 		}
 	}
 
 	protected double getKK() 
 	{
-		if(ares.kills == ares.killed)
+		if(mod_Ares.kills == mod_Ares.killed)
 		{
-			return ares.kills;
+			return 1.00D;
 		}
 		else
 		{
-			return round(ares.kills / ares.killed);
+			return round(mod_Ares.kills / mod_Ares.killed);
 		}
 	}
 	
 	protected void endKillStreak()
 	{
-		ares.killStreak = 0;
+		mod_Ares.killStreak = 0;
 	}
 
 }
