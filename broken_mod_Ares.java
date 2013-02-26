@@ -9,7 +9,7 @@ import java.math.*;
 
 import net.minecraft.client.Minecraft;
 
-public class mod_Ares extends BaseMod {
+public static class mod_Ares extends BaseMod {
   private static mod_Ares pa;
 
 	public boolean onPA = false;
