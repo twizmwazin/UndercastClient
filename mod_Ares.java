@@ -33,7 +33,7 @@ public class mod_Ares extends BaseMod {
     	private String team;
     	private boolean showGUI;
     	private int killStreak;
-
+        private String motd;
     	public KeyBinding o = new KeyBinding("togglegui", 24);
     
     
@@ -283,7 +283,8 @@ public class mod_Ares extends BaseMod {
 		{
 	
 			world = mc.theWorld;
-			
+			motd = mc.getServerData().serverMOTD;
+			this.map = motd;
 			this.FPS = mc.debug.split(",");
 			this.fps = this.FPS[0];
 	
