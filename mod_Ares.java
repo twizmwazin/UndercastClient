@@ -237,27 +237,35 @@ public class mod_Ares extends BaseMod {
 		}
 
 	}
-	private BigDecimal getKD()
+
+        private static double round(double d)
+        {
+            d = d * 100;
+            d = Math.round(d);
+            d = d / 100;
+            return d;
+        }
+	private double getKD()
 	{
 		if(kills == deaths)
 		{
-			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);
+			return kills;
 		}
 		else
 		{
-			return new BigDecimal(String.valueOf(kills / deaths)).setScale(2, BigDecimal.ROUND_HALF_UP);
+			return round(kills / deaths);
 		}
 	}
 
-	private BigDecimal getKK() 
+	private double getKK() 
 	{
 		if(kills == killed)
 		{
-			return new BigDecimal(String.valueOf(kills)).setScale(2, BigDecimal.ROUND_HALF_UP);
+			return kills;
 		}
 		else
 		{
-			return new BigDecimal(String.valueOf(kills / killed)).setScale(2, BigDecimal.ROUND_HALF_UP);
+			return round(kills / killed);
 		}
 	}
     private void endKillStreak(){
