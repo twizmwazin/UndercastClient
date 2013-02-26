@@ -301,36 +301,29 @@ if(showGUI){
 			if(this.team.equalsIgnoreCase("red team")){
 				mc.fontRenderer.drawStringWithShadow("Team: "
 						+ this.team, 2, 18, 0x990000);	
-			}else
-				if(this.team.equalsIgnoreCase("blue team")){
+			}else if(this.team.equalsIgnoreCase("blue team")){
 				mc.fontRenderer.drawStringWithShadow("Team: "
 						+ this.team, 2, 18, 0x0033FF);	
-				}else
-					if(this.team.equalsIgnoreCase("purple team")){
+			}else if(this.team.equalsIgnoreCase("purple team")){
 					mc.fontRenderer.drawStringWithShadow("Team: "
 							+ this.team, 2, 18, 0x9933CC);	
-					}else
-						if(this.team.equalsIgnoreCase("cyan team")){
+			}else if(this.team.equalsIgnoreCase("cyan team")){
 						mc.fontRenderer.drawStringWithShadow("Team: "
 								+ this.team, 2, 18, 0x00FFFF);	
-						}else
-							if(this.team.equalsIgnoreCase("lime team")){
+			}else if(this.team.equalsIgnoreCase("lime team")){
 							mc.fontRenderer.drawStringWithShadow("Team: "
 									+ this.team, 2, 18, 0x00FF00);	
-							}else
-								if(this.team.equalsIgnoreCase("yellow team")){
+			}else if(this.team.equalsIgnoreCase("yellow team")){
 								mc.fontRenderer.drawStringWithShadow("Team: "
 										+ this.team, 2, 18, 0xFFFF00);
-								}else
-									if(this.team.equalsIgnoreCase("green team")){
-									mc.fontRenderer.drawStringWithShadow("Team: "
+		        }else if(this.team.equalsIgnoreCase("orange team")){
+                           mc.fontRenderer.drawStringWithShadow("Team: "
 											+ this.team, 2, 18, 0x006600);
 									}else
 										if(this.team.equalsIgnoreCase("orange team")){
 										mc.fontRenderer.drawStringWithShadow("Team: "
 												+ this.team, 2, 18, 0xFF9900);
-			}else
-				if(this.team.equalsIgnoreCase("Observers")){
+			}else if(this.team.equalsIgnoreCase("Observers")){
 					mc.fontRenderer.drawStringWithShadow("Team: "
 							+ this.team, 2, 18, 0x00FFFF);
 				}
