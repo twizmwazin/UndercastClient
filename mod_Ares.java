@@ -1,3 +1,7 @@
+//You may not release this source under any condition, it must be linked to this page
+//You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
+//You may not claim this to be your own
+//You may not remove these comments
 package net.minecraft.src;
 
 import java.util.ArrayList;
@@ -14,7 +18,7 @@ public class mod_Ares extends BaseMod {
 	private String fps;
 	
 	private int friendCount;
-	public static final String serverDomain = "0";
+	public static final String serverDomain = "oc.tc";
 	private ArrayList<String> friends;
 	private double kills;
 	private double deaths;
