@@ -201,7 +201,7 @@ public static class mod_Ares extends BaseMod {
 					}
 				}
 			}
-			else if (message.startsWith("<") || !message.contains("was shot by " + username) && !message.contains("was blown up by " + username) && !message.contains("was slain by " + username))
+			else if (!message.startsWith("<")  !message.contains("was shot by " + username) && !message.contains("was blown up by " + username) && !message.contains("was slain by " + username))
 			{
 				if (!message.startsWith("<") && message.startsWith(username + " was"))
 				{
@@ -215,7 +215,7 @@ public static class mod_Ares extends BaseMod {
 					++this.deaths;
 				}
 			}
-			else if(message.startsWith("<") || message.contains("was shot by " + username) && message.contains("was blown up by " + username) && message.contains("was slain by " + username))
+			else if(!message.startsWith("<") && message.contains("was shot by " + username) || message.contains("was blown up by " + username) || message.contains("was slain by " + username))
 			{
 				this.kills++;
 				this.killStreak++;
