@@ -147,7 +147,7 @@ public class mod_Ares extends BaseMod
 				AresVariablesHandler.addDeaths(1);
 				AresVariablesHandler.setKillstreak(0);
 			}
-			else if (!message.startsWith("<") && message.startsWith(username))
+			else if (!message.startsWith("<") && message.startsWith(username) && !message.contains("scored"))
 			{
 				AresVariablesHandler.setKillstreak(0);
 				AresVariablesHandler.addDeaths(1);
