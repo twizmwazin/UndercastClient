@@ -18,32 +18,17 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 
-public class mod_Ares extends BaseMod{
-	protected static mod_Ares pa;
-
-	public boolean onPA = false;
-
-	private String[] FPS;
+public class mod_Ares extends BaseMod
+{
 	private String fps;
 
-	private int friendCount;
 	public static final String serverDomain = "oc.tc";
-	private ArrayList<String> friends;
-	protected static double kills;
-	protected static double deaths;
-	protected static double killed;
-	public String map;
 	private String IP;
-	private String serverName;
-	protected static String team;
 	private boolean showGUI;
-	protected int killStreak;
 	public static World world;
 	protected String username = "Not_Found";
 	protected Minecraft mc = Minecraft.getMinecraft();
-	//public int height = mc.displayHeight;
-	//public int width = mc.displayWidth;
-	public int height = 2;
+	public int height;
 
 
 	public KeyBinding F6 = new KeyBinding("gui", Keyboard.KEY_F6);
@@ -98,13 +83,8 @@ public class mod_Ares extends BaseMod{
 		ModLoader.setInGUIHook(this, true, false);
 		ModLoader.setInGameHook(this, true, false);
 
-		this.friends = new ArrayList();
-		this.friendCount = 0;
 		this.showGUI = true;
-		this.killStreak = 0;
-		this.killed = 0;
-		this.kills = 0;
-		this.deaths = 0;
+		new AresVariablesHandler(true);
 		ModLoader.registerKey(this, F6, false);
 		ModLoader.addLocalization("F6","gui");
 	}
@@ -116,7 +96,7 @@ public class mod_Ares extends BaseMod{
 		World world = mc.theWorld; //get the current world.
 		EntityPlayer player = mc.thePlayer; //get the player entity.
 		String message = StringUtils.stripControlCodes(var1);
-		if (this.onPA)
+		if (AresVariablesHandler.isPlayingAres())
 		{
 			username = mc.thePlayer.username.toString();
 			if(username == null)
@@ -125,81 +105,79 @@ public class mod_Ares extends BaseMod{
 			}
 			if (!message.startsWith("<") && message.contains(" joined the game")) 
 			{
+				String name;
 				message = message.replace(" joined the game", "");
-
-				if (!this.friends.contains(message))
-				{
-					this.friends.add(message.toString());
-					++this.friendCount;
-					if(this.showFriends.toString().equals("true"))
-					{
-						player.addChatMessage("One of your friends just logged in, "
-								+ message
-								+ ". There are now "
-								+ this.friendCount + " online");
-					}
-
-				}
+				if(message.contains("["))
+					name = message.split(" ")[1];
+				else 
+					name = message;
+				
+				AresVariablesHandler.addFriend(name);
 			}
 
 			else if(!message.startsWith("<") && message.equalsIgnoreCase("welcome to project ares"))
 			{
-				this.map = null;
-				this.map = AresCustomMethods.methods.getMap();
+				AresVariablesHandler.setMap(AresCustomMethods.methods.getMap());
 			}
 			else if(!message.startsWith("<") && message.contains("Now playing"))
 			{
 				message = message.replace("Now playing ", "");
-				map = message.split(" by ")[0];
+				AresVariablesHandler.setMap(message.split(" by ")[0]);
 			}
 			else if (!message.startsWith("<") && message.contains("left the game"))
 			{
+				String name;
 				message = message.replace(" left the game", "");
-				if (this.friends.contains(message))
+				if(message.contains("["))
 				{
-					--this.friendCount;
-					this.friends.remove(message);
-					if(this.showFriends.toString().equals("true"))
-					{	
-						player.addChatMessage("One of your friends just left, " + message + ". There are now " + this.friendCount + " online");
-					}
+					name = message.split(" ")[1];
+				}
+				else
+				{
+					name = message;
+				}
+				if (AresVariablesHandler.isFriend(name))
+				{
+					AresVariablesHandler.removeFriend(name);
 				}
 			}
 			else if (!message.startsWith("<") && message.startsWith(username + " was"))
 			{
-				++this.killed;
-				++this.deaths;
-				killStreak = 0;
+				AresVariablesHandler.addKilled(1);
+				AresVariablesHandler.addDeaths(1);
+				AresVariablesHandler.setKillstreak(0);
 			}
 			else if (!message.startsWith("<") && message.startsWith(username))
 			{
-				killStreak = 0;
-				++this.deaths;
+				AresVariablesHandler.setKillstreak(0);
+				AresVariablesHandler.addDeaths(1);
 			}
 
 			else if(message.startsWith("<") && message.contains("was shot by " + username) || message.contains("was blown up by " + username) || message.contains("was slain by " + username))
 			{
-				this.kills++;
-				this.killStreak++;
+				AresVariablesHandler.addKills(1);
+				AresVariablesHandler.addKillstreak(1);
 			}
 			else if (!message.startsWith("<") && var1.contains("You joined the"))
 			{
-				this.kills = 0.0D;
-				this.killed = 0.0D;
-				this.deaths = 0.0D;
-				this.team = message.replace("You joined the ", "");
+				AresVariablesHandler.setKills(0);
+				AresVariablesHandler.setKilled(0);
+				AresVariablesHandler.setDeaths(0);
+				AresVariablesHandler.setKillstreak(0);
+				AresVariablesHandler.setTeam(message.replace("You joined the ", ""));
 			}
 
 			else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second"))
 			{
 				player.addChatMessage("-------------- Final Stats --------------");
-				player.addChatMessage("-------------- Kills: " + kills + "--------------");
-				player.addChatMessage("-------------- Deaths: " + deaths + "--------------");
+				player.addChatMessage("-------------- Kills: " + AresVariablesHandler.getKills() + "--------------");
+				player.addChatMessage("-------------- Deaths: " + AresVariablesHandler.getDeaths() + "--------------");
 				player.addChatMessage("-------------- K/D: " + AresCustomMethods.methods.getKD() + "--------------");
-				kills = 0.0D;
-				killed = 0.0D;
-				deaths = 0.0D;
-				team = "Observers";
+				AresVariablesHandler.setKills(0);
+				AresVariablesHandler.setKilled(0);
+				AresVariablesHandler.setDeaths(0);
+				AresVariablesHandler.setKillstreak(0);
+				AresVariablesHandler.setTeam("Observers");
 			}
 		}
 	}
@@ -221,13 +199,13 @@ public class mod_Ares extends BaseMod{
 			}
 		}
 
-		if (onPA == true && showGUI == true)
+		if (AresVariablesHandler.isPlayingAres() == true && showGUI == true)
 		{
 			//Server display
 			if(this.showServer.toString().equals("true"))
 			{
 				mc.fontRenderer.drawStringWithShadow("Server: \u00A76"
-						+ this.serverName, 2, height, 16777215);
+						+ AresVariablesHandler.getServer(), 2, height, 16777215);
 				height +=8;
 			}
 
@@ -236,57 +214,57 @@ public class mod_Ares extends BaseMod{
 			{
 
 
-				if(this.team.equalsIgnoreCase("red team"))
+				if(AresVariablesHandler.getTeam().equalsIgnoreCase("red team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0x990000);
+							+ AresVariablesHandler.getTeam(), 2, height, 0x990000);
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("blue team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("blue team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0x0033FF);
+							+ AresVariablesHandler.getTeam(), 2, height, 0x0033FF);
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("purple team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("purple team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0x9933CC);
+							+ AresVariablesHandler.getTeam(), 2, height, 0x9933CC);
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("cyan team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("cyan team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0x00FFFF);	
+							+ AresVariablesHandler.getTeam(), 2, height, 0x00FFFF);	
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("lime team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("lime team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0x00FF00);	
+							+ AresVariablesHandler.getTeam(), 2, height, 0x00FF00);	
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("yellow team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("yellow team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0xFFFF00);
+							+ AresVariablesHandler.getTeam(), 2, height, 0xFFFF00);
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("orange team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("orange team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0x006600);
+							+ AresVariablesHandler.getTeam(), 2, height, 0x006600);
 				}
-				else if(this.team.equalsIgnoreCase("orange team"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("orange team"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, height, 0xFF9900);
+							+ AresVariablesHandler.getTeam(), 2, height, 0xFF9900);
 					height +=8;
 				}
-				else if(this.team.equalsIgnoreCase("Observers"))
+				else if(AresVariablesHandler.getTeam().equalsIgnoreCase("Observers"))
 				{
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ this.team, 2, 18, 0x00FFFF);
+							+ AresVariablesHandler.getTeam(), 2, 18, 0x00FFFF);
 					height +=8;
 				}
 			}
@@ -294,7 +272,7 @@ public class mod_Ares extends BaseMod{
 			if(this.showFriends.toString().equals("true"))
 			{
 				mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73"
-						+ this.friendCount, 2, height, 16777215);
+						+ AresVariablesHandler.getFriends(), 2, height, 16777215);
 				height +=8;
 			}
 
@@ -302,17 +280,17 @@ public class mod_Ares extends BaseMod{
 			// Map fetcher:
 			if(this.showMap.toString().equals("true"))
 			{
-				if (this.map != null)
+				if (AresVariablesHandler.getMap() != null)
 				{
 					mc.fontRenderer.drawStringWithShadow(
-							"Current Map: \u00A7d" + this.map, 2, height, 16777215);
+							"Current Map: \u00A7d" + AresVariablesHandler.getMap(), 2, height, 16777215);
 					height +=8;
 				}
 				else
 				{
-					this.map = "Fetching...";
+					AresVariablesHandler.setMap("Fetching...");
 					mc.fontRenderer.drawStringWithShadow(
-							"Current Map: \u00A78" + this.map, 2, height, 16777215);
+							"Current Map: \u00A78" + AresVariablesHandler.getMap(), 2, height, 16777215);
 					height +=8;
 				}
 			}
@@ -332,13 +310,13 @@ public class mod_Ares extends BaseMod{
 
 			if(this.showKills.toString().equals("true"))
 			{
-				mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a" + this.kills, 2, height,
+				mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a" + AresVariablesHandler.getKills(), 2, height,
 						16777215);
 				height +=8;
 			}
 			if(this.showDeaths.toString().equals("true"))
 			{
-				mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + this.deaths, 2, height,
+				mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + AresVariablesHandler.getDeaths(), 2, height,
 						16777215);
 				height +=8;
 			}
@@ -348,7 +326,7 @@ public class mod_Ares extends BaseMod{
 
 				//Kill Streak display
 				mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75"
-						+ this.killStreak, 2, height, 16777215);
+						+ AresVariablesHandler.getKillstreak(), 2, height, 16777215);
 				height +=8;
 			}
 		}
@@ -357,7 +335,7 @@ public class mod_Ares extends BaseMod{
 
 	public void clientConnect(NetClientHandler var1)
 	{
-		this.team = "Observers";
+		AresVariablesHandler.setTeam("Observers");
 		System.out.println("Client successfully connected to "
 				+ var1.getNetManager().getSocketAddress().toString());
 
@@ -366,9 +344,9 @@ public class mod_Ares extends BaseMod{
 			//What happens if logs into project ares
 			this.showGUI = true;
 			System.out.println("Connected to: " + var1.getNetManager().getSocketAddress().toString() + "Ares mod activated!");
-			this.team = "Observers";
-			onPA = true;
-			serverName = AresCustomMethods.methods.getServer(var1.getNetManager().getSocketAddress().toString());
+			AresVariablesHandler.setTeam("Observers");
+			AresVariablesHandler.isPlayingAres(true);
+			AresVariablesHandler.setServer(AresCustomMethods.methods.getServer(var1.getNetManager().getSocketAddress().toString()));
 		}
 		else
 		{
@@ -380,13 +358,14 @@ public class mod_Ares extends BaseMod{
 
 	public void onDisconnect(NetClientHandler handler) 
 	{
-		this.team = "Observers";
-		if (onPA)
-			onPA = false;
+		AresVariablesHandler.setTeam("Observers");
+		if (AresVariablesHandler.isPlayingAres())
+			AresVariablesHandler.isPlayingAres(false);
+		
 		this.showGUI = false;
-		this.team = "Observers";
-		killStreak = 0;
-		this.map = "Attempting to fetch map...";
+		AresVariablesHandler.setTeam("Observers");
+		AresVariablesHandler.setKillstreak(0);
+		AresVariablesHandler.setMap("Attempting to fetch map...");
 	}
 
 	public void keyboardEvent(KeyBinding keybinding)

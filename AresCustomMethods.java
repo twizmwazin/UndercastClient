@@ -30,6 +30,7 @@ public class AresCustomMethods
 			return "server MOTD was null.";
 		}
 	}
+	
 	private static double round(double d)
 	{
 		d = d * 100;
@@ -40,8 +41,8 @@ public class AresCustomMethods
 	
 	protected static double getKD()
 	{
-		double k = mod_Ares.pa.kills;
-		double d = mod_Ares.pa.deaths;
+		double k = AresVariablesHandler.getKills();
+		double d = AresVariablesHandler.getDeaths();
 		if(k == d && k == 0)
 		{
 			return 0D;
@@ -62,8 +63,8 @@ public class AresCustomMethods
 
 	protected static double getKK()
 	{
-		double k = mod_Ares.pa.kills;
-		double kk = mod_Ares.pa.killed;
+		double k = AresVariablesHandler.getKills();
+		double kk = AresVariablesHandler.getKilled();
 		if(k == kk && k == 0)
 		{
 			return 0D;
