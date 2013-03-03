@@ -2,9 +2,9 @@ package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
 
-public class AresCustomMethods 
+public class AresCustomMethods
 {
-  protected static AresCustomMethods methods;
+	protected static AresCustomMethods methods;
 	private static Minecraft mc = Minecraft.getMinecraft();
 	protected static String getMap()
 	{
@@ -14,8 +14,8 @@ public class AresCustomMethods
 		{
 			map = mc.getServerData().serverMOTD.toString();
 			map = StringUtils.stripControlCodes(map);
-			map = map.replace(" Â«", "");
-			map = map.replace("Â» ", "");
+			map = map.replace(" «", "");
+			map = map.replace("» ", "");
 			if(map != null)
 			{
 				return map;
@@ -38,13 +38,19 @@ public class AresCustomMethods
 		return d;
 	}
 	
-	protected static double getKD(double k, double d)
+	protected static double getKD()
 	{
+		double k = mod_Ares.pa.kills;
+		double d = mod_Ares.pa.deaths;
 		if(k == d && k == 0)
 		{
 			return 0D;
 		}
-		else if(k ==  d && k != 0)
+		else if(k > 0 && d == 0)
+		{
+			return k;
+		}
+		else if(k == d && k > 0)
 		{
 			return k;
 		}
@@ -54,13 +60,19 @@ public class AresCustomMethods
 		}
 	}
 
-	protected static double getKK(double k, double kk)
+	protected static double getKK()
 	{
+		double k = mod_Ares.pa.kills;
+		double kk = mod_Ares.pa.killed;
 		if(k == kk && k == 0)
 		{
 			return 0D;
 		}
-		else if(k ==  kk && k != 0)
+		else if(k > 0 && k == 0)
+		{
+			return k;
+		}
+		else if(k ==  kk && kk > 0)
 		{
 			return k;
 		}
@@ -96,23 +108,6 @@ public class AresCustomMethods
 			return "Lambda";
 		else
 		return "Not project ares";
-	}
-	
-	protected static void endKillStreak()
-	{
-		mod_Ares.pa.killStreak = 0;
-	}
-	
-	protected void endGame(EntityPlayer player)
-	{
-		player.addChatMessage("-------------- Final Stats --------------");
-		player.addChatMessage("-------------- Kills: " + mod_Ares.pa.kills + "--------------");
-		player.addChatMessage("-------------- Deaths: " + mod_Ares.pa.deaths + "--------------");
-		player.addChatMessage("-------------- K/D: " + AresCustomMethods.methods.getKD(mod_Ares.pa.kills, mod_Ares.pa.deaths) + "--------------");
-		mod_Ares.pa.kills = 0.0D;
-		mod_Ares.pa.killed = 0.0D;
-		mod_Ares.pa.deaths = 0.0D;
-		mod_Ares.pa.team = "Observers";
 	}
 
 }

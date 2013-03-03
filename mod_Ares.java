@@ -14,9 +14,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 
-public class mod_Ares extends BaseMod {
+public class mod_Ares extends BaseMod{
 	protected static mod_Ares pa;
 
 	public boolean onPA = false;
@@ -27,13 +29,13 @@ public class mod_Ares extends BaseMod {
 	private int friendCount;
 	public static final String serverDomain = "oc.tc";
 	private ArrayList<String> friends;
-	protected double kills;
-	protected double deaths;
-	protected double killed;
+	protected static double kills;
+	protected static double deaths;
+	protected static double killed;
 	public String map;
 	private String IP;
 	private String serverName;
-	protected String team;
+	protected static String team;
 	private boolean showGUI;
 	protected int killStreak;
 	public static World world;
@@ -44,7 +46,7 @@ public class mod_Ares extends BaseMod {
 	public int height = 2;
 
 
-	public KeyBinding o = new KeyBinding("togglegui", 24);
+	public KeyBinding F6 = new KeyBinding("gui", Keyboard.KEY_F6);
 
 
 	@MLProp(name="showFPS", info="true = Show FPS in Gui, false = Doesn't show it.")
@@ -100,8 +102,11 @@ public class mod_Ares extends BaseMod {
 		this.friendCount = 0;
 		this.showGUI = true;
 		this.killStreak = 0;
-		ModLoader.registerKey(this, o, false);
-		ModLoader.addLocalization("o","Toggle Gui");
+		this.killed = 0;
+		this.kills = 0;
+		this.deaths = 0;
+		ModLoader.registerKey(this, F6, false);
+		ModLoader.addLocalization("F6","gui");
 	}
 
 
@@ -142,9 +147,9 @@ public class mod_Ares extends BaseMod {
 				this.map = null;
 				this.map = AresCustomMethods.methods.getMap();
 			}
-			else if(!message.startsWith("<") && message.contains("Now Playing"))
+			else if(!message.startsWith("<") && message.contains("Now playing"))
 			{
-				message = message.replace("Now Playing ", "");
+				message = message.replace("Now playing ", "");
 				map = message.split(" by ")[0];
 			}
 			else if (!message.startsWith("<") && message.contains("left the game"))
@@ -160,21 +165,19 @@ public class mod_Ares extends BaseMod {
 					}
 				}
 			}
-			else if (message.startsWith("<") || !message.contains("was shot by " + username) && !message.contains("was blown up by " + username) && !message.contains("was slain by " + username))
+			else if (!message.startsWith("<") && message.startsWith(username + " was"))
 			{
-				if (!message.startsWith("<") && message.startsWith(username + " was"))
-				{
-					++this.killed;
-					++this.deaths;
-					AresCustomMethods.methods.endKillStreak();
-				}
-				else if (!message.startsWith("<") && message.startsWith(username))
-				{
-					AresCustomMethods.methods.endKillStreak();
-					++this.deaths;
-				}
+				++this.killed;
+				++this.deaths;
+				killStreak = 0;
 			}
-			else if(message.startsWith("<") || message.contains("was shot by " + username) && message.contains("was blown up by " + username) && message.contains("was slain by " + username))
+			else if (!message.startsWith("<") && message.startsWith(username))
+			{
+				killStreak = 0;
+				++this.deaths;
+			}
+
+			else if(message.startsWith("<") && message.contains("was shot by " + username) || message.contains("was blown up by " + username) || message.contains("was slain by " + username))
 			{
 				this.kills++;
 				this.killStreak++;
@@ -189,7 +192,14 @@ public class mod_Ares extends BaseMod {
 
 			else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second"))
 			{
-				AresCustomMethods.methods.endGame(player);
+				player.addChatMessage("-------------- Final Stats --------------");
+				player.addChatMessage("-------------- Kills: " + kills + "--------------");
+				player.addChatMessage("-------------- Deaths: " + deaths + "--------------");
+				player.addChatMessage("-------------- K/D: " + AresCustomMethods.methods.getKD() + "--------------");
+				kills = 0.0D;
+				killed = 0.0D;
+				deaths = 0.0D;
+				team = "Observers";
 			}
 		}
 	}
@@ -207,7 +217,7 @@ public class mod_Ares extends BaseMod {
 			{
 				mc.fontRenderer.drawStringWithShadow(this.fps, 2, height, 0xffff);
 				height += 8;
-				
+
 			}
 		}
 
@@ -284,7 +294,7 @@ public class mod_Ares extends BaseMod {
 			if(this.showFriends.toString().equals("true"))
 			{
 				mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73"
-						 + this.friendCount, 2, height, 16777215);
+						+ this.friendCount, 2, height, 16777215);
 				height +=8;
 			}
 
@@ -309,13 +319,13 @@ public class mod_Ares extends BaseMod {
 			// Kills, deaths, K/D and KK
 			if(this.showKD.equals("true"))
 			{
-				mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + AresCustomMethods.methods.getKD(kills, deaths), 2, height,
+				mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + AresCustomMethods.methods.getKD(), 2, height,
 						16777215);
 				height +=8;
 			}
 			if(this.showKK.equals("true"))
 			{
-				mc.fontRenderer.drawStringWithShadow("K/K: \u00A73" + AresCustomMethods.methods.getKK(kills, killed), 2, height,
+				mc.fontRenderer.drawStringWithShadow("K/K: \u00A73" + AresCustomMethods.methods.getKK(), 2, height,
 						16777215);
 				height +=8;
 			}
@@ -375,7 +385,7 @@ public class mod_Ares extends BaseMod {
 			onPA = false;
 		this.showGUI = false;
 		this.team = "Observers";
-		AresCustomMethods.methods.endKillStreak();
+		killStreak = 0;
 		this.map = "Attempting to fetch map...";
 	}
 
@@ -386,7 +396,7 @@ public class mod_Ares extends BaseMod {
 		EntityPlayerSP player = mc.thePlayer;
 		if(!(mc.currentScreen instanceof GuiChat))
 		{
-			if (keybinding == o)
+			if (keybinding == F6)
 			{
 				if(showGUI==true)
 				{
