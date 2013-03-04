@@ -24,16 +24,11 @@ public class mod_Ares extends BaseMod
 
 	public static final String serverDomain = "oc.tc";
 	private String IP;
-	private boolean showGUI;
 	public static World world;
 	protected String username = "Not_Found";
 	protected Minecraft mc = Minecraft.getMinecraft();
 	public int height;
-
-
-	public KeyBinding F6 = new KeyBinding("gui", Keyboard.KEY_F6);
-
-
+	
 	@MLProp(name="showFPS", info="true = Show FPS in Gui, false = Doesn't show it.")
 	public static String showFPS = "true";
 
@@ -67,10 +62,7 @@ public class mod_Ares extends BaseMod
 	@MLProp(name="showStreak", info="true = Show your kill streak in Gui, false = Doesn't show it.")
 	public static String showStreak = "true";
 	EntityPlayer player = null;
-
-	// TODO: Check for captured wools
-
-
+	
 	@Override
 	public String getVersion()
 	{
@@ -82,114 +74,28 @@ public class mod_Ares extends BaseMod
 	{
 		ModLoader.setInGUIHook(this, true, false);
 		ModLoader.setInGameHook(this, true, false);
-
-		this.showGUI = true;
+		
 		new AresVariablesHandler(true);
-		ModLoader.registerKey(this, F6, false);
-		ModLoader.addLocalization("F6","gui");
+		ModLoader.registerKey(this, AresVariablesHandler.getKeybind(), false);
+		ModLoader.addLocalization("keybind","gui");
 	}
 
 
 	public void clientChat(String var1)
 	{
 		Minecraft mc = ModLoader.getMinecraftInstance();
-		World world = mc.theWorld; //get the current world.
-		EntityPlayer player = mc.thePlayer; //get the player entity.
+		EntityPlayer player = mc.thePlayer;
+		username = mc.thePlayer.username;
 		String message = StringUtils.stripControlCodes(var1);
-		if (AresVariablesHandler.isPlayingAres())
-		{
-			username = mc.thePlayer.username.toString();
-			if(username == null)
-			{
-				return;
-			}
-			if (!message.startsWith("<") && message.contains(" joined the game")) 
-			{
-				String name;
-				message = message.replace(" joined the game", "");
-				if(message.contains("["))
-					name = message.split(" ")[1];
-				else 
-					name = message;
-				
-				AresVariablesHandler.addFriend(name);
-			}
-
-			else if(!message.startsWith("<") && message.equalsIgnoreCase("welcome to project ares"))
-			{
-				AresVariablesHandler.setMap(AresCustomMethods.methods.getMap());
-			}
-			else if(!message.startsWith("<") && message.contains("Now playing"))
-			{
-				message = message.replace("Now playing ", "");
-				AresVariablesHandler.setMap(message.split(" by ")[0]);
-			}
-			else if (!message.startsWith("<") && message.contains("left the game"))
-			{
-				String name;
-				message = message.replace(" left the game", "");
-				if(message.contains("["))
-				{
-					name = message.split(" ")[1];
-				}
-				else
-				{
-					name = message;
-				}
-				if (AresVariablesHandler.isFriend(name))
-				{
-					AresVariablesHandler.removeFriend(name);
-				}
-			}
-			else if (!message.startsWith("<") && message.startsWith(username + " was"))
-			{
-				AresVariablesHandler.addKilled(1);
-				AresVariablesHandler.addDeaths(1);
-				AresVariablesHandler.setKillstreak(0);
-			}
-			else if (!message.startsWith("<") && message.startsWith(username) && !message.contains("scored"))
-			{
-				AresVariablesHandler.setKillstreak(0);
-				AresVariablesHandler.addDeaths(1);
-			}
-
-			else if(message.startsWith("<") && message.contains("was shot by " + username) || message.contains("was blown up by " + username) || message.contains("was slain by " + username))
-			{
-				AresVariablesHandler.addKills(1);
-				AresVariablesHandler.addKillstreak(1);
-			}
-			else if (!message.startsWith("<") && var1.contains("You joined the"))
-			{
-				AresVariablesHandler.setKills(0);
-				AresVariablesHandler.setKilled(0);
-				AresVariablesHandler.setDeaths(0);
-				AresVariablesHandler.setKillstreak(0);
-				AresVariablesHandler.setTeam(message.replace("You joined the ", ""));
-			}
-
-			else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second"))
-			{
-				player.addChatMessage("-------------- Final Stats --------------");
-				player.addChatMessage("-------------- Kills: " + AresVariablesHandler.getKills() + "--------------");
-				player.addChatMessage("-------------- Deaths: " + AresVariablesHandler.getDeaths() + "--------------");
-				player.addChatMessage("-------------- K/D: " + AresCustomMethods.methods.getKD() + "--------------");
-				AresVariablesHandler.setKills(0);
-				AresVariablesHandler.setKilled(0);
-				AresVariablesHandler.setDeaths(0);
-				AresVariablesHandler.setKillstreak(0);
-				AresVariablesHandler.setTeam("Observers");
-			}
-		}
+		if(!message.startsWith("<"))
+			new AresChatHandler(message, username, player);
 	}
 
 	public boolean onTickInGame(float time, Minecraft mc)
 	{
-
-		world = mc.theWorld;
-
 		this.fps = mc.debug.split(",")[0];
 		height = 2;
-		if(showGUI)
+		if(AresVariablesHandler.guiShowing())
 		{
 			if(this.showFPS.toString().equals("true"))
 			{
@@ -199,7 +105,7 @@ public class mod_Ares extends BaseMod
 			}
 		}
 
-		if (AresVariablesHandler.isPlayingAres() == true && showGUI == true)
+		if (AresVariablesHandler.isPlayingAres() == true && AresVariablesHandler.guiShowing() == true)
 		{
 			//Server display
 			if(this.showServer.toString().equals("true"))
@@ -342,7 +248,7 @@ public class mod_Ares extends BaseMod
 		if (var1.getNetManager().getSocketAddress().toString().contains(serverDomain))
 		{
 			//What happens if logs into project ares
-			this.showGUI = true;
+			AresVariablesHandler.guiShowing(true);
 			System.out.println("Connected to: " + var1.getNetManager().getSocketAddress().toString() + "Ares mod activated!");
 			AresVariablesHandler.setTeam("Observers");
 			AresVariablesHandler.isPlayingAres(true);
@@ -350,7 +256,7 @@ public class mod_Ares extends BaseMod
 		}
 		else
 		{
-			this.showGUI = false;
+			AresVariablesHandler.guiShowing(false);
 		}
 
 	}
@@ -362,7 +268,7 @@ public class mod_Ares extends BaseMod
 		if (AresVariablesHandler.isPlayingAres())
 			AresVariablesHandler.isPlayingAres(false);
 		
-		this.showGUI = false;
+		AresVariablesHandler.guiShowing(false);
 		AresVariablesHandler.setTeam("Observers");
 		AresVariablesHandler.setKillstreak(0);
 		AresVariablesHandler.setMap("Attempting to fetch map...");
@@ -375,15 +281,15 @@ public class mod_Ares extends BaseMod
 		EntityPlayerSP player = mc.thePlayer;
 		if(!(mc.currentScreen instanceof GuiChat))
 		{
-			if (keybinding == F6)
+			if (keybinding == AresVariablesHandler.getKeybind())
 			{
-				if(showGUI==true)
+				if(AresVariablesHandler.guiShowing())
 				{
-					showGUI = false;
+					AresVariablesHandler.guiShowing(false);
 				}
 				else
 				{
-					showGUI = true;
+					AresVariablesHandler.guiShowing(true);
 				}
 			}
 		}

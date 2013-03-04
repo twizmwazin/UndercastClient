@@ -3,6 +3,8 @@ package net.minecraft.src;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.lwjgl.input.Keyboard;
+
 public class AresVariablesHandler 
 {
 	private static String map;
@@ -14,6 +16,8 @@ public class AresVariablesHandler
 	private static String server;
 	private static String team;
 	private static boolean isPA = false;
+	private static boolean gui;
+	private static KeyBinding keybind = new KeyBinding("gui", Keyboard.KEY_F6);
 	
 	public AresVariablesHandler(boolean b)
 	{
@@ -24,6 +28,7 @@ public class AresVariablesHandler
 			setDeaths(0);
 			setKilled(0);
 			setTeam("Observers");
+			guiShowing(true);
 		}
 	}
 	
@@ -151,6 +156,32 @@ public class AresVariablesHandler
 	{
 		isPA = b;
 		return isPA;
+	}
+	
+	protected static boolean guiShowing()
+	{
+		return gui;
+	}
+	
+	protected static boolean guiShowing(boolean b)
+	{
+		gui = b;
+		return gui;
+	}
+	
+	protected static KeyBinding getKeybind()
+	{
+		return keybind;
+	}
+	
+	protected static void setKeybind(KeyBinding k)
+	{
+		keybind = k;
+	}
+	
+	protected static void setKeybind(String name, int key)
+	{
+		keybind = new KeyBinding(name, key);
 	}
 
 }
