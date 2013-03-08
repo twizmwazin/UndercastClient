@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import mod.ares.gui.GuiListener;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
@@ -78,6 +79,9 @@ public class mod_Ares extends BaseMod
 		new AresVariablesHandler(true);
 		ModLoader.registerKey(this, AresVariablesHandler.getKeybind(), false);
 		ModLoader.addLocalization("keybind","gui");
+        
+        //start thread listener
+		new GuiListener().start();
 	}
 
 
