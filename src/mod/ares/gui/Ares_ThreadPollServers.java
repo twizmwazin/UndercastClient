@@ -17,7 +17,7 @@ import net.minecraft.util.MathHelper;
 
 public class Ares_ThreadPollServers extends Thread {
 
-	public static String MOTD = "???";
+	public String MOTD = "???";
 	public String gameVersion = "???";
 	public String serverIP = "";
 	public int port = 25665;
@@ -89,8 +89,8 @@ public class Ares_ThreadPollServers extends Thread {
 					var9 = MathHelper.parseIntWithDefault(var26[5], 0);
 
 					if (var8 >= 0 && var9 >= 0) {
-						populationInfo = "\u00a77" + var8
-								+ "\u00a78/\u00a77" + var9;
+						populationInfo = "§f" + var8
+								+ "\u00a78/" + var9;
 					} else {
 						populationInfo = "\u00a78???";
 					}
@@ -117,8 +117,8 @@ public class Ares_ThreadPollServers extends Thread {
 				MOTD = "\u00a77" + var5;
 
 				if (var8 >= 0 && var9 > 0) {
-					populationInfo = "\u00a77" + var8
-							+ "\u00a78/\u00a77" + var9;
+					populationInfo = "§f" + var8
+							+ "\u00a78/" + var9;
 				} else {
 					populationInfo = "\u00a78???";
 				}

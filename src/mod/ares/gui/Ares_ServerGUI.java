@@ -21,27 +21,29 @@ import net.minecraft.util.StringTranslate;
 
 public class Ares_ServerGUI extends GuiScreen {
 	ArrayList<Ares_ThreadPollServers> serverList;
+	int menuButtons = 3;
+	int serverListSpace = 10;
 
 	/**
 	 * Default constructor
 	 */
 	public Ares_ServerGUI() {
-		//Construct the server polls here.
+		// Construct the server polls here.
 		serverList = new ArrayList<Ares_ThreadPollServers>();
-		//add all the servers
-		serverList.add(new Ares_ThreadPollServers("alpha.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("beta.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("gamma.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("delta.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("epsilon.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("zeta.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("eta.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("theta.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("iota.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("kappa.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("lambda.oc.tc",25565));
-		serverList.add(new Ares_ThreadPollServers("nostalgia.oc.tc",25565));
-		//update all their info
+		// add all the servers
+		serverList.add(new Ares_ThreadPollServers("alpha.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("beta.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("gamma.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("delta.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("epsilon.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("zeta.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("eta.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("theta.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("iota.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("kappa.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("lambda.oc.tc", 25565));
+		serverList.add(new Ares_ThreadPollServers("nostalgia.oc.tc", 25565));
+		// update all their info
 		Thread thread = new Thread() {
 			public void run() {
 				runServerPolls();
@@ -58,12 +60,27 @@ public class Ares_ServerGUI extends GuiScreen {
 		// clear the list
 		this.controlList.clear();
 		// top row buttons
-		this.controlList.add(new GuiButton(2, this.width - (3*75 + 16),
-				5, 75, 20, "Refresh"));
-		this.controlList.add(new GuiButton(1, this.width - (2*75 + 13),
-				5, 75, 20, "Old Menu"));
-		this.controlList.add(new GuiButton(0, this.width - (75 + 10),
-				5, 75, 20, "Cancel"));
+		this.controlList.add(new GuiButton(2, this.width - (3 * 75 + 16), 5,
+				75, 20, "Refresh"));
+		this.controlList.add(new GuiButton(1, this.width - (2 * 75 + 13), 5,
+				75, 20, "Old Menu"));
+		this.controlList.add(new GuiButton(0, this.width - (75 + 10), 5, 75,
+				20, "Cancel"));
+		
+		//this is a copy of the server list drawing.
+		//the buttons need to be drawn here because they only need to be drawn once.
+		//make sure this matches the draw method
+		int height = 25;
+		int width = 40;
+		for (int server=0; server<serverList.size();server++) {
+			if(height+(3*fontRenderer.FONT_HEIGHT+serverListSpace)>this.height){
+				width+=200;
+				height = 25;
+			}
+			height += 2*fontRenderer.FONT_HEIGHT+serverListSpace;
+			this.controlList.add(new GuiButton(server+menuButtons, width-35, height-5, 30,20, "Play"));
+			height += fontRenderer.FONT_HEIGHT;
+		}
 	}
 
 	/**
@@ -72,18 +89,25 @@ public class Ares_ServerGUI extends GuiScreen {
 	 */
 	public void drawScreen(int x, int y, float f) {
 		drawDefaultBackground();
-		drawGradientRect(5, 3, this.width-5, 20+6, 1615855616, -1602211792);
-		//drawGradientRect(5, 3, this.width-5, 20+3, -1073741824,-1073741824);
+		drawGradientRect(5, 3, this.width - 5, 20 + 6, 1615855616, -1602211792);
+		// drawGradientRect(5, 3, this.width-5, 20+3, -1073741824,-1073741824);
 		// title
 		drawString(this.fontRenderer, "Project Ares Servers", 10, 10, 16777215);
 
 		// server info drawing
-		//drawString(this.fontRenderer, "§4" + alpha.serverIP, 10, 30, 16777215);
-		//drawString(this.fontRenderer, alpha.gameVersion, 10, 20, 16777215);
-		//drawString(this.fontRenderer, alpha.MOTD, 10, 28, 16777215);
-		//drawString(this.fontRenderer, alpha.pingToServer, 10, 36, 16777215);
-		//drawString(this.fontRenderer, alpha.populationInfo, 10, 45, 16777215);
+		int height = 25;
+		int width = 40;
+		for (int server=0; server<serverList.size();server++) {
+			if(height+(3*fontRenderer.FONT_HEIGHT+serverListSpace)>this.height){
+				width+=200;
+				height = 25;
+			}
+			drawString(this.fontRenderer, "§4" + serverList.get(server).serverIP,width, height += fontRenderer.FONT_HEIGHT+serverListSpace, 16777215);
+			drawString(this.fontRenderer, serverList.get(server).MOTD, width,height += fontRenderer.FONT_HEIGHT, 16777215);
+			//would have added button here
+			drawString(this.fontRenderer,"§f" + serverList.get(server).populationInfo + "  §7"+ serverList.get(server).pingToServer, width,height += fontRenderer.FONT_HEIGHT, 16777215);
 
+		}
 		// tells the super class to paint everything
 		super.drawScreen(x, y, f);
 	}
@@ -112,14 +136,17 @@ public class Ares_ServerGUI extends GuiScreen {
 				};
 				thread.start();
 			}
+			else if(par1GuiButton.id <= serverList.size()-1+menuButtons){
+				
+			}
 		}
 	}
-	
+
 	/**
 	 * Go through all the servers and poll for new info
 	 */
-	private void runServerPolls(){
-		for(Ares_ThreadPollServers temp : serverList){
+	private void runServerPolls() {
+		for (Ares_ThreadPollServers temp : serverList) {
 			temp.run();
 		}
 	}
