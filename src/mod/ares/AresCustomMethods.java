@@ -1,6 +1,8 @@
-package net.minecraft.src;
+package mod.ares;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.ModLoader;
+import net.minecraft.util.StringUtils;
 
 public class AresCustomMethods
 {

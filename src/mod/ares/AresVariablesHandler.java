@@ -1,9 +1,11 @@
-package net.minecraft.src;
+package mod.ares;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.lwjgl.input.Keyboard;
+
+import net.minecraft.client.settings.KeyBinding;
 
 public class AresVariablesHandler 
 {

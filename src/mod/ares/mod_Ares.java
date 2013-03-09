@@ -2,7 +2,7 @@
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
 //You may not remove these comments
-package net.minecraft.src;
+package mod.ares;
 
 import java.util.ArrayList;
 import java.awt.Color;
@@ -14,10 +14,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import mod.ares.gui.GuiListener;
 import org.lwjgl.input.Keyboard;
 
+import mod.ares.gui.GuiListener;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.multiplayer.NetClientHandler;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.src.BaseMod;
+import net.minecraft.src.MLProp;
+import net.minecraft.src.ModLoader;
+import net.minecraft.util.StringUtils;
+import net.minecraft.world.World;
 
 public class mod_Ares extends BaseMod
 {
@@ -79,8 +91,8 @@ public class mod_Ares extends BaseMod
 		new AresVariablesHandler(true);
 		ModLoader.registerKey(this, AresVariablesHandler.getKeybind(), false);
 		ModLoader.addLocalization("keybind","gui");
-        
-        //start thread listener
+		
+		//start thread listener
 		new GuiListener().start();
 	}
 
@@ -108,7 +120,7 @@ public class mod_Ares extends BaseMod
 
 			}
 		}
-
+		
 		if (AresVariablesHandler.isPlayingAres() == true && AresVariablesHandler.guiShowing() == true)
 		{
 			//Server display
