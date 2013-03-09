@@ -138,9 +138,7 @@ public class Ares_ServerGUI extends GuiScreen {
 			}
 			else if(par1GuiButton.id <= serverList.size()-1+menuButtons){
 				String serverip = serverList.get(par1GuiButton.id-menuButtons).serverIP;
-				System.out.print(serverip);
 				String serverport = Integer.toString(serverList.get(par1GuiButton.id-menuButtons).port);
-				System.out.print(serverport);
 				ServerData joinServer = new ServerData(serverip,serverip+":"+serverport);
 				//connect
 				mc.displayGuiScreen(new GuiConnecting(this.mc, joinServer));
