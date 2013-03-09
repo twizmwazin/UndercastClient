@@ -109,6 +109,8 @@ public class AresCustomMethods
 			return "Kappa";
 		else if(s.contains("lambda"))
 			return "Lambda";
+		else if(s.contains("nostalgia"))
+			return "Nostalgia";
 		else
 		return "Not project ares";
 	}
