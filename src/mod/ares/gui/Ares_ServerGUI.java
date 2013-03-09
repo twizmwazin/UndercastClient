@@ -44,12 +44,7 @@ public class Ares_ServerGUI extends GuiScreen {
 		serverList.add(new Ares_ThreadPollServers("lambda.oc.tc", 25565));
 		serverList.add(new Ares_ThreadPollServers("nostalgia.oc.tc", 25565));
 		// update all their info
-		Thread thread = new Thread() {
-			public void run() {
-				runServerPolls();
-			}
-		};
-		thread.start();
+		runServerPolls();
 	}
 
 	/**
@@ -129,12 +124,7 @@ public class Ares_ServerGUI extends GuiScreen {
 			}
 			// refresh
 			else if (par1GuiButton.id == 2) {
-				Thread thread = new Thread() {
-					public void run() {
-						runServerPolls();
-					}
-				};
-				thread.start();
+				runServerPolls();
 			}
 			else if(par1GuiButton.id <= serverList.size()-1+menuButtons){
 				String serverip = serverList.get(par1GuiButton.id-menuButtons).serverIP;
@@ -150,8 +140,13 @@ public class Ares_ServerGUI extends GuiScreen {
 	 * Go through all the servers and poll for new info
 	 */
 	private void runServerPolls() {
-		for (Ares_ThreadPollServers temp : serverList) {
-			temp.run();
+		for (final Ares_ThreadPollServers temp : serverList) {
+			Thread thread = new Thread() {
+				public void run() {
+					temp.run();
+				}
+			};
+			thread.start();
 		}
 	}
 }
