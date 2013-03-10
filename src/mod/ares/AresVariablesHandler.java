@@ -20,6 +20,7 @@ public class AresVariablesHandler
 	private static boolean isPA = false;
 	private static boolean gui;
 	private static KeyBinding keybind = new KeyBinding("gui", Keyboard.KEY_F6);
+	private static KeyBinding keybind2 = new KeyBinding("inGameGui", Keyboard.KEY_L);
 	
 	public AresVariablesHandler(boolean b)
 	{
@@ -179,6 +180,16 @@ public class AresVariablesHandler
 	protected static void setKeybind(KeyBinding k)
 	{
 		keybind = k;
+	}
+	
+	protected static KeyBinding getKeybind2()
+	{
+		return keybind2;
+	}
+	
+	protected static void setKeybind2(KeyBinding k)
+	{
+		keybind2 = k;
 	}
 	
 	protected static void setKeybind(String name, int key)

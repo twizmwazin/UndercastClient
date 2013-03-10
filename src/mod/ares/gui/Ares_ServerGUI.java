@@ -27,11 +27,14 @@ public class Ares_ServerGUI extends GuiScreen {
 	private ArrayList<Ares_ThreadPollServers> serverList;
 	private int menuButtons = 4;
 	private int serverListSpace = 10;
+	public static boolean inGame;
 
 	/**
 	 * Default constructor
 	 */
-	public Ares_ServerGUI() {
+	public Ares_ServerGUI(boolean inGame) {
+		//background boolean
+		this.inGame = inGame;
 		// Construct the server polls here.
 		serverList = new ArrayList<Ares_ThreadPollServers>();
 		// add all the servers
@@ -59,14 +62,20 @@ public class Ares_ServerGUI extends GuiScreen {
 		// clear the list
 		this.controlList.clear();
 		// top row buttons
-		this.controlList.add(new GuiButton(3, this.width - (3 * 75 +40+19), 5,
-				75, 20, "Refresh"));
-		this.controlList.add(new GuiButton(2, this.width - (2 * 75 +40+ 16), 5,
-				40, 20, "Stats"));
-		this.controlList.add(new GuiButton(1, this.width - (2 * 75 + 13), 5,
-				75, 20, "Old Menu"));
-		this.controlList.add(new GuiButton(0, this.width - (75 + 10), 5, 75,
+		int widthDis = 5;
+		this.controlList.add(new GuiButton(0, this.width - (widthDis+=75), 5, 75,
 				20, "Cancel"));
+		//only be able to go to multiplayer menu when you not ingame
+		if(!inGame)
+			this.controlList.add(new GuiButton(1, this.width - (widthDis+=78), 5,
+				75, 20, "Old Menu"));
+		this.controlList.add(new GuiButton(2, this.width - (widthDis+=43), 5,
+				40, 20, "Stats"));
+		this.controlList.add(new GuiButton(3, this.width - (widthDis+=78), 5,
+				75, 20, "Refresh"));
+
+
+
 		
 		//this is a copy of the server list drawing.
 		//the buttons need to be drawn here because they only need to be drawn once.
@@ -89,9 +98,11 @@ public class Ares_ServerGUI extends GuiScreen {
 	 * take place in here
 	 */
 	public void drawScreen(int x, int y, float f) {
-		drawDefaultBackground();
+		if(!inGame)
+			drawDefaultBackground();
+		else
+			drawGradientRect(0, 0, this.width,this.height, -1073741824,-1073741824);
 		drawGradientRect(5, 3, this.width - 5, 20 + 6, 1615855616, -1602211792);
-		// drawGradientRect(5, 3, this.width-5, 20+3, -1073741824,-1073741824);
 		// title
 		drawString(this.fontRenderer, "Project Ares Servers", 10, 10, 16777215);
 
@@ -121,12 +132,17 @@ public class Ares_ServerGUI extends GuiScreen {
 		if (par1GuiButton.enabled) {
 			// cancel
 			if (par1GuiButton.id == 0) {
-				this.mc.displayGuiScreen(new GuiMainMenu());
+				if(!inGame)
+					this.mc.displayGuiScreen(new GuiMainMenu());
+				else
+					this.mc.setIngameFocus();
 			}
 			// old menu
 			else if (par1GuiButton.id == 1) {
-				GuiListener.toggleMultiGUI(false);
-				this.mc.displayGuiScreen(new GuiMultiplayer(new GuiMainMenu()));
+				if(!inGame){
+					GuiListener.toggleMultiGUI(false);
+					this.mc.displayGuiScreen(new GuiMultiplayer(new GuiMainMenu()));
+				}
 			}
 			// refresh
 			else if (par1GuiButton.id == 2) {

@@ -16,6 +16,7 @@ import java.net.URLConnection;
 
 import org.lwjgl.input.Keyboard;
 
+import mod.ares.gui.Ares_ServerGUI;
 import mod.ares.gui.GuiListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -90,6 +91,7 @@ public class mod_Ares extends BaseMod
 		
 		new AresVariablesHandler(true);
 		ModLoader.registerKey(this, AresVariablesHandler.getKeybind(), false);
+		ModLoader.registerKey(this, AresVariablesHandler.getKeybind2() , false);
 		ModLoader.addLocalization("keybind","gui");
 		
 		//start thread listener
@@ -111,7 +113,7 @@ public class mod_Ares extends BaseMod
 	{
 		this.fps = mc.debug.split(",")[0];
 		height = 2;
-		if(AresVariablesHandler.guiShowing())
+		if(AresVariablesHandler.guiShowing() && mc.inGameHasFocus)
 		{
 			if(this.showFPS.toString().equals("true"))
 			{
@@ -121,7 +123,7 @@ public class mod_Ares extends BaseMod
 			}
 		}
 		
-		if (AresVariablesHandler.isPlayingAres() == true && AresVariablesHandler.guiShowing() == true)
+		if (AresVariablesHandler.isPlayingAres() == true && AresVariablesHandler.guiShowing() == true && mc.inGameHasFocus)
 		{
 			//Server display
 			if(this.showServer.toString().equals("true"))
@@ -295,7 +297,7 @@ public class mod_Ares extends BaseMod
 		Minecraft mc = ModLoader.getMinecraftInstance();
 		World world = mc.theWorld;
 		EntityPlayerSP player = mc.thePlayer;
-		if(!(mc.currentScreen instanceof GuiChat))
+		if(mc.inGameHasFocus)
 		{
 			if (keybinding == AresVariablesHandler.getKeybind())
 			{
@@ -307,6 +309,9 @@ public class mod_Ares extends BaseMod
 				{
 					AresVariablesHandler.guiShowing(true);
 				}
+			}
+			else if(keybinding == AresVariablesHandler.getKeybind2()){
+				ModLoader.openGUI(mc.thePlayer,new Ares_ServerGUI(true));
 			}
 		}
 	}

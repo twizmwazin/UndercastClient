@@ -19,7 +19,7 @@ public class GuiListener extends Thread {
 	public void run() {
 		while (true) {
 			if (mc.currentScreen instanceof GuiMultiplayer && displayGui) {
-				ModLoader.openGUI(mc.thePlayer,new Ares_ServerGUI());
+				ModLoader.openGUI(mc.thePlayer,new Ares_ServerGUI(false));
 			}
 			//if the user has gone back to the main menu. Set it back to Ares Gui
 			else if (mc.currentScreen instanceof GuiMainMenu) {
