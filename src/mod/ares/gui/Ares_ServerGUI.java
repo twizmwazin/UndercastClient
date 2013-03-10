@@ -1,7 +1,10 @@
 package mod.ares.gui;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.ArrayList;
 
+import mod.ares.mod_Ares;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,9 +23,10 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.StringTranslate;
 
 public class Ares_ServerGUI extends GuiScreen {
-	ArrayList<Ares_ThreadPollServers> serverList;
-	int menuButtons = 3;
-	int serverListSpace = 10;
+	private Minecraft mc = Minecraft.getMinecraft();
+	private ArrayList<Ares_ThreadPollServers> serverList;
+	private int menuButtons = 4;
+	private int serverListSpace = 10;
 
 	/**
 	 * Default constructor
@@ -55,8 +59,10 @@ public class Ares_ServerGUI extends GuiScreen {
 		// clear the list
 		this.controlList.clear();
 		// top row buttons
-		this.controlList.add(new GuiButton(2, this.width - (3 * 75 + 16), 5,
+		this.controlList.add(new GuiButton(3, this.width - (3 * 75 +40+19), 5,
 				75, 20, "Refresh"));
+		this.controlList.add(new GuiButton(2, this.width - (2 * 75 +40+ 16), 5,
+				40, 20, "Stats"));
 		this.controlList.add(new GuiButton(1, this.width - (2 * 75 + 13), 5,
 				75, 20, "Old Menu"));
 		this.controlList.add(new GuiButton(0, this.width - (75 + 10), 5, 75,
@@ -124,6 +130,14 @@ public class Ares_ServerGUI extends GuiScreen {
 			}
 			// refresh
 			else if (par1GuiButton.id == 2) {
+				String username = this.mc.session.username;
+				try {
+					Desktop.getDesktop().browse(new URI( "http://"+mod_Ares.serverDomain+"/"+username));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			else if (par1GuiButton.id == 3) {
 				runServerPolls();
 			}
 			else if(par1GuiButton.id <= serverList.size()-1+menuButtons){
