@@ -114,10 +114,13 @@ public class Ares_ServerGUI extends GuiScreen {
 				width+=200;
 				height = 25;
 			}
-			drawString(this.fontRenderer, "§4" + serverList.get(server).serverIP,width, height += fontRenderer.FONT_HEIGHT+serverListSpace, 16777215);
-			drawString(this.fontRenderer, serverList.get(server).MOTD, width,height += fontRenderer.FONT_HEIGHT, 16777215);
+			if(serverList.get(server).serverIP!=null)
+				drawString(this.fontRenderer, "\u00A74" + serverList.get(server).serverIP,width, height += fontRenderer.FONT_HEIGHT+serverListSpace, 16777215);
+			if(serverList.get(server).MOTD!=null)
+				drawString(this.fontRenderer, serverList.get(server).MOTD, width,height += fontRenderer.FONT_HEIGHT, 16777215);
 			//would have added button here
-			drawString(this.fontRenderer,"§f" + serverList.get(server).populationInfo + "  §7"+ serverList.get(server).pingToServer, width,height += fontRenderer.FONT_HEIGHT, 16777215);
+			if(serverList.get(server).populationInfo!=null || serverList.get(server).pingToServer!=null)
+				drawString(this.fontRenderer,"\u00A7f" + serverList.get(server).populationInfo + "  \u00A77"+ serverList.get(server).pingToServer, width,height += fontRenderer.FONT_HEIGHT, 16777215);
 
 		}
 		// tells the super class to paint everything

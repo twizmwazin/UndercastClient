@@ -16,8 +16,8 @@ public class AresCustomMethods
 		{
 			map = mc.getServerData().serverMOTD.toString();
 			map = StringUtils.stripControlCodes(map);
-			map = map.replace(" «", "");
-			map = map.replace("» ", "");
+			map = map.replace("<<", "");
+			map = map.replace(">>", "");
 			if(map != null)
 			{
 				return map;
