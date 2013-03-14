@@ -3,7 +3,7 @@
   "modid": "mod_Ares",
   "name": "Unofficial Project Ares Mod",
   "description": "A custom made mod that tracks gameplay stats and has custom guis made for the oc.tc servers",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "url": "https://oc.tc/forums/topics/51292322ba6087e09d0000df",
   "updateUrl": "",
   "authorList": [
@@ -12,7 +12,7 @@
     "Name"
   ],
   "credits": "",
-  "logoFile": "mod/ares/art/logo.png",
+  "logoFile": "",
   "screenshots": [
   ],
   "parent":"",
