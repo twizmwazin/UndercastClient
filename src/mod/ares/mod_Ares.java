@@ -80,7 +80,7 @@ public class mod_Ares extends BaseMod
 	@Override
 	public String getVersion()
 	{
-		return "1.4.7";
+		return "1.5";
 	}
 
 	@Override
