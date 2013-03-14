@@ -60,7 +60,7 @@ public class AresChatHandler
 			AresVariablesHandler.addDeaths(1);
 		}
 
-		else if(message.contains("was shot by " + username) || message.contains("was blown up by " + username) || message.contains("was slain by " + username))
+		else if(message.contains("by " + username))
 		{
 			AresVariablesHandler.addKills(1);
 			AresVariablesHandler.addKillstreak(1);
