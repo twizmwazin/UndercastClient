@@ -1,4 +1,5 @@
-package mod.ares;
+package net.minecraft.src;
+
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,11 +8,11 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.src.ChatAllowedCharacters;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StringUtils;
+import net.minecraft.src.Packet;
+import net.minecraft.src.StringUtils;
 
 public class AresCustomMethods {
 	protected static AresCustomMethods methods;
@@ -153,9 +154,7 @@ public class AresCustomMethods {
 			return "Delta";
 		else if (s.contains("epsilon"))
 			return "Epsilon";
-		else if (s.contains("theta") && s.contains("25500"))
-			return "Nostalgia";
-		else if (s.contains("theta") && !s.contains("25500"))
+		else if (s.contains("theta"))
 			return "Theta";
 		else if (s.contains("eta"))
 			return "Eta";

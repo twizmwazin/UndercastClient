@@ -1,8 +1,9 @@
+package net.minecraft.src;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
 //You may not remove these comments
-package mod.ares;
+
 
 import java.util.ArrayList;
 import java.awt.Color;
@@ -16,21 +17,16 @@ import java.net.URLConnection;
 
 import org.lwjgl.input.Keyboard;
 
-import mod.ares.gui.Ares_ServerGUI;
-import mod.ares.gui.GuiListener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.multiplayer.NetClientHandler;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.src.BaseMod;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerSP;
+import net.minecraft.src.KeyBinding;
 import net.minecraft.src.MLProp;
 import net.minecraft.src.ModLoader;
-import net.minecraft.util.StringUtils;
-import net.minecraft.world.World;
+import net.minecraft.src.NetClientHandler;
+import net.minecraft.src.StringUtils;
+import net.minecraft.src.World;
 
 public class mod_Ares extends BaseMod
 {
@@ -86,6 +82,7 @@ public class mod_Ares extends BaseMod
 	@Override
 	public void load()
 	{
+		System.out.print("Loaded");
 		ModLoader.setInGUIHook(this, true, false);
 		ModLoader.setInGameHook(this, true, false);
 		

@@ -1,26 +1,18 @@
-package mod.ares.gui;
+package net.minecraft.src;
+
 
 import java.awt.Desktop;
 import java.net.URI;
 import java.util.ArrayList;
 
-import mod.ares.mod_Ares;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiScreenAddServer;
-import net.minecraft.client.gui.GuiScreenServerList;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.LanServer;
-import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.client.multiplayer.ServerList;
-import net.minecraft.util.StatCollector;
-import net.minecraft.util.StringTranslate;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiConnecting;
+import net.minecraft.src.GuiMainMenu;
+import net.minecraft.src.GuiMultiplayer;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.ServerData;
+
 
 public class Ares_ServerGUI extends GuiScreen {
 	private Minecraft mc = Minecraft.getMinecraft();

@@ -1,12 +1,10 @@
-package mod.ares.gui;
+package net.minecraft.src;
+
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiScreenServerList;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.GuiMainMenu;
+import net.minecraft.src.GuiMultiplayer;
 
 public class GuiListener extends Thread {
 

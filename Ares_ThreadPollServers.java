@@ -1,4 +1,5 @@
-package mod.ares.gui;
+package net.minecraft.src;
+
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,11 +10,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.multiplayer.ServerAddress;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.MathHelper;
+import net.minecraft.src.ChatAllowedCharacters;
+import net.minecraft.src.MathHelper;
+import net.minecraft.src.Packet;
+
 
 public class Ares_ThreadPollServers extends Thread {
 

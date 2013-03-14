@@ -1,7 +1,10 @@
-package mod.ares;
+package net.minecraft.src;
 
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.src.EntityPlayer;
+
+
+
 
 public class AresChatHandler 
 {
