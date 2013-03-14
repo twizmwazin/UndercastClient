@@ -60,18 +60,18 @@ public class Ares_ServerGUI extends GuiScreen {
 	 */
 	public void initGui() {
 		// clear the list
-		this.controlList.clear();
+		this.buttonList.clear();
 		// top row buttons
 		int widthDis = 5;
-		this.controlList.add(new GuiButton(0, this.width - (widthDis+=75), 5, 75,
+		this.buttonList.add(new GuiButton(0, this.width - (widthDis+=75), 5, 75,
 				20, "Cancel"));
 		//only be able to go to multiplayer menu when you not ingame
 		if(!inGame)
-			this.controlList.add(new GuiButton(1, this.width - (widthDis+=78), 5,
+			this.buttonList.add(new GuiButton(1, this.width - (widthDis+=78), 5,
 				75, 20, "Old Menu"));
-		this.controlList.add(new GuiButton(2, this.width - (widthDis+=43), 5,
+		this.buttonList.add(new GuiButton(2, this.width - (widthDis+=43), 5,
 				40, 20, "Stats"));
-		this.controlList.add(new GuiButton(3, this.width - (widthDis+=78), 5,
+		this.buttonList.add(new GuiButton(3, this.width - (widthDis+=78), 5,
 				75, 20, "Refresh"));
 
 
@@ -88,7 +88,7 @@ public class Ares_ServerGUI extends GuiScreen {
 				height = 25;
 			}
 			height += 2*fontRenderer.FONT_HEIGHT+serverListSpace;
-			this.controlList.add(new GuiButton(server+menuButtons, width-35, height-5, 30,20, "Play"));
+			this.buttonList.add(new GuiButton(server+menuButtons, width-35, height-5, 30,20, "Play"));
 			height += fontRenderer.FONT_HEIGHT;
 		}
 	}
@@ -164,7 +164,7 @@ public class Ares_ServerGUI extends GuiScreen {
 				String serverport = Integer.toString(serverList.get(par1GuiButton.id-menuButtons).port);
 				ServerData joinServer = new ServerData(serverip,serverip+":"+serverport);
 				//connect
-				mc.displayGuiScreen(new GuiConnecting(this.mc, joinServer));
+				mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
 			}
 		}
 	}
