@@ -1,5 +1,8 @@
 package net.minecraft.src;
-
+//You may not release this source under any condition, it must be linked to this page
+//You may recompile and publish as long as GoldBattle is given credit
+//You may not claim this to be your own
+//You may not remove these comments
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,15 +27,26 @@ public class Ares_ThreadPollServers extends Thread {
 	public String populationInfo = "???";
 	public String pingToServer = "???";
 
+	/**
+	 * Default constructor
+	 * 
+	 * @param server
+	 * @param port
+	 */
 	public Ares_ThreadPollServers(String server, int port){
 		this.serverIP=server;
 		this.port=port;
 	}
+	
+	/**
+	 * Thread for polling servers
+	 * Has a try catch to get the IOException
+	 */
 	public void run() {
 			long var1 = System.nanoTime();
 			//get the server info
 			try {
-			pollServer(serverIP,port);
+				pollServer(serverIP,port);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -41,6 +55,13 @@ public class Ares_ThreadPollServers extends Thread {
             pingToServer = String.valueOf(temp);
 	}
 
+	/**
+	 * Main method. Gets all the info for the server per address and port.
+	 * Sets clas varible equall to what is read in.
+	 * @param server
+	 * @param port
+	 * @throws IOException
+	 */
 	public void pollServer(String server, int port) throws IOException {
 		Socket var2 = null;
 		DataInputStream var3 = null;

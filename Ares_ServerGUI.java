@@ -1,5 +1,8 @@
 package net.minecraft.src;
-
+//You may not release this source under any condition, it must be linked to this page
+//You may recompile and publish as long as GoldBattle is given credit
+//You may not claim this to be your own
+//You may not remove these comments
 
 import java.awt.Desktop;
 import java.net.URI;
@@ -135,7 +138,7 @@ public class Ares_ServerGUI extends GuiScreen {
 			// old menu
 			else if (par1GuiButton.id == 1) {
 				if(!inGame){
-					GuiListener.toggleMultiGUI(false);
+					AresGuiListener.toggleMultiGUI(false);
 					this.mc.displayGuiScreen(new GuiMultiplayer(new GuiMainMenu()));
 				}
 			}

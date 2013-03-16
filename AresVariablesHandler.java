@@ -1,5 +1,8 @@
 package net.minecraft.src;
-
+//You may not release this source under any condition, it must be linked to this page
+//You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
+//You may not claim this to be your own
+//You may not remove these comments
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,10 +20,12 @@ public class AresVariablesHandler
 	private static double deaths;
 	private static double killed;
 	private static int killstreak;
+	private static int largestKillstreak;
 	private static HashSet<String> friends = new HashSet<String>();
 	private static String server;
 	private static String team;
 	private static boolean isPA = false;
+
 	private static boolean gui;
 	private static KeyBinding keybind = new KeyBinding("gui", Keyboard.KEY_F6);
 	private static KeyBinding keybind2 = new KeyBinding("inGameGui", Keyboard.KEY_L);
@@ -100,12 +105,16 @@ public class AresVariablesHandler
 	
 	protected static void setKillstreak(int i)
 	{
+		if(largestKillstreak<killstreak)
+			largestKillstreak=killstreak;
 		killstreak = i;
 	}
 	
 	protected static void addKillstreak(int i)
 	{
 		killstreak += i;
+		if(largestKillstreak<killstreak)
+			largestKillstreak=killstreak;
 	}
 	
 	protected static int getFriends()
@@ -199,5 +208,8 @@ public class AresVariablesHandler
 	{
 		keybind = new KeyBinding(name, key);
 	}
-
+	
+	public static int getLargestKillstreak() {
+		return largestKillstreak;
+	}
 }
