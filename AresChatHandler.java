@@ -65,6 +65,7 @@ public class AresChatHandler
 			AresVariablesHandler.setKilled(0);
 			AresVariablesHandler.setDeaths(0);
 			AresVariablesHandler.setKillstreak(0);
+			AresVariablesHandler.setLargestKillstreak(0);
 			AresVariablesHandler.setTeam(message.replace("You joined the ", ""));
 		}
 		//when a map is done. Display all the stats
@@ -81,6 +82,7 @@ public class AresChatHandler
 			AresVariablesHandler.setKilled(0);
 			AresVariablesHandler.setDeaths(0);
 			AresVariablesHandler.setKillstreak(0);
+			AresVariablesHandler.setLargestKillstreak(0);
 			AresVariablesHandler.setTeam("Observers");
 		}
 	}

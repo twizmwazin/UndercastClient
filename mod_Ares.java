@@ -73,6 +73,18 @@ public class mod_Ares extends BaseMod {
 	
 	@MLProp(name = "showGuiMulti", info = "true = Show Ares server gui in the, false = Doesn't show it.")
 	public static String showGuiMulti = "true";	
+	
+	@MLProp(name = "keyGui", info = "true = Show Ares server gui in the, false = Doesn't show it.")
+	public static String keyGui = "F6";	
+	
+	@MLProp(name = "keyGui2", info = "The key used to open the ingame server gui.")
+	public static String keyGui2 = "L";
+	
+	@MLProp(name = "x", info = "Y Cord. or the ingame gui (integer)")
+	public static String x = "2";
+	
+	@MLProp(name = "y", info = "X Cord. or the ingame gui (integer)")
+	public static String y = "2";
 
 	@Override
 	public String getVersion() {
@@ -81,16 +93,22 @@ public class mod_Ares extends BaseMod {
 
 	@Override
 	public void load() {
+		//main hooks
 		ModLoader.setInGUIHook(this, true, false);
 		ModLoader.setInGameHook(this, true, false);
 
-		new AresVariablesHandler(true);
+		ModLoader.addLocalization("keybind", "gui");
+		//load variables
+		new AresVariablesHandler();
+		//hook keybinds
 		ModLoader.registerKey(this, AresVariablesHandler.getKeybind(), false);
 		ModLoader.registerKey(this, AresVariablesHandler.getKeybind2(), false);
-		ModLoader.addLocalization("keybind", "gui");
 
 		// start thread listener
 		new AresGuiListener().start();
+		
+		//parse config data
+		
 	}
 
 	/**
@@ -126,89 +144,88 @@ public class mod_Ares extends BaseMod {
 			deathScreenActive=false;
 		//get debug info for the fps
 		String fps = mc.debug.split(",")[0];
-		int height = 2;
+		int height = Integer.parseInt(this.x);
+		int width = Integer.parseInt(this.y);
 		//if the gui is enabled display
 		//if chat is open and config says yes then show gui
 		if (AresVariablesHandler.guiShowing() && 
 				(mc.inGameHasFocus || this.showGuiChat.toString().equals("true") && mc.currentScreen instanceof GuiChat)) {
 			//show fps
 			if (this.showFPS.toString().equals("true")) {
-				mc.fontRenderer.drawStringWithShadow(fps, 2, height,
+				mc.fontRenderer.drawStringWithShadow(fps, width, height,
 						0xffff);
 				height += 8;
-
 			}
 		}
 		//if on Ares server then display this info.
 		//if chat is open and config says yes then show gui
-		if (AresVariablesHandler.isPlayingAres() == true && AresVariablesHandler.guiShowing() == true && 
+		if (AresVariablesHandler.isPlayingAres()&& AresVariablesHandler.guiShowing() && 
 				(mc.inGameHasFocus || this.showGuiChat.toString().equals("true") && mc.currentScreen instanceof GuiChat) ) {
 			// Server display
 			if (this.showServer.toString().equals("true")) {
 				mc.fontRenderer
 						.drawStringWithShadow("Server: \u00A76"
-								+ AresVariablesHandler.getServer(), 2, height,
+								+ AresVariablesHandler.getServer(), width, height,
 								16777215);
 				height += 8;
 			}
 
 			// Team display (based on color)
 			if (this.showTeam.toString().equals("true")) {
-
 				if (AresVariablesHandler.getTeam().equalsIgnoreCase("red team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0x990000);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("blue team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0x0033FF);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("purple team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0x9933CC);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("cyan team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0x00FFFF);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("lime team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0x00FF00);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("yellow team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0xFFFF00);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("green team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0x006600);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("orange team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, height,
+							+ AresVariablesHandler.getTeam(), width, height,
 							0xFF9900);
 					height += 8;
 				} else if (AresVariablesHandler.getTeam().equalsIgnoreCase("Observers")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, 18, 0x00FFFF);
+							+ AresVariablesHandler.getTeam(), width, height, 0x00FFFF);
 					height += 8;
 				} else {
 					mc.fontRenderer.drawStringWithShadow("Team: "
-							+ AresVariablesHandler.getTeam(), 2, 18, 0x606060);
+							+ AresVariablesHandler.getTeam(), width, height, 0x606060);
 					height += 8;
 				}
 			}
 			// Friend display:
 			if (this.showFriends.toString().equals("true")) {
 				mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73"
-						+ AresVariablesHandler.getFriends(), 2, height,
+						+ AresVariablesHandler.getFriends(), width, height,
 						16777215);
 				height += 8;
 			}
@@ -216,13 +233,13 @@ public class mod_Ares extends BaseMod {
 			if (this.showMap.toString().equals("true")) {
 				if (AresVariablesHandler.getMap() != null) {
 					mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d"
-							+ AresVariablesHandler.getMap(), 2, height,
+							+ AresVariablesHandler.getMap(), width, height,
 							16777215);
 					height += 8;
 				} else {
 					AresVariablesHandler.setMap("Fetching...");
 					mc.fontRenderer.drawStringWithShadow("Current Map: \u00A78"
-							+ AresVariablesHandler.getMap(), 2, height,
+							+ AresVariablesHandler.getMap(), width, height,
 							16777215);
 					height += 8;
 				}
@@ -230,28 +247,28 @@ public class mod_Ares extends BaseMod {
 			//Show KD Ratio
 			if (this.showKD.equals("true")) {
 				mc.fontRenderer.drawStringWithShadow("K/D: \u00A73"
-						+ AresCustomMethods.getKD(), 2, height,
+						+ AresCustomMethods.getKD(), width, height,
 						16777215);
 				height += 8;
 			}
 			//show KK Ratio
 			if (this.showKK.equals("true")) {
 				mc.fontRenderer.drawStringWithShadow("K/K: \u00A73"
-						+ AresCustomMethods.getKK(), 2, height,
+						+ AresCustomMethods.getKK(), width, height,
 						16777215);
 				height += 8;
 			}
 			//show amount of kills
 			if (this.showKills.toString().equals("true")) {
 				mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a"
-						+ AresVariablesHandler.getKills(), 2, height, 16777215);
+						+ AresVariablesHandler.getKills(), width, height, 16777215);
 				height += 8;
 			}
 			//show amount of deaths
 			if (this.showDeaths.toString().equals("true")) {
 				mc.fontRenderer
 						.drawStringWithShadow("Deaths: \u00A74"
-								+ AresVariablesHandler.getDeaths(), 2, height,
+								+ AresVariablesHandler.getDeaths(), width, height,
 								16777215);
 				height += 8;
 			}
@@ -259,7 +276,7 @@ public class mod_Ares extends BaseMod {
 			if (this.showStreak.toString().equals("true")) {
 				mc.fontRenderer.drawStringWithShadow(
 						"Current Killstreak: \u00A75"
-								+ AresVariablesHandler.getKillstreak()+"/"+AresVariablesHandler.getLargestKillstreak(), 2,
+								+ AresVariablesHandler.getKillstreak()+"/"+AresVariablesHandler.getLargestKillstreak(), width,
 						height, 16777215);
 				height += 8;
 			}
@@ -297,7 +314,11 @@ public class mod_Ares extends BaseMod {
 		AresVariablesHandler.isPlayingAres(false);
 		AresVariablesHandler.guiShowing(false);
 		AresVariablesHandler.setTeam("Observers");
+		AresVariablesHandler.setKills(0);
+		AresVariablesHandler.setKilled(0);
+		AresVariablesHandler.setDeaths(0);
 		AresVariablesHandler.setKillstreak(0);
+		AresVariablesHandler.setLargestKillstreak(0);
 		AresVariablesHandler.setMap("Attempting to fetch map...");
 	}
 
@@ -306,6 +327,7 @@ public class mod_Ares extends BaseMod {
 	 * Used to activate the gui ect.
 	 */
 	public void keyboardEvent(KeyBinding keybinding) {
+		//new AresVariablesHandler(true);
 		Minecraft mc = ModLoader.getMinecraftInstance();
 		World world = mc.theWorld;
 		EntityPlayerSP player = mc.thePlayer;
