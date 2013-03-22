@@ -4,6 +4,7 @@ package tc.oc;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import tc.oc.server.Ares_ServerGUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.GuiMainMenu;
