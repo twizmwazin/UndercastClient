@@ -91,6 +91,12 @@ public class mod_Ares extends BaseMod {
 	
 	@MLProp(name = "y", info = "X Cord. or the ingame gui (integer)")
 	public static String y = "2";
+	
+	@MLProp(name = "toggleTitleScreenButton", info = "Allows you to toggle the Title Screen button on the Death Screen. True = Button Disabled")
+	public static boolean toggleTitleScreenButton = true;
+	
+	@MLProp(name = "filterTips", info = "Removes the [Tip] messages. True = Removed")
+	public static boolean filterTips = true;
 
 	@Override
 	public String getVersion() {
@@ -145,6 +151,12 @@ public class mod_Ares extends BaseMod {
 				AresVariablesHandler.addDeaths(1);
 				AresVariablesHandler.setKillstreak(0);
 				deathScreenActive=true;
+			}
+			GuiButton titleScreen = (GuiButton)mc.currentScreen.buttonList.get(1); //get the title screen button
+			if(titleScreen.enabled && toggleTitleScreenButton){//the button got enabled
+				titleScreen.enabled = false; //disable it
+				mc.currentScreen.buttonList.set(1, titleScreen); //put it back
+				mc.currentScreen.updateScreen();//update the screen
 			}
 		}else
 			deathScreenActive=false;

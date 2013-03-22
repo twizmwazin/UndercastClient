@@ -85,5 +85,9 @@ public class AresChatHandler
 			AresVariablesHandler.setLargestKillstreak(0);
 			AresVariablesHandler.setTeam("Observers");
 		}
+		//filters [Tip] messages
+		else if(message.startsWith("[Tip]") && mod_Ares.filterTips){
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine(0);
+		}
 	}
 }
