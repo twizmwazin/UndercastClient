@@ -8,7 +8,7 @@ __Current features__
     * KK ratio
     * KD ratio
     * Kill streak
-* Custom server meny
+* Custom server menu
 * Ingame custom server menu
 * Highly customizable
 
