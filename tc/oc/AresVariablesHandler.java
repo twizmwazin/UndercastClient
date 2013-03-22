@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package tc.oc;
 
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
@@ -11,6 +11,7 @@ import java.util.HashSet;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.src.KeyBinding;
+import net.minecraft.src.mod_Ares;
 
 public class AresVariablesHandler {
 	private static String map;
@@ -42,145 +43,145 @@ public class AresVariablesHandler {
 				Keyboard.getKeyIndex(mod_Ares.keyGui2.toString()));
 	}
 
-	protected static String getMap() {
+	public static String getMap() {
 		return map;
 	}
 
-	protected static void setMap(String s) {
+	public static void setMap(String s) {
 		map = s;
 	}
 
-	protected static double getKills() {
+	public static double getKills() {
 		return kills;
 	}
 
-	protected static void setKills(double d) {
+	public static void setKills(double d) {
 		kills = d;
 	}
 
-	protected static void addKills(double d) {
+	public static void addKills(double d) {
 		kills += d;
 	}
 
-	protected static double getDeaths() {
+	public static double getDeaths() {
 		return deaths;
 	}
 
-	protected static void setDeaths(double d) {
+	public static void setDeaths(double d) {
 		deaths = d;
 	}
 
-	protected static void addDeaths(double d) {
+	public static void addDeaths(double d) {
 		deaths += d;
 	}
 
-	protected static double getKilled() {
+	public static double getKilled() {
 		return killed;
 	}
 
-	protected static void setKilled(double d) {
+	public static void setKilled(double d) {
 		killed = d;
 	}
 
-	protected static void addKilled(double d) {
+	public static void addKilled(double d) {
 		killed += d;
 	}
 
-	protected static int getKillstreak() {
+	public static int getKillstreak() {
 		return killstreak;
 	}
 
-	protected static void setKillstreak(int i) {
+	public static void setKillstreak(int i) {
 		if (largestKillstreak < killstreak)
 			largestKillstreak = killstreak;
 		killstreak = i;
 	}
 
-	protected static void addKillstreak(int i) {
+	public static void addKillstreak(int i) {
 		killstreak += i;
 		if (largestKillstreak < killstreak)
 			largestKillstreak = killstreak;
 	}
 
-	protected static int getFriends() {
+	public static int getFriends() {
 		return friends.size();
 	}
 
-	protected static void addFriend(String s) {
+	public static void addFriend(String s) {
 		friends.add(s);
 	}
 
-	protected static void removeFriend(String s) {
+	public static void removeFriend(String s) {
 		friends.remove(s);
 	}
 
-	protected static void clearFriends() {
+	public static void clearFriends() {
 		friends.clear();
 	}
 
-	protected static boolean isFriend(String s) {
+	public static boolean isFriend(String s) {
 		return friends.contains(s);
 	}
 
-	protected static String getServer() {
+	public static String getServer() {
 		return server;
 	}
 
-	protected static void setServer(String s) {
+	public static void setServer(String s) {
 		server = s;
 	}
 
-	protected static String getTeam() {
+	public static String getTeam() {
 		return team;
 	}
 
-	protected static void setTeam(String s) {
+	public static void setTeam(String s) {
 		team = s;
 	}
 
-	protected static boolean isPlayingAres() {
+	public static boolean isPlayingAres() {
 		return isPA;
 	}
 
-	protected static boolean isPlayingAres(boolean b) {
+	public static boolean isPlayingAres(boolean b) {
 		isPA = b;
 		return isPA;
 	}
 
-	protected static boolean guiShowing() {
+	public static boolean guiShowing() {
 		return gui;
 	}
 
-	protected static boolean guiShowing(boolean b) {
+	public static boolean guiShowing(boolean b) {
 		gui = b;
 		return gui;
 	}
 
-	protected static KeyBinding getKeybind() {
+	public static KeyBinding getKeybind() {
 		return keybind;
 	}
 
-	protected static void setKeybind(KeyBinding k) {
+	public static void setKeybind(KeyBinding k) {
 		keybind = k;
 	}
 
-	protected static KeyBinding getKeybind2() {
+	public static KeyBinding getKeybind2() {
 		return keybind2;
 	}
 
-	protected static void setKeybind2(KeyBinding k) {
+	public static void setKeybind2(KeyBinding k) {
 		keybind2 = k;
 	}
 
-	protected static void setKeybind(String name, int key) {
+	public static void setKeybind(String name, int key) {
 		keybind = new KeyBinding(name, key);
 	}
 
-	protected static int getLargestKillstreak() {
+	public static int getLargestKillstreak() {
 		return largestKillstreak;
 	}
 
-	protected static void setLargestKillstreak(int killstreak) {
+	public static void setLargestKillstreak(int killstreak) {
 		largestKillstreak = killstreak;
 	}
 }

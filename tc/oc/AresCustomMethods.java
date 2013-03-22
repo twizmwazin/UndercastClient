@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package tc.oc;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -23,7 +23,7 @@ public class AresCustomMethods {
 	/**
 	 * Gets the current map (multi thread) Sets it to the AresVariable map variable
 	 */
-	protected static void getMap() {
+	public static void getMap() {
 		Thread thread = new Thread() {
 			public void run() {
 
@@ -133,7 +133,7 @@ public class AresCustomMethods {
 	 * 
 	 * @return KD double rounded
 	 */
-	protected static double getKD() {
+	public static double getKD() {
 		double k = AresVariablesHandler.getKills();
 		double d = AresVariablesHandler.getDeaths();
 		if (k == d && k == 0) {
@@ -152,7 +152,7 @@ public class AresCustomMethods {
 	 * 
 	 * @return KK double rounded
 	 */
-	protected static double getKK() {
+	public static double getKK() {
 		double k = AresVariablesHandler.getKills();
 		double kk = AresVariablesHandler.getKilled();
 		if (k == kk && k == 0) {
@@ -172,7 +172,7 @@ public class AresCustomMethods {
 	 * @param currentServer  The ip of the server that you are on
 	 * @return The string of the server you are on
 	 */
-	protected static String getServer(String currentServer) {
+	public static String getServer(String currentServer) {
 		if (currentServer.contains("alpha"))
 			return "Alpha";
 		else if (currentServer.contains("beta"))

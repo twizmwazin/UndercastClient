@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package tc.oc;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own

@@ -16,6 +16,12 @@ import java.net.URLConnection;
 
 import org.lwjgl.input.Keyboard;
 
+import tc.oc.AresChatHandler;
+import tc.oc.AresCustomMethods;
+import tc.oc.AresGuiListener;
+import tc.oc.AresVariablesHandler;
+import tc.oc.Ares_ServerGUI;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.BaseMod;
 import net.minecraft.src.EntityPlayer;
@@ -88,7 +94,7 @@ public class mod_Ares extends BaseMod {
 
 	@Override
 	public String getVersion() {
-		return "1.5";
+		return "1.5.1";
 	}
 
 	@Override

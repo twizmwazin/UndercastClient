@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package tc.oc;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as GoldBattle is given credit
 //You may not claim this to be your own
@@ -15,6 +15,7 @@ import net.minecraft.src.GuiMainMenu;
 import net.minecraft.src.GuiMultiplayer;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ServerData;
+import net.minecraft.src.mod_Ares;
 
 
 public class Ares_ServerGUI extends GuiScreen {
