@@ -4,7 +4,9 @@ package tc.oc;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.mod_Ares;
 
 public class AresChatHandler 
 {
