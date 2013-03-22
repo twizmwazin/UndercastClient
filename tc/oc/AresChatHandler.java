@@ -20,7 +20,7 @@ public class AresChatHandler
 			else
 				name = message;
 			
-			AresVariablesHandler.addFriend(name);
+			AresData.addFriend(name);
 		}
 		//friend traking. Leaving
 		else if (message.contains("left the game"))
@@ -35,38 +35,38 @@ public class AresChatHandler
 			{
 				name = message;
 			}
-			if (AresVariablesHandler.isFriend(name))
+			if (AresData.isFriend(name))
 			{
-				AresVariablesHandler.removeFriend(name);
+				AresData.removeFriend(name);
 			}
 		}
 		//update what map you are playing on
 		else if(message.contains("Now playing"))
 		{
 			message = message.replace("Now playing ", "");
-			AresVariablesHandler.setMap(message.split(" by ")[0]);
+			AresData.map=(message.split(" by ")[0]);
 		}
 		//if you die from someone
 		else if(message.startsWith(username) && message.contains(" by "))
 		{
-			AresVariablesHandler.addKilled(1);
-			AresVariablesHandler.setKillstreak(0);
+			AresData.addKilled(1);
+			AresData.killstreak=0;
 		}
 		//if you kill a person
 		else if(message.contains("by " + username))
 		{
-			AresVariablesHandler.addKills(1);
-			AresVariablesHandler.addKillstreak(1);
+			AresData.addKills(1);
+			AresData.addKillstreak(1);
 		}
 		//when you join a match
 		else if (message.contains("You joined the"))
 		{
-			AresVariablesHandler.setKills(0);
-			AresVariablesHandler.setKilled(0);
-			AresVariablesHandler.setDeaths(0);
-			AresVariablesHandler.setKillstreak(0);
-			AresVariablesHandler.setLargestKillstreak(0);
-			AresVariablesHandler.setTeam(message.replace("You joined the ", ""));
+			AresData.kills=0;
+			AresData.killed=0;
+			AresData.deaths=0;
+			AresData.killstreak=0;
+			AresData.largestKillstreak=0;
+			AresData.team=message.replace("You joined the ", "");
 		}
 		//when a map is done. Display all the stats
 		else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second"))
@@ -74,16 +74,16 @@ public class AresChatHandler
 			player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
 			player.addChatMessage("Final Stats:");
 			player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-			player.addChatMessage("Kills: " + AresVariablesHandler.getKills());
-			player.addChatMessage("Deaths: " + AresVariablesHandler.getDeaths());
+			player.addChatMessage("Kills: " + AresData.kills);
+			player.addChatMessage("Deaths: " + AresData.deaths);
 			player.addChatMessage("K/D: " + AresCustomMethods.getKD());
-			player.addChatMessage("Kill Streak: " + AresVariablesHandler.getLargestKillstreak());
-			AresVariablesHandler.setKills(0);
-			AresVariablesHandler.setKilled(0);
-			AresVariablesHandler.setDeaths(0);
-			AresVariablesHandler.setKillstreak(0);
-			AresVariablesHandler.setLargestKillstreak(0);
-			AresVariablesHandler.setTeam("Observers");
+			player.addChatMessage("Kill Streak: " + AresData.largestKillstreak);
+			AresData.kills=0;
+			AresData.killed=0;
+			AresData.deaths=0;
+			AresData.killstreak=0;
+			AresData.largestKillstreak=0;
+			AresData.team="Observers";
 		}
 		//filters [Tip] messages
 		else if(message.startsWith("[Tip]") && mod_Ares.filterTips){

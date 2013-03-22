@@ -41,11 +41,8 @@ public class AresCustomMethods {
 
 					String server = mc.getServerData().serverIP.substring(0,
 							mc.getServerData().serverIP.indexOf(":"));
-					String port = mc.getServerData().serverIP.substring(mc
-							.getServerData().serverIP.indexOf(":") + 1);
-					var2.connect(
-							new InetSocketAddress(server, Integer
-									.parseInt(port)), 3000);
+					String port = mc.getServerData().serverIP.substring(mc.getServerData().serverIP.indexOf(":") + 1);
+					var2.connect(new InetSocketAddress(server, Integer.parseInt(port)), 3000);
 					var3 = new DataInputStream(var2.getInputStream());
 					var4 = new DataOutputStream(var2.getOutputStream());
 					var4.write(254);
@@ -58,8 +55,7 @@ public class AresCustomMethods {
 					for (int var7 = 0; var7 < var6.length; ++var7) {
 						if (var6[var7] != 167
 								&& var6[var7] != 0
-								&& ChatAllowedCharacters.allowedCharacters
-										.indexOf(var6[var7]) < 0) {
+								&& ChatAllowedCharacters.allowedCharacters.indexOf(var6[var7]) < 0) {
 							var6[var7] = 63;
 						}
 					}
@@ -111,10 +107,8 @@ public class AresCustomMethods {
 				map = StringUtils.stripControlCodes(map);
 				if (!map.equals("???"))
 					map = map.substring(2, map.length() - 2);
-				// map = map.replace(">>","");
-				// map = map.replace("<<", "");
 
-				AresVariablesHandler.setMap(map);
+				AresData.map=map;
 			}
 		};
 		thread.start();
@@ -134,8 +128,8 @@ public class AresCustomMethods {
 	 * @return KD double rounded
 	 */
 	public static double getKD() {
-		double k = AresVariablesHandler.getKills();
-		double d = AresVariablesHandler.getDeaths();
+		double k = AresData.kills;
+		double d = AresData.deaths;
 		if (k == d && k == 0) {
 			return 0D;
 		} else if (k > 0 && d == 0) {
@@ -153,8 +147,8 @@ public class AresCustomMethods {
 	 * @return KK double rounded
 	 */
 	public static double getKK() {
-		double k = AresVariablesHandler.getKills();
-		double kk = AresVariablesHandler.getKilled();
+		double k = AresData.kills;
+		double kk = AresData.killed;
 		if (k == kk && k == 0) {
 			return 0D;
 		} else if (k > 0 && kk == 0) {
