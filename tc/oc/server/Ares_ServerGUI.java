@@ -36,6 +36,7 @@ public class Ares_ServerGUI extends GuiScreen {
 		// Construct the server polls here.
 		serverList = new ArrayList<Ares_ThreadPollServers>();
 		// add all the servers
+		//TODO: get this info from the config file
 		serverList.add(new Ares_ThreadPollServers("alpha.oc.tc", 25565));
 		serverList.add(new Ares_ThreadPollServers("beta.oc.tc", 25565));
 		serverList.add(new Ares_ThreadPollServers("gamma.oc.tc", 25565));
@@ -61,20 +62,14 @@ public class Ares_ServerGUI extends GuiScreen {
 		this.buttonList.clear();
 		// top row buttons
 		int widthDis = 5;
-		this.buttonList.add(new GuiButton(0, this.width - (widthDis+=75), 5, 75,
-				20, "Cancel"));
+		this.buttonList.add(new GuiButton(0, this.width - (widthDis+=75), 5, 75, 20, "Cancel"));
 		//only be able to go to multiplayer menu when you not ingame
-		if(!inGame)
-			this.buttonList.add(new GuiButton(1, this.width - (widthDis+=78), 5,
-				75, 20, "Old Menu"));
-		this.buttonList.add(new GuiButton(2, this.width - (widthDis+=43), 5,
-				40, 20, "Stats"));
-		this.buttonList.add(new GuiButton(3, this.width - (widthDis+=78), 5,
-				75, 20, "Refresh"));
+		if(!inGame){
+			this.buttonList.add(new GuiButton(1, this.width - (widthDis+=78), 5, 75, 20, "Old Menu"));
+		}
+		this.buttonList.add(new GuiButton(2, this.width - (widthDis+=43), 5, 40, 20, "Stats"));
+		this.buttonList.add(new GuiButton(3, this.width - (widthDis+=78), 5, 75, 20, "Refresh"));
 
-
-
-		
 		//this is a copy of the server list drawing.
 		//the buttons need to be drawn here because they only need to be drawn once.
 		//make sure this matches the draw method
