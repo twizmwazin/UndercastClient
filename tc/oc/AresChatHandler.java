@@ -49,13 +49,13 @@ public class AresChatHandler
 			AresData.map=(message.split(" by ")[0]);
 		}
 		//if you die from someone
-		else if(message.startsWith(username) && message.contains(" by "))
+		else if(message.startsWith(username) && (message.contains(" by ") || message.contains(" took ")))
 		{
 			AresData.addKilled(1);
 			AresData.killstreak=0;
 		}
 		//if you kill a person
-		else if(message.contains("by " + username))
+		else if(message.contains("by " + username) || message.contains("took " + username))
 		{
 			AresData.addKills(1);
 			AresData.addKillstreak(1);
