@@ -1,4 +1,4 @@
-package tc.oc.server;
+package tc.oc;
 
 import net.minecraft.src.ModLoader;
 
@@ -7,11 +7,38 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+
+
 public class AresConfig {
     private static Properties defaults = new Properties();
     private String configPath;
     private Properties config;
+    
+    //main variables
+    public static String serverDomain;
+	public static boolean showFPS;
+	public static boolean showKills;
+	public static boolean showDeaths;
+	public static boolean showKilled;
+	public static boolean showServer;
+	public static boolean showTeam;
+	public static boolean showKD;
+	public static boolean showKK;
+	public static boolean showFriends;
+	public static boolean showMap;
+	public static boolean showStreak;
+	public static boolean showGuiChat;	
+	public static boolean showGuiMulti;	
+	public static String keyGui;	
+	public static String keyGui2;
+	public static int x;
+	public static int y;
+	public static boolean toggleTitleScreenButton;
+	public static boolean filterTips;
 
+	/**
+	 * Default values created when class is first referenced
+	 */
     static {
         defaults.setProperty("serverDomain", "oc.tc");
         defaults.setProperty("showFPS", "true");
@@ -38,8 +65,14 @@ public class AresConfig {
     public AresConfig() {
         System.out.println("[ProjectAres]: Attempting to load/create the configuration.");
         loadConfig();
+        loadConfigData();
     }
-
+    
+    /**
+     * Attempts to find a config
+     * If there is one load it
+     * If there is not one create one
+     */
     private void loadConfig() {
         config = new Properties(defaults);
 
@@ -59,7 +92,12 @@ public class AresConfig {
             displayErrorMessage(e.toString());
         }
     }
-
+    
+    /**
+     * Creates a config properties of default values
+     * Then saves the config to the config location
+     * @param cfg config file
+     */
     private void createConfig(File cfg) {
         File folder = new File(configPath);
         if (!folder.exists()) {
@@ -96,6 +134,33 @@ public class AresConfig {
         }
     }
 
+    /**
+     * Loads the property data into the local data
+     */
+    public void loadConfigData() {
+    	System.out.println("[ProjectAres]: Loading Config to Local Data");
+    	serverDomain = this.getStringProperty("serverDomain");
+        showFPS = this.getBoolProperty("showFPS");
+        showKills = this.getBoolProperty("showKills");
+        showDeaths = this.getBoolProperty("showDeaths");
+        showKilled = this.getBoolProperty("showKilled");
+        showServer = this.getBoolProperty("showServer");
+        showTeam = this.getBoolProperty("showTeam");
+        showKD = this.getBoolProperty("showKD");
+        showKK = this.getBoolProperty("showKK");
+        showFriends = this.getBoolProperty("showFriends");
+        showMap = this.getBoolProperty("showMap");
+        showStreak = this.getBoolProperty("showStreak");
+        showGuiChat = this.getBoolProperty("showGuiChat");
+        showGuiMulti = this.getBoolProperty("showGuiMulti");
+        keyGui = this.getStringProperty("keyGui");
+        keyGui2 = this.getStringProperty("keyGui2");
+        x = this.getIntProperty("X");
+        y = this.getIntProperty("Y");
+        toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
+        filterTips = this.getBoolProperty("filterTips");
+    }
+    
     public void setProperty(String prop, String value) {
         config.setProperty(prop, value);
         saveConfig();
