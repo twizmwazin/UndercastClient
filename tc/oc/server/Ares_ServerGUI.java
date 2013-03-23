@@ -47,11 +47,8 @@ public class Ares_ServerGUI extends GuiScreen {
 
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, height - 52, 98, 20, stringtranslate.translateKey("selectServer.select")));
         this.buttonList.add(guibuttonrefresh = new GuiButton(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh")));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, height - 28, stringtranslate.translateKey("gui.done")));
-        if (!inGame) {
-            this.buttonList.add(new GuiButton(3, this.width / 2 + 102, height - 28, 98, 20, "Old Menu"));
-        }
-        this.buttonList.add(new GuiButton(4, this.width / 2 - 200, height - 28, 98, 20, "Player Stats"));
+        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel")));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, height - 28, 98, 20, "Player Stats"));
         guiServerInfoSlot = new Ares_ServerInfoSlotGui(this, servers);
     }
 

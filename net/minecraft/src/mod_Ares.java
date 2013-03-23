@@ -15,6 +15,7 @@ import tc.oc.AresConfig;
 import tc.oc.AresCustomMethods;
 import tc.oc.AresGuiListener;
 import tc.oc.AresData;
+import tc.oc.AresMenuButton;
 
 import net.minecraft.client.Minecraft;
 import tc.oc.server.Ares_ServerGUI;
@@ -23,6 +24,7 @@ public class mod_Ares extends BaseMod {
 	protected String username = "Not_Found";
 	protected Minecraft mc = Minecraft.getMinecraft();
 	private boolean deathScreenActive;
+	private boolean mainMenuActive;
     public static ArrayList<String> servers = new ArrayList<String>();
     public static AresConfig CONFIG;
 
@@ -50,13 +52,45 @@ public class mod_Ares extends BaseMod {
 		ModLoader.registerKey(this, AresData.keybind, false);
 		ModLoader.registerKey(this, AresData.keybind2, false);
 
-		// start thread listener
-		new AresGuiListener().start();
-
         //Pulls servers from web for GUI Server List and sorts them
         servers = getServers();
         //keep it matching the website until we have a sort button
         //Collections.sort(servers);
+        
+        //start thread for the main menu button
+        Thread thread = new Thread() {
+			public void run() {
+				while(true){
+					//if the main menu is active then add a button
+					if(mc.currentScreen instanceof GuiMainMenu && mc.currentScreen.buttonList.size()>0){
+						//if you have not added the button already then add it
+						if(!mainMenuActive){
+							//edit the current multiplayer button
+							GuiButton multi =((GuiButton)mc.currentScreen.buttonList.get(1));
+							multi.width = (multi.width/2) - 1;
+							mc.currentScreen.buttonList.set(1, multi);
+							//get values
+							int y = multi.yPosition;
+							int x = multi.xPosition + multi.width + 2;
+							int height = multi.height;
+							int width = multi.width;
+							//add the custom ares button
+							AresMenuButton test = new AresMenuButton(-1, x, y, width, height, "oc.tc");
+							mc.currentScreen.buttonList.add(test);
+							mc.currentScreen.updateScreen();
+							mainMenuActive=true;
+						}
+					}
+					else{
+						mainMenuActive=false;
+					}
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {}
+				}
+			}
+		};
+		thread.start();
 	}
 
 	/**
@@ -112,30 +146,6 @@ public class mod_Ares extends BaseMod {
 		if (!message.startsWith("<"))
 			new AresChatHandler(message, username, player);
 	}
-    
-    public int getTeamColors() {
-        if (AresData.team == AresData.Teams.Red) {
-            return 0x990000;
-        } else if (AresData.team == AresData.Teams.Blue) {
-            return 0x0033FF;
-        } else if (AresData.team == AresData.Teams.Purple) {
-            return 0x9933CC;
-        } else if (AresData.team == AresData.Teams.Cyan) {
-            return 0x00FFFF;
-        } else if (AresData.team == AresData.Teams.Lime) {
-            return 0x00FF00;
-        } else if (AresData.team == AresData.Teams.Yellow) {
-            return 0xFFFF00;
-        } else if (AresData.team == AresData.Teams.Green) {
-            return 0x006600;
-        } else if (AresData.team == AresData.Teams.Orange) {
-            return 0xFF9900;
-        } else if (AresData.team == AresData.Teams.Observers) {
-            return 0x00FFFF;
-        } else {
-            return 0x606060;
-        }    
-    }
 
 	/**
 	 * On game tick this is called.
@@ -287,4 +297,32 @@ public class mod_Ares extends BaseMod {
 			}
 		}
 	}
+	
+	/**
+	 * Returns the team color hex based on the team you are on
+	 * @return hex value of team color
+	 */
+	public int getTeamColors() {
+        if (AresData.team == AresData.Teams.Red) {
+            return 0x990000;
+        } else if (AresData.team == AresData.Teams.Blue) {
+            return 0x0033FF;
+        } else if (AresData.team == AresData.Teams.Purple) {
+            return 0x9933CC;
+        } else if (AresData.team == AresData.Teams.Cyan) {
+            return 0x00FFFF;
+        } else if (AresData.team == AresData.Teams.Lime) {
+            return 0x00FF00;
+        } else if (AresData.team == AresData.Teams.Yellow) {
+            return 0xFFFF00;
+        } else if (AresData.team == AresData.Teams.Green) {
+            return 0x006600;
+        } else if (AresData.team == AresData.Teams.Orange) {
+            return 0xFF9900;
+        } else if (AresData.team == AresData.Teams.Observers) {
+            return 0x00FFFF;
+        } else {
+            return 0x606060;
+        }    
+    }
 }
