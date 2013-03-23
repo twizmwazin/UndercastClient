@@ -23,12 +23,14 @@ public class AresData {
 	public static int largestKillstreak;
 	public static HashSet<String> friends = new HashSet<String>();
 	public static String server;
-	public static String team;
+	public static Teams team;
 	public static boolean isPA;
 
 	public static boolean guiShowing;
 	public static KeyBinding keybind;
 	public static KeyBinding keybind2;
+
+    public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers};
 
 	public AresData() {
 		map="Fetching...";
@@ -36,7 +38,7 @@ public class AresData {
 		deaths=0;
 		killed=0;
 		largestKillstreak=0;
-		team="Observers";
+		team=Teams.Observers;
 		guiShowing=true;
 		keybind = new KeyBinding("gui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui));
 		keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui2));

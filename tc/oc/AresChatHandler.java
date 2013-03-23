@@ -68,7 +68,7 @@ public class AresChatHandler
 			AresData.deaths=0;
 			AresData.killstreak=0;
 			AresData.largestKillstreak=0;
-			AresData.team=message.replace("You joined the ", "");
+			AresData.team=AresData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", ""));
 		}
 		//when a map is done. Display all the stats
 		else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second"))
@@ -85,7 +85,7 @@ public class AresChatHandler
 			AresData.deaths=0;
 			AresData.killstreak=0;
 			AresData.largestKillstreak=0;
-			AresData.team="Observers";
+			AresData.team=AresData.Teams.Observers;
 		}
 		//filters [Tip] messages
 		else if(message.startsWith("[Tip]") && mod_Ares.CONFIG.filterTips){

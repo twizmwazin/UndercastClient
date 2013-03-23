@@ -112,6 +112,30 @@ public class mod_Ares extends BaseMod {
 		if (!message.startsWith("<"))
 			new AresChatHandler(message, username, player);
 	}
+    
+    public int getTeamColors() {
+        if (AresData.team == AresData.Teams.Red) {
+            return 0x990000;
+        } else if (AresData.team == AresData.Teams.Blue) {
+            return 0x0033FF;
+        } else if (AresData.team == AresData.Teams.Purple) {
+            return 0x9933CC;
+        } else if (AresData.team == AresData.Teams.Cyan) {
+            return 0x00FFFF;
+        } else if (AresData.team == AresData.Teams.Lime) {
+            return 0x00FF00;
+        } else if (AresData.team == AresData.Teams.Yellow) {
+            return 0xFFFF00;
+        } else if (AresData.team == AresData.Teams.Green) {
+            return 0x006600;
+        } else if (AresData.team == AresData.Teams.Orange) {
+            return 0xFF9900;
+        } else if (AresData.team == AresData.Teams.Observers) {
+            return 0x00FFFF;
+        } else {
+            return 0x606060;
+        }    
+    }
 
 	/**
 	 * On game tick this is called.
@@ -163,37 +187,8 @@ public class mod_Ares extends BaseMod {
 
 			// Team display (based on color)
 			if (CONFIG.showTeam) {
-				if (AresData.team.equalsIgnoreCase("red team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height,0x990000);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("blue team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height,0x0033FF);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("purple team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height,0x9933CC);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("cyan team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+ AresData.team, width, height,0x00FFFF);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("lime team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+ AresData.team, width, height,0x00FF00);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("yellow team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+ AresData.team, width, height,0xFFFF00);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("green team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+ AresData.team, width, height,0x006600);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("orange team")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height,0xFF9900);
-					height += 8;
-				} else if (AresData.team.equalsIgnoreCase("Observers")) {
-					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height, 0x00FFFF);
-					height += 8;
-				} else {
-					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height, 0x606060);
-					height += 8;
-				}
+			    mc.fontRenderer.drawStringWithShadow("Team: " + AresData.team, width, height, getTeamColors());
+			    height += 8;
 			}
 			// Friend display:
 			if (CONFIG.showFriends) {
@@ -245,7 +240,7 @@ public class mod_Ares extends BaseMod {
 	 * Sets variables if the server is a Ares server
 	 */
 	public void clientConnect(NetClientHandler var1) {
-		AresData.team="Observers";
+		AresData.team=AresData.Teams.Observers;
 		System.out.println("Client successfully connected to "+ var1.getNetManager().getSocketAddress().toString());
 		
 		//if logging onto a project ares server, then enable the main mod
@@ -253,7 +248,7 @@ public class mod_Ares extends BaseMod {
 			// What happens if logs into project ares
 			AresData.guiShowing=true;
 			System.out.println("Connected to: "+ var1.getNetManager().getSocketAddress().toString()+ " Ares mod activated!");
-			AresData.team="Observers";
+			AresData.team=AresData.Teams.Observers;
 			AresData.isPA=true;
 			AresData.server=AresCustomMethods.getServer(var1.getNetManager().getSocketAddress().toString());
 			AresCustomMethods.getMap();
@@ -269,7 +264,7 @@ public class mod_Ares extends BaseMod {
 	public void onDisconnect(NetClientHandler handler) {
 		AresData.isPA = false;
 		AresData.guiShowing=false;
-		AresData.team="Observers";
+		AresData.team=AresData.Teams.Observers;
 		AresData.kills=0;
 		AresData.killed=0;
 		AresData.deaths=0;
