@@ -11,24 +11,23 @@ import tc.oc.server.GuiAresServers;
 
 public class AresGuiListener extends Thread {
 
-	private static Minecraft mc = Minecraft.getMinecraft();
-	private static boolean displayGui = true;
-	
-	/**
-	 * MultiPlayer Menu Listener thread.
-	 * If the multiplayer gui is open, it wants to be open, and the config says yes
-	 * It displays the gui
-	 */
-	public void run() {
-		while (true) {
-			if (mc.currentScreen instanceof GuiMultiplayer && displayGui && mod_Ares.showGuiMulti) {
-				ModLoader.openGUI(mc.thePlayer,new GuiAresServers(false));
-			}
-			//if the user has gone back to the main menu. Set it back to Ares Gui
-			else if (mc.currentScreen instanceof GuiMainMenu) {
-				displayGui=true;
-			}
-            else if(mc.currentScreen instanceof GuiControls){
+    private static Minecraft mc = Minecraft.getMinecraft();
+    private static boolean displayGui = true;
+
+    /**
+     * MultiPlayer Menu Listener thread.
+     * If the multiplayer gui is open, it wants to be open, and the config says yes
+     * It displays the gui
+     */
+    public void run() {
+        while (true) {
+            if (mc.currentScreen instanceof GuiMultiplayer && displayGui && mod_Ares.showGuiMulti) {
+                ModLoader.openGUI(mc.thePlayer, new GuiAresServers(false));
+            }
+            //if the user has gone back to the main menu. Set it back to Ares Gui
+            else if (mc.currentScreen instanceof GuiMainMenu) {
+                displayGui = true;
+            } else if (mc.currentScreen instanceof GuiControls) {
                 if (!Keyboard.getKeyName(AresData.keybind.keyCode).toUpperCase().equals(mod_Ares.keyGui.toUpperCase())) {
                     mod_Ares.config.setProperty("keyGui", Keyboard.getKeyName(AresData.keybind.keyCode).toUpperCase());
                     mod_Ares.loadConfig();
@@ -39,17 +38,18 @@ public class AresGuiListener extends Thread {
                     mod_Ares.loadConfig();
                 }
             }
-			//sleep the listener for a bit
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {}
-		}
-	}
-	
-	/**
-	 * Tells the listener that the old menu wants to/shouldnt be displayed
-	 */
-	public static void toggleMultiGUI(Boolean value){
-		displayGui = value;
-	}
+            //sleep the listener for a bit
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+
+    /**
+     * Tells the listener that the old menu wants to/shouldnt be displayed
+     */
+    public static void toggleMultiGUI(Boolean value) {
+        displayGui = value;
+    }
 }

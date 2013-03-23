@@ -1,11 +1,11 @@
 package tc.oc.server;
 
+import net.minecraft.src.ModLoader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
-
-import net.minecraft.src.ModLoader;
 
 public class AresConfig {
     private static Properties defaults = new Properties();

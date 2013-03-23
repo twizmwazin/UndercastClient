@@ -8,7 +8,8 @@ public class Servers implements ServerInterface {
         this.server = new Ares_ThreadPollServers(server, 25565);
         try {
             this.server.pollServer(server, 25565);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     @Override
