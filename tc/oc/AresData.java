@@ -38,8 +38,8 @@ public class AresData {
 		largestKillstreak=0;
 		team="Observers";
 		guiShowing=true;
-		keybind = new KeyBinding("gui", Keyboard.getKeyIndex(mod_Ares.keyGui.toString()));
-		keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex(mod_Ares.keyGui2.toString()));
+		keybind = new KeyBinding("gui", Keyboard.getKeyIndex(mod_Ares.keyGui));
+		keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex(mod_Ares.keyGui2));
 	}
 	
 	public static void addKills(double d) {

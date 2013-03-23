@@ -8,12 +8,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.Packet;
 import net.minecraft.src.StringUtils;
 

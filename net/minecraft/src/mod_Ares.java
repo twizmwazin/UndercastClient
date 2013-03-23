@@ -5,98 +5,48 @@ package net.minecraft.src;
 //You may not remove these comments
 
 import java.util.ArrayList;
-import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.lwjgl.input.Keyboard;
+import java.util.Collections;
 
 import tc.oc.AresChatHandler;
 import tc.oc.AresCustomMethods;
 import tc.oc.AresGuiListener;
 import tc.oc.AresData;
-import tc.oc.server.Ares_ServerGUI;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.BaseMod;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerSP;
-import net.minecraft.src.KeyBinding;
-import net.minecraft.src.MLProp;
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.StringUtils;
-import net.minecraft.src.World;
+import tc.oc.server.AresConfig;
+import tc.oc.server.GuiAresServers;
 
 public class mod_Ares extends BaseMod {
 	protected String username = "Not_Found";
 	protected Minecraft mc = Minecraft.getMinecraft();
 	private boolean deathScreenActive;
+    public static ArrayList<String> servers = new ArrayList<String>();
+    public static AresConfig config;
 	
-	@MLProp(name = "serverDomain", info = "The base domain of the ares server")
-	public static final String serverDomain = "oc.tc";
-	
-	@MLProp(name = "showFPS", info = "true = Show FPS in Gui, false = Doesn't show it.")
-	public static String showFPS = "true";
-
-	@MLProp(name = "showKills", info = "true = Show Kills in Gui, false = Doesn't show it.")
-	public static String showKills = "true";
-
-	@MLProp(name = "showDeaths", info = "true = Show Deaths in Gui, false = Doesn't show it.")
-	public static String showDeaths = "true";
-
-	@MLProp(name = "showKilled", info = "true = Show Times killed via PVP not PVE in Gui, false = Doesn't show it")
-	public static String showKilled = "true";
-
-	@MLProp(name = "showServer", info = "true = Show what server you are on in Gui, false = Doesn't show it.")
-	public static String showServer = "true";
-
-	@MLProp(name = "showTeam", info = "true = Show what team your on in Gui, false = Doesn't show it.")
-	public static String showTeam = "true";
-
-	@MLProp(name = "showKD", info = "true = Show your Kill Death Ratio in Gui, false = Doesn't show it.")
-	public static String showKD = "true";
-
-	@MLProp(name = "showKK", info = "true = Show your Kill Killed Ratio in Gui, false = Doesn't show it.")
-	public static String showKK = "true";
-
-	@MLProp(name = "showFriends", info = "true = Show Friends Online in Gui, false = Doesn't show it.")
-	public static String showFriends = "true";
-
-	@MLProp(name = "showMap", info = "true = Show the current map you are playing in Gui, false = Doesn't show it.")
-	public static String showMap = "true";
-
-	@MLProp(name = "showStreak", info = "true = Show your kill streak in Gui, false = Doesn't show it.")
-	public static String showStreak = "true";
-	
-	@MLProp(name = "showGuiChat", info = "true = Show gui when chat is open, false = Doesn't show it.")
-	public static String showGuiChat = "true";	
-	
-	@MLProp(name = "showGuiMulti", info = "true = Show Ares server gui in the, false = Doesn't show it.")
-	public static String showGuiMulti = "true";	
-	
-	@MLProp(name = "keyGui", info = "true = Show Ares server gui in the, false = Doesn't show it.")
-	public static String keyGui = "F6";	
-	
-	@MLProp(name = "keyGui2", info = "The key used to open the ingame server gui.")
-	public static String keyGui2 = "L";
-	
-	@MLProp(name = "x", info = "Y Cord. or the ingame gui (integer)")
-	public static String x = "2";
-	
-	@MLProp(name = "y", info = "X Cord. or the ingame gui (integer)")
-	public static String y = "2";
-	
-	@MLProp(name = "toggleTitleScreenButton", info = "Allows you to toggle the Title Screen button on the Death Screen. True = Button Disabled")
-	public static boolean toggleTitleScreenButton = true;
-	
-	@MLProp(name = "filterTips", info = "Removes the [Tip] messages. True = Removed")
-	public static boolean filterTips = true;
+	public static String serverDomain;
+	public static boolean showFPS;
+	public static boolean showKills;
+	public static boolean showDeaths;
+	public static boolean showKilled;
+	public static boolean showServer;
+	public static boolean showTeam;
+	public static boolean showKD;
+	public static boolean showKK;
+	public static boolean showFriends;
+	public static boolean showMap;
+	public static boolean showStreak;
+	public static boolean showGuiChat;	
+	public static boolean showGuiMulti;	
+	public static String keyGui;	
+	public static String keyGui2;
+	public static int x;
+	public static int y;
+	public static boolean toggleTitleScreenButton;
+	public static boolean filterTips;
 
 	@Override
 	public String getVersion() {
@@ -105,24 +55,76 @@ public class mod_Ares extends BaseMod {
 
 	@Override
 	public void load() {
+        // Custom Config
+        initConfig();
+
 		//main hooks
 		ModLoader.setInGUIHook(this, true, false);
 		ModLoader.setInGameHook(this, true, false);
 
 		ModLoader.addLocalization("keybind", "gui");
+
 		//load variables defaults
 		new AresData();
+
 		//hook keybinds
 		ModLoader.registerKey(this, AresData.keybind, false);
 		ModLoader.registerKey(this, AresData.keybind2, false);
 
 		// start thread listener
 		new AresGuiListener().start();
-		
-		//TODO: Custom Config
-		//parse config data
-		
+
+        //Pulls servers from web for GUI Server List and sorts them
+        servers = getServers();
+        Collections.sort(servers);
 	}
+
+    private void initConfig() {
+        config = new AresConfig();
+        loadConfig();
+    }
+
+    public static void loadConfig() {
+        serverDomain = config.getStringProperty("serverDomain");
+        showFPS = config.getBoolProperty("showFPS");
+        showKills = config.getBoolProperty("showKills");
+        showDeaths = config.getBoolProperty("showDeaths");
+        showKilled = config.getBoolProperty("showKilled");
+        showServer = config.getBoolProperty("showServer");
+        showTeam = config.getBoolProperty("showTeam");
+        showKD = config.getBoolProperty("showKD");
+        showKK = config.getBoolProperty("showKK");
+        showFriends = config.getBoolProperty("showFriends");
+        showMap = config.getBoolProperty("showMap");
+        showStreak = config.getBoolProperty("showStreak");
+        showGuiChat = config.getBoolProperty("showGuiChat");
+        showGuiMulti = config.getBoolProperty("showGuiMulti");
+        keyGui = config.getStringProperty("keyGui");
+        keyGui2 = config.getStringProperty("keyGui2");
+        x = config.getIntProperty("X");
+        y = config.getIntProperty("Y");
+        toggleTitleScreenButton = config.getBoolProperty("toggleTitleScreenButton");
+        filterTips = config.getBoolProperty("filterTips");
+    }
+
+    public static ArrayList<String> getServers() {
+        ArrayList<String> list = new ArrayList<String>();
+
+        try {
+            URL url = new URL("https://oc.tc/play");
+            URLConnection con = url.openConnection();
+            con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.startsWith("<li>") && line.endsWith("</li>")) {
+                    list.add(line.replace("<li>", "").replace("</li>", ""));
+                }
+            }
+        } catch (Exception ignored) {}
+
+        return list;
+    }
 
 	/**
 	 * On client chat event this is called.
@@ -148,31 +150,32 @@ public class mod_Ares extends BaseMod {
 		//if it is the first time it is active count a death
 		//if it is not don't do anything
 		if(mc.currentScreen instanceof GuiGameOver){
-			if(!deathScreenActive){
-				AresData.addDeaths(1);
-				AresData.killstreak=0;
-				deathScreenActive=true;
-			}
-			//get the title screen button
-			GuiButton titleScreen = (GuiButton)mc.currentScreen.buttonList.get(1);
-			//if the button is enabled and the user wants to disable it
-			if(titleScreen.enabled && toggleTitleScreenButton){
-				titleScreen.enabled = false;
-				mc.currentScreen.buttonList.set(1, titleScreen);
-				mc.currentScreen.updateScreen();
-			}
-		} else{
-			deathScreenActive=false;
-		}
+            if(!deathScreenActive){
+                AresData.addDeaths(1);
+                AresData.killstreak=0;
+                deathScreenActive=true;
+            }
+            //get the title screen button
+            GuiButton titleScreen = (GuiButton)mc.currentScreen.buttonList.get(1);
+            //if the button is enabled and the user wants to disable it
+            if(titleScreen.enabled && toggleTitleScreenButton){
+                titleScreen.enabled = false;
+                mc.currentScreen.buttonList.set(1, titleScreen);
+                mc.currentScreen.updateScreen();
+            }
+        } else{
+            deathScreenActive=false;
+        }
+
 		//get debug info for the fps
 		String fps = mc.debug.split(",")[0];
-		int height = Integer.parseInt(this.x);
-		int width = Integer.parseInt(this.y);
+		int height = this.x;
+		int width = this.y;
 		//if the gui is enabled display
 		//if chat is open and config says yes then show gui
-		if (AresData.guiShowing && (mc.inGameHasFocus || this.showGuiChat.toString().equals("true") && mc.currentScreen instanceof GuiChat)) {
+		if (AresData.guiShowing && (mc.inGameHasFocus || this.showGuiChat && mc.currentScreen instanceof GuiChat)) {
 			//show fps
-			if (this.showFPS.toString().equals("true")) {
+			if (this.showFPS) {
 				mc.fontRenderer.drawStringWithShadow(fps, width, height,
 						0xffff);
 				height += 8;
@@ -180,15 +183,15 @@ public class mod_Ares extends BaseMod {
 		}
 		//if on Ares server then display this info.
 		//if chat is open and config says yes then show gui
-		if (AresData.isPlayingAres()&& AresData.guiShowing && (mc.inGameHasFocus || this.showGuiChat.toString().equals("true") && mc.currentScreen instanceof GuiChat) ) {
+		if (AresData.isPlayingAres()&& AresData.guiShowing && (mc.inGameHasFocus || this.showGuiChat && mc.currentScreen instanceof GuiChat) ) {
 			// Server display
-			if (this.showServer.toString().equals("true")) {
+			if (this.showServer) {
 				mc.fontRenderer.drawStringWithShadow("Server: \u00A76"+AresData.server, width, height,16777215);
 				height += 8;
 			}
 
 			// Team display (based on color)
-			if (this.showTeam.toString().equals("true")) {
+			if (this.showTeam) {
 				if (AresData.team.equalsIgnoreCase("red team")) {
 					mc.fontRenderer.drawStringWithShadow("Team: "+AresData.team, width, height,0x990000);
 					height += 8;
@@ -226,12 +229,12 @@ public class mod_Ares extends BaseMod {
 				}
 			}
 			// Friend display:
-			if (this.showFriends.toString().equals("true")) {
+			if (this.showFriends) {
 				mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73"+AresData.getFriends(), width, height,16777215);
 				height += 8;
 			}
 			// Map fetcher:
-			if (this.showMap.toString().equals("true")) {
+			if (this.showMap) {
 				if (AresData.map != null) {
 					mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d"+AresData.map, width, height,16777215);
 					height += 8;
@@ -242,27 +245,27 @@ public class mod_Ares extends BaseMod {
 				}
 			}
 			//Show KD Ratio
-			if (this.showKD.equals("true")) {
+			if (this.showKD) {
 				mc.fontRenderer.drawStringWithShadow("K/D: \u00A73"+AresCustomMethods.getKD(), width, height,16777215);
 				height += 8;
 			}
 			//show KK Ratio
-			if (this.showKK.equals("true")) {
+			if (this.showKK) {
 				mc.fontRenderer.drawStringWithShadow("K/K: \u00A73"+AresCustomMethods.getKK(), width, height,16777215);
 				height += 8;
 			}
 			//show amount of kills
-			if (this.showKills.toString().equals("true")) {
+			if (this.showKills) {
 				mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a"+AresData.kills, width, height, 16777215);
 				height += 8;
 			}
 			//show amount of deaths
-			if (this.showDeaths.toString().equals("true")) {
+			if (this.showDeaths) {
 				mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74"+AresData.deaths, width, height,16777215);
 				height += 8;
 			}
 			// Kill Streak display
-			if (this.showStreak.toString().equals("true")) {
+			if (this.showStreak) {
 				mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75"+AresData.killstreak+"/"+AresData.largestKillstreak, width, height, 16777215);
 				height += 8;
 			}
@@ -316,13 +319,9 @@ public class mod_Ares extends BaseMod {
 		
 		if (mc.inGameHasFocus) {
 			if (keybinding == AresData.keybind) {
-				if (AresData.guiShowing) {
-					AresData.guiShowing=false;
-				} else {
-					AresData.guiShowing=true;
-				}
+                AresData.guiShowing = !AresData.guiShowing;
 			} else if (keybinding == AresData.keybind2) {
-				ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
+				ModLoader.openGUI(mc.thePlayer, new GuiAresServers(true));
 			}
 		}
 	}
