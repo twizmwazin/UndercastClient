@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Collections;
 
 import tc.oc.AresChatHandler;
 import tc.oc.AresConfig;
@@ -18,7 +17,7 @@ import tc.oc.AresGuiListener;
 import tc.oc.AresData;
 
 import net.minecraft.client.Minecraft;
-import tc.oc.server.Ares_ServerGui;
+import tc.oc.server.Ares_ServerGUI;
 
 public class mod_Ares extends BaseMod {
 	protected String username = "Not_Found";
@@ -289,7 +288,7 @@ public class mod_Ares extends BaseMod {
 			if (keybinding == AresData.keybind) {
                 AresData.guiShowing = !AresData.guiShowing;
 			} else if (keybinding == AresData.keybind2) {
-				ModLoader.openGUI(mc.thePlayer, new Ares_ServerGui(true));
+				ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
 			}
 		}
 	}

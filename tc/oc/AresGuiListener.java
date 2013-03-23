@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
 import org.lwjgl.input.Keyboard;
-import tc.oc.server.Ares_ServerGui;
+import tc.oc.server.Ares_ServerGUI;
 
 public class AresGuiListener extends Thread {
 
@@ -23,7 +23,7 @@ public class AresGuiListener extends Thread {
 	public void run() {
 		while (true) {
 			if (mc.currentScreen instanceof GuiMultiplayer && displayGui && mod_Ares.CONFIG.showGuiMulti) {
-				ModLoader.openGUI(mc.thePlayer,new Ares_ServerGui(false));
+				ModLoader.openGUI(mc.thePlayer,new Ares_ServerGUI(false));
 			}
 			//if the user has gone back to the main menu. Set it back to Ares Gui
 			else if (mc.currentScreen instanceof GuiMainMenu) {

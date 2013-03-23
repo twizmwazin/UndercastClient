@@ -7,7 +7,7 @@ import java.awt.*;
 import java.net.URI;
 import java.util.ArrayList;
 
-public class Ares_ServerGui extends GuiScreen {
+public class Ares_ServerGUI extends GuiScreen {
     private Ares_ServerInfoSlotGui guiServerInfoSlot;
 
     public ArrayList<AresServerInterface> servers;
@@ -15,12 +15,13 @@ public class Ares_ServerGui extends GuiScreen {
     private int selected = -1;
     private GuiButton guibuttonrefresh;
     public Boolean inGame;
+    private boolean toggletooltip;
 
     /**
 	 * Default constructor
 	 * @param inGame Boolean if you are on a server or not
 	 */
-    public Ares_ServerGui(boolean inGame) {
+    public Ares_ServerGUI(boolean inGame) {
         this.inGame = inGame;
         servers = new ArrayList<AresServerInterface>();
         //creates server list
@@ -37,7 +38,6 @@ public class Ares_ServerGui extends GuiScreen {
 			thread.start();
         }
     }
-
     /**
 	 * This is init of the gui when it is about to get drawn. You should only
 	 * have buttons/control elements in here.
@@ -49,9 +49,9 @@ public class Ares_ServerGui extends GuiScreen {
         this.buttonList.add(guibuttonrefresh = new GuiButton(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh")));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, height - 28, stringtranslate.translateKey("gui.done")));
         if (!inGame) {
-            this.buttonList.add(new GuiButton(3, this.width - 102, height - 28, 98, 20, "Old Menu"));
+            this.buttonList.add(new GuiButton(3, this.width / 2 + 102, height - 28, 98, 20, "Old Menu"));
         }
-        this.buttonList.add(new GuiButton(4, 4, height - 28, 98, 20, "Player Stats"));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 200, height - 28, 98, 20, "Player Stats"));
         guiServerInfoSlot = new Ares_ServerInfoSlotGui(this, servers);
     }
 
@@ -111,10 +111,9 @@ public class Ares_ServerGui extends GuiScreen {
 	 * If you are ingame; do not draw the default background
 	 */
     public void drawScreen(int i, int j, float f) {
-    	if(!inGame)
+    	if(!inGame) {
 			drawDefaultBackground();
-		else
-			drawGradientRect(0, 0, this.width,this.height, -1073741824,-1073741824);
+        }
         this.guiServerInfoSlot.drawScreen(i, j, f);
         this.drawCenteredString(this.fontRenderer, "Project Ares Server List", this.width / 2, 20, 16777215);
         super.drawScreen(i, j, f);

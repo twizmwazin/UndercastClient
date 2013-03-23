@@ -6,7 +6,7 @@ import net.minecraft.src.Tessellator;
 import java.util.ArrayList;
 
 class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
-    final Ares_ServerGui parent;
+    final Ares_ServerGUI parent;
     private ArrayList<AresServerInterface> servers;
 
     /**
@@ -15,8 +15,8 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
      * @param guiservers Main server gui screen
      * @param servers list of servers
      */
-    public Ares_ServerInfoSlotGui(Ares_ServerGui guiservers, ArrayList<AresServerInterface> servers) {
-        super(guiservers, Minecraft.getMinecraft(), guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
+    public Ares_ServerInfoSlotGui(Ares_ServerGUI guiservers, ArrayList<AresServerInterface> servers) {
+        super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
         this.parent = guiservers;
         this.servers = servers;
     }
