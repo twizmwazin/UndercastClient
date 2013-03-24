@@ -6,7 +6,9 @@ import tc.oc.AresGuiListener;
 import java.awt.*;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Ares_ServerGUI extends GuiScreen {
     private Ares_ServerInfoSlotGui guiServerInfoSlot;
@@ -18,7 +20,7 @@ public class Ares_ServerGUI extends GuiScreen {
     public Boolean inGame;
     private boolean toggletooltip;
     private int sortIndex;
-    private String[] sortNames = {"Web","Abc","Match"};
+    private String[] sortNames = {"Web","Match","Player","Abc"};
 
     /**
      * Default constructor
@@ -59,7 +61,7 @@ public class Ares_ServerGUI extends GuiScreen {
     protected void actionPerformed(GuiButton guibutton) {
         //join button
         if (guibutton.id == 0) {
-        	joinSelectedServer();
+            joinSelectedServer();
         }
         //refresh button
         if (guibutton.id == 1) {
@@ -94,29 +96,107 @@ public class Ares_ServerGUI extends GuiScreen {
             sortIndex++;
             //auto spill over function
             if(sortIndex>sortNames.length-1)
-        	sortIndex=0;
+                sortIndex=0;
             //update button
             this.buttonList.set(4,new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, sortNames[sortIndex]));
             //if the index is moving to web then use the downloaded server list
             if(sortNames[sortIndex].equalsIgnoreCase("web")){
-        	servers.clear();
-        	for (String server : mod_Ares.masterServerList) {
-        	    servers.add(new AresServer(server, 25565));
-        	}
-        	pollServers();
+                servers.clear();
+                for (String server : mod_Ares.masterServerList) {
+                    servers.add(new AresServer(server, 25565));
+                }
+                pollServers();
+            }
+            //sort based on motd match
+            else if(sortNames[sortIndex].equalsIgnoreCase("match")){
+                //copy the array of servers
+                ArrayList<String> currentServerList = new ArrayList<String>();
+                //sort the servers
+                String[][] serverData = new String[servers.size()][2];
+                for (int i=0; i<servers.size();i++) {
+                    serverData[i][0]=servers.get(i).getServerMOTD().substring(1,2);
+                    serverData[i][1]=servers.get(i).getServer();
+                }
+                //green
+                for(String[] info: serverData){
+                    if(info[0].equalsIgnoreCase("a")){
+                        currentServerList.add(info[1]);
+                    }
+                }
+                //white
+                for(String[] info: serverData){
+                    if(info[0].equalsIgnoreCase("7")){
+                        currentServerList.add(info[1]);
+                    }
+                }
+                //red
+                for(String[] info: serverData){
+                    if(info[0].equalsIgnoreCase("c")){
+                        currentServerList.add(info[1]);
+                    }
+                }
+                //yellow
+                for(String[] info: serverData){
+                    if(info[0].equalsIgnoreCase("6")){
+                        currentServerList.add(info[1]);
+                    }
+                }
+                ///unknown conditions
+                for(String[] info: serverData){
+                    if(info[0].equalsIgnoreCase("?")){
+                        currentServerList.add(info[1]);
+                    }
+                }
+                //add new servers and poll
+                servers.clear();
+                for (String server : currentServerList) {
+                    servers.add(new AresServer(server, 25565));
+                }
+                pollServers();
+            }
+            //sort based on player count
+            else if(sortNames[sortIndex].equalsIgnoreCase("player")){
+                //copy the array of servers
+                ArrayList<String> currentServerList = new ArrayList<String>();
+                //sort the servers
+                String[][] serverData = new String[servers.size()][2];
+                for (int i=0; i<servers.size();i++) {
+                    serverData[i][0]=StringUtils.stripControlCodes(servers.get(i).getServerPlayers().split("/")[0]);
+                    serverData[i][1]=servers.get(i).getServer();
+                }
+                //sort
+                Arrays.sort(serverData, new Comparator<String[]>() {
+                    @Override
+                    public int compare(final String[] entry1, final String[] entry2) {
+                        final Integer pop1 = Integer.parseInt(entry1[0]);
+                        final Integer pop2 = Integer.parseInt(entry2[0]);
+                        return pop1.compareTo(pop2);
+                    }
+                });
+                //add to arraylist
+                for(String[] info: serverData){
+                    currentServerList.add(info[1]);
+                }
+                //add new servers and poll
+                servers.clear();
+                for (String server : currentServerList) {
+                    servers.add(new AresServer(server, 25565));
+                }
+                pollServers();
             }
             //if the servers are being sorted abc sort the list and update
             else if(sortNames[sortIndex].equalsIgnoreCase("abc")){
-        	servers.clear();
-        	//copy the array of servers
-        	ArrayList<String> currentServerList = new ArrayList<String>(mod_Ares.masterServerList);
+                servers.clear();
+                //copy the array of servers
+                ArrayList<String> currentServerList = new ArrayList<String>(mod_Ares.masterServerList);
                 //sort the servers
-        	Collections.sort(currentServerList);
-        	for (String server : currentServerList) {
-        	    servers.add(new AresServer(server, 25565));
-        	}
-        	pollServers();
+                Collections.sort(currentServerList);
+                for (String server : currentServerList) {
+                    servers.add(new AresServer(server, 25565));
+                }
+                pollServers();
             }
+
         }
     }
 
@@ -154,29 +234,29 @@ public class Ares_ServerGUI extends GuiScreen {
     public boolean serverIndexSelected(int var1) {
         return var1 == selected;
     }
-    
+
     /***
      * Join selected server
      */
     public void joinSelectedServer(){
-    	String serverip = selectedServer.getServer();
+        String serverip = selectedServer.getServer();
         String serverport = Integer.toString(selectedServer.getPort());
         ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
         //connect
         mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
     }
-    
+
     /**
      * Poll all the servers(multi thread)
      */
     public void pollServers(){
-	for (final AresServerInterface server : servers) {
-	    Thread thread = new Thread() {
-		public void run() {
-		    server.pollServer();
-		}
-	    };
-	    thread.start();
-	}
+        for (final AresServerInterface server : servers) {
+            Thread thread = new Thread() {
+                public void run() {
+                    server.pollServer();
+                }
+            };
+            thread.start();
+        }
     }
 }
