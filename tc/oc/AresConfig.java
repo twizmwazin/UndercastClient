@@ -8,37 +8,36 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 
-
 public class AresConfig {
     private static Properties defaults = new Properties();
     private String configPath;
     private Properties config;
-    
+
     //main variables
     public static String serverDomain;
-	public static boolean showFPS;
-	public static boolean showKills;
-	public static boolean showDeaths;
-	public static boolean showKilled;
-	public static boolean showServer;
-	public static boolean showTeam;
-	public static boolean showKD;
-	public static boolean showKK;
-	public static boolean showFriends;
-	public static boolean showMap;
-	public static boolean showStreak;
-	public static boolean showGuiChat;	
-	public static boolean showGuiMulti;	
-	public static String keyGui;	
-	public static String keyGui2;
-	public static int x;
-	public static int y;
-	public static boolean toggleTitleScreenButton;
-	public static boolean filterTips;
+    public static boolean showFPS;
+    public static boolean showKills;
+    public static boolean showDeaths;
+    public static boolean showKilled;
+    public static boolean showServer;
+    public static boolean showTeam;
+    public static boolean showKD;
+    public static boolean showKK;
+    public static boolean showFriends;
+    public static boolean showMap;
+    public static boolean showStreak;
+    public static boolean showGuiChat;
+    public static boolean showGuiMulti;
+    public static String keyGui;
+    public static String keyGui2;
+    public static int x;
+    public static int y;
+    public static boolean toggleTitleScreenButton;
+    public static boolean filterTips;
 
-	/**
-	 * Default values created when class is first referenced
-	 */
+    /**
+     * Default values created when class is first referenced
+     */
     static {
         defaults.setProperty("serverDomain", "oc.tc");
         defaults.setProperty("showFPS", "true");
@@ -67,7 +66,7 @@ public class AresConfig {
         loadConfig();
         loadConfigData();
     }
-    
+
     /**
      * Attempts to find a config
      * If there is one load it
@@ -92,10 +91,11 @@ public class AresConfig {
             displayErrorMessage(e.toString());
         }
     }
-    
+
     /**
      * Creates a config properties of default values
      * Then saves the config to the config location
+     *
      * @param cfg config file
      */
     private void createConfig(File cfg) {
@@ -138,8 +138,8 @@ public class AresConfig {
      * Loads the property data into the local data
      */
     public void loadConfigData() {
-    	System.out.println("[ProjectAres]: Loading Config to Local Data");
-    	serverDomain = this.getStringProperty("serverDomain");
+        System.out.println("[ProjectAres]: Loading Config to Local Data");
+        serverDomain = this.getStringProperty("serverDomain");
         showFPS = this.getBoolProperty("showFPS");
         showKills = this.getBoolProperty("showKills");
         showDeaths = this.getBoolProperty("showDeaths");
@@ -160,7 +160,7 @@ public class AresConfig {
         toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
         filterTips = this.getBoolProperty("filterTips");
     }
-    
+
     public void setProperty(String prop, String value) {
         config.setProperty(prop, value);
         saveConfig();

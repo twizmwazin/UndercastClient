@@ -7,8 +7,9 @@ public class AresServer implements AresServerInterface {
     /**
      * Default constructor
      * Creates a Thread Poll for the server
+     *
      * @param server String server IP
-     * @param port int port for the server
+     * @param port   int port for the server
      */
     public AresServer(String server, int port) {
         this.server = new Ares_ThreadPollServers(server, port);
@@ -17,10 +18,10 @@ public class AresServer implements AresServerInterface {
     /**
      * Runs the Thread to poll the server
      */
-    public void pollServer(){
-    	server.run();
+    public void pollServer() {
+        server.run();
     }
-    
+
     @Override
     public String getServer() {
         return server.serverIP;
@@ -40,15 +41,15 @@ public class AresServer implements AresServerInterface {
     public String getServerVersion() {
         return server.gameVersion;
     }
-    
+
     @Override
     public String getPing() {
         return server.pingToServer;
     }
 
-	@Override
-	public int getPort() {
-		return server.port;
-	}
-    
+    @Override
+    public int getPort() {
+        return server.port;
+    }
+
 }

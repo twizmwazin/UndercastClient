@@ -18,30 +18,32 @@ public class Ares_ServerGUI extends GuiScreen {
     private boolean toggletooltip;
 
     /**
-	 * Default constructor
-	 * @param inGame Boolean if you are on a server or not
-	 */
+     * Default constructor
+     *
+     * @param inGame Boolean if you are on a server or not
+     */
     public Ares_ServerGUI(boolean inGame) {
         this.inGame = inGame;
         servers = new ArrayList<AresServerInterface>();
         //creates server list
         for (String server : mod_Ares.servers) {
-            servers.add(new AresServer(server,25565));
+            servers.add(new AresServer(server, 25565));
         }
         //poll the servers
         for (final AresServerInterface server : servers) {
-        	Thread thread = new Thread() {
-				public void run() {
-					server.pollServer();
-				}
-			};
-			thread.start();
+            Thread thread = new Thread() {
+                public void run() {
+                    server.pollServer();
+                }
+            };
+            thread.start();
         }
     }
+
     /**
-	 * This is init of the gui when it is about to get drawn. You should only
-	 * have buttons/control elements in here.
-	 */
+     * This is init of the gui when it is about to get drawn. You should only
+     * have buttons/control elements in here.
+     */
     public void initGui() {
         StringTranslate stringtranslate = StringTranslate.getInstance();
 
@@ -53,30 +55,30 @@ public class Ares_ServerGUI extends GuiScreen {
     }
 
     /**
-	 * If a button is clicked this method gets called. The id is the number
-	 * given to the button during init.
-	 */
+     * If a button is clicked this method gets called. The id is the number
+     * given to the button during init.
+     */
     protected void actionPerformed(GuiButton guibutton) {
         //join button
-    	if (guibutton.id == 0) {
-    		String serverip = selectedServer.getServer();
-			String serverport = Integer.toString(selectedServer.getPort());
-			ServerData joinServer = new ServerData(serverip,serverip+":"+serverport);
-			//connect
-			mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
+        if (guibutton.id == 0) {
+            String serverip = selectedServer.getServer();
+            String serverport = Integer.toString(selectedServer.getPort());
+            ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
+            //connect
+            mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
         }
-    	//refresh button
-    	if (guibutton.id == 1) {
-    		//goes through each server and repolls them
-    		for (final AresServerInterface server : servers) {
-    			Thread thread = new Thread() {
-    				public void run() {
-    					server.pollServer();
-    				}
-    			};
-    			thread.start();
-    		}
-    	}
+        //refresh button
+        if (guibutton.id == 1) {
+            //goes through each server and repolls them
+            for (final AresServerInterface server : servers) {
+                Thread thread = new Thread() {
+                    public void run() {
+                        server.pollServer();
+                    }
+                };
+                thread.start();
+            }
+        }
         //cancel/back to main menu
         if (guibutton.id == 2) {
             if (!inGame) {
@@ -101,15 +103,15 @@ public class Ares_ServerGUI extends GuiScreen {
             }
         }
     }
-    
+
     /**
-	 * This method is a override method for drawing a gui All "painting" should
-	 * take place in here
-	 * If you are ingame; do not draw the default background
-	 */
+     * This method is a override method for drawing a gui All "painting" should
+     * take place in here
+     * If you are ingame; do not draw the default background
+     */
     public void drawScreen(int i, int j, float f) {
-    	if(!inGame) {
-			drawDefaultBackground();
+        if (!inGame) {
+            drawDefaultBackground();
         }
         this.guiServerInfoSlot.drawScreen(i, j, f);
         this.drawCenteredString(this.fontRenderer, "Project Ares Server List", this.width / 2, 20, 16777215);
@@ -118,6 +120,7 @@ public class Ares_ServerGUI extends GuiScreen {
 
     /**
      * Gets the current selected server
+     *
      * @param var1 gets the server based on passed index
      */
     public void selectServerIndex(int var1) {
@@ -128,7 +131,7 @@ public class Ares_ServerGUI extends GuiScreen {
             this.selectedServer = null;
         }
     }
-    
+
     /**
      * sees if the index of a server is selected
      */

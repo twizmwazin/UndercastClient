@@ -11,9 +11,9 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
 
     /**
      * Default constructor to create list
-     * 
+     *
      * @param guiservers Main server gui screen
-     * @param servers list of servers
+     * @param servers    list of servers
      */
     public Ares_ServerInfoSlotGui(Ares_ServerGUI guiservers, ArrayList<AresServerInterface> servers) {
         super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
@@ -25,7 +25,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
      * Main draw method for the individual server boxes
      */
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
-    	AresServerInterface server = servers.get(i);
+        AresServerInterface server = servers.get(i);
 
         parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server.getServer()), j + 2, k + 1, 16777215);
         int serveNameWidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(getServerName(server.getServer()));
@@ -38,7 +38,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
         parent.drawString(Minecraft.getMinecraft().fontRenderer, server.getServerVersion(), j + 215 - pingwidth, k + 12 + 11, 8421504);
 
     }
-    
+
     protected int getContentHeight() {
         return (this.getSize()) * 36;
     }
@@ -52,8 +52,9 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
     }
 
     protected void drawBackground() {
-    	if(!parent.inGame)
-    		parent.drawDefaultBackground();
+        if (!parent.inGame) {
+            parent.drawDefaultBackground();
+        }
     }
 
     private String getServerName(String server) {
