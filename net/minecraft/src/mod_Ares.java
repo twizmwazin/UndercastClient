@@ -6,6 +6,7 @@ package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
 import tc.oc.*;
+import tc.oc.AresData.Teams;
 import tc.oc.server.Ares_ServerGUI;
 
 import java.io.BufferedReader;
@@ -21,6 +22,8 @@ public class mod_Ares extends BaseMod {
     private boolean mainMenuActive;
     public static ArrayList<String> servers = new ArrayList<String>();
     public static AresConfig CONFIG;
+    public static boolean brightActive;
+    public float brightLevel = (float) 20.0D;
 
     @Override
     public String getVersion() {
@@ -38,6 +41,7 @@ public class mod_Ares extends BaseMod {
 
         ModLoader.addLocalization("keybind", "gui");
         ModLoader.addLocalization("keybind", "inGameGui");
+        ModLoader.addLocalization("keybind", "fullBright");
 
         //load variables defaults
         new AresData();
@@ -45,6 +49,7 @@ public class mod_Ares extends BaseMod {
         //hook keybinds
         ModLoader.registerKey(this, AresData.keybind, false);
         ModLoader.registerKey(this, AresData.keybind2, false);
+        ModLoader.registerKey(this, AresData.keybind3, false);
 
         //Pulls servers from web for GUI Server List and sorts them
         servers = getServers();
@@ -234,8 +239,28 @@ public class mod_Ares extends BaseMod {
             }
             // Kill Streak display
             if (CONFIG.showStreak) {
-                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + AresData.getKillstreak() + "/" + AresData.getLargestKillstreak(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int)AresData.getKillstreak() + "/" + (int)AresData.getLargestKillstreak(), width, height, 16777215);
                 height += 8;
+            }
+        }
+        
+        //if you not on obs turn it off
+        if(AresData.team != Teams.Observers){
+            brightActive=false;
+            //if full bright is on turn it off
+            if(mc.gameSettings.gammaSetting>=brightLevel){
+        	mc.gameSettings.gammaSetting=(float)0.0D;
+            }
+        }
+        
+        //gui display for obs if you have brightness
+        if(mc.inGameHasFocus){
+            if(brightActive && CONFIG.fullBright && AresData.team == Teams.Observers){
+        	 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
+                 height += 8;
+            }else if(!brightActive && CONFIG.fullBright && AresData.team == Teams.Observers){
+        	 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A7cOFF", width, height, 16777215);
+                 height += 8;
             }
         }
         return true;
@@ -248,7 +273,7 @@ public class mod_Ares extends BaseMod {
     public void clientConnect(NetClientHandler var1) {
         AresData.setTeam(AresData.Teams.Observers);
         System.out.println("Client successfully connected to " + var1.getNetManager().getSocketAddress().toString());
-
+        
         //if logging onto a project ares server, then enable the main mod
         if (var1.getNetManager().getSocketAddress().toString().contains(CONFIG.serverDomain)) {
             // What happens if logs into project ares
@@ -260,6 +285,11 @@ public class mod_Ares extends BaseMod {
             AresCustomMethods.getMap();
         } else {
             AresData.guiShowing = false;
+        }
+        //if fullbright was left on shut it off
+        if(mc.gameSettings.gammaSetting>=brightLevel){
+            brightActive=false;
+            mc.gameSettings.gammaSetting=(float)0.0D;
         }
     }
 
@@ -284,12 +314,23 @@ public class mod_Ares extends BaseMod {
      * Used to activate the gui ect.
      */
     public void keyboardEvent(KeyBinding keybinding) {
-
         if (mc.inGameHasFocus) {
             if (keybinding == AresData.keybind) {
                 AresData.guiShowing = !AresData.guiShowing;
             } else if (keybinding == AresData.keybind2) {
                 ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
+                //mc.sndManager.playSoundFX("random.successful_hit", 0.5F, 1.0F);
+            }
+            //if you are an obs;have the config to true; toggle fullbright and play sound
+            else if(keybinding == AresData.keybind3 && AresData.team == Teams.Observers && CONFIG.fullBright){
+        	if(mc.inGameHasFocus){
+        	    brightActive = !brightActive;
+        	    if(brightActive)
+        		mc.gameSettings.gammaSetting = brightLevel;
+        	    else
+        		mc.gameSettings.gammaSetting = (float) 0.0D;
+        	    mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
+        	}
             }
         }
     }

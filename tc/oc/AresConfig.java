@@ -30,10 +30,12 @@ public class AresConfig {
     public static boolean showGuiMulti;
     public static String keyGui;
     public static String keyGui2;
+    public static String keyGui3;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
     public static boolean filterTips;
+    public static boolean fullBright;
 
     /**
      * Default values created when class is first referenced
@@ -55,10 +57,12 @@ public class AresConfig {
         defaults.setProperty("showGuiMulti", "true");
         defaults.setProperty("keyGui", "F6");
         defaults.setProperty("keyGui2", "L");
+        defaults.setProperty("keyGui3", "G");
         defaults.setProperty("X", "2");
         defaults.setProperty("Y", "2");
         defaults.setProperty("toggleTitleScreenButton", "true");
         defaults.setProperty("filterTips", "true");
+        defaults.setProperty("fullBright", "true");
     }
 
     public AresConfig() {
@@ -123,10 +127,12 @@ public class AresConfig {
             config.setProperty("showGuiMulti", "true");
             config.setProperty("keyGui", "F6");
             config.setProperty("keyGui2", "L");
+            config.setProperty("keyGui3", "G");
             config.setProperty("X", "2");
             config.setProperty("Y", "2");
             config.setProperty("toggleTitleScreenButton", "true");
             config.setProperty("filterTips", "true");
+            config.setProperty("fullBright", "true");
 
             config.store(new FileOutputStream(configPath + "mod_Ares.cfg"), null);
         } catch (Exception e) {
@@ -155,10 +161,12 @@ public class AresConfig {
         showGuiMulti = this.getBoolProperty("showGuiMulti");
         keyGui = this.getStringProperty("keyGui");
         keyGui2 = this.getStringProperty("keyGui2");
+        keyGui3 = this.getStringProperty("keyGui3");
         x = this.getIntProperty("X");
         y = this.getIntProperty("Y");
         toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
         filterTips = this.getBoolProperty("filterTips");
+        fullBright = this.getBoolProperty("fullBright");
     }
 
     public void setProperty(String prop, String value) {

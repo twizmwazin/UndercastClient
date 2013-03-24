@@ -27,6 +27,7 @@ public class AresData {
     public static boolean guiShowing;
     public static KeyBinding keybind;
     public static KeyBinding keybind2;
+    public static KeyBinding keybind3;
 
     public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers}
 
@@ -42,6 +43,7 @@ public class AresData {
         guiShowing = true;
         keybind = new KeyBinding("gui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui));
         keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui2));
+        keybind3 = new KeyBinding("fullBright", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui3));
     }
 
     public static void addKills(double d) {
