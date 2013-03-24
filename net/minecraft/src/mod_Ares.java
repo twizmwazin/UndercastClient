@@ -20,7 +20,7 @@ public class mod_Ares extends BaseMod {
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean deathScreenActive;
     private boolean mainMenuActive;
-    public static ArrayList<String> servers = new ArrayList<String>();
+    public static ArrayList<String> masterServerList = new ArrayList<String>();
     public static AresConfig CONFIG;
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
@@ -53,9 +53,7 @@ public class mod_Ares extends BaseMod {
         ModLoader.registerKey(this, AresData.keybind3, false);
 
         //Pulls servers from web for GUI Server List and sorts them
-        servers = getServers();
-        //keep it matching the website until we have a sort button
-        //Collections.sort(servers);
+        masterServerList = getServers();
 
         //start thread for the main menu button
         Thread thread = new Thread() {

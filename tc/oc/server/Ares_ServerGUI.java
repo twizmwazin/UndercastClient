@@ -6,6 +6,7 @@ import tc.oc.AresGuiListener;
 import java.awt.*;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Ares_ServerGUI extends GuiScreen {
     private Ares_ServerInfoSlotGui guiServerInfoSlot;
@@ -16,6 +17,8 @@ public class Ares_ServerGUI extends GuiScreen {
     private GuiButton guibuttonrefresh;
     public Boolean inGame;
     private boolean toggletooltip;
+    private int sortIndex;
+    private String[] sortNames = {"Web","Abc","Match"};
 
     /**
      * Default constructor
@@ -25,19 +28,13 @@ public class Ares_ServerGUI extends GuiScreen {
     public Ares_ServerGUI(boolean inGame) {
         this.inGame = inGame;
         servers = new ArrayList<AresServerInterface>();
+        sortIndex = 0;
         //creates server list
-        for (String server : mod_Ares.servers) {
+        for (String server : mod_Ares.masterServerList) {
             servers.add(new AresServer(server, 25565));
         }
         //poll the servers
-        for (final AresServerInterface server : servers) {
-            Thread thread = new Thread() {
-                public void run() {
-                    server.pollServer();
-                }
-            };
-            thread.start();
-        }
+        pollServers();
     }
 
     /**
@@ -50,7 +47,8 @@ public class Ares_ServerGUI extends GuiScreen {
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, height - 52, 98, 20, stringtranslate.translateKey("selectServer.select")));
         this.buttonList.add(guibuttonrefresh = new GuiButton(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh")));
         this.buttonList.add(new GuiButton(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel")));
-        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, height - 28, 98, 20, "Player Stats"));
+        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats"));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, sortNames[sortIndex]));
         guiServerInfoSlot = new Ares_ServerInfoSlotGui(this, servers);
     }
 
@@ -65,15 +63,7 @@ public class Ares_ServerGUI extends GuiScreen {
         }
         //refresh button
         if (guibutton.id == 1) {
-            //goes through each server and repolls them
-            for (final AresServerInterface server : servers) {
-                Thread thread = new Thread() {
-                    public void run() {
-                        server.pollServer();
-                    }
-                };
-                thread.start();
-            }
+            pollServers();
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {
@@ -91,11 +81,41 @@ public class Ares_ServerGUI extends GuiScreen {
             }
         }
         //stats button
-        if (guibutton.id == 4) {
+        if (guibutton.id == 3) {
             String username = this.mc.session.username;
             try {
                 Desktop.getDesktop().browse(new URI("http://" + mod_Ares.CONFIG.serverDomain + "/" + username));
             } catch (Exception ignored) {
+            }
+        }
+        //sort button
+        if (guibutton.id == 4) {
+            //move sort index
+            sortIndex++;
+            //auto spill over function
+            if(sortIndex>sortNames.length-1)
+        	sortIndex=0;
+            //update button
+            this.buttonList.set(4,new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, sortNames[sortIndex]));
+            //if the index is moving to web then use the downloaded server list
+            if(sortNames[sortIndex].equalsIgnoreCase("web")){
+        	servers.clear();
+        	for (String server : mod_Ares.masterServerList) {
+        	    servers.add(new AresServer(server, 25565));
+        	}
+        	pollServers();
+            }
+            //if the servers are being sorted abc sort the list and update
+            else if(sortNames[sortIndex].equalsIgnoreCase("abc")){
+        	servers.clear();
+        	//copy the array of servers
+        	ArrayList<String> currentServerList = new ArrayList<String>(mod_Ares.masterServerList);
+                //sort the servers
+        	Collections.sort(currentServerList);
+        	for (String server : currentServerList) {
+        	    servers.add(new AresServer(server, 25565));
+        	}
+        	pollServers();
             }
         }
     }
@@ -144,5 +164,19 @@ public class Ares_ServerGUI extends GuiScreen {
         ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
         //connect
         mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
+    }
+    
+    /**
+     * Poll all the servers(multi thread)
+     */
+    public void pollServers(){
+	for (final AresServerInterface server : servers) {
+	    Thread thread = new Thread() {
+		public void run() {
+		    server.pollServer();
+		}
+	    };
+	    thread.start();
+	}
     }
 }
