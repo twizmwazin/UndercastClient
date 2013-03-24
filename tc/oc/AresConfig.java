@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
-import javax.jws.Oneway;
-
 
 public class AresConfig {
     private static Properties defaults = new Properties();
