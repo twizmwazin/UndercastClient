@@ -62,7 +62,13 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
     }
 
     protected void elementClicked(int i, boolean flag) {
-        parent.selectServerIndex(i);
+    	//flag = double click
+    	if(flag){
+    		parent.joinSelectedServer();
+    	}
+    	else{
+    		parent.selectServerIndex(i);
+    	}
     }
 }
 

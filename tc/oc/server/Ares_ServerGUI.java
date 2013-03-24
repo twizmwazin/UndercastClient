@@ -61,11 +61,7 @@ public class Ares_ServerGUI extends GuiScreen {
     protected void actionPerformed(GuiButton guibutton) {
         //join button
         if (guibutton.id == 0) {
-            String serverip = selectedServer.getServer();
-            String serverport = Integer.toString(selectedServer.getPort());
-            ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
-            //connect
-            mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
+        	joinSelectedServer();
         }
         //refresh button
         if (guibutton.id == 1) {
@@ -137,5 +133,16 @@ public class Ares_ServerGUI extends GuiScreen {
      */
     public boolean serverIndexSelected(int var1) {
         return var1 == selected;
+    }
+    
+    /***
+     * Join selected server
+     */
+    public void joinSelectedServer(){
+    	String serverip = selectedServer.getServer();
+        String serverport = Integer.toString(selectedServer.getPort());
+        ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
+        //connect
+        mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
     }
 }
