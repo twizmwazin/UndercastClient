@@ -24,6 +24,7 @@ public class mod_Ares extends BaseMod {
     public static AresConfig CONFIG;
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
+    public float defaultLevel = mc.gameSettings.gammaSetting;
 
     @Override
     public String getVersion() {
@@ -249,7 +250,7 @@ public class mod_Ares extends BaseMod {
             brightActive=false;
             //if full bright is on turn it off
             if(mc.gameSettings.gammaSetting>=brightLevel){
-        	mc.gameSettings.gammaSetting=(float)0.0D;
+        	mc.gameSettings.gammaSetting=defaultLevel;
             }
         }
         
@@ -289,7 +290,7 @@ public class mod_Ares extends BaseMod {
         //if fullbright was left on shut it off
         if(mc.gameSettings.gammaSetting>=brightLevel){
             brightActive=false;
-            mc.gameSettings.gammaSetting=(float)0.0D;
+            mc.gameSettings.gammaSetting=defaultLevel;
         }
     }
 
@@ -307,6 +308,10 @@ public class mod_Ares extends BaseMod {
         AresData.resetKillstreak();
         AresData.resetLargestKillstreak();
         AresData.setMap("Attempting to fetch map...");
+        if(mc.gameSettings.gammaSetting>=brightLevel){
+            brightActive=false;
+            mc.gameSettings.gammaSetting=defaultLevel;
+        }
     }
 
     /**
@@ -319,7 +324,6 @@ public class mod_Ares extends BaseMod {
                 AresData.guiShowing = !AresData.guiShowing;
             } else if (keybinding == AresData.keybind2) {
                 ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
-                //mc.sndManager.playSoundFX("random.successful_hit", 0.5F, 1.0F);
             }
             //if you are an obs;have the config to true; toggle fullbright and play sound
             else if(keybinding == AresData.keybind3 && AresData.team == Teams.Observers && CONFIG.fullBright){
@@ -328,7 +332,7 @@ public class mod_Ares extends BaseMod {
         	    if(brightActive)
         		mc.gameSettings.gammaSetting = brightLevel;
         	    else
-        		mc.gameSettings.gammaSetting = (float) 0.0D;
+        		mc.gameSettings.gammaSetting = defaultLevel;
         	    mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
         	}
             }
