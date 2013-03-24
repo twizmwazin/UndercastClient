@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+import javax.jws.Oneway;
+
 
 public class AresConfig {
     private static Properties defaults = new Properties();
@@ -36,6 +38,7 @@ public class AresConfig {
     public static boolean toggleTitleScreenButton;
     public static boolean filterTips;
     public static boolean fullBright;
+    public static boolean matchOnServerJoin;
 
     /**
      * Default values created when class is first referenced
@@ -63,6 +66,7 @@ public class AresConfig {
         defaults.setProperty("toggleTitleScreenButton", "true");
         defaults.setProperty("filterTips", "true");
         defaults.setProperty("fullBright", "true");
+        defaults.setProperty("matchOnServerJoin", "false");
     }
 
     public AresConfig() {
@@ -133,6 +137,7 @@ public class AresConfig {
             config.setProperty("toggleTitleScreenButton", "true");
             config.setProperty("filterTips", "true");
             config.setProperty("fullBright", "true");
+            config.setProperty("matchOnServerJoin", "false");
 
             config.store(new FileOutputStream(configPath + "mod_Ares.cfg"), null);
         } catch (Exception e) {
@@ -167,6 +172,7 @@ public class AresConfig {
         toggleTitleScreenButton = this.getBoolProperty("toggleTitleScreenButton");
         filterTips = this.getBoolProperty("filterTips");
         fullBright = this.getBoolProperty("fullBright");
+        matchOnServerJoin = this.getBoolProperty("matchOnServerJoin");
     }
 
     public void setProperty(String prop, String value) {

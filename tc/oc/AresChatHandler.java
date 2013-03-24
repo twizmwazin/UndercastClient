@@ -5,6 +5,7 @@ package tc.oc;
 //You may not remove these comments
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.mod_Ares;
 
@@ -80,6 +81,10 @@ public class AresChatHandler {
         //filters [Tip] messages
         else if (message.startsWith("[Tip]") && mod_Ares.CONFIG.filterTips) {
             Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine(0);
+        }
+        //sends /match when you join a server.
+        else if(message.equals("Welcome to Project Ares") && mod_Ares.CONFIG.matchOnServerJoin){
+        	Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
         }
     }
 }
