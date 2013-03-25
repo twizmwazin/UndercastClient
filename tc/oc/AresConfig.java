@@ -12,6 +12,9 @@ public class AresConfig {
     private static Properties defaults = new Properties();
     private String configPath;
     private Properties config;
+    
+    //update this value to change the config version.
+    private static int version = 1;
 
     //main variables
     public static String serverDomain;
@@ -37,6 +40,7 @@ public class AresConfig {
     public static boolean filterTips;
     public static boolean fullBright;
     public static boolean matchOnServerJoin;
+    public static int configVersion;
 
     /**
      * Default values created when class is first referenced
@@ -65,6 +69,8 @@ public class AresConfig {
         defaults.setProperty("filterTips", "true");
         defaults.setProperty("fullBright", "true");
         defaults.setProperty("matchOnServerJoin", "false");
+        //if the value is missing, it should force an update. Don't change it.
+        defaults.setProperty("configVersion", "0");
     }
 
     public AresConfig() {
@@ -136,6 +142,7 @@ public class AresConfig {
             config.setProperty("filterTips", "true");
             config.setProperty("fullBright", "true");
             config.setProperty("matchOnServerJoin", "false");
+            config.setProperty("configVersion", ""+version);
 
             config.store(new FileOutputStream(configPath + "mod_Ares.cfg"), null);
         } catch (Exception e) {
@@ -171,6 +178,9 @@ public class AresConfig {
         filterTips = this.getBoolProperty("filterTips");
         fullBright = this.getBoolProperty("fullBright");
         matchOnServerJoin = this.getBoolProperty("matchOnServerJoin");
+        configVersion = this.getIntProperty("configVersion");
+        
+        checkForConfigUpdate();
     }
 
     public void setProperty(String prop, String value) {
@@ -246,4 +256,22 @@ public class AresConfig {
     private void displayErrorMessage(String error) {
         System.out.println("[ProjectAres]: ERROR: " + error);
     }
+    
+    /***
+     * Checks if the config version has changed and adds the options which are new.
+     */
+    private void checkForConfigUpdate(){
+    	if(version != configVersion){
+    		System.out.println("[ProjectAres]: Updating the config...");
+    		switch(configVersion){
+    		case 0:
+    			//add you additional options.
+    			config.setProperty("configVersion", ""+version);
+    		case 1:
+    			//for the next version.
+    		}
+    		saveConfig();	
+    	}
+    }
 }
+
