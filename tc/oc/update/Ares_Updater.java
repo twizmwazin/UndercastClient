@@ -19,7 +19,7 @@ public class Ares_Updater {
         String readline2="Could not get update information.";
         try {
             //download link
-            URL data = new URL("http://goo.gl/zG8cE");
+            URL data = new URL("https://dl.dropbox.com/s/v4jjlnky1wpwywv/version.txt");
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();     
             readline2 = in.readLine();
