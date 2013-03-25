@@ -114,18 +114,18 @@ public class mod_Ares extends BaseMod {
             System.err.println("[ProjectAres]: ERROR: Could not get online list of servers");
             //if you can't get it from the website load defaults
             list.clear();
-            list.add("alpha.oc.tc:25565");
-            list.add("beta.oc.tc:25565");
-            list.add("gamma.oc.tc:25565");
-            list.add("delta.oc.tc:25565");
-            list.add("epsilon.oc.tc:25565");
-            list.add("zeta.oc.tc:25565");
-            list.add("eta.oc.tc:25565");
-            list.add("theta.oc.tc:25565");
-            list.add("iota.oc.tc:25565");
-            list.add("kappa.oc.tc:25565");
-            list.add("lambda.oc.tc:25565");
-            list.add("nostalgia.oc.tc:25565");
+            list.add("alpha.oc.tc");
+            list.add("beta.oc.tc");
+            list.add("gamma.oc.tc");
+            list.add("delta.oc.tc");
+            list.add("epsilon.oc.tc");
+            list.add("zeta.oc.tc");
+            list.add("eta.oc.tc");
+            list.add("theta.oc.tc");
+            list.add("iota.oc.tc");
+            list.add("kappa.oc.tc");
+            list.add("lambda.oc.tc");
+            list.add("nostalgia.oc.tc");
         }
 
         return list;
