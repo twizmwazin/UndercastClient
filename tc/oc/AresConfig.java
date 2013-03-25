@@ -266,10 +266,19 @@ public class AresConfig {
     		switch(configVersion){
     		case 0:
     			//add you additional options.
-    			config.setProperty("configVersion", ""+version);
+    			if(fullBright == true){ //do not overwrite the setting, if it isn't the default value
+    				config.setProperty("fullBright", "true");
+    			}
+    			if(matchOnServerJoin == false){ //do not overwrite the setting, if it isn't the default value
+    				config.setProperty("matchOnServerJoin", "false");
+    			}
+    			if(keyGui3.equals("G")){
+    				config.setProperty("keyGui3", "G");
+    			}
     		case 1:
     			//for the next version.
     		}
+    		config.setProperty("configVersion", ""+version);
     		saveConfig();	
     	}
     }
