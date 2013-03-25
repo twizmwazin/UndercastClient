@@ -162,6 +162,10 @@ public class Ares_ServerGUI extends GuiScreen {
                 String[][] serverData = new String[servers.size()][2];
                 for (int i=0; i<servers.size();i++) {
                     serverData[i][0]=StringUtils.stripControlCodes(servers.get(i).getServerPlayers().split("/")[0]);
+                    //if player count it unknown have it on the bottem
+                    if(serverData[i][0].contains("?")){
+                        serverData[i][0]=""+Integer.MAX_VALUE;
+                    }
                     serverData[i][1]=servers.get(i).getServer();
                 }
                 //sort

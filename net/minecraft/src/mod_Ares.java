@@ -73,7 +73,7 @@ public class mod_Ares extends BaseMod {
                             int height = multi.height;
                             int width = multi.width;
                             //add the custom ares button
-                            AresMenuButton test = new AresMenuButton(-1, x, y, width, height, "oc.tc");
+                            AresMenuButton test = new AresMenuButton(-1, x, y, width, height, "Project Ares");
                             mc.currentScreen.buttonList.add(test);
                             mc.currentScreen.updateScreen();
                             mainMenuActive = true;
@@ -248,7 +248,11 @@ public class mod_Ares extends BaseMod {
             brightActive=false;
             //if full bright is on turn it off
             if(mc.gameSettings.gammaSetting>=brightLevel){
-        	mc.gameSettings.gammaSetting=defaultLevel;
+                mc.gameSettings.gammaSetting=defaultLevel;
+                if(defaultLevel>=brightLevel){
+                    mc.gameSettings.gammaSetting=(float) 0.0D;
+                    defaultLevel=(float) 0.0D;
+                }
             }
         }
         
