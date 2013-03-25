@@ -1,5 +1,4 @@
 package tc.oc;
-
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -23,17 +22,18 @@ public class AresData {
     public static String server;
     public static Teams team;
     public static boolean isPA;
+    public static boolean update;
+    public static String updateLink;
 
     public static boolean guiShowing;
     public static KeyBinding keybind;
     public static KeyBinding keybind2;
     public static KeyBinding keybind3;
 
-    public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers}
-
-    ;
+    public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers};
 
     public AresData() {
+        update=true;
         setMap("Fetching...");
         resetKills();
         resetDeaths();
@@ -151,5 +151,21 @@ public class AresData {
 
     public static String getServer() {
         return server;
+    }
+
+    public static boolean isUpdate() {
+        return update;
+    }
+
+    public static void setUpdate(boolean update) {
+        AresData.update = update;
+    }
+
+    public static String getUpdateLink() {
+        return updateLink;
+    }
+
+    public static void setUpdateLink(String updateLink) {
+        AresData.updateLink = updateLink;
     }
 }

@@ -1,4 +1,8 @@
 package tc.oc.server;
+//You may not release this source under any condition, it must be linked to this page
+//You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
+//You may not claim this to be your own
+//You may not remove these comments
 
 import net.minecraft.src.*;
 import tc.oc.AresGuiListener;
@@ -73,13 +77,6 @@ public class Ares_ServerGUI extends GuiScreen {
                 this.mc.displayGuiScreen(new GuiMainMenu());
             } else {
                 this.mc.setIngameFocus();
-            }
-        }
-        //old menu button
-        if (guibutton.id == 3) {
-            if (!inGame) {
-                AresGuiListener.toggleMultiGUI(false);
-                this.mc.displayGuiScreen(new GuiMultiplayer(new GuiMainMenu()));
             }
         }
         //stats button

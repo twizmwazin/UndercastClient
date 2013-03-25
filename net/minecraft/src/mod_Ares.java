@@ -7,7 +7,8 @@ package net.minecraft.src;
 import net.minecraft.client.Minecraft;
 import tc.oc.*;
 import tc.oc.AresData.Teams;
-import tc.oc.server.Ares_ServerGUI;
+import tc.oc.server.*;
+import tc.oc.update.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,6 +17,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class mod_Ares extends BaseMod {
+    public final static String MOD_VERSION = "1.3.7";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean deathScreenActive;
@@ -28,7 +30,7 @@ public class mod_Ares extends BaseMod {
 
     @Override
     public String getVersion() {
-        return "1.5.1";
+        return MOD_VERSION;
     }
 
     @Override
@@ -46,6 +48,9 @@ public class mod_Ares extends BaseMod {
 
         //load variables defaults
         new AresData();
+        
+        //check for update
+        new Ares_Updater();
 
         //hook keybinds
         ModLoader.registerKey(this, AresData.keybind, false);
@@ -257,7 +262,7 @@ public class mod_Ares extends BaseMod {
         }
         
         //gui display for obs if you have brightness
-        if(mc.inGameHasFocus){
+        if(AresData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat)){
             if(brightActive && CONFIG.fullBright && AresData.team == Teams.Observers){
         	 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
                  height += 8;
@@ -280,19 +285,31 @@ public class mod_Ares extends BaseMod {
         //if logging onto a project ares server, then enable the main mod
         if (var1.getNetManager().getSocketAddress().toString().contains(CONFIG.serverDomain)) {
             // What happens if logs into project ares
+            AresData.isPA=true;
             AresData.guiShowing = true;
             System.out.println("Connected to: " + var1.getNetManager().getSocketAddress().toString() + " Ares mod activated!");
             AresData.setTeam(AresData.Teams.Observers);
             AresData.isPA = true;
             AresData.setServer(AresCustomMethods.getServer(var1.getNetManager().getSocketAddress().toString()));
             AresCustomMethods.getMap();
-        } else {
-            AresData.guiShowing = false;
+        } else{
+            AresData.isPA=false;
         }
-        //if fullbright was left on shut it off
-        if(mc.gameSettings.gammaSetting>=brightLevel){
-            brightActive=false;
-            mc.gameSettings.gammaSetting=defaultLevel;
+        //update notifier
+        if(!AresData.isUpdate()){
+            Thread thread = new Thread() {
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+                    mc.thePlayer.addChatMessage("[ProjectAres]: A New Version of the Project Ares Mod is avaliable");
+                    mc.thePlayer.addChatMessage("[ProjectAres]: Link: \u00A74"+AresData.updateLink);
+                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+                }
+            };
+            thread.start();
         }
     }
 
