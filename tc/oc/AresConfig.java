@@ -88,7 +88,7 @@ public class AresConfig {
         config = new Properties(defaults);
 
         try {
-            configPath = ModLoader.getMinecraftInstance().getMinecraftDir().getCanonicalPath() + File.separatorChar + "mods" + File.separatorChar + "UnofficialProjectAres" + File.separatorChar;
+            configPath = ModLoader.getMinecraftInstance().getMinecraftDir().getCanonicalPath() + File.separatorChar + "config" + File.separatorChar + "UnofficialProjectAres" + File.separatorChar;
 
             File cfg = new File(configPath + "mod_Ares.cfg");
 
@@ -144,7 +144,7 @@ public class AresConfig {
             config.setProperty("matchOnServerJoin", "false");
             config.setProperty("configVersion", ""+version);
 
-            config.store(new FileOutputStream(configPath + "mod_Ares.cfg"), null);
+            config.store(new FileOutputStream(configPath +"mod_Ares.cfg"),"This is the Unoffical Project Ares Mod Config" + "\nCustomize it to your taste" + "\nkeyGui = Ingame Stats" +"\nkeyGui2 = Ingame Server Menu" + "\nkeyGui3 = Full Bright\n");
         } catch (Exception e) {
             displayErrorMessage(e.toString());
         }
