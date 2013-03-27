@@ -131,7 +131,7 @@ public class AresCustomMethods {
         } else if (k > 0 && d == 0) {
             return k;
         } else if (k == d && k > 0) {
-            return k;
+            return 1D;
         } else {
             return round(k / d);
         }
@@ -150,7 +150,7 @@ public class AresCustomMethods {
         } else if (k > 0 && kk == 0) {
             return k;
         } else if (k == kk && kk > 0) {
-            return k;
+            return 1D;
         } else {
             return round(k / kk);
         }
