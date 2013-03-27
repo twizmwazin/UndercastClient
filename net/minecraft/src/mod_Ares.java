@@ -7,6 +7,7 @@ package net.minecraft.src;
 import net.minecraft.client.Minecraft;
 import tc.oc.*;
 import tc.oc.AresData.Teams;
+import tc.oc.controls.*;
 import tc.oc.server.*;
 import tc.oc.update.*;
 
@@ -27,6 +28,8 @@ public class mod_Ares extends BaseMod {
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
+    private ControlsAres controlAres;
+ 
 
     @Override
     public String getVersion() {
@@ -51,6 +54,9 @@ public class mod_Ares extends BaseMod {
         
         //check for update
         new Ares_Updater();
+        
+        //load the new controls menu
+        controlAres = new ControlsAres();
 
         //hook keybinds
         ModLoader.registerKey(this, AresData.keybind, false);
@@ -272,6 +278,11 @@ public class mod_Ares extends BaseMod {
             }
         }
         return true;
+    }
+    
+    public boolean onTickInGUI(float tick, Minecraft mc, GuiScreen screen){
+    	controlAres.onTickInGUI(tick, mc, screen);
+    	return true;
     }
 
     /**
