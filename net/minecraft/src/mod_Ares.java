@@ -18,7 +18,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class mod_Ares extends BaseMod {
-    public final static String MOD_VERSION = "1.3.7";
+    public final static String MOD_VERSION = "1.3.8";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean deathScreenActive;
