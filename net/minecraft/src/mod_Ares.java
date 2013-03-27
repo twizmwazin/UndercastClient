@@ -262,7 +262,7 @@ public class mod_Ares extends BaseMod {
         }
         
         //gui display for obs if you have brightness
-        if(AresData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat)){
+        if(AresData.isPlayingAres() && AresData.guiShowing && (mc.inGameHasFocus || CONFIG.showGuiChat && mc.currentScreen instanceof GuiChat)){
             if(brightActive && CONFIG.fullBright && AresData.team == Teams.Observers){
         	 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
                  height += 8;
@@ -345,7 +345,7 @@ public class mod_Ares extends BaseMod {
                 ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
             }
             //if you are an obs;have the config to true; toggle fullbright and play sound
-            else if(keybinding == AresData.keybind3 && AresData.team == Teams.Observers && CONFIG.fullBright){
+            else if(AresData.isPlayingAres() && keybinding == AresData.keybind3 && AresData.team == Teams.Observers && CONFIG.fullBright){
         	if(mc.inGameHasFocus){
         	    brightActive = !brightActive;
         	    if(brightActive)
