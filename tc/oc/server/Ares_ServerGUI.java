@@ -239,12 +239,14 @@ public class Ares_ServerGUI extends GuiScreen {
     /***
      * Join selected server
      */
-    public void joinSelectedServer(){
-        String serverip = selectedServer.getServer();
-        String serverport = Integer.toString(selectedServer.getPort());
-        ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
-        //connect
+    public void joinSelectedServer() {
+    	if(selectedServer != null) {
+    		String serverip = selectedServer.getServer();
+    		String serverport = Integer.toString(selectedServer.getPort());
+    		ServerData joinServer = new ServerData(serverip, serverip + ":" + serverport);
+    		// connect
         mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
+    	}
     }
 
     /**
