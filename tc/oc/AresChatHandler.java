@@ -59,7 +59,13 @@ public class AresChatHandler {
             AresData.resetKillstreak();
             ;
             AresData.resetLargestKillstreak();
-            AresData.setTeam(AresData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "")));
+            
+            try {
+                AresData.setTeam(AresData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "")));
+            } catch(Exception e) {
+                // if the team set fails because of an alias, set the team to Unknown
+                AresData.setTeam(AresData.Teams.Unknown);
+            }
 
         }
         //when a map is done. Display all the stats

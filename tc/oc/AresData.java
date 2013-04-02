@@ -30,7 +30,7 @@ public class AresData {
     public static KeyBinding keybind2;
     public static KeyBinding keybind3;
 
-    public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers};
+    public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown};
 
     public AresData() {
         update=true;
