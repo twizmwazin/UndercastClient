@@ -21,12 +21,8 @@ public class ControlsAres {
 
     public void onTickInGUI(float tick, Minecraft mc, GuiScreen screen) {
         if(!this.forgeDetected) { // If Forge detected no need for better controls, if not then open better controls when controls is open.
-            if(mc.currentScreen instanceof GuiControls && !(mc.currentScreen instanceof GuiAresControls) && mc.isGamePaused) {
-                mc.displayGuiScreen(new GuiAresControls(new GuiOptions(new GuiIngameMenu(), mc.gameSettings), mc.gameSettings));
-            }
-
-            if(mc.currentScreen instanceof GuiControls && !(mc.currentScreen instanceof GuiAresControls) && !mc.isGamePaused) {
-                mc.displayGuiScreen(new GuiAresControls(new GuiOptions(new GuiMainMenu(), mc.gameSettings), mc.gameSettings));
+            if(mc.currentScreen instanceof GuiControls && !(mc.currentScreen instanceof GuiAresControls)) {
+                mc.displayGuiScreen(new GuiAresControls(new GuiOptions((GuiScreen)null, mc.gameSettings), mc.gameSettings));
             }
         }
     }
