@@ -148,13 +148,16 @@ public class mod_Ares extends BaseMod {
      * NOTE: only sends none global ares messages
      */
     public void clientChat(String var1) {
-        Minecraft mc = ModLoader.getMinecraftInstance();
-        EntityPlayer player = mc.thePlayer;
-        username = mc.thePlayer.username;
-        String message = StringUtils.stripControlCodes(var1);
-        //stop global msg to go through
-        if (!message.startsWith("<")) {
-            new AresChatHandler(message, username, player);
+        try {
+            Minecraft mc = ModLoader.getMinecraftInstance();
+            EntityPlayer player = mc.thePlayer;
+            username = mc.thePlayer.username;
+            String message = StringUtils.stripControlCodes(var1);
+            // stop global msg to go through
+            if(!message.startsWith("<")) {
+                new AresChatHandler(message, username, player);
+            }
+        } catch(Exception e) {
         }
     }
 
