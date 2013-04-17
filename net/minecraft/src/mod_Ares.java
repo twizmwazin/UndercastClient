@@ -297,7 +297,7 @@ public class mod_Ares extends BaseMod {
         System.out.println("Client successfully connected to " + var1.getNetManager().getSocketAddress().toString());
         
         //if logging onto a project ares server, then enable the main mod
-        if (var1.getNetManager().getSocketAddress().toString().contains(CONFIG.serverDomain)) {
+        if (var1.getNetManager().getSocketAddress().toString().contains("oc.tc")) {
             // What happens if logs into project ares
             AresData.isPA=true;
             AresData.guiShowing = true;

@@ -13,11 +13,10 @@ public class AresConfig {
     private String configPath;
     private Properties config;
     
-    //update this value to change the config version.
+    // update this value to change the config version.
     private static int version = 1;
 
-    //main variables
-    public static String serverDomain;
+    // main variables
     public static boolean showFPS;
     public static boolean showKills;
     public static boolean showDeaths;
@@ -46,7 +45,6 @@ public class AresConfig {
      * Default values created when class is first referenced
      */
     static {
-        defaults.setProperty("serverDomain", "oc.tc");
         defaults.setProperty("showFPS", "true");
         defaults.setProperty("showKills", "true");
         defaults.setProperty("showDeaths", "true");
@@ -69,7 +67,7 @@ public class AresConfig {
         defaults.setProperty("filterTips", "true");
         defaults.setProperty("fullBright", "true");
         defaults.setProperty("matchOnServerJoin", "false");
-        //if the value is missing, it should force an update. Don't change it.
+        // if the value is missing, it should force an update. Don't change it.
         defaults.setProperty("configVersion", "0");
     }
 
@@ -92,7 +90,7 @@ public class AresConfig {
 
             File cfg = new File(configPath + "mod_Ares.cfg");
 
-            if (cfg.exists()) {
+            if(cfg.exists()) {
                 System.out.println("[ProjectAres]: Config file found, loading...");
                 config.load(new FileInputStream(configPath + "mod_Ares.cfg"));
             } else {
@@ -112,14 +110,13 @@ public class AresConfig {
      */
     private void createConfig(File cfg) {
         File folder = new File(configPath);
-        if (!folder.exists()) {
+        if(!folder.exists()) {
             System.out.println("[ProjectAres]: No folder found, creating...");
             folder.mkdir();
         }
         try {
             cfg.createNewFile();
 
-            config.setProperty("serverDomain", "oc.tc");
             config.setProperty("showFPS", "true");
             config.setProperty("showKills", "true");
             config.setProperty("showDeaths", "true");
@@ -155,7 +152,6 @@ public class AresConfig {
      */
     public void loadConfigData() {
         System.out.println("[ProjectAres]: Loading Config to Local Data");
-        serverDomain = this.getStringProperty("serverDomain");
         showFPS = this.getBoolProperty("showFPS");
         showKills = this.getBoolProperty("showKills");
         showDeaths = this.getBoolProperty("showDeaths");
@@ -261,26 +257,26 @@ public class AresConfig {
      * Checks if the config version has changed and adds the options which are new.
      */
     private void checkForConfigUpdate(){
-    	if(version != configVersion){
-    		System.out.println("[ProjectAres]: Updating the config...");
-    		switch(configVersion){
-    		case 0:
-    			//add you additional options.
-    			if(fullBright == true){ //do not overwrite the setting, if it isn't the default value
-    				config.setProperty("fullBright", "true");
-    			}
-    			if(matchOnServerJoin == false){ //do not overwrite the setting, if it isn't the default value
-    				config.setProperty("matchOnServerJoin", "false");
-    			}
-    			if(keyGui3.equals("G")){
-    				config.setProperty("keyGui3", "G");
-    			}
-    		case 1:
-    			//for the next version.
-    		}
-    		config.setProperty("configVersion", ""+version);
-    		saveConfig();	
-    	}
+        if(version != configVersion){
+            System.out.println("[ProjectAres]: Updating the config...");
+            switch(configVersion){
+            case 0:
+                // add you additional options.
+                if(fullBright == true){ // do not overwrite the setting, if it isn't the default value
+                    config.setProperty("fullBright", "true");
+                }
+                if(matchOnServerJoin == false){ // do not overwrite the setting, if it isn't the default value
+                    config.setProperty("matchOnServerJoin", "false");
+                }
+                if(keyGui3.equals("G")){
+                    config.setProperty("keyGui3", "G");
+                }
+            case 1:
+                // for the next version.
+            }
+            config.setProperty("configVersion", ""+version);
+            saveConfig();	
+        }
     }
 }
 

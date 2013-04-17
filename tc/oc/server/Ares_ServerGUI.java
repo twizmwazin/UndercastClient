@@ -83,7 +83,7 @@ public class Ares_ServerGUI extends GuiScreen {
         if (guibutton.id == 3) {
             String username = this.mc.session.username;
             try {
-                Desktop.getDesktop().browse(new URI("http://" + mod_Ares.CONFIG.serverDomain + "/" + username));
+                Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
             } catch (Exception ignored) {
             }
         }
