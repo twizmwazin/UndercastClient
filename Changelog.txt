@@ -1,0 +1,6 @@
+The changelog exists since version 1.4.0
+
+1.4.0
+- Fixed crash with ShotBow servers
+- Fixed disconnect when using the control option screen
+- Removed the setting ServerDomain
