@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  http://api.thijsmolendijk.nl/mod/servers.php -> Server:Players:Current map:Next map
  And player stats:
  http://api.thijsmolendijk.nl/user/parse.php?para1=<user> -> YAML with player data (I can change it to a different format, just poke me)
+ Or, use the ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT HTTP!!
  */
 
 class MatchLoaderThread extends Thread {
@@ -28,7 +29,8 @@ class MatchLoaderThread extends Thread {
 	public void run() {
 		InputStream in = null;
 		try {
-			URLConnection connection = urlToLoad.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) urlToLoad.openConnection(); //I changed this, because it gives error 403 (forbidden) if you send no user agent.
+			connection.addRequestProperty("User-Agent", "Mozilla/4.76"); //See ^^
 			in = connection.getInputStream();
             //Try to get the charset
 			Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
