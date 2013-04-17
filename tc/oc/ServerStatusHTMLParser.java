@@ -56,7 +56,7 @@ class Parser extends HTMLEditorKit.ParserCallback
 	//# of map currently parsing
 	private int mapCount = -1;
 	//Data
-	public String[][] mapData = new String[12][4];
+	public String[][] mapData = new String[20][4];
 	
 	//Function called when a tag (<tagName>) is opened
 	public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos)
