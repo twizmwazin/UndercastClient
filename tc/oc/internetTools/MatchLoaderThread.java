@@ -19,13 +19,18 @@ import java.util.regex.Pattern;
  Or, use the ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT HTTP!!
  */
 
-class MatchLoaderThread extends Thread {
+public class MatchLoaderThread extends Thread {
     private URL urlToLoad;
     private String contents;
-    MatchLoaderThread(URL url) { // constructor starts the thread.
+    public MatchLoaderThread(URL url) { // constructor starts the thread.
         urlToLoad = url;
         //this.panel = gui;
-        start();
+        try {
+            start();
+        } catch(Exception e) {
+            System.out.println("[ProjectAres]: Failed to load maps");
+            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+        }
     }
     public void run() {
         InputStream in = null;
