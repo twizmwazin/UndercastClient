@@ -1,4 +1,4 @@
-package tc.oc;
+package tc.oc.internetTools;
 
 import java.io.InputStreamReader;
 import java.io.Reader;

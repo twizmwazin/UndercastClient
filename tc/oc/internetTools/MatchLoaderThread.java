@@ -1,8 +1,9 @@
-package tc.oc;
+package tc.oc.internetTools;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
@@ -23,7 +24,7 @@ class MatchLoaderThread extends Thread {
     private String contents;
 	MatchLoaderThread(URL url) {  // constructor starts the thread.
 		urlToLoad = url;
-		this.panel = gui;
+		// this.panel = gui;
 		start();
 	}
 	public void run() {
@@ -67,7 +68,7 @@ class MatchLoaderThread extends Thread {
 		}
 	}
     
-    public void getContents() {
+    public String getContents() {
         return this.contents;
     }
 }
