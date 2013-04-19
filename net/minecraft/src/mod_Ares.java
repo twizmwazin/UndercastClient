@@ -233,7 +233,7 @@ public class mod_Ares extends BaseMod {
                 }
             }
             // Show next map
-            if (CONFIG.showMap) {
+            if (CONFIG.showNextMap) {
                 if (AresData.getNextMap() != null) {
                     mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + AresData.getNextMap(), width, height, 16777215);
                     height += 8;

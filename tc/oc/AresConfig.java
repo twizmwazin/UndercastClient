@@ -14,7 +14,7 @@ public class AresConfig {
     private Properties config;
     
     // update this value to change the config version.
-    private static int version = 1;
+    private static int version = 2;
 
     // main variables
     public static boolean showFPS;
@@ -27,6 +27,7 @@ public class AresConfig {
     public static boolean showKK;
     public static boolean showFriends;
     public static boolean showMap;
+    public static boolean showNextMap;
     public static boolean showStreak;
     public static boolean showGuiChat;
     public static boolean showGuiMulti;
@@ -55,6 +56,7 @@ public class AresConfig {
         defaults.setProperty("showKK", "true");
         defaults.setProperty("showFriends", "true");
         defaults.setProperty("showMap", "true");
+        defaults.setProperty("showNextMap", "true");
         defaults.setProperty("showStreak", "true");
         defaults.setProperty("showGuiChat", "true");
         defaults.setProperty("showGuiMulti", "true");
@@ -127,6 +129,7 @@ public class AresConfig {
             config.setProperty("showKK", "true");
             config.setProperty("showFriends", "true");
             config.setProperty("showMap", "true");
+            config.setProperty("showNextMap", "true");
             config.setProperty("showStreak", "true");
             config.setProperty("showGuiChat", "true");
             config.setProperty("showGuiMulti", "true");
@@ -161,6 +164,7 @@ public class AresConfig {
         showKD = this.getBoolProperty("showKD");
         showKK = this.getBoolProperty("showKK");
         showFriends = this.getBoolProperty("showFriends");
+        showNextMap = this.getBoolProperty("showNextMap");
         showMap = this.getBoolProperty("showMap");
         showStreak = this.getBoolProperty("showStreak");
         showGuiChat = this.getBoolProperty("showGuiChat");
@@ -272,6 +276,10 @@ public class AresConfig {
                     config.setProperty("keyGui3", "G");
                 }
             case 1:
+                if(showNextMap == true){
+                    config.setProperty("showNextMap", "true");
+                }
+            case 2:
                 // for the next version.
             }
             config.setProperty("configVersion", ""+version);
