@@ -8,11 +8,16 @@ import net.minecraft.src.KeyBinding;
 import net.minecraft.src.mod_Ares;
 import org.lwjgl.input.Keyboard;
 
+import tc.oc.internetTools.MatchLoaderThread;
+import tc.oc.internetTools.ServerStatusHTMLParser;
+
+import java.net.URL;
 import java.util.HashSet;
 
 public class AresData {
     //Data Varibles
     public static String map;
+    public static String nextMap;
     public static double kills;
     public static double deaths;
     public static double killed;
@@ -24,6 +29,9 @@ public class AresData {
     public static boolean isPA;
     public static boolean update;
     public static String updateLink;
+    private static MatchLoaderThread mapLoader;
+    private static boolean mapLoaderFinished;
+    public static String[][] mapData;
 
     public static boolean guiShowing;
     public static KeyBinding keybind;
@@ -44,6 +52,48 @@ public class AresData {
         keybind = new KeyBinding("gui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui));
         keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui2));
         keybind3 = new KeyBinding("fullBright", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui3));
+        mapLoaderFinished = false;
+        try {
+            mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
+        } catch(Exception e) {
+            System.out.println("[ProjectAres]: Failed to load maps");
+            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+        }
+    }
+
+    public static void update() {
+        if(!mapLoaderFinished && mapLoader.getContents() != null) {
+            mapLoaderFinished = true;
+            try {
+                mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
+            } catch (Exception e) {
+                System.out.println("[ProjectAres]: Failed to parse maps");
+                System.out.println("[ProjectAres]: ERROR: " + e.toString());
+            }
+            // set the map
+            for(int c = 0; c < mapData.length; c++) {
+                if(mapData[c][0] == null) {
+                    break;
+                }
+                if(mapData[c][0].replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
+                    map = mapData[c][2].replace("Now: ", "");
+                    nextMap = mapData[c][3].replace("Next: ", "");
+                }
+            }
+        }
+    }
+
+    public static void reload() {
+        map = "Loading...";
+        nextMap = "Loading...";
+
+        try {
+            mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
+        } catch(Exception e) {
+            System.out.println("[ProjectAres]: Failed to load maps");
+            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+        }
+        mapLoaderFinished = false;
     }
 
     public static void addKills(double d) {
@@ -145,8 +195,13 @@ public class AresData {
         map = maps;
     }
 
+    public static String getNextMap() {
+        return nextMap;
+    }
+
     public static void setServer(String servers) {
         server = servers;
+        reload();
     }
 
     public static String getServer() {

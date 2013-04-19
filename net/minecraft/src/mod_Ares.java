@@ -30,10 +30,6 @@ public class mod_Ares extends BaseMod {
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
     private ControlsAres controlAres;
-    private MatchLoaderThread mapLoader;
-    private boolean mapLoaderFinished;
-    public String[][] mapData;
-
 
     @Override
     public String getVersion() {
@@ -69,14 +65,6 @@ public class mod_Ares extends BaseMod {
 
         //Pulls servers from web for GUI Server List and sorts them
         masterServerList = getServers();
-
-        mapLoaderFinished = false;
-        try {
-            mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
-        } catch(Exception e) {
-            System.out.println("[ProjectAres]: Failed to load maps");
-            System.out.println("[ProjectAres]: ERROR: " + e.toString());
-        }
 
         //start thread for the main menu button
         Thread thread = new Thread() {
@@ -178,17 +166,8 @@ public class mod_Ares extends BaseMod {
      * Draws the gui ingame based on the config file
      */
     public boolean onTickInGame(float time, Minecraft mc) {
-        
-        if(!mapLoaderFinished && mapLoader.getContents() != null) {
-            mapLoaderFinished = true;
-            try {
-                mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-            } catch (Exception e) {
-                System.out.println("[ProjectAres]: Failed to parse maps");
-                System.out.println("[ProjectAres]: ERROR: " + e.toString());
-            }
-        }
-        
+        AresData.update();
+
         //if the game over screen is active then you have died
         //if it is the first time it is active count a death
         //if it is not don't do anything
@@ -253,6 +232,16 @@ public class mod_Ares extends BaseMod {
                     height += 8;
                 }
             }
+            // Show next map
+            if (CONFIG.showMap) {
+                if (AresData.getNextMap() != null) {
+                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + AresData.getNextMap(), width, height, 16777215);
+                    height += 8;
+                } else {
+                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A78Loading...", width, height, 16777215);
+                    height += 8;
+                }
+            }
             //Show KD Ratio
             if (CONFIG.showKD) {
                 mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + AresCustomMethods.getKD(), width, height, 16777215);
@@ -307,16 +296,8 @@ public class mod_Ares extends BaseMod {
     }
     
     public boolean onTickInGUI(float tick, Minecraft mc, GuiScreen screen){
-    	controlAres.onTickInGUI(tick, mc, screen);
-        if(!mapLoaderFinished && mapLoader.getContents() != null) {
-            mapLoaderFinished = true;
-            try {
-                mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-            } catch (Exception e) {
-                System.out.println("[ProjectAres]: Failed to parse maps");
-                System.out.println("[ProjectAres]: ERROR: " + e.toString());
-            }
-        }
+        controlAres.onTickInGUI(tick, mc, screen);
+        AresData.update();
     	return true;
     }
 
@@ -337,7 +318,6 @@ public class mod_Ares extends BaseMod {
             AresData.setTeam(AresData.Teams.Observers);
             AresData.isPA = true;
             AresData.setServer(AresCustomMethods.getServer(var1.getNetManager().getSocketAddress().toString()));
-            AresCustomMethods.getMap();
         } else{
             AresData.isPA=false;
         }

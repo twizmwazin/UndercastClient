@@ -24,7 +24,6 @@ public class MatchLoaderThread extends Thread {
     private String contents;
     public MatchLoaderThread(URL url) { // constructor starts the thread.
         urlToLoad = url;
-        //this.panel = gui;
         try {
             start();
         } catch(Exception e) {

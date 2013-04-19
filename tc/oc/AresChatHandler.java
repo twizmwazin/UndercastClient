@@ -40,6 +40,9 @@ public class AresChatHandler {
         else if (message.contains("Now playing")) {
             message = message.replace("Now playing ", "");
             AresData.setMap((message.split(" by ")[0]));
+            if(AresData.getKills() == 0 && AresData.getDeaths() == 0) { // new match or observer or noob
+                AresData.reload();
+            }
         }
         //if you die from someone
         else if (message.startsWith(username) && (message.contains(" by ") || message.contains(" took "))) {

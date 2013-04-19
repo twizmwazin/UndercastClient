@@ -21,7 +21,7 @@ public class AresCustomMethods {
     /**
      * Gets the current map (multi thread) Sets it to the AresVariable map variable
      */
-    public static void getMap() {
+    /*public static void getMap() {
         Thread thread = new Thread() {
             public void run() {
 
@@ -108,7 +108,7 @@ public class AresCustomMethods {
             }
         };
         thread.start();
-    }
+    }*/
 
     // simple rounding method
     private static double round(double d) {
