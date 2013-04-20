@@ -1,5 +1,10 @@
 The changelog exists since version 1.4.0
 
+1.4.1
+- added the ability to show the next map (maybe a bit unstable)
+- fixed Zeta gets displayed as Eta
+- fixed option showGuiMulti doesn't remove the Project Ares button
+
 1.4.0
 - Fixed crash with ShotBow servers
 - Fixed disconnect when using the control option screen
