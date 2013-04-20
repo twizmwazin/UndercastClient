@@ -71,7 +71,7 @@ public class mod_Ares extends BaseMod {
             public void run() {
                 while (true) {
                     //if the main menu is active then add a button
-                    if (mc.currentScreen instanceof GuiMainMenu && mc.currentScreen.buttonList.size() > 0) {
+                    if (mc.currentScreen instanceof GuiMainMenu && mc.currentScreen.buttonList.size() > 0 && CONFIG.showGuiMulti) {
                         //if you have not added the button already then add it
                         if (!mainMenuActive) {
                             //edit the current multiplayer button
