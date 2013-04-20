@@ -175,6 +175,8 @@ public class AresCustomMethods {
             return "Epsilon";
         } else if (currentServer.contains("theta")) {
             return "Theta";
+        } else if (currentServer.contains("zeta")) {
+            return "Zeta";
         } else if (currentServer.contains("eta")) {
             return "Eta";
         } else if (currentServer.contains("iota")) {
