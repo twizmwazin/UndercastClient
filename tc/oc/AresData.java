@@ -4,8 +4,6 @@ package tc.oc;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.src.KeyBinding;
-import net.minecraft.src.mod_Ares;
 import org.lwjgl.input.Keyboard;
 
 import tc.oc.internetTools.MatchLoaderThread;
@@ -34,9 +32,6 @@ public class AresData {
     public static String[][] mapData;
 
     public static boolean guiShowing;
-    public static KeyBinding keybind;
-    public static KeyBinding keybind2;
-    public static KeyBinding keybind3;
 
     public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown};
 
@@ -49,9 +44,6 @@ public class AresData {
         resetLargestKillstreak();
         setTeam(Teams.Observers);
         guiShowing = true;
-        keybind = new KeyBinding("gui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui));
-        keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui2));
-        keybind3 = new KeyBinding("fullBright", Keyboard.getKeyIndex(mod_Ares.CONFIG.keyGui3));
         mapLoaderFinished = false;
         try {
             mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));

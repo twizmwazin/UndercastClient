@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import tc.oc.AresData;
+import tc.oc.AresModClass;
 
-import net.minecraft.src.mod_Ares;
 
 public class Ares_Updater {
 
@@ -27,7 +27,7 @@ public class Ares_Updater {
             AresData.setUpdate(false);
             AresData.setUpdateLink("Could not get update information.");
         }
-        if(!mod_Ares.MOD_VERSION.equalsIgnoreCase(readline)){
+        if(!AresModClass.MOD_VERSION.equalsIgnoreCase(readline)){
             AresData.setUpdate(false);
             AresData.setUpdateLink(readline2);
         }

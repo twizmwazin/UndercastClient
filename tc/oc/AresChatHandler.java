@@ -5,9 +5,8 @@ package tc.oc;
 //You may not remove these comments
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.mod_Ares;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.packet.Packet3Chat;
 
 public class AresChatHandler {
     public AresChatHandler(String message, String username, EntityPlayer player) {
@@ -87,13 +86,16 @@ public class AresChatHandler {
             AresData.resetLargestKillstreak();
             AresData.setTeam(AresData.Teams.Observers);
         }
-        //filters [Tip] messages
-        else if (message.startsWith("[Tip]") && mod_Ares.CONFIG.filterTips) {
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine(0);
-        }
         //sends /match when you join a server.
-        else if(message.equals("Welcome to Project Ares") && mod_Ares.CONFIG.matchOnServerJoin){
+        else if(message.equals("Welcome to Project Ares") && AresConfig.matchOnServerJoin){
         	Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
         }
+    }
+    public static String handleTip(Packet3Chat packet) {
+        if (packet.message.contains("Tip") && AresConfig.filterTips)
+        {
+            return null;
+        }
+        return packet.message;
     }
 }

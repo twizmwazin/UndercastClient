@@ -4,8 +4,6 @@ package tc.oc.server;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.src.*;
-import tc.oc.AresGuiListener;
 
 import java.awt.*;
 import java.net.URI;
@@ -13,6 +11,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.util.StringTranslate;
+import net.minecraft.util.StringUtils;
+import tc.oc.AresModClass;
 
 public class Ares_ServerGUI extends GuiScreen {
     private Ares_ServerInfoSlotGui guiServerInfoSlot;
@@ -36,7 +42,7 @@ public class Ares_ServerGUI extends GuiScreen {
         servers = new ArrayList<AresServerInterface>();
         sortIndex = 0;
         //creates server list
-        for (String server : mod_Ares.masterServerList) {
+        for (String server : AresModClass.masterServerList) {
             servers.add(new AresServer(server, 25565));
         }
         //poll the servers
@@ -99,7 +105,7 @@ public class Ares_ServerGUI extends GuiScreen {
             //if the index is moving to web then use the downloaded server list
             if(sortNames[sortIndex].equalsIgnoreCase("web")){
                 servers.clear();
-                for (String server : mod_Ares.masterServerList) {
+                for (String server : AresModClass.masterServerList) {
                     servers.add(new AresServer(server, 25565));
                 }
                 pollServers();
@@ -189,7 +195,7 @@ public class Ares_ServerGUI extends GuiScreen {
             else if(sortNames[sortIndex].equalsIgnoreCase("abc")){
                 servers.clear();
                 //copy the array of servers
-                ArrayList<String> currentServerList = new ArrayList<String>(mod_Ares.masterServerList);
+                ArrayList<String> currentServerList = new ArrayList<String>(AresModClass.masterServerList);
                 //sort the servers
                 Collections.sort(currentServerList);
                 for (String server : currentServerList) {

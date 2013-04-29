@@ -1,9 +1,9 @@
 package tc.oc.server;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Tessellator;
 
 import java.util.ArrayList;
+import net.minecraft.client.renderer.Tessellator;
 
 class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
     final Ares_ServerGUI parent;

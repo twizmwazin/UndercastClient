@@ -4,15 +4,15 @@ package tc.oc.server;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.src.ChatAllowedCharacters;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.Packet;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.util.MathHelper;
 
 
 public class Ares_ThreadPollServers extends Thread {
