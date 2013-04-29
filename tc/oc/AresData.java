@@ -30,6 +30,8 @@ public class AresData {
     private static MatchLoaderThread mapLoader;
     private static boolean mapLoaderFinished;
     public static String[][] mapData;
+    // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message 
+    public static boolean welcomeMessageExpected = true; 
 
     public static boolean guiShowing;
 
@@ -63,15 +65,17 @@ public class AresData {
                 System.out.println("[ProjectAres]: ERROR: " + e.toString());
             }
             // set the map
-            for(int c = 0; c < mapData.length; c++) {
+            /*for(int c = 0; c < mapData.length; c++) {
                 if(mapData[c][0] == null) {
                     break;
                 }
                 if(mapData[c][0].replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
+                    System.out.println(c);
+                    System.out.println(mapData[2][2]);
                     map = mapData[c][2].replace("Now: ", "");
                     nextMap = mapData[c][3].replace("Next: ", "");
                 }
-            }
+            }*/
         }
     }
 

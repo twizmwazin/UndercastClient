@@ -109,12 +109,12 @@ public class AresModClass {
         //if chat is open and config says yes then show gui
         if (AresData.isPlayingAres() && AresData.guiShowing && (mc.inGameHasFocus || AresConfig.showGuiChat && mc.currentScreen instanceof GuiChat))
         {
-//            // Server display
-//            if (AresConfig.showServer)
-//            {
-//                mc.fontRenderer.drawStringWithShadow("Server: \u00A76" + AresData.getServer(), width, height, 16777215);
-//                height += 8;
-//            }
+            // Server display
+            if (AresConfig.showServer)
+            {
+                mc.fontRenderer.drawStringWithShadow("Server: \u00A76" + AresData.getServer(), width, height, 16777215);
+                height += 8;
+            }
 
             // Team display (based on color)
             if (AresConfig.showTeam)

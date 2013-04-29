@@ -9,8 +9,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.src.ModLoader;
 import org.lwjgl.input.Keyboard;
 import tc.oc.AresData.Teams;
-import tc.oc.server.Ares_ServerGUI;
-
 /**
  * @author Flv92
  */

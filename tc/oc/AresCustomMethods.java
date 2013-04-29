@@ -55,40 +55,4 @@ public class AresCustomMethods {
         }
     }
 
-    /**
-     * Gets the Ares server you are playing on
-     *
-     * @param currentServer The ip of the server that you are on
-     * @return The string of the server you are on
-     */
-    public static String getServer(String currentServer) {
-        if (currentServer.contains("alpha")) {
-            return "Alpha";
-        } else if (currentServer.contains("beta")) {
-            return "Beta";
-        } else if (currentServer.contains("gamma")) {
-            return "Gamma";
-        } else if (currentServer.contains("delta")) {
-            return "Delta";
-        } else if (currentServer.contains("epsilon")) {
-            return "Epsilon";
-        } else if (currentServer.contains("theta")) {
-            return "Theta";
-        } else if (currentServer.contains("zeta")) {
-            return "Zeta";
-        } else if (currentServer.contains("eta")) {
-            return "Eta";
-        } else if (currentServer.contains("iota")) {
-            return "Iota";
-        } else if (currentServer.contains("kappa")) {
-            return "Kappa";
-        } else if (currentServer.contains("lambda")) {
-            return "Lambda";
-        } else if (currentServer.contains("nostalgia")) {
-            return "Nostalgia";
-        } else {
-            return "???";
-        }
-    }
-
 }
