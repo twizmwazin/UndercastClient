@@ -13,9 +13,8 @@ public class AresServerInfo {
     private String serverMap;
     private String serverNextMap;
     private ServerType serverType;
-    
-    public AresServerInfo(String name, String map, String nextMap, ServerType serverType)
-    {
+
+    public AresServerInfo(String name, String map, String nextMap, ServerType serverType) {
         this.serverName = name;
         this.serverMap = map;
         this.serverNextMap = nextMap;

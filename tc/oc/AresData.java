@@ -52,30 +52,24 @@ public class AresData {
         setTeam(Teams.Observers);
         guiShowing = true;
         mapLoaderFinished = false;
-        try
-        {
+        try {
             mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("[ProjectAres]: Failed to load maps");
             System.out.println("[ProjectAres]: ERROR: " + e.toString());
         }
     }
 
     public static void update() {
-        if (!mapLoaderFinished && mapLoader.getContents() != null)
-        {
+        if (!mapLoaderFinished && mapLoader.getContents() != null) {
             mapLoaderFinished = true;
-            try
-            {
+            try {
                 mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("[ProjectAres]: Failed to parse maps");
                 System.out.println("[ProjectAres]: ERROR: " + e.toString());
             }
-            for (int i = 0; i < mapData.length; i++)
-            {
+            for (int i = 0; i < mapData.length; i++) {
                 System.out.println(mapData[i][0]);
             }
             FMLClientHandler.instance().getClient().thePlayer.sendChatMessage("/servers");
@@ -98,11 +92,9 @@ public class AresData {
         map = "Loading...";
         nextMap = "Loading...";
 
-        try
-        {
+        try {
             mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("[ProjectAres]: Failed to load maps");
             System.out.println("[ProjectAres]: ERROR: " + e.toString());
         }
@@ -147,8 +139,7 @@ public class AresData {
 
     public static void addKillstreak(int i) {
         killstreak += i;
-        if (largestKillstreak < killstreak)
-        {
+        if (largestKillstreak < killstreak) {
             largestKillstreak = killstreak;
         }
     }
