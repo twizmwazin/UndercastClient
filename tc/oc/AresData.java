@@ -65,6 +65,10 @@ public class AresData {
                 System.out.println("[ProjectAres]: Failed to parse maps");
                 System.out.println("[ProjectAres]: ERROR: " + e.toString());
             }
+            for(int i = 0; i < mapData.length;i++)
+            {
+                System.out.println(mapData[i][0]);
+            }
             // set the map
             /*for(int c = 0; c < mapData.length; c++) {
                 if(mapData[c][0] == null) {
