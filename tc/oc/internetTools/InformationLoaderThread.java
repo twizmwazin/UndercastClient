@@ -19,10 +19,10 @@ import java.util.regex.Pattern;
  Or, use the ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT HTTP!!
  */
 
-public class MatchLoaderThread extends Thread {
+public class InformationLoaderThread extends Thread {
     private URL urlToLoad;
     private String contents;
-    public MatchLoaderThread(URL url) { // constructor starts the thread.
+    public InformationLoaderThread(URL url) { // constructor starts the thread.
         urlToLoad = url;
         try {
             start();

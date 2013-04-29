@@ -19,7 +19,7 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
 import tc.oc.AresData.Teams;
-import tc.oc.internetTools.MatchLoaderThread;
+import tc.oc.internetTools.InformationLoaderThread;
 import tc.oc.update.Ares_Updater;
 
 /**
