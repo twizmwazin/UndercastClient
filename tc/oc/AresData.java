@@ -32,6 +32,7 @@ public class AresData {
     public static String[][] mapData;
     // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message 
     public static boolean welcomeMessageExpected = true; 
+    public static boolean isLobby;
 
     public static boolean guiShowing;
 

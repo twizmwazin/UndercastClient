@@ -114,9 +114,11 @@ public class AresChatHandler {
         {
             AresData.setServer(message.replace("Teleporting you to ", ""));
             AresData.welcomeMessageExpected = true;
+            AresCustomMethods.handleServerSwap();
         } else if (message.contains("You are currently on "))
         {
             AresData.setServer(message.replace("You are currently on ", ""));
+            AresCustomMethods.handleServerSwap();
         }
     }
 

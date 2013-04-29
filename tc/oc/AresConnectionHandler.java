@@ -40,6 +40,7 @@ public class AresConnectionHandler implements IConnectionHandler {
         {
             // What happens if logs into project ares
             AresData.isPA = true;
+            AresData.isLobby = true;
             AresData.guiShowing = true;
             System.out.println("Ares mod activated!");
             AresData.setTeam(AresData.Teams.Observers);

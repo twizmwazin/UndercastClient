@@ -1,7 +1,12 @@
 The changelog exists since version 1.4.0
 
-1.4.2
-- goal: compatibility with Overcast Network
+1.4.3dev
+- lobby support
+- server and map detection fixed
+
+1.4.2dev
+- disable broken features
+- remove server gui temporarily
 
 1.4.1
 - added the ability to show the next map (maybe a bit unstable)
@@ -12,3 +17,4 @@ The changelog exists since version 1.4.0
 - Fixed crash with ShotBow servers
 - Fixed disconnect when using the control option screen
 - Removed the setting ServerDomain
+

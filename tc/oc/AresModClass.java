@@ -30,7 +30,7 @@ public class AresModClass {
     /**
      * Static unique variable giving the current version of the mod
      */
-    public final static String MOD_VERSION = "1.4.2dev";
+    public final static String MOD_VERSION = "1.4.3dev";
     public static Configuration CONFIG;
     public static String username = "Not_Found";
     private static boolean deathScreenActive;
@@ -117,7 +117,7 @@ public class AresModClass {
             }
 
             // Team display (based on color)
-            if (AresConfig.showTeam)
+            if (AresConfig.showTeam && !AresData.isLobby)
             {
                 mc.fontRenderer.drawStringWithShadow("Team: " + AresData.getTeam(), width, height, getTeamColors());
                 height += 8;
@@ -128,56 +128,56 @@ public class AresModClass {
                 mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + AresData.getFriends(), width, height, 16777215);
                 height += 8;
             }
-//            // Map fetcher:
-//            if (AresConfig.showMap)
-//            {
-//                if (AresData.getMap() != null)
-//                {
-//                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d" + AresData.getMap(), width, height, 16777215);
-//                    height += 8;
-//                } else
-//                {
-//                    AresData.setMap("Fetching...");
-//                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A78" + AresData.getMap(), width, height, 16777215);
-//                    height += 8;
-//                }
-//            }
-//            // Show next map
-//            if (AresConfig.showNextMap) {
-//                if (AresData.getNextMap() != null) {
-//                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + AresData.getNextMap(), width, height, 16777215);
-//                    height += 8;
-//                } else {
-//                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A78Loading...", width, height, 16777215);
-//                    height += 8;
-//                }
-//            }
+            // Map fetcher:
+            if (AresConfig.showMap && !AresData.isLobby)
+            {
+                if (AresData.getMap() != null)
+                {
+                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d" + AresData.getMap(), width, height, 16777215);
+                    height += 8;
+                } else
+                {
+                    AresData.setMap("Fetching...");
+                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A78" + AresData.getMap(), width, height, 16777215);
+                    height += 8;
+                }
+            }
+            // Show next map
+            if (AresConfig.showNextMap && !AresData.isLobby) {
+                if (AresData.getNextMap() != null) {
+                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + AresData.getNextMap(), width, height, 16777215);
+                    height += 8;
+                } else {
+                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A78Loading...", width, height, 16777215);
+                    height += 8;
+                }
+            }
             //Show KD Ratio
-            if (AresConfig.showKD)
+            if (AresConfig.showKD && !AresData.isLobby)
             {
                 mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + AresCustomMethods.getKD(), width, height, 16777215);
                 height += 8;
             }
             //show KK Ratio
-            if (AresConfig.showKK)
+            if (AresConfig.showKK && !AresData.isLobby)
             {
                 mc.fontRenderer.drawStringWithShadow("K/K: \u00A73" + AresCustomMethods.getKK(), width, height, 16777215);
                 height += 8;
             }
             //show amount of kills
-            if (AresConfig.showKills)
+            if (AresConfig.showKills && !AresData.isLobby)
             {
                 mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a" + AresData.getKills(), width, height, 16777215);
                 height += 8;
             }
             //show amount of deaths
-            if (AresConfig.showDeaths)
+            if (AresConfig.showDeaths && !AresData.isLobby)
             {
                 mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + AresData.getDeaths(), width, height, 16777215);
                 height += 8;
             }
             // Kill Streak display
-            if (AresConfig.showStreak)
+            if (AresConfig.showStreak && !AresData.isLobby)
             {
                 mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) AresData.getKillstreak() + "/" + (int) AresData.getLargestKillstreak(), width, height, 16777215);
                 height += 8;
