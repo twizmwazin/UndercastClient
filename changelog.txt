@@ -1,5 +1,8 @@
 The changelog exists since version 1.4.0
 
+1.4.2
+- goal: compatibility with Overcast Network
+
 1.4.1
 - added the ability to show the next map (maybe a bit unstable)
 - fixed Zeta gets displayed as Eta

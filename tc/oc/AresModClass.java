@@ -30,7 +30,7 @@ public class AresModClass {
     /**
      * Static unique variable giving the current version of the mod
      */
-    public final static String MOD_VERSION = "1.4.1";
+    public final static String MOD_VERSION = "1.4.2dev";
     public static Configuration CONFIG;
     public static String username = "Not_Found";
     private static boolean deathScreenActive;
