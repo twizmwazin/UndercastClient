@@ -35,15 +35,15 @@ public class AresConnectionHandler implements IConnectionHandler {
     @Override
     public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
         AresData.setTeam(AresData.Teams.Observers);
-        System.out.println("Client successfully connected to " + ((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString());
+        //System.out.println("Client successfully connected to " + ((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString());
 
         //if logging onto a project ares server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("oc.tc"))
+        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("us.oc.tc"))
         {
             // What happens if logs into project ares
             AresData.isPA = true;
             AresData.guiShowing = true;
-            System.out.println("Connected to: " + ((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString() + " Ares mod activated!");
+            System.out.println("Ares mod activated!");
             AresData.setTeam(AresData.Teams.Observers);
             AresData.isPA = true;
             AresData.setServer(AresCustomMethods.getServer(((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString()));

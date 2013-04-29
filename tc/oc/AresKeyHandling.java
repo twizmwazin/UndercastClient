@@ -48,7 +48,7 @@ public class AresKeyHandling extends KeyHandler {
                 AresData.guiShowing = !AresData.guiShowing;
             } else if (kb == keyGuiServer)
             {
-                ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
+                //ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
             } //if you are an obs;have the config to true; toggle fullbright and play sound
             else if (AresData.isPlayingAres() && kb == keyGuiFullBright && AresData.team == Teams.Observers && AresConfig.fullBright)
             {

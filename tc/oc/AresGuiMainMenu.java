@@ -18,7 +18,7 @@ public class AresGuiMainMenu extends GuiMainMenu {
         super.initGui();
         this.buttonList.remove(1);
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, 99, 20, StringTranslate.getInstance().translateKey("menu.multiplayer")));
-        this.buttonList.add(new GuiButton(7, this.width / 2 + 1, this.height / 4 + 72, 99, 20, "Project Ares"));
+        //this.buttonList.add(new GuiButton(7, this.width / 2 + 1, this.height / 4 + 72, 99, 20, "Project Ares"));
     }
 
     protected void actionPerformed(GuiButton par1GuiButton) {
