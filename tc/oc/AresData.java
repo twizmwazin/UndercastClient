@@ -4,6 +4,7 @@ package tc.oc;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import cpw.mods.fml.client.FMLClientHandler;
 import org.lwjgl.input.Keyboard;
 
 import tc.oc.internetTools.MatchLoaderThread;
@@ -14,6 +15,7 @@ import java.util.HashSet;
 
 public class AresData {
     //Data Varibles
+
     public static String map;
     public static String nextMap;
     public static double kills;
@@ -31,15 +33,17 @@ public class AresData {
     private static boolean mapLoaderFinished;
     public static String[][] mapData;
     // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message 
-    public static boolean welcomeMessageExpected = true; 
+    public static boolean welcomeMessageExpected = true;
     public static boolean isLobby;
-
     public static boolean guiShowing;
 
-    public static enum Teams {Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown};
+    public static enum Teams {
+
+        Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown
+    };
 
     public AresData() {
-        update=true;
+        update = true;
         setMap("Fetching...");
         resetKills();
         resetDeaths();
@@ -48,39 +52,45 @@ public class AresData {
         setTeam(Teams.Observers);
         guiShowing = true;
         mapLoaderFinished = false;
-        try {
+        try
+        {
             mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
-        } catch(Exception e) {
+        } catch (Exception e)
+        {
             System.out.println("[ProjectAres]: Failed to load maps");
             System.out.println("[ProjectAres]: ERROR: " + e.toString());
         }
     }
 
     public static void update() {
-        if(!mapLoaderFinished && mapLoader.getContents() != null) {
+        if (!mapLoaderFinished && mapLoader.getContents() != null)
+        {
             mapLoaderFinished = true;
-            try {
+            try
+            {
                 mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 System.out.println("[ProjectAres]: Failed to parse maps");
                 System.out.println("[ProjectAres]: ERROR: " + e.toString());
             }
-            for(int i = 0; i < mapData.length;i++)
+            for (int i = 0; i < mapData.length; i++)
             {
                 System.out.println(mapData[i][0]);
             }
+            FMLClientHandler.instance().getClient().thePlayer.sendChatMessage("/servers");
             // set the map
             /*for(int c = 0; c < mapData.length; c++) {
-                if(mapData[c][0] == null) {
-                    break;
-                }
-                if(mapData[c][0].replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
-                    System.out.println(c);
-                    System.out.println(mapData[2][2]);
-                    map = mapData[c][2].replace("Now: ", "");
-                    nextMap = mapData[c][3].replace("Next: ", "");
-                }
-            }*/
+             if(mapData[c][0] == null) {
+             break;
+             }
+             if(mapData[c][0].replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
+             System.out.println(c);
+             System.out.println(mapData[2][2]);
+             map = mapData[c][2].replace("Now: ", "");
+             nextMap = mapData[c][3].replace("Next: ", "");
+             }
+             }*/
         }
     }
 
@@ -88,9 +98,11 @@ public class AresData {
         map = "Loading...";
         nextMap = "Loading...";
 
-        try {
+        try
+        {
             mapLoader = new MatchLoaderThread(new URL("https://oc.tc/play"));
-        } catch(Exception e) {
+        } catch (Exception e)
+        {
             System.out.println("[ProjectAres]: Failed to load maps");
             System.out.println("[ProjectAres]: ERROR: " + e.toString());
         }
@@ -135,7 +147,8 @@ public class AresData {
 
     public static void addKillstreak(int i) {
         killstreak += i;
-        if (largestKillstreak < killstreak) {
+        if (largestKillstreak < killstreak)
+        {
             largestKillstreak = killstreak;
         }
     }

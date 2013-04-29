@@ -40,7 +40,7 @@ public class AresModClass {
     public static float defaultLevel;
     @Instance("aresMod")
     public static AresModClass instance;
-
+    public static ArrayList<AresServerInfo> masterServerList = new ArrayList<AresServerInfo>();
     /**
      * preInitialisation method automatically called by Forge with
      *
@@ -144,11 +144,14 @@ public class AresModClass {
                 }
             }
             // Show next map
-            if (AresConfig.showNextMap && !AresData.isLobby) {
-                if (AresData.getNextMap() != null) {
+            if (AresConfig.showNextMap && !AresData.isLobby)
+            {
+                if (AresData.getNextMap() != null)
+                {
                     mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + AresData.getNextMap(), width, height, 16777215);
                     height += 8;
-                } else {
+                } else
+                {
                     mc.fontRenderer.drawStringWithShadow("Next Map: \u00A78Loading...", width, height, 16777215);
                     height += 8;
                 }
