@@ -7,18 +7,25 @@ public class AresServerInfo {
 
     public enum ServerType {
 
-        LOBBY, BLITZ, OCTC
+        LOBBY, BLITZ, PROJECTARES
+    };
+
+    public enum ServerState {
+
+        STARTING, STARTED, FINISHED, WAITING, LOBBY
     };
     private String serverName;
     private String serverMap;
     private String serverNextMap;
     private ServerType serverType;
+    private ServerState serverState;
 
-    public AresServerInfo(String name, String map, String nextMap, ServerType serverType) {
+    public AresServerInfo(String name, String map, String nextMap, ServerType serverType, ServerState serverState) {
         this.serverName = name;
         this.serverMap = map;
         this.serverNextMap = nextMap;
         this.serverType = serverType;
+        this.serverState = serverState;
     }
 
     /**
@@ -50,6 +57,13 @@ public class AresServerInfo {
     }
 
     /**
+     * @return the serverState
+     */
+    public ServerState getServerState() {
+        return serverState;
+    }
+
+    /**
      * @param serverName the serverName to set
      */
     public void setServerName(String serverName) {
@@ -75,5 +89,17 @@ public class AresServerInfo {
      */
     public void setServerType(ServerType serverType) {
         this.serverType = serverType;
+    }
+
+    /**
+     * @param serverState the serverState to set
+     */
+    public void setServerState(ServerState serverState) {
+        this.serverState = serverState;
+    }
+    
+    @Override
+    public String toString(){
+        return serverName + ":" + serverMap + ":" + serverNextMap + ":" + serverType.name() + ":" + serverState.name();
     }
 }

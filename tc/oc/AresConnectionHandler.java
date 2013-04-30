@@ -46,6 +46,7 @@ public class AresConnectionHandler implements IConnectionHandler {
             AresData.setTeam(AresData.Teams.Observers);
             AresData.isPA = true;
             AresData.setServer("Lobby");
+            AresModClass.instance.generateOrUpdateServerList();
         } else
         {
             AresData.isPA = false;

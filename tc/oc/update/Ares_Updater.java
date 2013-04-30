@@ -27,7 +27,7 @@ public class Ares_Updater {
             AresData.setUpdate(false);
             AresData.setUpdateLink("Could not get update information.");
         }
-        if(!AresModClass.MOD_VERSION.equalsIgnoreCase(readline)){
+        if(!AresModClass.MOD_VERSION.equalsIgnoreCase(readline)  && !AresModClass.MOD_VERSION.contains("dev")){
             AresData.setUpdate(false);
             AresData.setUpdateLink(readline2);
         }

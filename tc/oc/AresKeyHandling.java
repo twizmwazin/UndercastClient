@@ -6,9 +6,9 @@ import cpw.mods.fml.common.TickType;
 import java.util.EnumSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.src.ModLoader;
 import org.lwjgl.input.Keyboard;
 import tc.oc.AresData.Teams;
+import tc.oc.server.Ares_ServerGUI;
 /**
  * @author Flv92
  */
@@ -46,7 +46,11 @@ public class AresKeyHandling extends KeyHandler {
                 AresData.guiShowing = !AresData.guiShowing;
             } else if (kb == keyGuiServer)
             {
-                //ModLoader.openGUI(mc.thePlayer, new Ares_ServerGUI(true));
+                for(AresServerInfo i : AresModClass.masterServerList)
+                {
+                    System.out.println(i.toString());
+                }
+                //mc.displayGuiScreen(new Ares_ServerGUI(true));
             } //if you are an obs;have the config to true; toggle fullbright and play sound
             else if (AresData.isPlayingAres() && kb == keyGuiFullBright && AresData.team == Teams.Observers && AresConfig.fullBright)
             {

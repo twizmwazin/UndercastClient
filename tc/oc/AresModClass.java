@@ -21,6 +21,8 @@ import net.minecraftforge.common.Configuration;
 import tc.oc.AresData.Teams;
 import tc.oc.internetTools.InformationLoaderThread;
 import tc.oc.update.Ares_Updater;
+import tc.oc.AresServerInfo.ServerType;
+import tc.oc.AresServerInfo.ServerState;
 
 /**
  * @author Flv92
@@ -219,6 +221,38 @@ public class AresModClass {
             return 0x00FFFF;
         } else {
             return 0x606060;
+        }
+    }
+
+    public void generateOrUpdateServerList() {
+        masterServerList.clear();
+        //@TODO: Things using a new custom API to get infos about the servers.
+        String[] serverNames = new String[]{
+            "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "nostalgia",
+            "chaos", "cronus",
+            "lobby"};
+        String[] currentMap = new String[]{
+            "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1",
+            "map2", "map2",
+            null};
+        String[] nextMap = new String[]{
+            "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1", "map1",
+            "map2", "map2",
+            null};
+        ServerState[] states = new ServerState[]{
+            ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED, ServerState.STARTED,
+            ServerState.FINISHED, ServerState.FINISHED,
+            ServerState.LOBBY
+        };
+        ServerType[] serverTypes = new ServerType[]{
+            ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,ServerType.PROJECTARES,
+            ServerType.BLITZ, ServerType.BLITZ,
+            ServerType.LOBBY
+        };
+        
+        for(int i = 0;i<serverNames.length;i++)
+        {
+            masterServerList.add(new AresServerInfo(serverNames[i], currentMap[i], nextMap[i], serverTypes[i], states[i]));
         }
     }
 }
