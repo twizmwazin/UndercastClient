@@ -79,9 +79,6 @@ public class AresChatHandler {
             AresData.resetKillstreak();
             AresData.resetLargestKillstreak();
             AresData.setTeam(AresData.Teams.Observers);
-        } //filters [Tip] messages
-        else if (message.startsWith("[Tip]") && AresConfig.filterTips) {
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine(0);
         } //sends /match when you join a server.
         else if (message.contains("Welcome to")) {
             if (!AresData.welcomeMessageExpected) {

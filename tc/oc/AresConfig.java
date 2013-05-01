@@ -51,6 +51,7 @@ public class AresConfig {
         showStreak = config.get("ProjectAres", "showStreak", true).getBoolean(true);
         showGuiChat = config.get("ProjectAres", "showGuiChat", true).getBoolean(true);
         showGuiMulti = config.get("ProjectAres", "showGuiMulti", true).getBoolean(true);
+        enableButtonTooltips = config.get("ProjectAres", "enableButtonTooltips", true).getBoolean(true);
         x = config.get("ProjectAres", "X", 2).getInt();
         y = config.get("ProjectAres", "Y", 2).getInt();
         toggleTitleScreenButton = config.get("ProjectAres", "toggleTitleScreenButton", true).getBoolean(true);
