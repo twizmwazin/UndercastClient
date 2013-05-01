@@ -1,5 +1,21 @@
 The changelog exists since version 1.4.0
 
+1.5.0
+ - improved updater (no messages in dev and newer versions)
+ - friend counter disabled by default setting
+ - fix server information parsing
+ - added button tooltips
+ - reimplement the server gui
+ - lobby button
+ - remove the settings for controls, use the ingame screen instead
+ - fixed tip filter with a seperate forge version
+ - reenable map fetcher
+
+1.4.4dev
+- fix crash on server join
+- disable map fetcher until an API is implemented
+- disable updater for dev versions
+
 1.4.3dev
 - lobby support
 - server and map detection fixed
@@ -17,4 +33,3 @@ The changelog exists since version 1.4.0
 - Fixed crash with ShotBow servers
 - Fixed disconnect when using the control option screen
 - Removed the setting ServerDomain
-

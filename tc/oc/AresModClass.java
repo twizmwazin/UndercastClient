@@ -22,7 +22,7 @@ import tc.oc.AresData.Teams;
 @Mod(modid = "overcastNetwork-unofficialMod", name = "OvercastNetwork Mod", version = AresModClass.MOD_VERSION)
 public class AresModClass {
 
-    public final static String MOD_VERSION = "1.4.4dev";
+    public final static String MOD_VERSION = "1.5.0";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean deathScreenActive;
