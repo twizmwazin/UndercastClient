@@ -26,18 +26,18 @@ public class AresCustomMethods {
     public static double getKD() {
         double k = AresData.getKills();
         double d = AresData.getDeaths();
-        if (k == d && k == 0)
-        {
+        if (k == d && k == 0) {
             return 0D;
-        } else if (k > 0 && d == 0)
-        {
-            return k;
-        } else if (k == d && k > 0)
-        {
-            return 1D;
-        } else
-        {
-            return round(k / d);
+        } else {
+            if (k > 0 && d == 0) {
+                return k;
+            } else {
+                if (k == d && k > 0) {
+                    return 1D;
+                } else {
+                    return round(k / d);
+                }
+            }
         }
     }
 
@@ -49,18 +49,18 @@ public class AresCustomMethods {
     public static double getKK() {
         double k = AresData.getKills();
         double kk = AresData.getKilled();
-        if (k == kk && k == 0)
-        {
+        if (k == kk && k == 0) {
             return 0D;
-        } else if (k > 0 && kk == 0)
-        {
-            return k;
-        } else if (k == kk && kk > 0)
-        {
-            return 1D;
-        } else
-        {
-            return round(k / kk);
+        } else {
+            if (k > 0 && kk == 0) {
+                return k;
+            } else {
+                if (k == kk && kk > 0) {
+                    return 1D;
+                } else {
+                    return round(k / kk);
+                }
+            }
         }
     }
 
@@ -69,11 +69,9 @@ public class AresCustomMethods {
      * reseted
      */
     public static void handleServerSwap() {
-        if (AresData.server.equalsIgnoreCase("lobby"))
-        {
+        if (AresData.server.equalsIgnoreCase("lobby")) {
             AresData.isLobby = true;
-        } else
-        {
+        } else {
             AresData.isLobby = false;
         }
         AresData.setTeam(AresData.Teams.Observers);

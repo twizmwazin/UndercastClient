@@ -4,14 +4,15 @@ package tc.oc;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import cpw.mods.fml.client.FMLClientHandler;
 import org.lwjgl.input.Keyboard;
 
 import tc.oc.internetTools.InformationLoaderThread;
 import tc.oc.internetTools.ServerStatusHTMLParser;
+import tc.oc.server.AresServer;
 
 import java.net.URL;
 import java.util.HashSet;
+import net.minecraft.client.settings.KeyBinding;
 
 public class AresData {
     //Data Varibles
@@ -27,19 +28,35 @@ public class AresData {
     public static String server;
     public static Teams team;
     public static boolean isPA;
+    public static boolean isLobby;
     public static boolean update;
     public static String updateLink;
     private static InformationLoaderThread mapLoader;
     private static boolean mapLoaderFinished;
-    public static String[][] mapData;
-    // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message 
+    public static AresServer[] serverInformation;
+    public static int serverCount;
+    // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message
     public static boolean welcomeMessageExpected = true;
-    public static boolean isLobby;
+    public static boolean redirect = false;
+    public static String directionServer;
     public static boolean guiShowing;
+    public static KeyBinding keybind;
+    public static KeyBinding keybind2;
+    public static KeyBinding keybind3;
 
     public static enum Teams {
 
         Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown
+    };
+
+    public static enum MatchState {
+
+        Starting, Started, Finished, Waiting, Lobby, Unknown
+    };
+
+    public static enum ServerType {
+
+        Lobby, Blitz, ProjectAres, Unknown
     };
 
     public AresData() {
@@ -51,7 +68,15 @@ public class AresData {
         resetLargestKillstreak();
         setTeam(Teams.Observers);
         guiShowing = true;
+        keybind = new KeyBinding("gui", Keyboard.getKeyIndex("F6"));
+        keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex("L"));
+        keybind3 = new KeyBinding("fullBright", Keyboard.getKeyIndex("G"));
         mapLoaderFinished = false;
+        serverInformation = new AresServer[20];
+        serverCount = 0;
+        for (int c = 0; c < serverInformation.length; c++) {
+            serverInformation[c] = new AresServer();
+        }
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch (Exception e) {
@@ -64,27 +89,36 @@ public class AresData {
         if (!mapLoaderFinished && mapLoader.getContents() != null) {
             mapLoaderFinished = true;
             try {
-                mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
+                String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
+
+                for (int c = 0; c < mapData.length; c++) {
+                    serverInformation[c].name = mapData[c][0];
+                    try {
+                        serverInformation[c].playerCount = Integer.parseInt(mapData[c][1]);
+                    } catch (Exception e) {
+                        serverInformation[c].playerCount = -1;
+                    }
+                    serverInformation[c].currentMap = mapData[c][2];
+                    serverInformation[c].nextMap = mapData[c][3];
+                    serverInformation[c].matchState = MatchState.Started; //API support
+                    serverInformation[c].type = ServerType.Unknown;
+                }
+
+                // set the map
+                for (int c = 0; c < serverInformation.length; c++) {
+                    if (serverInformation[c].getServerName() == null) {
+                        serverCount = c - 1;
+                        break;
+                    }
+                    if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
+                        map = serverInformation[c].currentMap;
+                        nextMap = serverInformation[c].nextMap;
+                    }
+                }
             } catch (Exception e) {
                 System.out.println("[ProjectAres]: Failed to parse maps");
                 System.out.println("[ProjectAres]: ERROR: " + e.toString());
             }
-            for (int i = 0; i < mapData.length; i++) {
-                System.out.println(mapData[i][0]);
-            }
-            FMLClientHandler.instance().getClient().thePlayer.sendChatMessage("/servers");
-            // set the map
-            /*for(int c = 0; c < mapData.length; c++) {
-             if(mapData[c][0] == null) {
-             break;
-             }
-             if(mapData[c][0].replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
-             System.out.println(c);
-             System.out.println(mapData[2][2]);
-             map = mapData[c][2].replace("Now: ", "");
-             nextMap = mapData[c][3].replace("Next: ", "");
-             }
-             }*/
         }
     }
 

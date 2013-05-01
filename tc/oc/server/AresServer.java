@@ -1,55 +1,43 @@
 package tc.oc.server;
 
-public class AresServer implements AresServerInterface {
+import tc.oc.AresData;
+import tc.oc.AresData.ServerType;
+import tc.oc.AresData.MatchState;;
 
-    private Ares_ThreadPollServers server;
-
+public class AresServer {
+    public String name;
+    public String currentMap;
+    public String nextMap;
+    public int playerCount;
+    public ServerType type;
+    public MatchState matchState;
     /**
      * Default constructor
-     * Creates a Thread Poll for the server
-     *
-     * @param server String server IP
-     * @param port   int port for the server
      */
-    public AresServer(String server, int port) {
-        this.server = new Ares_ThreadPollServers(server, port);
+    public AresServer() {
     }
 
-    /**
-     * Runs the Thread to poll the server
-     */
-    public void pollServer() {
-        server.run();
+    public String getServerName() {
+        return name;
     }
 
-    @Override
-    public String getServer() {
-        return server.serverIP;
+    public String getCurrentMap() {
+        return currentMap;
     }
 
-    @Override
-    public String getServerMOTD() {
-        return server.MOTD;
+    public String getNextMap() {
+        return nextMap;
     }
 
-    @Override
-    public String getServerPlayers() {
-        return server.populationInfo;
+    public int getPlayerCount() {
+        return playerCount;
     }
 
-    @Override
-    public String getServerVersion() {
-        return server.gameVersion;
+    public ServerType getServerType() {
+        return type;
     }
 
-    @Override
-    public String getPing() {
-        return server.pingToServer;
+    public MatchState getMatchState() {
+        return matchState;
     }
-
-    @Override
-    public int getPort() {
-        return server.port;
-    }
-
 }

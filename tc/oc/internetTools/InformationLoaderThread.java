@@ -9,7 +9,7 @@ import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
- MatchLoaderThread by molenzwiebel
+ InformationLoaderThread by molenzwiebel
  This class will take a url and load the contents in an
  other thread.
  A link that might be interesting to fetch:

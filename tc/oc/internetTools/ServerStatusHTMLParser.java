@@ -24,10 +24,25 @@ import javax.swing.text.html.parser.ParserDelegator;
  *     data[11][1] will give the players on Nostalgia
  */
 public class ServerStatusHTMLParser {
+    // Function to remove the last character is it is a space
+    public static String stripLastSpace(String str) {
+        
+        if (str.length() > 0 && str.charAt(str.length()-1) == ' ') {
+            str = str.substring(0, str.length()-1);
+            return str;
+        }
+        else {
+            return str;
+        }
+    }
+
     public static String[][] parse(String string) throws Exception {
+        // Remove all text between "<div class='span4'>" and "<div class='span8'>" (staff online data, not needed)
+        String realSource = string.replace(string.substring(string.indexOf("<div class='span4'>"), string.indexOf("<div class='span8'>")), "");
+
         // Create 2 readers
-        Reader HTMLReader = new StringReader(string); 
-        Reader HTMLReader2 = new StringReader(string); 
+        Reader HTMLReader = new StringReader(realSource);
+        Reader HTMLReader2 = new StringReader(realSource);
         // Create 2 parsers
         ParserDelegator pd = new ParserDelegator();
         ParserDelegator pd2 = new ParserDelegator();
@@ -79,13 +94,8 @@ class Parser extends HTMLEditorKit.ParserCallback {
         // Handle the text in between tags (<tag>TEXT</tag>)
         if(inTD)
         {
-            //Make sure we are not parsing how many staff members there are online (by checking if there is a " / " in the text)
-            if (count == 2 && !(new String(data).contains(" / "))) {
-                inTD = false; count = -1; mapCount--;
-            } else {
-                // Write the data
-                mapData[mapCount][count-1] = new String(data);
-            }
+            // Write the data
+            mapData[mapCount][count-1] = ServerStatusHTMLParser.stripLastSpace(new String(data).replace("Now: ", ""));
             count++;
         }
     }
@@ -121,7 +131,7 @@ class NextParser extends HTMLEditorKit.ParserCallback {
                 inTD = false;
             } else {
                 // Write data
-                mapData[mapCount] = new String(data);
+                mapData[mapCount] = new String(data).replace("Next: ", "");
                 mapCount++;
             }
         }
