@@ -64,6 +64,8 @@ public class AresChatHandler {
                 AresData.setTeam(AresData.Teams.Unknown);
             }
 
+        } else if (!message.startsWith("<") && message.toLowerCase().contains("game over")) {
+            AresData.setTeam(AresData.Teams.Observers);
         } //when a map is done. Display all the stats
         else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
@@ -78,7 +80,6 @@ public class AresChatHandler {
             AresData.resetDeaths();
             AresData.resetKillstreak();
             AresData.resetLargestKillstreak();
-            AresData.setTeam(AresData.Teams.Observers);
         } //sends /match when you join a server.
         else if (message.contains("Welcome to")) {
             if (!AresData.welcomeMessageExpected) {
