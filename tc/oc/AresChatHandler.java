@@ -58,7 +58,7 @@ public class AresChatHandler {
             AresData.resetLargestKillstreak();
 
             try {
-                AresData.setTeam(AresData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "")));
+                AresData.setTeam(AresData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
             } catch (Exception e) {
                 // if the team set fails because of an alias, set the team to Unknown
                 AresData.setTeam(AresData.Teams.Unknown);
