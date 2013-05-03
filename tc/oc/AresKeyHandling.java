@@ -42,25 +42,22 @@ public class AresKeyHandling extends KeyHandler {
         {
             if (kb == keyGuiHide) {
                 AresData.guiShowing = !AresData.guiShowing;
-            } else {
-                if (kb == keyGuiServer) {
-                    mc.displayGuiScreen(new Ares_ServerGUI(true));
-                } //if you are an obs;have the config to true; toggle fullbright and play sound
-                else {
-                    if (AresData.isPlayingAres() && kb == keyGuiFullBright && AresData.team == Teams.Observers && AresConfig.fullBright) {
-                        if (mc.inGameHasFocus) {
-                            AresModClass.brightActive = !AresModClass.brightActive;
-                            if (AresModClass.brightActive) {
-                                mc.gameSettings.gammaSetting = AresModClass.instance.brightLevel;
-                            } else {
-                                mc.gameSettings.gammaSetting = AresModClass.instance.defaultLevel;
-                            }
-                            mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
-                        }
+            } else if (kb == keyGuiServer) {
+                mc.displayGuiScreen(new Ares_ServerGUI(true));
+            } else if (AresData.isPlayingAres() && kb == keyGuiFullBright && (AresData.team == Teams.Observers || AresData.isGameOver) && AresConfig.fullBright) {
+                if (mc.inGameHasFocus) {
+                    AresModClass.brightActive = !AresModClass.brightActive;
+                    if (AresModClass.brightActive) {
+                        System.out.println("1");
+                        mc.gameSettings.gammaSetting = AresModClass.instance.brightLevel;
+                    } else {
+                        System.out.println("2");
+                        mc.gameSettings.gammaSetting = AresModClass.instance.defaultLevel;
                     }
+                    mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }
             }
-        }
+        } //if you are an obs;have the config to true; toggle fullbright and play sound
     }
 
     @Override

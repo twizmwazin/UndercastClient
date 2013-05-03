@@ -170,7 +170,7 @@ public class AresModClass {
         }
 
         //if you not on obs turn it off
-        if (AresData.team != Teams.Observers) {
+        if (AresData.team != Teams.Observers && !AresData.isGameOver) {
             brightActive = false;
             //if full bright is on turn it off
             if (mc.gameSettings.gammaSetting >= brightLevel) {
@@ -184,11 +184,11 @@ public class AresModClass {
 
         //gui display for obs if you have brightness
         if (AresData.isPlayingAres() && AresData.guiShowing && (mc.inGameHasFocus || AresConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
-            if (brightActive && AresConfig.fullBright && AresData.team == Teams.Observers) {
+            if (brightActive && AresConfig.fullBright && (AresData.team == Teams.Observers || AresData.isGameOver)) {
                 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
                 height += 8;
             } else {
-                if (!brightActive && AresConfig.fullBright && AresData.team == Teams.Observers) {
+                if (!brightActive && AresConfig.fullBright && (AresData.team == Teams.Observers || AresData.isGameOver)) {
                     mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A7cOFF", width, height, 16777215);
                     height += 8;
                 }

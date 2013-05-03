@@ -43,6 +43,7 @@ public class AresData {
     public static KeyBinding keybind;
     public static KeyBinding keybind2;
     public static KeyBinding keybind3;
+    public static boolean isGameOver = false;
 
     public static enum Teams {
 
