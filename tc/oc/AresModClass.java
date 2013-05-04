@@ -197,35 +197,37 @@ public class AresModClass {
 
     /**
      * Returns the team color hex based on the team you are on
-     *
+     *     
      * @return hex value of team color
      */
     public int getTeamColors() {
-        if (AresData.getTeam() == AresData.Teams.Red) {
-            return 0x990000;
-        } else if (AresData.getTeam() == AresData.Teams.Blue) {
-            return 0x0033FF;
-        } else if (AresData.getTeam() == AresData.Teams.Purple) {
-            return 0x9933CC;
-        } else if (AresData.getTeam() == AresData.Teams.Cyan) {
-            return 0x00FFFF;
-        } else if (AresData.getTeam() == AresData.Teams.Lime) {
-            return 0x00FF00;
-        } else if (AresData.getTeam() == AresData.Teams.Yellow) {
-            return 0xFFFF00;
-        } else if (AresData.getTeam() == AresData.Teams.Green) {
-            return 0x006600;
-        } else if (AresData.getTeam() == AresData.Teams.Orange) {
-            return 0xFF9900;
-        } else if (AresData.getTeam() == AresData.Teams.Observers) {
-            return 0x00FFFF;
-        } else {
-            return 0x606060;
+        switch (AresData.getTeam()) {
+            case Red:
+                return 0x990000;
+            case Blue:
+                return 0x0033FF;
+            case Purple:
+                return 0x9933CC;
+            case Cyan:
+                return 0x00FFFF;
+            case Lime:
+                return 0x00FF00;
+            case Yellow:
+                return 0xFFFF00;
+            case Green:
+                return 0x006600;
+            case Orange:
+                return 0xFF9900;
+            case Observers:
+                return 0x00FFFF;
+            default:
+                return 0x606060;
         }
     }
 
     /**
      * get an instance of AresModClass
+     *
      * @return the instance
      */
     public static AresModClass getInstance() {
