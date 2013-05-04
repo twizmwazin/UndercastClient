@@ -5,7 +5,7 @@ The changelog exists since version 1.4.0
  - add play time
  - readded the sort button
  - added Cot and Bot team names (for Cot & Bot Blitz map)
- - fixex reset of scores when joining observers during the game or after death in a blitz game
+ - fixed reset of scores when joining observers during the game or after death in a blitz game
 1.5.1
  - updated for 1.5.2
  - fixed team is unknown on mayan apocalypse
