@@ -23,7 +23,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
      * Main draw method for the individual server boxes
      */
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
-        AresServer server = AresData.serverInformation[i];
+        AresServer server = AresData.sortedServerInformation[i];
 
         parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
         int serveNameWidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(getServerName(server));

@@ -15,6 +15,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.StringTranslate;
 import tc.oc.AresData;
 import tc.oc.GuiButtonTooltip;
+import tc.oc.AresCustomMethods;
 
 public class Ares_ServerGUI extends GuiScreen {
 
@@ -34,7 +35,6 @@ public class Ares_ServerGUI extends GuiScreen {
      */
     public Ares_ServerGUI(boolean inGame) {
         this.inGame = inGame;
-        sortIndex = 0;
         AresData.reload();
     }
 
@@ -49,10 +49,8 @@ public class Ares_ServerGUI extends GuiScreen {
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
         this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel"), "Close the server list"));
         this.buttonList.add(new GuiButtonTooltip(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats", "Open your player stats in the browser"));
-        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, sortNames[sortIndex], "Sort the servers - CURRENTLY DISABLED"));
+        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, AresData.sortNames[sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
-        GuiButton sortButton = (GuiButton) this.buttonList.get(4);
-        sortButton.enabled = false;
         guiServerInfoSlot = new Ares_ServerInfoSlotGui(this);
     }
 
@@ -87,115 +85,15 @@ public class Ares_ServerGUI extends GuiScreen {
         }
         //sort button
         if (guibutton.id == 4) {
-//            //move sort index
-//            sortIndex++;
-//            //auto spill over function
-//            if(sortIndex>sortNames.length-1)
-//                sortIndex=0;
-//            //update button
-//            this.buttonList.set(4,new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, sortNames[sortIndex]));
-//            //if the index is moving to web then use the downloaded server list
-//            if(sortNames[sortIndex].equalsIgnoreCase("web")){
-//                servers.clear();
-//                for (String server : mod_Ares.masterServerList) {
-//                    servers.add(new AresServer(server, 25565));
-//                }
-//                pollServers();
-//            }
-//            //sort based on motd match
-//            else if(sortNames[sortIndex].equalsIgnoreCase("match")){
-//                //copy the array of servers
-//                ArrayList<String> currentServerList = new ArrayList<String>();
-//                //sort the servers
-//                String[][] serverData = new String[servers.size()][2];
-//                for (int i=0; i<servers.size();i++) {
-//                    serverData[i][0]=servers.get(i).getServerMOTD().substring(1,2);
-//                    serverData[i][1]=servers.get(i).getServer();
-//                }
-//                //green
-//                for(String[] info: serverData){
-//                    if(info[0].equalsIgnoreCase("a")){
-//                        currentServerList.add(info[1]);
-//                    }
-//                }
-//                //white
-//                for(String[] info: serverData){
-//                    if(info[0].equalsIgnoreCase("7")){
-//                        currentServerList.add(info[1]);
-//                    }
-//                }
-//                //red
-//                for(String[] info: serverData){
-//                    if(info[0].equalsIgnoreCase("c")){
-//                        currentServerList.add(info[1]);
-//                    }
-//                }
-//                //yellow
-//                for(String[] info: serverData){
-//                    if(info[0].equalsIgnoreCase("6")){
-//                        currentServerList.add(info[1]);
-//                    }
-//                }
-//                ///unknown conditions
-//                for(String[] info: serverData){
-//                    if(info[0].equalsIgnoreCase("?")){
-//                        currentServerList.add(info[1]);
-//                    }
-//                }
-//                //add new servers and poll
-//                servers.clear();
-//                for (String server : currentServerList) {
-//                    servers.add(new AresServer(server, 25565));
-//                }
-//                pollServers();
-//            }
-//            //sort based on player count
-//            else if(sortNames[sortIndex].equalsIgnoreCase("player")){
-//                //copy the array of servers
-//                ArrayList<String> currentServerList = new ArrayList<String>();
-//                //sort the servers
-//                String[][] serverData = new String[servers.size()][2];
-//                for (int i=0; i<servers.size();i++) {
-//                    serverData[i][0]=StringUtils.stripControlCodes(servers.get(i).getServerPlayers().split("/")[0]);
-//                    //if player count it unknown have it on the bottem
-//                    if(serverData[i][0].contains("?")){
-//                        serverData[i][0]=""+Integer.MAX_VALUE;
-//                    }
-//                    serverData[i][1]=servers.get(i).getServer();
-//                }
-//                //sort
-//                Arrays.sort(serverData, new Comparator<String[]>() {
-//                    @Override
-//                    public int compare(final String[] entry1, final String[] entry2) {
-//                        final Integer pop1 = Integer.parseInt(entry1[0]);
-//                        final Integer pop2 = Integer.parseInt(entry2[0]);
-//                        return pop1.compareTo(pop2);
-//                    }
-//                });
-//                //add to arraylist
-//                for(String[] info: serverData){
-//                    currentServerList.add(info[1]);
-//                }
-//                //add new servers and poll
-//                servers.clear();
-//                for (String server : currentServerList) {
-//                    servers.add(new AresServer(server, 25565));
-//                }
-//                pollServers();
-//            }
-//            //if the servers are being sorted abc sort the list and update
-//            else if(sortNames[sortIndex].equalsIgnoreCase("abc")){
-//                servers.clear();
-//                //copy the array of servers
-//                ArrayList<String> currentServerList = new ArrayList<String>(mod_Ares.masterServerList);
-//                //sort the servers
-//                Collections.sort(currentServerList);
-//                for (String server : currentServerList) {
-//                    servers.add(new AresServer(server, 25565));
-//                }
-//                pollServers();
-//            }
-//
+            // move sort index
+            AresData.sortIndex++;
+            // auto spill over function
+            if (AresData.sortIndex > AresData.sortNames.length - 1) {
+                AresData.sortIndex = 0;
+            }
+            // update button
+            this.buttonList.set(4, new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, AresData.sortNames[AresData.sortIndex]));
+            AresCustomMethods.sortServers();
         }
         if (guibutton.id == 5) {
             if (inGame) {
@@ -227,8 +125,8 @@ public class Ares_ServerGUI extends GuiScreen {
      */
     public void selectServerIndex(int var1) {
         this.selected = var1;
-        if (var1 >= 0 && var1 <= AresData.serverInformation.length) {
-            this.selectedServer = AresData.serverInformation[selected];
+        if (var1 >= 0 && var1 <= AresData.sortedServerInformation.length) {
+            this.selectedServer = AresData.sortedServerInformation[selected];
         } else {
             this.selectedServer = null;
         }
@@ -248,10 +146,10 @@ public class Ares_ServerGUI extends GuiScreen {
     public void joinSelectedServer() {
         if (selected != -1) {
             if (inGame) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + AresData.serverInformation[selected].name);
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + AresData.sortedServerInformation[selected].name);
             } else {
                 AresData.redirect = true;
-                AresData.directionServer = AresData.serverInformation[selected].name;
+                AresData.directionServer = AresData.sortedServerInformation[selected].name;
                 ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
