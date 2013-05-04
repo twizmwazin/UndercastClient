@@ -75,11 +75,21 @@ public class AresCustomMethods {
             AresData.isLobby = false;
         }
         AresData.setTeam(AresData.Teams.Observers);
-
         AresData.resetDeaths();
         AresData.resetKills();
         AresData.resetKilled();
         AresData.resetKillstreak();
         AresData.resetLargestKillstreak();
+    }
+
+    /**
+     * This is used in order to only display hours if you play at least for one
+     */
+    public static String getPlayingTimeString() {
+        if (AresData.playTimeHours == 0) {
+            return "Playing Time: \u00A7E" + AresData.playTimeMin + "\u00A7Fmin";
+        } else {
+            return "Playing Time: \u00A7E" + AresData.playTimeHours + "\u00A7Fh \u00A7E" + AresData.playTimeMin + "\u00A7Fmin";
+        }
     }
 }

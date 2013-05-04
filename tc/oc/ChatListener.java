@@ -27,12 +27,12 @@ public class ChatListener implements IChatListener {
         {
             Minecraft mc = FMLClientHandler.instance().getClient();
             EntityPlayer player = mc.thePlayer;
-            AresModClass.instance.username = mc.thePlayer.username;
+            AresModClass.getInstance().username = mc.thePlayer.username;
             String message = StringUtils.stripControlCodes(packet.message);
             // stop global msg to go through
             if (!message.startsWith("<"))
             {
-                new AresChatHandler(message, AresModClass.instance.username, player);
+                new AresChatHandler(message, AresModClass.getInstance().username, player);
             }
         } catch (Exception e)
         {

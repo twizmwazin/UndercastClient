@@ -44,8 +44,8 @@ public class AresConnectionHandler implements IConnectionHandler {
             AresData.guiShowing = true;
             System.out.println("Ares mod activated!");
             AresData.setTeam(AresData.Teams.Observers);
-            AresData.isPA = true;
             AresData.setServer("Lobby");
+            AresModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
         } else {
             AresData.isPA = false;
         }
@@ -99,9 +99,9 @@ public class AresConnectionHandler implements IConnectionHandler {
         AresData.resetKillstreak();
         AresData.resetLargestKillstreak();
         AresData.setMap("Attempting to fetch map...");
-        if (mc.gameSettings.gammaSetting >= AresModClass.instance.brightLevel) {
+        if (mc.gameSettings.gammaSetting >= AresModClass.getInstance().brightLevel) {
             AresModClass.brightActive = false;
-            mc.gameSettings.gammaSetting = AresModClass.instance.defaultLevel;
+            mc.gameSettings.gammaSetting = AresModClass.getInstance().defaultLevel;
         }
         AresData.welcomeMessageExpected = true;
     }

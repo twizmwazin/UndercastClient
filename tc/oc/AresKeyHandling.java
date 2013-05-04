@@ -48,9 +48,9 @@ public class AresKeyHandling extends KeyHandler {
                 if (mc.inGameHasFocus) {
                     AresModClass.brightActive = !AresModClass.brightActive;
                     if (AresModClass.brightActive) {
-                        mc.gameSettings.gammaSetting = AresModClass.instance.brightLevel;
+                        mc.gameSettings.gammaSetting = AresModClass.getInstance().brightLevel;
                     } else {
-                        mc.gameSettings.gammaSetting = AresModClass.instance.defaultLevel;
+                        mc.gameSettings.gammaSetting = AresModClass.getInstance().defaultLevel;
                     }
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }

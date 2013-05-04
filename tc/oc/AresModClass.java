@@ -32,7 +32,8 @@ public class AresModClass {
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
     @Mod.Instance("overcastNetwork-unofficialMod")
-    public static AresModClass instance;
+    private static AresModClass instance;
+    public PlayTimeCounterThread playTimeCounter;
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -119,6 +120,11 @@ public class AresModClass {
             // Friend display:
             if (AresConfig.showFriends) {
                 mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + AresData.getFriends(), width, height, 16777215);
+                height += 8;
+            }
+            // Playing Time display:
+            if (AresConfig.showPlayingTime) {
+                mc.fontRenderer.drawStringWithShadow(AresCustomMethods.getPlayingTimeString(), width, height, 16777215);
                 height += 8;
             }
             // Map fetcher:
@@ -223,5 +229,13 @@ public class AresModClass {
         } else {
             return 0x606060;
         }
+    }
+
+    /**
+     * get an instance of AresModClass
+     * @return the instance
+     */
+    public static AresModClass getInstance() {
+        return instance;
     }
 }

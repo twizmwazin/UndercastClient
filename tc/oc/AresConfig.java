@@ -25,6 +25,7 @@ public class AresConfig {
     public static boolean showStreak;
     public static boolean showGuiChat;
     public static boolean showGuiMulti;
+    public static boolean showPlayingTime;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
@@ -58,6 +59,7 @@ public class AresConfig {
         filterTips = config.get("ProjectAres", "filterTips", true).getBoolean(true);
         fullBright = config.get("ProjectAres", "fullBright", true).getBoolean(true);
         matchOnServerJoin = config.get("ProjectAres", "matchOnServerJoin", false).getBoolean(false);
+        showPlayingTime = config.get("ProjectAres", "showPlayingTime", true).getBoolean(true);
         config.save();
         System.out.println("[ProjectAres]: Config loaded!");
 

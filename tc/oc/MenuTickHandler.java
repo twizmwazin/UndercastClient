@@ -33,11 +33,11 @@ public class MenuTickHandler implements ITickHandler {
             }
             boolean hasWorld = mc.theWorld != null;
             if (hasWorld) {
-                AresModClass.instance.onGameTick(mc);
+                AresModClass.getInstance().onGameTick(mc);
             }
         } else {
             if (type.equals(EnumSet.of(TickType.RENDER))) {
-                AresModClass.instance.onGameTick(mc);
+                AresModClass.getInstance().onGameTick(mc);
             }
         }
     }
