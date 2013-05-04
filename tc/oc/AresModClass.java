@@ -170,7 +170,7 @@ public class AresModClass {
         }
 
         //if you not on obs turn it off
-        if (AresData.team != Teams.Observers && !AresData.isGameOver) {
+        if ((AresData.team != Teams.Observers && !AresData.isGameOver) || !AresData.isPA) {
             brightActive = false;
             //if full bright is on turn it off
             if (mc.gameSettings.gammaSetting >= brightLevel) {
