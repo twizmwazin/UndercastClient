@@ -1,5 +1,11 @@
 The changelog exists since version 1.4.0
 
+1.5.2
+ - full bright is possible when a game is over
+ - add play time
+ - readded the sort button
+ - added Cot and Bot team names (for Cot & Bot Blitz map)
+ - fixex reset of scores when joining observers during the game or after death in a blitz game
 1.5.1
  - updated for 1.5.2
  - fixed team is unknown on mayan apocalypse
