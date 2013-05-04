@@ -51,7 +51,7 @@ public class AresData {
 
     public static enum Teams {
 
-        Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Observers, Unknown
+        Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown
     };
 
     public static enum MatchState {

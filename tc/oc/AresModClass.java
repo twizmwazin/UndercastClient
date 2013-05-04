@@ -203,19 +203,20 @@ public class AresModClass {
     public int getTeamColors() {
         switch (AresData.getTeam()) {
             case Red:
+            case Cot:
                 return 0x990000;
             case Blue:
+            case Bot:
                 return 0x0033FF;
             case Purple:
                 return 0x9933CC;
             case Cyan:
-                return 0x00FFFF;
-            case Lime:
-                return 0x00FF00;
+                return 0x00AAAA;
             case Yellow:
                 return 0xFFFF00;
+            case Lime:
             case Green:
-                return 0x006600;
+                return 0x55FF55;
             case Orange:
                 return 0xFF9900;
             case Observers:
@@ -224,7 +225,6 @@ public class AresModClass {
                 return 0x606060;
         }
     }
-
     /**
      * get an instance of AresModClass
      *
