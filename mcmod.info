@@ -1,9 +1,9 @@
 [
 {
   "modid": "mod_Ares",
-  "name": "Unofficial Project Ares Mod",
+  "name": "Unofficial Overcast Network Mod",
   "description": "A custom made mod that tracks gameplay stats and has custom guis made for the oc.tc servers",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "url": "https://oc.tc/forums/topics/514fa995ba6087bdca000186",
   "updateUrl": "",
   "authorList": [
