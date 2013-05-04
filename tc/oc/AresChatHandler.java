@@ -41,8 +41,12 @@ public class AresChatHandler {
             if (AresData.getKills() == 0 && AresData.getDeaths() == 0) { // new match or observer or noob
                 AresData.reload();
             }
+        } //if you die
+        else if (message.startsWith(username)) {
+            AresData.addDeaths(1);
+            AresData.resetKillstreak();
         } //if you die from someone
-        else if (message.startsWith(username) && (message.contains(" by ") || message.contains(" took "))) {
+        else if (message.startsWith(username)&& (message.contains(" by ") || message.contains(" took "))) {
             AresData.addKilled(1);
             AresData.resetKillstreak();
         } //if you kill a person
@@ -51,19 +55,12 @@ public class AresChatHandler {
             AresData.addKillstreak(1);
         } //when you join a match
         else if (message.contains("You joined the")) {
-            AresData.resetKills();
-            AresData.resetKilled();
-            AresData.resetDeaths();
-            AresData.resetKillstreak();
-            AresData.resetLargestKillstreak();
-
             try {
                 AresData.setTeam(AresData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
             } catch (Exception e) {
                 // if the team set fails because of an alias, set the team to Unknown
                 AresData.setTeam(AresData.Teams.Unknown);
             }
-
         } else if (!message.startsWith("<") && message.toLowerCase().contains("game over")) {
             AresData.isGameOver = true;
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {

@@ -25,7 +25,6 @@ public class AresModClass {
     public final static String MOD_VERSION = "1.5.1";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
-    private boolean deathScreenActive;
     private boolean mainMenuActive;
     public static Configuration CONFIG;
     public static boolean brightActive;
@@ -77,14 +76,8 @@ public class AresModClass {
         if (mc.currentScreen instanceof GuiGameOver) {
             mc.currentScreen = null;
             mc.displayGuiScreen(new AresGuiGameOver());
-            if (!deathScreenActive) {
-                AresData.resetKillstreak();
-                deathScreenActive = true;
-            }
             //if the button is enabled and the user wants to disable it
 
-        } else {
-            deathScreenActive = false;
         }
         if (mc.currentScreen instanceof AresGuiGameOver && AresConfig.toggleTitleScreenButton) {
             ((AresGuiGameOver) mc.currentScreen).setTitleScreenButtonState(false);
