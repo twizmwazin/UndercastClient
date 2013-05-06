@@ -22,7 +22,7 @@ import tc.oc.update.Ares_UpdaterThread;
 @Mod(modid = "overcastNetwork-unofficialMod", name = "OvercastNetwork Mod", version = AresModClass.MOD_VERSION)
 public class AresModClass {
 
-    public final static String MOD_VERSION = "1.5.1";
+    public final static String MOD_VERSION = "1.5.2";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean mainMenuActive;
