@@ -9,12 +9,11 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
-import tc.oc.update.Ares_UpdaterThread;
 import tc.oc.AresData.Teams;
+import tc.oc.update.Ares_UpdaterThread;
 
 /**
  * @author Flv92
