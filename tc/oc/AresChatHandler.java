@@ -41,7 +41,12 @@ public class AresChatHandler {
             if (AresData.getKills() == 0 && AresData.getDeaths() == 0) { // new match or observer or noob
                 AresData.reload();
             }
-        } //if you die
+        }
+        else if (message.contains("                    "))
+        {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
+        }
+        //if you die
         else if (message.startsWith(username)) {
             AresData.addDeaths(1);
             AresData.resetKillstreak();
