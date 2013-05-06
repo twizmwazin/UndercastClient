@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import tc.oc.AresData.Teams;
 import tc.oc.update.Ares_UpdaterThread;
 
@@ -48,6 +49,7 @@ public class AresModClass {
         KeyBindingRegistry.registerKeyBinding(new AresKeyHandling());
         new AresData();
         new Ares_UpdaterThread();
+        MinecraftForge.EVENT_BUS.register(new PlayerClickOnSignEvent());
     }
 
     @Mod.Init

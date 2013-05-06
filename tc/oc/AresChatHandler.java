@@ -46,7 +46,7 @@ public class AresChatHandler {
             AresData.addDeaths(1);
             AresData.resetKillstreak();
         } //if you die from someone
-        else if (message.startsWith(username)&& (message.contains(" by ") || message.contains(" took "))) {
+        else if (message.startsWith(username) && (message.contains(" by ") || message.contains(" took "))) {
             AresData.addKilled(1);
             AresData.resetKillstreak();
         } //if you kill a person

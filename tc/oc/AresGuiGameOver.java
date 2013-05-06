@@ -71,7 +71,6 @@ public class AresGuiGameOver extends GuiScreen {
             case 1:
                 this.mc.thePlayer.respawnPlayer();
                 this.mc.currentScreen = null;
-                AresData.addDeaths(1);
                 break;
             case 2:
                 this.mc.theWorld.sendQuittingDisconnectingPacket();
