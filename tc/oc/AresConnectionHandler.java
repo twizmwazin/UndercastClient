@@ -37,7 +37,7 @@ public class AresConnectionHandler implements IConnectionHandler {
     public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
         AresData.setTeam(AresData.Teams.Observers);
         //if logging onto a project ares server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("us.oc.tc")) {
+        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc")) {
             // What happens if logs into project ares
             AresData.isPA = true;
             AresData.isLobby = true;
