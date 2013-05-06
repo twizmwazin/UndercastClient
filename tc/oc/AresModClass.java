@@ -49,7 +49,6 @@ public class AresModClass {
         KeyBindingRegistry.registerKeyBinding(new AresKeyHandling());
         new AresData();
         new Ares_UpdaterThread();
-        MinecraftForge.EVENT_BUS.register(new PlayerClickOnSignEvent());
     }
 
     @Mod.Init
