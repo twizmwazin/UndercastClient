@@ -1,11 +1,16 @@
 The changelog exists since version 1.4.0
 
 1.5.2
- - full bright is possible when a game is over
- - add play time
- - readded the sort button
- - added Cot and Bot team names (for Cot & Bot Blitz map)
- - fixed reset of scores when joining observers during the game or after death in a blitz game
+ - full bright is usable after the match
+ - option to show the playing time
+ - readded the sort button (sorting by Match has no effect because, we can't get match informations atm)
+ - fixed teams for CotBot
+ - don't reset your stats when you join the observers
+ - don't count team change (during a match) as a death
+ - color tweaks for cyan and green team
+ - better performance
+ - server gui connects to us.oc.tc when you use it from a not-oc.tc server
+
 1.5.1
  - updated for 1.5.2
  - fixed team is unknown on mayan apocalypse
