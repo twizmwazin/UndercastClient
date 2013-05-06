@@ -30,7 +30,7 @@ public class ChatListener implements IChatListener {
             AresModClass.getInstance().username = mc.thePlayer.username;
             String message = StringUtils.stripControlCodes(packet.message);
             // stop global msg to go through
-            if (!message.startsWith("<"))
+            if (!message.startsWith("<") && AresData.isPlayingAres())
             {
                 new AresChatHandler(message, AresModClass.getInstance().username, player);
             }
