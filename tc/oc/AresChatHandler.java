@@ -50,7 +50,7 @@ public class AresChatHandler {
             AresData.addKilled(1);
             AresData.resetKillstreak();
         } //if you kill a person
-        else if (message.contains("by " + username) || message.contains("took " + username) || message.contains(username + "'s")) {
+        else if (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) {
             AresData.addKills(1);
             AresData.addKillstreak(1);
         } //when you join a match
