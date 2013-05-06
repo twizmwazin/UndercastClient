@@ -103,7 +103,7 @@ public class AresConnectionHandler implements IConnectionHandler {
             AresModClass.brightActive = false;
             mc.gameSettings.gammaSetting = AresModClass.getInstance().defaultLevel;
         }
-        AresData.welcomeMessageExpected = true;
+        AresData.welcomeMessageExpected = false;
     }
 
     @Override

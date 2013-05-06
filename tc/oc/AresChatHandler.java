@@ -41,12 +41,7 @@ public class AresChatHandler {
             if (AresData.getKills() == 0 && AresData.getDeaths() == 0) { // new match or observer or noob
                 AresData.reload();
             }
-        }
-        else if (message.contains("                    "))
-        {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
-        }
-        //if you die
+        } //if you die
         else if (message.startsWith(username)) {
             AresData.addDeaths(1);
             AresData.resetKillstreak();
@@ -86,15 +81,7 @@ public class AresChatHandler {
             AresData.resetLargestKillstreak();
             AresData.setTeam(AresData.Teams.Observers);
         } //sends /match when you join a server.
-        else if (message.contains("Welcome to")) {
-            if (!AresData.welcomeMessageExpected) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
-            } else {
-                AresData.welcomeMessageExpected = false;
-            }
-            if (AresConfig.matchOnServerJoin && !AresData.server.equalsIgnoreCase("lobby")) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
-            }
+        else if (message.contains("Welcome to the Overcast Network")) {
             if (AresData.redirect && AresData.server.equalsIgnoreCase("lobby")) {
                 AresData.redirect = false;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + AresData.directionServer);
@@ -102,11 +89,22 @@ public class AresChatHandler {
         } //server detection
         else if (message.contains("Teleporting you to ")) {
             AresData.setServer(message.replace("Teleporting you to ", ""));
-            AresData.welcomeMessageExpected = true;
+            if (!message.toLowerCase().contains("lobby")) {
+                AresData.welcomeMessageExpected = true;
+            }
             AresCustomMethods.handleServerSwap();
         } else if (message.contains("You are currently on ")) {
             AresData.setServer(message.replace("You are currently on ", ""));
             AresCustomMethods.handleServerSwap();
+        } else if (message.equals(" ")) {
+            if (!AresData.welcomeMessageExpected) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
+            } else {
+                AresData.welcomeMessageExpected = false;
+            }
+            if (AresConfig.matchOnServerJoin) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
+            }
         }
     }
 
