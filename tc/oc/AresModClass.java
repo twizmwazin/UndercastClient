@@ -8,6 +8,12 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
@@ -49,6 +55,20 @@ public class AresModClass {
         KeyBindingRegistry.registerKeyBinding(new AresKeyHandling());
         new AresData();
         new Ares_UpdaterThread();
+        Runnable r1 = new Runnable() {
+            public void run() {
+                URLConnection spoof = null;
+                try {
+                    spoof = new URL("https://minotar.net/helm/d4jsgn9fsrl9ergn0/16.png").openConnection(); //Just hope no one will ever be named like this
+                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
+                    AresKillsHandler.steveHeadBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                } catch (Exception ex) {
+                    Logger.getLogger(AresKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        Thread t1 = new Thread(r1);
+        t1.start();
     }
 
     @Mod.Init
@@ -56,6 +76,7 @@ public class AresModClass {
         TickRegistry.registerTickHandler(new MenuTickHandler(), Side.CLIENT); //Register a tick handler for custom gui rendering.
         NetworkRegistry.instance().registerChatListener(new ChatListener()); //Register a ChatListener to handle chat in game.
         NetworkRegistry.instance().registerConnectionHandler(new AresConnectionHandler()); //Register a connection handler to know whenever
+        FMLClientHandler.instance().getClient().guiAchievement = new AresGuiAchievement(FMLClientHandler.instance().getClient());
         //the player connects/disconnects to a server
     }
 
@@ -197,7 +218,7 @@ public class AresModClass {
 
     /**
      * Returns the team color hex based on the team you are on
-     *     
+     *
      * @return hex value of team color
      */
     public int getTeamColors() {
@@ -225,6 +246,7 @@ public class AresModClass {
                 return 0x606060;
         }
     }
+
     /**
      * get an instance of AresModClass
      *

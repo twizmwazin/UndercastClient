@@ -33,6 +33,7 @@ public class ChatListener implements IChatListener {
             if (!message.startsWith("<") && AresData.isPlayingAres())
             {
                 new AresChatHandler(message, AresModClass.getInstance().username, player);
+                new AresKillsHandler(message, AresModClass.getInstance().username, player);
             }
         } catch (Exception e)
         {
