@@ -54,10 +54,22 @@ public class AresKillsHandler {
                 }
             }
         };
+        Runnable r2 = new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+                    ((AresGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
+                            .addFakeAchievementToMyList(custom, killOrKilled, killer);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AresKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
         Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r2);
         t1.start();
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        ((AresGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
-                .addFakeAchievementToMyList(custom, killOrKilled, killer);
+        t2.start();
+
     }
 }
