@@ -1,7 +1,12 @@
 package undercast.client;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
 
 /**
  * @author Flv92
@@ -33,9 +38,15 @@ public class UndercastConfig {
     public static boolean fullBright;
     public static boolean matchOnServerJoin;
     public static boolean enableButtonTooltips;
+    public static File configFile;
 
-    public UndercastConfig(Configuration configuration) {
+    public UndercastConfig(Configuration configuration, File configF) {
         config = configuration;
+        configFile = configF;
+        reloadConfig();
+    }
+
+    public static void reloadConfig() {
         config.load();
         System.out.println("[UndercastMod]: Attempting to load/create the configuration.");
         showFPS = config.get("UndercastMod", "showFPS", true).getBoolean(true);
@@ -62,6 +73,35 @@ public class UndercastConfig {
         showPlayingTime = config.get("UndercastMod", "showPlayingTime", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
+    }
 
+    public static void setBooleanProperty(String name, boolean bool) {
+        File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(configFile));
+            FileWriter fr = new FileWriter(tempFile);
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                if (!line.contains("B:" + name)) {
+                    fr.write(line + "\n");
+                } else {
+                    if (bool) {
+                        fr.write(line.substring(0, line.lastIndexOf("=") + 1) + "true" + "\n");
+                    } else {
+                        fr.write(line.substring(0, line.lastIndexOf("=") + 1) + "false" + "\n");
+                    }
+                }
+            }
+            fr.close();
+            br.close();
+            configFile.delete();
+            tempFile.renameTo(configFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        reloadConfig();
     }
 }

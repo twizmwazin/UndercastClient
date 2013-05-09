@@ -60,7 +60,7 @@ public class UndercastModClass {
         }
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
         CONFIG = new Configuration(newConfig);
-        new UndercastConfig(CONFIG);
+        new UndercastConfig(CONFIG, event.getSuggestedConfigurationFile());
         KeyBindingRegistry.registerKeyBinding(new UndercastKeyHandling());
         new UndercastData();
         new Undercast_UpdaterThread();
