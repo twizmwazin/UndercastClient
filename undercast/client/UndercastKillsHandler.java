@@ -23,7 +23,7 @@ public class UndercastKillsHandler {
 
     public UndercastKillsHandler(String message, String username, EntityPlayer player) {
         //When you die from someone
-        if (message.startsWith(username) && !message.toLowerCase().endsWith(" team") && message.contains(" by ")) {
+        if (message.startsWith(username) && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
             killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
             killOrKilled = false;
             this.printAchievement();
@@ -33,8 +33,8 @@ public class UndercastKillsHandler {
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
             this.printAchievement();
-        } else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")
-                && (message.contains("fell out of the world") || message.contains("hit the ground too hard"))) {
+        } //when you die, but nobody killed you.
+        else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
             killer = username;
             killOrKilled = false;
             this.printAchievement();
