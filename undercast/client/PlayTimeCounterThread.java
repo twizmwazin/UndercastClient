@@ -1,15 +1,15 @@
-package tc.oc;
+package undercast.client;
 
 public class PlayTimeCounterThread extends Thread {
     public PlayTimeCounterThread() {
         try {
             // only start the Thread if the playing time is used
-            if(AresConfig.showPlayingTime) {
+            if(UndercastConfig.showPlayingTime) {
                 this.start();
             }
         } catch (Exception e) {
-            System.out.println("[ProjectAres]: Playing Time Counter crashed");
-            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+            System.out.println("[UndercastMod]: Playing Time Counter crashed");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
     
@@ -17,13 +17,13 @@ public class PlayTimeCounterThread extends Thread {
         while (true) {
             try {
                 Thread.sleep(60000);
-                if(!AresData.isPA) {
+                if(!UndercastData.isPlayingOvercastNetwork()) {
                     return;
                 }
-                AresData.playTimeMin += 1;
-                if(AresData.playTimeMin == 60) {
-                    AresData.playTimeHours += 1;
-                    AresData.playTimeMin = 0;
+                UndercastData.playTimeMin += 1;
+                if(UndercastData.playTimeMin == 60) {
+                    UndercastData.playTimeHours += 1;
+                    UndercastData.playTimeMin = 0;
                 }
             } catch (Exception ignored) {
             }

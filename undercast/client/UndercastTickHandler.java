@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
@@ -11,12 +11,12 @@ import net.minecraft.client.gui.GuiScreen;
 /**
  * @author Flv92
  */
-public class MenuTickHandler implements ITickHandler {
+public class UndercastTickHandler implements ITickHandler {
 
     GuiScreen current;
     Minecraft mc;
 
-    public MenuTickHandler() {
+    public UndercastTickHandler() {
     }
 
     @Override
@@ -28,16 +28,16 @@ public class MenuTickHandler implements ITickHandler {
         if (type.equals(EnumSet.of(TickType.CLIENT))) {
             mc = FMLClientHandler.instance().getClient();
             current = mc.currentScreen;
-            if (current instanceof GuiMainMenu && !(current instanceof AresGuiMainMenu)) {
-                mc.displayGuiScreen(new AresGuiMainMenu());
+            if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
+                mc.displayGuiScreen(new UndercastGuiMainMenu());
             }
             boolean hasWorld = mc.theWorld != null;
             if (hasWorld) {
-                AresModClass.getInstance().onGameTick(mc);
+                UndercastModClass.getInstance().onGameTick(mc);
             }
         } else {
             if (type.equals(EnumSet.of(TickType.RENDER))) {
-                AresModClass.getInstance().onGameTick(mc);
+                UndercastModClass.getInstance().onGameTick(mc);
             }
         }
     }

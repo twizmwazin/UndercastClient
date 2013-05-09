@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.IConnectionHandler;
@@ -10,12 +10,12 @@ import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.server.MinecraftServer;
-import tc.oc.update.Ares_UpdaterThread;
+import undercast.client.update.Undercast_UpdaterThread;
 
 /**
  * @author Flv92
  */
-public class AresConnectionHandler implements IConnectionHandler {
+public class UndercastConnectionHandler implements IConnectionHandler {
 
     @Override
     public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
@@ -32,32 +32,33 @@ public class AresConnectionHandler implements IConnectionHandler {
      * @param netClientHandler
      * @param server
      * @param port
+     * @param manager
      */
     @Override
     public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
-        AresData.setTeam(AresData.Teams.Observers);
-        //if logging onto a project ares server, then enable the main mod
+        UndercastData.setTeam(UndercastData.Teams.Observers);
+        //if logging onto an OvercastNetwork server, then enable the main mod
         if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc")) {
-            // What happens if logs into project ares
-            AresData.isPA = true;
-            AresData.isLobby = true;
-            AresData.guiShowing = true;
-            System.out.println("Ares mod activated!");
-            AresData.setTeam(AresData.Teams.Observers);
-            AresData.setServer("Lobby");
-            AresModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
+            // What happens if logs into OvercastNetwork
+            UndercastData.isOC = true;
+            UndercastData.isLobby = true;
+            UndercastData.guiShowing = true;
+            System.out.println("Undercast Mod activated!");
+            UndercastData.setTeam(UndercastData.Teams.Observers);
+            UndercastData.setServer("Lobby");
+            UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
         } else {
-            AresData.isPA = false;
+            UndercastData.isOC = false;
         }
         //update notifier
-        if (!AresData.isUpdate()) {
+        if (!UndercastData.isUpdate()) {
             Thread thread = new Thread() {
                 public void run() {
                     try {
                         Thread.sleep(3000);
                         for (int c = 0; c < 10; c++) { // don't wait longer than 10 sec
                             Thread.sleep(1000);
-                            if (Ares_UpdaterThread.finished) {
+                            if (Undercast_UpdaterThread.finished) {
                                 break;
                             }
                         }
@@ -65,8 +66,8 @@ public class AresConnectionHandler implements IConnectionHandler {
                     }
                     Minecraft mc = FMLClientHandler.instance().getClient();
                     mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-                    mc.thePlayer.addChatMessage("[ProjectAres]: A New Version of the Project Ares Mod is avaliable");
-                    mc.thePlayer.addChatMessage("[ProjectAres]: Link: \u00A74" + AresData.updateLink);
+                    mc.thePlayer.addChatMessage("[UndercastMod]: A New Version of the Undercat Mod is avaliable");
+                    mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74" + UndercastData.updateLink);
                     mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
                 }
             };
@@ -90,24 +91,24 @@ public class AresConnectionHandler implements IConnectionHandler {
     @Override
     public void connectionClosed(INetworkManager manager) {
         Minecraft mc = FMLClientHandler.instance().getClient();
-        AresData.isPA = false;
-        AresData.guiShowing = false;
-        AresData.setTeam(AresData.Teams.Observers);
-        AresData.resetKills();
-        AresData.resetKilled();
-        AresData.resetDeaths();
-        AresData.resetKillstreak();
-        AresData.resetLargestKillstreak();
-        AresData.setMap("Attempting to fetch map...");
-        if (mc.gameSettings.gammaSetting >= AresModClass.getInstance().brightLevel) {
-            AresModClass.brightActive = false;
-            mc.gameSettings.gammaSetting = AresModClass.getInstance().defaultLevel;
+        UndercastData.isOC = false;
+        UndercastData.guiShowing = false;
+        UndercastData.setTeam(UndercastData.Teams.Observers);
+        UndercastData.resetKills();
+        UndercastData.resetKilled();
+        UndercastData.resetDeaths();
+        UndercastData.resetKillstreak();
+        UndercastData.resetLargestKillstreak();
+        UndercastData.setMap("Attempting to fetch map...");
+        if (mc.gameSettings.gammaSetting >= UndercastModClass.getInstance().brightLevel) {
+            UndercastModClass.brightActive = false;
+            mc.gameSettings.gammaSetting = UndercastModClass.getInstance().defaultLevel;
         }
-        AresData.welcomeMessageExpected = false;
+        UndercastData.welcomeMessageExpected = false;
     }
 
     @Override
     public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
-        AresData.update();
+        UndercastData.update();
     }
 }

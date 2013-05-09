@@ -1,4 +1,4 @@
-package tc.oc.server;
+package undercast.client.server;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -13,14 +13,14 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.StringTranslate;
-import tc.oc.AresData;
-import tc.oc.GuiButtonTooltip;
-import tc.oc.AresCustomMethods;
+import undercast.client.UndercastData;
+import undercast.client.GuiButtonTooltip;
+import undercast.client.UndercastCustomMethods;
 
-public class Ares_ServerGUI extends GuiScreen {
+public class Undercast_ServerGUI extends GuiScreen {
 
-    private Ares_ServerInfoSlotGui guiServerInfoSlot;
-    private AresServer selectedServer;
+    private Undercast_ServerInfoSlotGui guiServerInfoSlot;
+    private UndercastServer selectedServer;
     private int selected = -1;
     private GuiButton guibuttonrefresh;
     public Boolean inGame;
@@ -33,9 +33,9 @@ public class Ares_ServerGUI extends GuiScreen {
      *
      * @param inGame Boolean if you are on a server or not
      */
-    public Ares_ServerGUI(boolean inGame) {
+    public Undercast_ServerGUI(boolean inGame) {
         this.inGame = inGame;
-        AresData.reload();
+        UndercastData.reload();
     }
 
     /**
@@ -49,9 +49,9 @@ public class Ares_ServerGUI extends GuiScreen {
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
         this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel"), "Close the server list"));
         this.buttonList.add(new GuiButtonTooltip(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats", "Open your player stats in the browser"));
-        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, AresData.sortNames[sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
+        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
-        guiServerInfoSlot = new Ares_ServerInfoSlotGui(this);
+        guiServerInfoSlot = new Undercast_ServerInfoSlotGui(this);
     }
 
     /**
@@ -65,7 +65,7 @@ public class Ares_ServerGUI extends GuiScreen {
         }
         //refresh button
         if (guibutton.id == 1) {
-            AresData.reload();
+            UndercastData.reload();
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {
@@ -86,17 +86,17 @@ public class Ares_ServerGUI extends GuiScreen {
         //sort button
         if (guibutton.id == 4) {
             // move sort index
-            AresData.sortIndex++;
+            UndercastData.sortIndex++;
             // auto spill over function
-            if (AresData.sortIndex > AresData.sortNames.length - 1) {
-                AresData.sortIndex = 0;
+            if (UndercastData.sortIndex > UndercastData.sortNames.length - 1) {
+                UndercastData.sortIndex = 0;
             }
             // update button
-            this.buttonList.set(4, new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, AresData.sortNames[AresData.sortIndex]));
-            AresCustomMethods.sortServers();
+            this.buttonList.set(4, new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex]));
+            UndercastCustomMethods.sortServers();
         }
         if (guibutton.id == 5) {
-            if (inGame && AresData.isPlayingAres()) {
+            if (inGame && UndercastData.isPlayingOvercastNetwork()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
                 ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
@@ -125,8 +125,8 @@ public class Ares_ServerGUI extends GuiScreen {
      */
     public void selectServerIndex(int var1) {
         this.selected = var1;
-        if (var1 >= 0 && var1 <= AresData.sortedServerInformation.length) {
-            this.selectedServer = AresData.sortedServerInformation[selected];
+        if (var1 >= 0 && var1 <= UndercastData.sortedServerInformation.length) {
+            this.selectedServer = UndercastData.sortedServerInformation[selected];
         } else {
             this.selectedServer = null;
         }
@@ -145,11 +145,11 @@ public class Ares_ServerGUI extends GuiScreen {
      */
     public void joinSelectedServer() {
         if (selected != -1) {
-            if (inGame && AresData.isPlayingAres()) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + AresData.sortedServerInformation[selected].name);
+            if (inGame && UndercastData.isPlayingOvercastNetwork()) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.sortedServerInformation[selected].name);
             } else {
-                AresData.redirect = true;
-                AresData.directionServer = AresData.sortedServerInformation[selected].name;
+                UndercastData.redirect = true;
+                UndercastData.directionServer = UndercastData.sortedServerInformation[selected].name;
                 ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }

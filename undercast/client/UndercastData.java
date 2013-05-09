@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -6,15 +6,15 @@ package tc.oc;
 
 import org.lwjgl.input.Keyboard;
 
-import tc.oc.internetTools.InformationLoaderThread;
-import tc.oc.internetTools.ServerStatusHTMLParser;
-import tc.oc.server.AresServer;
+import undercast.client.internetTools.InformationLoaderThread;
+import undercast.client.internetTools.ServerStatusHTMLParser;
+import undercast.client.server.UndercastServer;
 
 import java.net.URL;
 import java.util.HashSet;
 import net.minecraft.client.settings.KeyBinding;
 
-public class AresData {
+public class UndercastData {
     //Data Varibles
 
     public static String map;
@@ -27,16 +27,16 @@ public class AresData {
     public static HashSet<String> friends = new HashSet<String>();
     public static String server;
     public static Teams team;
-    public static boolean isPA = false;
+    public static boolean isOC = false;
     public static boolean isLobby;
     public static boolean update;
     public static String updateLink;
     private static InformationLoaderThread mapLoader;
     private static boolean mapLoaderFinished;
-    public static AresServer[] serverInformation;
-    public static AresServer[] sortedServerInformation;
+    public static UndercastServer[] serverInformation;
+    public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
-    // if it's true, the /server comand isn't executed after a "Welcome to Project Ares" message
+    // if it's true, the /server comand isn't executed after a "Welcome to Overcast Network" message
     public static boolean welcomeMessageExpected = true;
     public static boolean redirect = false;
     public static String directionServer;
@@ -61,11 +61,11 @@ public class AresData {
 
     public static enum ServerType {
 
-        Lobby, Blitz, ProjectAres, Unknown
+        Lobby, Blitz, OvercastNetwork, Unknown
     };
     public static String[] sortNames = {"Web", "Match", "Players", "Abc"};
 
-    public AresData() {
+    public UndercastData() {
         update = true;
         setMap("Fetching...");
         resetKills();
@@ -78,21 +78,21 @@ public class AresData {
         keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex("L"));
         keybind3 = new KeyBinding("fullBright", Keyboard.getKeyIndex("G"));
         mapLoaderFinished = false;
-        serverInformation = new AresServer[20];
+        serverInformation = new UndercastServer[20];
         serverCount = 0;
         for (int c = 0; c < serverInformation.length; c++) {
-            serverInformation[c] = new AresServer();
+            serverInformation[c] = new UndercastServer();
         }
-        sortedServerInformation = new AresServer[20];
+        sortedServerInformation = new UndercastServer[20];
         for (int c = 0; c < sortedServerInformation.length; c++) {
-            sortedServerInformation[c] = new AresServer();
+            sortedServerInformation[c] = new UndercastServer();
         }
         sortIndex = 0;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch (Exception e) {
-            System.out.println("[ProjectAres]: Failed to load maps");
-            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+            System.out.println("[UndercastMod]: Failed to load maps");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
 
@@ -126,10 +126,10 @@ public class AresData {
                         nextMap = serverInformation[c].nextMap;
                     }
                 }
-                AresCustomMethods.sortServers();
+                UndercastCustomMethods.sortServers();
             } catch (Exception e) {
-                System.out.println("[ProjectAres]: Failed to parse maps");
-                System.out.println("[ProjectAres]: ERROR: " + e.toString());
+                System.out.println("[UndercastMod]: Failed to parse maps");
+                System.out.println("[UndercastMod]: ERROR: " + e.toString());
             }
         }
     }
@@ -141,8 +141,8 @@ public class AresData {
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch (Exception e) {
-            System.out.println("[ProjectAres]: Failed to load maps");
-            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+            System.out.println("[UndercastMod]: Failed to load maps");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         mapLoaderFinished = false;
     }
@@ -226,8 +226,8 @@ public class AresData {
         return friends.contains(s);
     }
 
-    public static boolean isPlayingAres() {
-        return isPA;
+    public static boolean isPlayingOvercastNetwork() {
+        return isOC;
     }
 
     public static Teams getTeam() {
@@ -264,7 +264,7 @@ public class AresData {
     }
 
     public static void setUpdate(boolean update) {
-        AresData.update = update;
+        UndercastData.update = update;
     }
 
     public static String getUpdateLink() {
@@ -272,6 +272,6 @@ public class AresData {
     }
 
     public static void setUpdateLink(String updateLink) {
-        AresData.updateLink = updateLink;
+        UndercastData.updateLink = updateLink;
     }
 }

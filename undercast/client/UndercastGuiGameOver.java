@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -12,7 +12,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class AresGuiGameOver extends GuiScreen {
+public class UndercastGuiGameOver extends GuiScreen {
 
     /**
      * The cooldown timer for the buttons, increases every tick and enables all

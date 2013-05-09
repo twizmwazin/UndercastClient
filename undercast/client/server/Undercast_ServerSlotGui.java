@@ -1,4 +1,4 @@
-package tc.oc.server;
+package undercast.client.server;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ModLoader;
@@ -11,7 +11,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
 
-public abstract class Ares_ServerSlotGui {
+public abstract class Undercast_ServerSlotGui {
 
     /**
      * The width of the GuiScreen. Affects the container rendering, but not the
@@ -81,9 +81,9 @@ public abstract class Ares_ServerSlotGui {
     private boolean field_77243_s;
     private int field_77242_t;
     private DoubleBuffer doubleBuffer;
-    private Ares_ServerGUI parent;
+    private Undercast_ServerGUI parent;
 
-    public Ares_ServerSlotGui(Ares_ServerGUI guiservers, int par2, int par3, int par4, int par5, int par6) {
+    public Undercast_ServerSlotGui(Undercast_ServerGUI guiservers, int par2, int par3, int par4, int par5, int par6) {
         this.parent = guiservers;
         this.width = par2;
         this.height = par3;

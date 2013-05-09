@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
@@ -7,19 +7,19 @@ import java.util.EnumSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
-import tc.oc.AresData.Teams;
-import tc.oc.server.Ares_ServerGUI;
+import undercast.client.UndercastData.Teams;
+import undercast.client.server.Undercast_ServerGUI;
 
 /**
  * @author Flv92
  */
-public class AresKeyHandling extends KeyHandler {
+public class UndercastKeyHandling extends KeyHandler {
 
     static KeyBinding keyGuiHide = new KeyBinding("gui", Keyboard.KEY_F6);
     static KeyBinding keyGuiServer = new KeyBinding("inGameGui", Keyboard.KEY_L);
     static KeyBinding keyGuiFullBright = new KeyBinding("fullBright", Keyboard.KEY_G);
 
-    public AresKeyHandling() {
+    public UndercastKeyHandling() {
         //the first value is an array of KeyBindings, the second is whether or not the call
         //keyDown should repeat as long as the key is down
         super(new KeyBinding[]{
@@ -31,7 +31,7 @@ public class AresKeyHandling extends KeyHandler {
 
     @Override
     public String getLabel() {
-        return "aresKeyBindig";
+        return "UndercastKeyBindig";
     }
 
     @Override
@@ -41,16 +41,16 @@ public class AresKeyHandling extends KeyHandler {
         //We only want to execute keyDown function once not twice (Won't work in fact, showing -> disabling -> showing gui)
         {
             if (kb == keyGuiHide) {
-                AresData.guiShowing = !AresData.guiShowing;
+                UndercastData.guiShowing = !UndercastData.guiShowing;
             } else if (kb == keyGuiServer) {
-                mc.displayGuiScreen(new Ares_ServerGUI(true));
-            } else if (AresData.isPlayingAres() && kb == keyGuiFullBright && (AresData.team == Teams.Observers || AresData.isGameOver) && AresConfig.fullBright) {
+                mc.displayGuiScreen(new Undercast_ServerGUI(true));
+            } else if (UndercastData.isPlayingOvercastNetwork() && kb == keyGuiFullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver) && UndercastConfig.fullBright) {
                 if (mc.inGameHasFocus) {
-                    AresModClass.brightActive = !AresModClass.brightActive;
-                    if (AresModClass.brightActive) {
-                        mc.gameSettings.gammaSetting = AresModClass.getInstance().brightLevel;
+                    UndercastModClass.brightActive = !UndercastModClass.brightActive;
+                    if (UndercastModClass.brightActive) {
+                        mc.gameSettings.gammaSetting = UndercastModClass.getInstance().brightLevel;
                     } else {
-                        mc.gameSettings.gammaSetting = AresModClass.getInstance().defaultLevel;
+                        mc.gameSettings.gammaSetting = UndercastModClass.getInstance().defaultLevel;
                     }
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }

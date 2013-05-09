@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +22,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 @SideOnly(Side.CLIENT)
-public class AresGuiAchievement extends GuiAchievement {
+public class UndercastGuiAchievement extends GuiAchievement {
 
     /**
      * Holds the instance of the game (Minecraft)
@@ -60,7 +60,7 @@ public class AresGuiAchievement extends GuiAchievement {
     private ImageLoader imgLoader;
     private String killerName;
 
-    public AresGuiAchievement(Minecraft par1Minecraft) {
+    public UndercastGuiAchievement(Minecraft par1Minecraft) {
         super(par1Minecraft);
         this.theGame = par1Minecraft;
         this.itemRender = new RenderItem();
@@ -196,7 +196,7 @@ public class AresGuiAchievement extends GuiAchievement {
                      }//et on charge notre image dans un buffer... oui je sais tu es perdu mais sa fonctionne comme ça ;)
                      this.buffered = (BufferedImage) img;*/
                     try {
-                        this.imgLoader.setupTexture(AresKillsHandler.killerBuffer, 20, 16, 16);
+                        this.imgLoader.setupTexture(UndercastKillsHandler.killerBuffer, 20, 16, 16);
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }

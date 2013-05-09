@@ -1,4 +1,4 @@
-package tc.oc.update;
+package undercast.client.update;
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -8,21 +8,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import tc.oc.AresData;
-import tc.oc.AresModClass;
+import undercast.client.UndercastData;
+import undercast.client.UndercastModClass;
 
 
-public class Ares_UpdaterThread extends Thread{
+public class Undercast_UpdaterThread extends Thread{
     boolean errorOccured;
     public static boolean finished = false;
     
-    public Ares_UpdaterThread(){
+    public Undercast_UpdaterThread(){
         errorOccured = false;
         try {
             start();
         } catch(Exception e) {
-            System.out.println("[ProjectAres]: Failed to check for updates");
-            System.out.println("[ProjectAres]: ERROR: " + e.toString());
+            System.out.println("[UndercastMod]: Failed to check for updates");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
 
@@ -37,15 +37,15 @@ public class Ares_UpdaterThread extends Thread{
             readline = in.readLine();
             readline2 = in.readLine();
         } catch (Exception e) {
-            AresData.setUpdate(false);
-            AresData.setUpdateLink("Could not get update information.");
+            UndercastData.setUpdate(false);
+            UndercastData.setUpdateLink("Could not get update information.");
         }
-        if(!AresModClass.MOD_VERSION.contains("dev") && compareVersions(readline)){
-            AresData.setUpdate(false);
+        if(!UndercastModClass.MOD_VERSION.contains("dev") && compareVersions(readline)){
+            UndercastData.setUpdate(false);
             if(!errorOccured) {
-                AresData.setUpdateLink(readline2);
+                UndercastData.setUpdateLink(readline2);
             } else {
-                AresData.setUpdateLink("An unknown error occured while getting the update information.");
+                UndercastData.setUpdateLink("An unknown error occured while getting the update information.");
             }
         }
         finished = true;
@@ -56,12 +56,12 @@ public class Ares_UpdaterThread extends Thread{
      */
     private boolean compareVersions(String internetVersion) {
         try {
-            String debug[] = AresModClass.MOD_VERSION.split("[.]");
-            int majorVersionMod = Integer.parseInt(AresModClass.MOD_VERSION.split("[.]")[0]);;
+            String debug[] = UndercastModClass.MOD_VERSION.split("[.]");
+            int majorVersionMod = Integer.parseInt(UndercastModClass.MOD_VERSION.split("[.]")[0]);;
             int majorVersionLatest = Integer.parseInt(internetVersion.split("[.]")[0]);
-            int minorVersionMod = Integer.parseInt(AresModClass.MOD_VERSION.split("[.]")[1]);;
+            int minorVersionMod = Integer.parseInt(UndercastModClass.MOD_VERSION.split("[.]")[1]);;
             int minorVersionLatest = Integer.parseInt(internetVersion.split("[.]")[1]);
-            int revisionMod = Integer.parseInt(AresModClass.MOD_VERSION.split("[.]")[2]);;
+            int revisionMod = Integer.parseInt(UndercastModClass.MOD_VERSION.split("[.]")[2]);;
             int revisionLatest = Integer.parseInt(internetVersion.split("[.]")[2]);;
             
             if (majorVersionMod < majorVersionLatest) {

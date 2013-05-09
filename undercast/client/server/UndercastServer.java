@@ -1,10 +1,10 @@
-package tc.oc.server;
+package undercast.client.server;
 
-import tc.oc.AresData;
-import tc.oc.AresData.ServerType;
-import tc.oc.AresData.MatchState;;
+import undercast.client.UndercastData;
+import undercast.client.UndercastData.ServerType;
+import undercast.client.UndercastData.MatchState;;
 
-public class AresServer {
+public class UndercastServer {
     public String name;
     public String currentMap;
     public String nextMap;
@@ -14,7 +14,7 @@ public class AresServer {
     /**
      * Default constructor
      */
-    public AresServer() {
+    public UndercastServer() {
     }
 
     public String getServerName() {

@@ -1,16 +1,16 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.util.StringTranslate;
-import tc.oc.server.Ares_ServerGUI;
+import undercast.client.server.Undercast_ServerGUI;
 
 @SideOnly(Side.CLIENT)
-public class AresGuiMainMenu extends GuiMainMenu {
+public class UndercastGuiMainMenu extends GuiMainMenu {
 
-    public AresGuiMainMenu() {
+    public UndercastGuiMainMenu() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class AresGuiMainMenu extends GuiMainMenu {
     protected void actionPerformed(GuiButton par1GuiButton) {
         super.actionPerformed(par1GuiButton);
         if (par1GuiButton.id == 7) {
-            mc.displayGuiScreen(new Ares_ServerGUI(false));
+            mc.displayGuiScreen(new Undercast_ServerGUI(false));
         }
     }
 }

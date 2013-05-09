@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -40,7 +40,7 @@ public class GuiButtonTooltip extends GuiButton {
                     l = 16777120;
                 }
             }
-            if (k == 2 && AresConfig.enableButtonTooltips) {
+            if (k == 2 && UndercastConfig.enableButtonTooltips) {
                 drawHoveringText(Arrays.asList(xpl), par2, par3, fontrenderer);
             }
             this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, l);

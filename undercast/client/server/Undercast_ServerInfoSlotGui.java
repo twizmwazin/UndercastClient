@@ -1,12 +1,12 @@
-package tc.oc.server;
+package undercast.client.server;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
-import tc.oc.AresData;
+import undercast.client.UndercastData;
 
-class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
+class Undercast_ServerInfoSlotGui extends Undercast_ServerSlotGui {
 
-    final Ares_ServerGUI parent;
+    final Undercast_ServerGUI parent;
 
     /**
      * Default constructor to create list
@@ -14,7 +14,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
      * @param guiservers Main server gui screen
      * @param servers list of servers
      */
-    public Ares_ServerInfoSlotGui(Ares_ServerGUI guiservers) {
+    public Undercast_ServerInfoSlotGui(Undercast_ServerGUI guiservers) {
         super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
         this.parent = guiservers;
     }
@@ -23,7 +23,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
      * Main draw method for the individual server boxes
      */
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
-        AresServer server = AresData.sortedServerInformation[i];
+        UndercastServer server = UndercastData.sortedServerInformation[i];
 
         parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
         int serveNameWidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(getServerName(server));
@@ -39,7 +39,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
     }
 
     protected int getSize() {
-        return AresData.serverCount;
+        return UndercastData.serverCount;
     }
 
     protected boolean isSelected(int i) {
@@ -52,7 +52,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
         }
     }
 
-    private String getServerName(AresServer server) {
+    private String getServerName(UndercastServer server) {
         return ("\2475" + Character.toUpperCase(server.name.charAt(0)) + server.name.substring(1) + "\247f");
     }
 
@@ -65,7 +65,7 @@ class Ares_ServerInfoSlotGui extends Ares_ServerSlotGui {
         }
     }
 
-    private int getMatchColor(AresServer server) {
+    private int getMatchColor(UndercastServer server) {
         switch (server.matchState) {
             case Started:
                 return 0xFFFF00; // yellow

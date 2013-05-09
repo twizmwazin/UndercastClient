@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -19,14 +19,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
-import tc.oc.AresData.Teams;
-import tc.oc.update.Ares_UpdaterThread;
+import undercast.client.UndercastData.Teams;
+import undercast.client.update.Undercast_UpdaterThread;
 
 /**
  * @author Flv92
  */
-@Mod(modid = AresModClass.MOD_NAME, name = AresModClass.MOD_NAME, version = AresModClass.MOD_VERSION)
-public class AresModClass {
+@Mod(modid = UndercastModClass.MOD_NAME, name = UndercastModClass.MOD_NAME, version = UndercastModClass.MOD_VERSION)
+public class UndercastModClass {
 
     public final static String MOD_VERSION = "1.5.2";
     public final static String MOD_NAME = "UndercastMod";
@@ -37,8 +37,8 @@ public class AresModClass {
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
-    @Mod.Instance(AresModClass.MOD_NAME)
-    private static AresModClass instance;
+    @Mod.Instance(UndercastModClass.MOD_NAME)
+    private static UndercastModClass instance;
     public PlayTimeCounterThread playTimeCounter;
 
     /**
@@ -60,19 +60,19 @@ public class AresModClass {
         }
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
         CONFIG = new Configuration(newConfig);
-        new AresConfig(CONFIG);
-        KeyBindingRegistry.registerKeyBinding(new AresKeyHandling());
-        new AresData();
-        new Ares_UpdaterThread();
+        new UndercastConfig(CONFIG);
+        KeyBindingRegistry.registerKeyBinding(new UndercastKeyHandling());
+        new UndercastData();
+        new Undercast_UpdaterThread();
         Runnable r1 = new Runnable() {
             public void run() {
                 URLConnection spoof = null;
                 try {
                     spoof = new URL("https://minotar.net/helm/d4jsgn9fsrl9ergn0/16.png").openConnection(); //Just hope no one will ever be named like this
                     spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    AresKillsHandler.steveHeadBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                    UndercastKillsHandler.steveHeadBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
                 } catch (Exception ex) {
-                    Logger.getLogger(AresKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
@@ -82,15 +82,15 @@ public class AresModClass {
 
     @Mod.Init
     public void init(FMLInitializationEvent event) {
-        TickRegistry.registerTickHandler(new MenuTickHandler(), Side.CLIENT); //Register a tick handler for custom gui rendering.
+        TickRegistry.registerTickHandler(new UndercastTickHandler(), Side.CLIENT); //Register a tick handler for custom gui rendering.
         NetworkRegistry.instance().registerChatListener(new ChatListener()); //Register a ChatListener to handle chat in game.
-        NetworkRegistry.instance().registerConnectionHandler(new AresConnectionHandler()); //Register a connection handler to know whenever
-        FMLClientHandler.instance().getClient().guiAchievement = new AresGuiAchievement(FMLClientHandler.instance().getClient());
+        NetworkRegistry.instance().registerConnectionHandler(new UndercastConnectionHandler()); //Register a connection handler to know whenever
+        FMLClientHandler.instance().getClient().guiAchievement = new UndercastGuiAchievement(FMLClientHandler.instance().getClient());
         //the player connects/disconnects to a server
     }
 
     /**
-     * onGameTick custom method called from the tickHandler MenuTickHandler.
+     * onGameTick custom method called from the tickHandler UndercastTickHandler.
      * Only called from two kind of ticks, TickType.CLIENT and TickType.RENDER
      * Client ticks are for remplace a gui at the exact moment where the gui
      * appears so this is invisible Render ticks are gui ticks in order to
@@ -98,73 +98,73 @@ public class AresModClass {
      *
      */
     public void onGameTick(Minecraft mc) {
-        AresData.update();
+        UndercastData.update();
 
         //if the game over screen is active then you have died
         //if it is the first time it is active count a death
         //if it is not don't do anything
         if (mc.currentScreen instanceof GuiGameOver) {
             mc.currentScreen = null;
-            mc.displayGuiScreen(new AresGuiGameOver());
+            mc.displayGuiScreen(new UndercastGuiGameOver());
             //if the button is enabled and the user wants to disable it
 
         }
-        if (mc.currentScreen instanceof AresGuiGameOver && AresConfig.toggleTitleScreenButton) {
-            ((AresGuiGameOver) mc.currentScreen).setTitleScreenButtonState(false);
+        if (mc.currentScreen instanceof UndercastGuiGameOver && UndercastConfig.toggleTitleScreenButton) {
+            ((UndercastGuiGameOver) mc.currentScreen).setTitleScreenButtonState(false);
         }
 
         //get debug info for the fps
         String fps = mc.debug.split(",")[0];
-        int height = AresConfig.x;
-        int width = AresConfig.y;
+        int height = UndercastConfig.x;
+        int width = UndercastConfig.y;
         //if the gui is enabled display
         //if chat is open and config says yes then show gui
-        if (AresData.guiShowing && (mc.inGameHasFocus || AresConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
+        if (UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
             //show fps
-            if (AresConfig.showFPS) {
+            if (UndercastConfig.showFPS) {
                 mc.fontRenderer.drawStringWithShadow(fps, width, height, 0xffff);
                 height += 8;
             }
         }
-        //if on Ares server then display this info.
+        //if on OvercastNetwork server then display this info.
         //if chat is open and config says yes then show gui
-        if (AresData.isPlayingAres() && AresData.guiShowing && (mc.inGameHasFocus || AresConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
+        if (UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
             // Server display
-            if (AresConfig.showServer) {
-                mc.fontRenderer.drawStringWithShadow("Server: \u00A76" + AresData.getServer(), width, height, 16777215);
+            if (UndercastConfig.showServer) {
+                mc.fontRenderer.drawStringWithShadow("Server: \u00A76" + UndercastData.getServer(), width, height, 16777215);
                 height += 8;
             }
 
             // Team display (based on color)
-            if (AresConfig.showTeam && !AresData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Team: " + AresData.getTeam(), width, height, getTeamColors());
+            if (UndercastConfig.showTeam && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow("Team: " + UndercastData.getTeam(), width, height, getTeamColors());
                 height += 8;
             }
             // Friend display:
-            if (AresConfig.showFriends) {
-                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + AresData.getFriends(), width, height, 16777215);
+            if (UndercastConfig.showFriends) {
+                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + UndercastData.getFriends(), width, height, 16777215);
                 height += 8;
             }
             // Playing Time display:
-            if (AresConfig.showPlayingTime) {
-                mc.fontRenderer.drawStringWithShadow(AresCustomMethods.getPlayingTimeString(), width, height, 16777215);
+            if (UndercastConfig.showPlayingTime) {
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getPlayingTimeString(), width, height, 16777215);
                 height += 8;
             }
             // Map fetcher:
-            if (AresConfig.showMap && !AresData.isLobby) {
-                if (AresData.getMap() != null) {
-                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d" + AresData.getMap(), width, height, 16777215);
+            if (UndercastConfig.showMap && !UndercastData.isLobby) {
+                if (UndercastData.getMap() != null) {
+                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d" + UndercastData.getMap(), width, height, 16777215);
                     height += 8;
                 } else {
-                    AresData.setMap("Fetching...");
-                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A78" + AresData.getMap(), width, height, 16777215);
+                    UndercastData.setMap("Fetching...");
+                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A78" + UndercastData.getMap(), width, height, 16777215);
                     height += 8;
                 }
             }
             // Show next map
-            if (AresConfig.showNextMap && !AresData.isLobby) {
-                if (AresData.getNextMap() != null) {
-                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + AresData.getNextMap(), width, height, 16777215);
+            if (UndercastConfig.showNextMap && !UndercastData.isLobby) {
+                if (UndercastData.getNextMap() != null) {
+                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
                     height += 8;
                 } else {
                     mc.fontRenderer.drawStringWithShadow("Next Map: \u00A78Loading...", width, height, 16777215);
@@ -172,34 +172,34 @@ public class AresModClass {
                 }
             }
             //Show KD Ratio
-            if (AresConfig.showKD && !AresData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + AresCustomMethods.getKD(), width, height, 16777215);
+            if (UndercastConfig.showKD && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow("K/D: \u00A73" + UndercastCustomMethods.getKD(), width, height, 16777215);
                 height += 8;
             }
             //show KK Ratio
-            if (AresConfig.showKK && !AresData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("K/K: \u00A73" + AresCustomMethods.getKK(), width, height, 16777215);
+            if (UndercastConfig.showKK && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow("K/K: \u00A73" + UndercastCustomMethods.getKK(), width, height, 16777215);
                 height += 8;
             }
             //show amount of kills
-            if (AresConfig.showKills && !AresData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a" + AresData.getKills(), width, height, 16777215);
+            if (UndercastConfig.showKills && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a" + UndercastData.getKills(), width, height, 16777215);
                 height += 8;
             }
             //show amount of deaths
-            if (AresConfig.showDeaths && !AresData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + AresData.getDeaths(), width, height, 16777215);
+            if (UndercastConfig.showDeaths && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + UndercastData.getDeaths(), width, height, 16777215);
                 height += 8;
             }
             // Kill Streak display
-            if (AresConfig.showStreak && !AresData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) AresData.getKillstreak() + "/" + (int) AresData.getLargestKillstreak(), width, height, 16777215);
+            if (UndercastConfig.showStreak && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) UndercastData.getKillstreak() + "/" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
                 height += 8;
             }
         }
 
         //if you not on obs turn it off
-        if ((AresData.team != Teams.Observers && !AresData.isGameOver) || !AresData.isPA) {
+        if ((UndercastData.team != Teams.Observers && !UndercastData.isGameOver) || !UndercastData.isPlayingOvercastNetwork()) {
             brightActive = false;
             //if full bright is on turn it off
             if (mc.gameSettings.gammaSetting >= brightLevel) {
@@ -212,12 +212,12 @@ public class AresModClass {
         }
 
         //gui display for obs if you have brightness
-        if (AresData.isPlayingAres() && AresData.guiShowing && (mc.inGameHasFocus || AresConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
-            if (brightActive && AresConfig.fullBright && (AresData.team == Teams.Observers || AresData.isGameOver)) {
+        if (UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
+            if (brightActive && UndercastConfig.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)) {
                 mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
                 height += 8;
             } else {
-                if (!brightActive && AresConfig.fullBright && (AresData.team == Teams.Observers || AresData.isGameOver)) {
+                if (!brightActive && UndercastConfig.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)) {
                     mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A7cOFF", width, height, 16777215);
                     height += 8;
                 }
@@ -231,7 +231,7 @@ public class AresModClass {
      * @return hex value of team color
      */
     public int getTeamColors() {
-        switch (AresData.getTeam()) {
+        switch (UndercastData.getTeam()) {
             case Red:
             case Cot:
                 return 0x990000;
@@ -257,11 +257,11 @@ public class AresModClass {
     }
 
     /**
-     * get an instance of AresModClass
+     * get an instance of UndercastModClass
      *
      * @return the instance
      */
-    public static AresModClass getInstance() {
+    public static UndercastModClass getInstance() {
         return instance;
     }
 }

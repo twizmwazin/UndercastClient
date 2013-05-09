@@ -1,4 +1,4 @@
-package tc.oc;
+package undercast.client;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import java.awt.image.BufferedImage;
@@ -14,14 +14,14 @@ import net.minecraft.stats.Achievement;
 /**
  * @author Flv92
  */
-public class AresKillsHandler {
+public class UndercastKillsHandler {
 
     public static BufferedImage killerBuffer = null;
     public static BufferedImage steveHeadBuffer = null;
     private String killer;
     private boolean killOrKilled;
 
-    public AresKillsHandler(String message, String username, EntityPlayer player) {
+    public UndercastKillsHandler(String message, String username, EntityPlayer player) {
         //When you die (from someone or not)
         if (message.startsWith(username)) {
             killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
@@ -50,7 +50,7 @@ public class AresKillsHandler {
                     killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
                     System.out.println("finished");
                 } catch (Exception ex) {
-                    Logger.getLogger(AresKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
@@ -59,10 +59,10 @@ public class AresKillsHandler {
                 try {
                     Thread.sleep(1000L);
                     Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                    ((AresGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
+                    ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
                             .addFakeAchievementToMyList(custom, killOrKilled, killer);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(AresKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
