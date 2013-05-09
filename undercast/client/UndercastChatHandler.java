@@ -94,10 +94,14 @@ public class UndercastChatHandler {
             }
             UndercastCustomMethods.handleServerSwap();
         } else if (message.contains("You are currently on ")) {
-            UndercastData.setServer(message.replace("You are currently on ", ""));
-            UndercastCustomMethods.handleServerSwap();
+            if (UndercastData.serverDetectionCommandExecuted) {
+                UndercastData.serverDetectionCommandExecuted = false;
+                UndercastData.setServer(message.replace("You are currently on ", ""));
+                UndercastCustomMethods.handleServerSwap();
+            }
         } else if (message.equals(" ")) {
             if (!UndercastData.welcomeMessageExpected) {
+                UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
             } else {
                 UndercastData.welcomeMessageExpected = false;

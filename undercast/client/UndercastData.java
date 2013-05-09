@@ -48,6 +48,8 @@ public class UndercastData {
     public static int playTimeHours;
     public static int playTimeMin;
     public static int sortIndex;
+    // saves if a /server command (without argument) was executed, if it's false, the user executed it 
+    public static boolean serverDetectionCommandExecuted = false;
 
     public static enum Teams {
 
