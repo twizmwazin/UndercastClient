@@ -33,6 +33,11 @@ public class UndercastKillsHandler {
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
             this.printAchievement();
+        } else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")
+                && (message.contains("fell out of the world") || message.contains("hit the ground too hard"))) {
+            killer = username;
+            killOrKilled = false;
+            this.printAchievement();
         }
     }
 

@@ -185,27 +185,18 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 if (!this.isFakeAchievement) {
                     this.itemRender.renderItemAndEffectIntoGUI(this.theGame.fontRenderer, this.theGame.renderEngine, this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
-                    /*String location = Minecraft.getMinecraftDir().getAbsolutePath();
-                     location = location.substring(0, location.length()) + "/resources/skinsHead/" + this.killer + ".png";
-                     File image = new File(location);
-                     Image img = null;
-                     try {
-                     img = ImageIO.read(image);
-                     } catch (IOException e) {
-                     e.printStackTrace();
-                     }//et on charge notre image dans un buffer... oui je sais tu es perdu mais sa fonctionne comme ça ;)
-                     this.buffered = (BufferedImage) img;*/
                     try {
+                        //Loading the buffer as a readable image and set it as GL11 texture
+                        //20 is a unique id, and both 16 are for the size of the image
                         this.imgLoader.setupTexture(UndercastKillsHandler.killerBuffer, 20, 16, 16);
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
-                    // on charge l'image à partit du buffer (20 est le numéro de texture, 64 et 32 car la texture d'un skin fait 64/32 pixels
-                    GL11.glPushMatrix(); // on ouvre une matrice pour que les changements suivants n'affectent pas le reste du gui
-                    GL11.glColor4f(1, 1, 1, 1); // on applique une lumière blanche sur l'image
-                    GL11.glScalef(1F / 16F, 1F / 16F, 1F);// ici j'ai du redimentionner l'image car avec ma class elle est déformée
-                    GL11.glTranslatef((i + 8) * 16F, (j + 8) * 16F, 0);// ici tu changera les 2 premier paramètres (position finale en x et y de l'image sur le gui)
-                    this.drawTexturedModalRect(0, 0, 0, 0, 256, 256); // et on affiche l'image
+                    GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
+                    GL11.glColor4f(1, 1, 1, 1); // White light on the image
+                    GL11.glScalef(1F / 16F, 1F / 16F, 1F);// Resizing the image (divided by 16 in the diagonal)
+                    GL11.glTranslatef((i + 8) * 16F, (j + 8) * 16F, 0);// Translating the image in the gui
+                    this.drawTexturedModalRect(0, 0, 0, 0, 256, 256); // Drawing the image
                     GL11.glPopMatrix();
                 }
                 GL11.glDisable(GL11.GL_LIGHTING);
