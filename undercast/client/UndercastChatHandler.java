@@ -42,7 +42,7 @@ public class UndercastChatHandler {
                 UndercastData.reload();
             }
         } //if you die
-        else if (message.startsWith(username)) {
+        else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
             UndercastData.addDeaths(1);
             UndercastData.resetKillstreak();
         } //if you die from someone

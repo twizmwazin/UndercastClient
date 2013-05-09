@@ -23,7 +23,7 @@ public class UndercastKillsHandler {
 
     public UndercastKillsHandler(String message, String username, EntityPlayer player) {
         //When you die (from someone or not)
-        if (message.startsWith(username)) {
+        if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
             killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
             System.out.println(killer);
             killOrKilled = false;
