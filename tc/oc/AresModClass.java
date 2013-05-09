@@ -9,6 +9,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
@@ -18,17 +19,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
 import tc.oc.AresData.Teams;
 import tc.oc.update.Ares_UpdaterThread;
 
 /**
  * @author Flv92
  */
-@Mod(modid = "overcastNetwork-unofficialMod", name = "OvercastNetwork Mod", version = AresModClass.MOD_VERSION)
+@Mod(modid = AresModClass.MOD_NAME, name = AresModClass.MOD_NAME, version = AresModClass.MOD_VERSION)
 public class AresModClass {
 
     public final static String MOD_VERSION = "1.5.2";
+    public final static String MOD_NAME = "UndercastMod";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean mainMenuActive;
@@ -36,7 +37,7 @@ public class AresModClass {
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
     public float defaultLevel = mc.gameSettings.gammaSetting;
-    @Mod.Instance("overcastNetwork-unofficialMod")
+    @Mod.Instance(AresModClass.MOD_NAME)
     private static AresModClass instance;
     public PlayTimeCounterThread playTimeCounter;
 
@@ -49,8 +50,16 @@ public class AresModClass {
      */
     @Mod.PreInit
     public void preInit(FMLPreInitializationEvent event) {
+        //With the renaming, the config file name changed.
+        //Just renaming the old one as the new one if necessary.
+        File newConfig = event.getSuggestedConfigurationFile();
+        File oldConfig = new File(newConfig.getParentFile().getAbsolutePath() + "/overcastNetwork-unofficialMod.cfg");
+        if(oldConfig.exists() && !newConfig.exists())
+        {
+            oldConfig.renameTo(newConfig);
+        }
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
-        CONFIG = new Configuration(event.getSuggestedConfigurationFile());
+        CONFIG = new Configuration(newConfig);
         new AresConfig(CONFIG);
         KeyBindingRegistry.registerKeyBinding(new AresKeyHandling());
         new AresData();
