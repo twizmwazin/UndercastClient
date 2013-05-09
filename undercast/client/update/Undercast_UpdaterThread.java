@@ -32,7 +32,7 @@ public class Undercast_UpdaterThread extends Thread{
         errorOccured = false;
         try {
             //download link
-            URL data = new URL("https://raw.github.com/palechip/UndercastMaintenance/master/forgeversion.txt"); // forge version should use forge instead of master
+            URL data = new URL("https://raw.github.com/UndercastTeam/UndercastClient/forge/version.txt"); // forge version should use forge instead of master
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();
             readline2 = in.readLine();
