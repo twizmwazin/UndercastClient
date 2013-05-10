@@ -1,5 +1,12 @@
 The changelog exists since version 1.4.0
 
+1.5.3
+ - ingame config (use P-key) (config gets resetted when switching to this version)
+ - renamed the mod to Undercast Client
+ - achievements for kills and deaths
+ - more reliable stats tracker
+ - minor bug fixes
+
 1.5.2
  - full bright is usable after the match
  - option to show the playing time
@@ -10,6 +17,7 @@ The changelog exists since version 1.4.0
  - color tweaks for cyan and green team
  - better performance
  - server gui connects to us.oc.tc when you use it from a not-oc.tc server
+ - minor bug fixes
 
 1.5.1
  - updated for 1.5.2
