@@ -6,6 +6,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import java.awt.image.BufferedImage;
@@ -54,8 +55,7 @@ public class UndercastModClass {
         //Just renaming the old one as the new one if necessary.
         File newConfig = event.getSuggestedConfigurationFile();
         File oldConfig = new File(newConfig.getParentFile().getAbsolutePath() + "/overcastNetwork-unofficialMod.cfg");
-        if(oldConfig.exists() && !newConfig.exists())
-        {
+        if (oldConfig.exists() && !newConfig.exists()) {
             oldConfig.renameTo(newConfig);
         }
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
@@ -86,15 +86,19 @@ public class UndercastModClass {
         NetworkRegistry.instance().registerChatListener(new ChatListener()); //Register a ChatListener to handle chat in game.
         NetworkRegistry.instance().registerConnectionHandler(new UndercastConnectionHandler()); //Register a connection handler to know whenever
         FMLClientHandler.instance().getClient().guiAchievement = new UndercastGuiAchievement(FMLClientHandler.instance().getClient());
+        LanguageRegistry.instance().addStringLocalization("undercast.gui", "Toggle Overcast Network mod gui");
+        LanguageRegistry.instance().addStringLocalization("undercast.inGameGui", "Change server");
+        LanguageRegistry.instance().addStringLocalization("undercast.fullBright", "Toggle fullbright");
+
         //the player connects/disconnects to a server
     }
 
     /**
-     * onGameTick custom method called from the tickHandler UndercastTickHandler.
-     * Only called from two kind of ticks, TickType.CLIENT and TickType.RENDER
-     * Client ticks are for remplace a gui at the exact moment where the gui
-     * appears so this is invisible Render ticks are gui ticks in order to
-     * correctly render text inside a gui
+     * onGameTick custom method called from the tickHandler
+     * UndercastTickHandler. Only called from two kind of ticks, TickType.CLIENT
+     * and TickType.RENDER Client ticks are for remplace a gui at the exact
+     * moment where the gui appears so this is invisible Render ticks are gui
+     * ticks in order to correctly render text inside a gui
      *
      */
     public void onGameTick(Minecraft mc) {

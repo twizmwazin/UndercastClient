@@ -15,9 +15,9 @@ import undercast.client.server.Undercast_ServerGUI;
  */
 public class UndercastKeyHandling extends KeyHandler {
 
-    static KeyBinding keyGuiHide = new KeyBinding("gui", Keyboard.KEY_F6);
-    static KeyBinding keyGuiServer = new KeyBinding("inGameGui", Keyboard.KEY_L);
-    static KeyBinding keyGuiFullBright = new KeyBinding("fullBright", Keyboard.KEY_G);
+    static KeyBinding keyGuiHide = new KeyBinding("undercast.gui", Keyboard.KEY_F6);
+    static KeyBinding keyGuiServer = new KeyBinding("undercast.inGameGui", Keyboard.KEY_L);
+    static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
 
     public UndercastKeyHandling() {
         //the first value is an array of KeyBindings, the second is whether or not the call
