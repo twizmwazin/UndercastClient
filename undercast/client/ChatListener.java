@@ -23,20 +23,19 @@ public class ChatListener implements IChatListener {
 
     @Override
     public Packet3Chat clientChat(NetHandler handler, Packet3Chat packet) {
-        try
-        {
+        try {
             Minecraft mc = FMLClientHandler.instance().getClient();
             EntityPlayer player = mc.thePlayer;
             UndercastModClass.getInstance().username = mc.thePlayer.username;
             String message = StringUtils.stripControlCodes(packet.message);
             // stop global msg to go through
-            if (!message.startsWith("<") && UndercastData.isPlayingOvercastNetwork())
-            {
+            if (!message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
                 new UndercastChatHandler(message, UndercastModClass.getInstance().username, player);
-                new UndercastKillsHandler(message, UndercastModClass.getInstance().username, player);
+                if (UndercastConfig.showAchievements) {
+                    new UndercastKillsHandler(message, UndercastModClass.getInstance().username, player);
+                }
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
         }
         packet.message = UndercastChatHandler.handleTip(packet);
         return packet;

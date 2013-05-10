@@ -38,6 +38,9 @@ public class UndercastConfig {
     public static boolean fullBright;
     public static boolean matchOnServerJoin;
     public static boolean enableButtonTooltips;
+    public static boolean showAchievements;
+    public static boolean showKillAchievements;
+    public static boolean showDeathAchievements;
     public static File configFile;
 
     public UndercastConfig(Configuration configuration, File configF) {
@@ -71,6 +74,9 @@ public class UndercastConfig {
         fullBright = config.get("UndercastMod", "fullBright", true).getBoolean(true);
         matchOnServerJoin = config.get("UndercastMod", "matchOnServerJoin", false).getBoolean(false);
         showPlayingTime = config.get("UndercastMod", "showPlayingTime", true).getBoolean(true);
+        showAchievements = config.get("UndercastMod", "showAchievements", false).getBoolean(false);
+        showKillAchievements = config.get("UndercastMod", "showKillAchievements", true).getBoolean(true);
+        showDeathAchievements = config.get("UndercastMod", "showDeathAchievements", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
