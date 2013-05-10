@@ -41,9 +41,6 @@ public class UndercastData {
     public static boolean redirect = false;
     public static String directionServer;
     public static boolean guiShowing;
-    public static KeyBinding keybind;
-    public static KeyBinding keybind2;
-    public static KeyBinding keybind3;
     public static boolean isGameOver = false;
     public static int playTimeHours;
     public static int playTimeMin;
@@ -76,9 +73,6 @@ public class UndercastData {
         resetLargestKillstreak();
         setTeam(Teams.Observers);
         guiShowing = true;
-        keybind = new KeyBinding("gui", Keyboard.getKeyIndex("F6"));
-        keybind2 = new KeyBinding("inGameGui", Keyboard.getKeyIndex("L"));
-        keybind3 = new KeyBinding("fullBright", Keyboard.getKeyIndex("G"));
         mapLoaderFinished = false;
         serverInformation = new UndercastServer[20];
         serverCount = 0;

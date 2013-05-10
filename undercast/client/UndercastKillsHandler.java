@@ -27,6 +27,7 @@ public class UndercastKillsHandler {
             killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
             killOrKilled = false;
             this.printAchievement();
+            String str = "" + 1;
         } //if you kill a person
         else if (UndercastConfig.showKillAchievements && message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) {
             System.out.println(message.substring(0, message.indexOf(" ")));

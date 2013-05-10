@@ -89,6 +89,8 @@ public class UndercastModClass {
         LanguageRegistry.instance().addStringLocalization("undercast.gui", "Toggle Overcast Network mod gui");
         LanguageRegistry.instance().addStringLocalization("undercast.inGameGui", "Change server");
         LanguageRegistry.instance().addStringLocalization("undercast.fullBright", "Toggle fullbright");
+        LanguageRegistry.instance().addStringLocalization("undercast.settings", "Show Undercast mod settings");
+
 
         //the player connects/disconnects to a server
     }
