@@ -29,7 +29,7 @@ import undercast.client.update.Undercast_UpdaterThread;
 @Mod(modid = UndercastModClass.MOD_NAME, name = UndercastModClass.MOD_NAME, version = UndercastModClass.MOD_VERSION)
 public class UndercastModClass {
 
-    public final static String MOD_VERSION = "1.5.2";
+    public final static String MOD_VERSION = "1.5.3";
     public final static String MOD_NAME = "UndercastMod";
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
