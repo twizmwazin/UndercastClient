@@ -11,9 +11,9 @@ import undercast.client.UndercastConfig;
 public class GeneralSettings extends GuiScreen {
 
     // Toggle settings
-    public String[] toggleSettings = new String[]{"showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips", "showAchievements", "showDeathAchievements", "showKillAchievements"};
-    public String[] enabledStrings = new String[]{"Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown", "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown"};
-    public String[] disabledStrings = new String[]{"Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden", "No Achievements shown", "No Death Achievements", "No Kill Achievements"};
+    public String[] toggleSettings = new String[]{"showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips", "showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement"};
+    public String[] enabledStrings = new String[]{"Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown", "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown"};
+    public String[] disabledStrings = new String[]{"Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden", "No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement"};
     // X Offset vars
     public GuiButton xPlusButton;
     public GuiButton xMinusButton;
@@ -42,7 +42,7 @@ public class GeneralSettings extends GuiScreen {
         }
 
         // Positioning
-        y = (y - 50) + toggleSettings.length * 25;
+        y = (y - 80) + toggleSettings.length * 25;
         int x = width / 2 - 77;
         x2 = width / 2 + 75;
 
@@ -75,9 +75,9 @@ public class GeneralSettings extends GuiScreen {
         int x = width / 2 - 77,
                 x2 = width / 2 + 75,
                 x1 = width / 2 - 150;
-        int y = (height / 2 - 80) + toggleSettings.length * 25;
-        drawCenteredString(fontRenderer, "X Offset", x1 + 30, y - 52, 0xffffff);
-        drawCenteredString(fontRenderer, "Y Offset", x2 + 30, y - 52, 0xffffff);
+        int y = (height / 2 - 120) + toggleSettings.length * 25;
+        drawCenteredString(fontRenderer, "X Offset", x1 + 40, y - 52, 0xffffff);
+        drawCenteredString(fontRenderer, "Y Offset", x2 + 40, y - 52, 0xffffff);
         // Draw buttons
         super.drawScreen(par1, par2, par3);
     }

@@ -69,8 +69,7 @@ public class UndercastChatHandler {
         } //When someone die
         else if ((message.contains("by ") || message.contains("took ") || message.contains("fury of ")) && !message.toLowerCase().endsWith(" team")) {
             UndercastData.isNextKillFirstBlood = false;
-        }
-        //when you join a match
+        } //when you join a match
         else if (message.contains("You joined the")) {
             try {
                 UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
@@ -138,6 +137,12 @@ public class UndercastChatHandler {
     }
 
     public static void printFirstBloodAchievement() {
+        final long waitingTime;
+        if (UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
+            waitingTime = 4000L;
+        } else {
+            waitingTime = 0L;
+        }
         UndercastKillsHandler.killerBuffer = UndercastKillsHandler.steveHeadBuffer;
         //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
@@ -157,7 +162,7 @@ public class UndercastChatHandler {
         Runnable r2 = new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(5000L);
+                    Thread.sleep(waitingTime);
                     Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                     Minecraft client = FMLClientHandler.instance().getClient();
                     ((UndercastGuiAchievement) client.guiAchievement)
