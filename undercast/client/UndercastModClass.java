@@ -41,6 +41,7 @@ public class UndercastModClass {
     @Mod.Instance(UndercastModClass.MOD_NAME)
     private static UndercastModClass instance;
     public PlayTimeCounterThread playTimeCounter;
+    public static String[] lastChatLines = new String[100];
 
     /**
      * preInitialisation method automatically called by Forge with

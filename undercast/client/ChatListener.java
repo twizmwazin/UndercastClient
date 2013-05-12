@@ -30,6 +30,7 @@ public class ChatListener implements IChatListener {
             String message = StringUtils.stripControlCodes(packet.message);
             // stop global msg to go through
             if (!message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
+                addLineToChatLines(message);
                 new UndercastChatHandler(message, UndercastModClass.getInstance().username, player);
                 if (UndercastConfig.showAchievements) {
                     new UndercastKillsHandler(message, UndercastModClass.getInstance().username, player);
@@ -39,5 +40,10 @@ public class ChatListener implements IChatListener {
         }
         packet.message = UndercastChatHandler.handleTip(packet);
         return packet;
+    }
+
+    public void addLineToChatLines(String line) {
+        System.arraycopy(UndercastModClass.lastChatLines, 0, UndercastModClass.lastChatLines, 1, 99);
+        UndercastModClass.lastChatLines[0] = line;
     }
 }

@@ -15,12 +15,12 @@ import undercast.client.settings.SettingsGUI;
  * @author Flv92
  */
 public class UndercastKeyHandling extends KeyHandler {
-    
+
     static KeyBinding keyGuiHide = new KeyBinding("undercast.gui", Keyboard.KEY_F6);
     static KeyBinding keyGuiServer = new KeyBinding("undercast.inGameGui", Keyboard.KEY_L);
     static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
     static KeyBinding keySettingsGui = new KeyBinding("undercast.settings", Keyboard.KEY_P);
-    
+
     public UndercastKeyHandling() {
         //the first value is an array of KeyBindings, the second is whether or not the call
         //keyDown should repeat as long as the key is down
@@ -30,12 +30,12 @@ public class UndercastKeyHandling extends KeyHandler {
             false, false, false, false
         });
     }
-    
+
     @Override
     public String getLabel() {
         return "UndercastKeyBindig";
     }
-    
+
     @Override
     public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
         Minecraft mc = FMLClientHandler.instance().getClient();
@@ -56,16 +56,17 @@ public class UndercastKeyHandling extends KeyHandler {
                     }
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }
+
             } else if (kb == keySettingsGui) {
                 FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI());
             }
         } //if you are an obs;have the config to true; toggle fullbright and play sound
     }
-    
+
     @Override
     public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd) {
     }
-    
+
     @Override
     public EnumSet<TickType> ticks() {
         return EnumSet.of(TickType.CLIENT);
