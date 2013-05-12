@@ -202,6 +202,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 if (!this.isFakeAchievement) {
                     this.itemRender.renderItemAndEffectIntoGUI(this.theGame.fontRenderer, this.theGame.renderEngine, this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
+                    GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
                     try {
                         //Loading the buffer as a readable image and set it as GL11 texture
                         //20 is a unique id, and both 16 are for the size of the image
@@ -209,7 +210,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
-                    GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
                     GL11.glColor4f(1, 1, 1, 1); // White light on the image
                     GL11.glScalef(1F / 16F, 1F / 16F, 1F);// Resizing the image (divided by 16 in the diagonal)
                     GL11.glTranslatef((i + 8) * 16F, (j + 8) * 16F, 0);// Translating the image in the gui

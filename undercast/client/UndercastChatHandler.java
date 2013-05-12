@@ -61,7 +61,9 @@ public class UndercastChatHandler {
         } //if you kill a person
         else if (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) {
             if (UndercastData.isNextKillFirstBlood) {
-                printFirstBloodAchievement();
+                if (UndercastConfig.showFirstBloodAchievement) {
+                    printFirstBloodAchievement();
+                }
                 UndercastData.isNextKillFirstBlood = false;
             }
             UndercastData.addKills(1);
