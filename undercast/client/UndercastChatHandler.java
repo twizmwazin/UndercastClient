@@ -4,9 +4,18 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import cpw.mods.fml.client.FMLClientHandler;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet3Chat;
+import net.minecraft.stats.Achievement;
 
 public class UndercastChatHandler {
 
@@ -51,9 +60,17 @@ public class UndercastChatHandler {
             UndercastData.resetKillstreak();
         } //if you kill a person
         else if (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) {
+            if (UndercastData.isNextKillFirstBlood) {
+                printFirstBloodAchievement();
+                UndercastData.isNextKillFirstBlood = false;
+            }
             UndercastData.addKills(1);
             UndercastData.addKillstreak(1);
-        } //when you join a match
+        } //When someone die
+        else if ((message.contains("by ") || message.contains("took ") || message.contains("fury of ")) && !message.toLowerCase().endsWith(" team")) {
+            UndercastData.isNextKillFirstBlood = false;
+        }
+        //when you join a match
         else if (message.contains("You joined the")) {
             try {
                 UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
@@ -65,6 +82,7 @@ public class UndercastChatHandler {
             UndercastData.isGameOver = true;
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
+            UndercastData.isNextKillFirstBlood = true;
         } //when a map is done. Display all the stats
         else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
@@ -117,5 +135,42 @@ public class UndercastChatHandler {
             return null;
         }
         return packet.message;
+    }
+
+    public static void printFirstBloodAchievement() {
+        UndercastKillsHandler.killerBuffer = UndercastKillsHandler.steveHeadBuffer;
+        //Thread charged to load the achievment gui
+        Runnable r1 = new Runnable() {
+            public void run() {
+                URLConnection spoof = null;
+                try {
+                    System.out.println("Beginning");
+                    spoof = new URL("https://minotar.net/helm/" + FMLClientHandler.instance().getClient().thePlayer.username + "/16.png").openConnection();
+                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
+                    UndercastKillsHandler.killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                    System.out.println("finished");
+                } catch (Exception ex) {
+                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        Runnable r2 = new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(5000L);
+                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+                    Minecraft client = FMLClientHandler.instance().getClient();
+                    ((UndercastGuiAchievement) client.guiAchievement)
+                            .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r2);
+        t1.start();
+        t2.start();
+
     }
 }
