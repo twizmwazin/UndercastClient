@@ -78,7 +78,7 @@ public class UndercastConfig {
         showAchievements = config.get("UndercastMod", "showAchievements", false).getBoolean(false);
         showKillAchievements = config.get("UndercastMod", "showKillAchievements", true).getBoolean(true);
         showDeathAchievements = config.get("UndercastMod", "showDeathAchievements", true).getBoolean(true);
-        showFirstBloodAchievement = config.get("UndercastMod", "showFistBloodAchievement", true).getBoolean(true);
+        showFirstBloodAchievement = config.get("UndercastMod", "showFirstBloodAchievement", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
