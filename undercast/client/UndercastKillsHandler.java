@@ -29,7 +29,7 @@ public class UndercastKillsHandler {
             this.printAchievement();
             String str = "" + 1;
         } //if you kill a person
-        else if (UndercastConfig.showKillAchievements && message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) {
+        else if (UndercastConfig.showKillAchievements && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
             System.out.println(message.substring(0, message.indexOf(" ")));
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
