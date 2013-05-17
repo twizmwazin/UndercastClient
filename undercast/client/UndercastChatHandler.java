@@ -19,7 +19,22 @@ import net.minecraft.stats.Achievement;
 
 public class UndercastChatHandler {
 
-    public UndercastChatHandler(String message, String username, EntityPlayer player) {
+    public UndercastChatHandler() {
+    }
+
+    public boolean handleMessage(String message, String username, EntityPlayer player){
+        return handleMessage(message,username,player,message);
+    }
+    /**
+     * handle a chat message received by the playe
+     *
+     * @param message The message received
+     * @param username The player's username receiving the message
+     * @param player an EntityPlayer instance linking to the client-player
+     * @return true if the message should be displayed to the user
+     */
+    public boolean handleMessage(String message, String username, EntityPlayer player, String normalMessage) {
+        boolean returnStatement = true;
         //Friend tracking Joining.
         if (message.contains(" joined the game")) {
             String name;
@@ -92,6 +107,7 @@ public class UndercastChatHandler {
             UndercastData.isNextKillFirstBlood = true;
         } //when a map is done. Display all the stats
         else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
+            player.addChatMessage(normalMessage);
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
             player.addChatMessage("Final Stats:");
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
@@ -105,6 +121,7 @@ public class UndercastChatHandler {
             UndercastData.resetKillstreak();
             UndercastData.resetLargestKillstreak();
             UndercastData.setTeam(UndercastData.Teams.Observers);
+            return false;
         } //sends /match when you join a server.
         else if (message.contains("Welcome to the Overcast Network")) {
             if (UndercastData.redirect && UndercastData.server.equalsIgnoreCase("lobby")) {
@@ -135,13 +152,18 @@ public class UndercastChatHandler {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
             }
         }
+        return returnStatement;
     }
 
     public static String handleTip(Packet3Chat packet) {
-        if (packet.message.contains("Tip") && UndercastConfig.filterTips) {
+        try {
+            if (packet.message.contains("Tip") && UndercastConfig.filterTips) {
+                return null;
+            }
+            return packet.message;
+        } catch (NullPointerException e) {
             return null;
         }
-        return packet.message;
     }
 
     public static void printFirstBloodAchievement() {

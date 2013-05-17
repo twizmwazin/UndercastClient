@@ -13,7 +13,9 @@ import net.minecraft.util.StringUtils;
  */
 public class ChatListener implements IChatListener {
 
+    public UndercastChatHandler chatHandler;
     public ChatListener() {
+        chatHandler = new UndercastChatHandler();
     }
 
     @Override
@@ -31,7 +33,10 @@ public class ChatListener implements IChatListener {
             // stop global msg to go through
             if (!message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
                 addLineToChatLines(message);
-                new UndercastChatHandler(message, UndercastModClass.getInstance().username, player);
+                if(!(chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message)))
+                {
+                    packet.message = null;
+                }
                 if (UndercastConfig.showAchievements) {
                     new UndercastKillsHandler(message, UndercastModClass.getInstance().username, player);
                 }
