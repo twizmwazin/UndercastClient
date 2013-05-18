@@ -1,5 +1,6 @@
 package undercast.client.settings;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.src.ModLoader;
@@ -25,7 +26,8 @@ public class SettingsGUI extends GuiScreen {
         int y = height / 2;
         this.buttonList.add(new GuiButton(1, x, y - 50, 150, 20, "Overlay Settings"));
         this.buttonList.add(new GuiButton(2, x, y - 20, 150, 20, "General Settings"));
-        this.buttonList.add(new GuiButton(3, x, y + 40, 150, 20, "Done"));
+        this.buttonList.add(new GuiButton(3, x, y + 10, 150, 20, "Achievement Settings"));
+        this.buttonList.add(new GuiButton(4, x, y + 60, 150, 20, "Done"));
     }
 
     @Override
@@ -52,12 +54,15 @@ public class SettingsGUI extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton guibutton) {
         if (guibutton.id == 1) {
-            ModLoader.openGUI(mc.thePlayer, new OverlaySettings());
+            Minecraft.getMinecraft().displayGuiScreen(new OverlaySettings());
         }
         if (guibutton.id == 2) {
-            ModLoader.openGUI(mc.thePlayer, new GeneralSettings());
+            Minecraft.getMinecraft().displayGuiScreen(new GeneralSettings());
         }
         if (guibutton.id == 3) {
+            Minecraft.getMinecraft().displayGuiScreen(new AchievementSettings());
+        }
+        if (guibutton.id == 4) {
             mc.displayGuiScreen(null);
         }
     }

@@ -48,7 +48,7 @@ public class UndercastData {
     // saves if a /server command (without argument) was executed, if it's false, the user executed it 
     public static boolean serverDetectionCommandExecuted = false;
     public static boolean isNextKillFirstBlood = false;
-
+    public static boolean isLastKillFromPlayer = false;
     public static enum Teams {
 
         Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown

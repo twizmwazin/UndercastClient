@@ -42,6 +42,7 @@ public class UndercastConfig {
     public static boolean showKillAchievements;
     public static boolean showDeathAchievements;
     public static boolean showFirstBloodAchievement;
+    public static boolean showLastKillAchievement;
     public static File configFile;
 
     public UndercastConfig(Configuration configuration, File configF) {
@@ -79,6 +80,7 @@ public class UndercastConfig {
         showKillAchievements = config.get("UndercastMod", "showKillAchievements", true).getBoolean(true);
         showDeathAchievements = config.get("UndercastMod", "showDeathAchievements", true).getBoolean(true);
         showFirstBloodAchievement = config.get("UndercastMod", "showFirstBloodAchievement", true).getBoolean(true);
+        showLastKillAchievement = config.get("UndercastMod", "showLastKillAchievement", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

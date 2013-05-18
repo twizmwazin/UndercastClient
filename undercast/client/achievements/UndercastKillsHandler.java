@@ -34,13 +34,12 @@ public class UndercastKillsHandler {
             killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
             killOrKilled = false;
             this.printAchievement();
-            String str = "" + 1;
         } //if you kill a person
         else if (UndercastConfig.showKillAchievements && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
-            System.out.println(message.substring(0, message.indexOf(" ")));
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
             this.printAchievement();
+            UndercastData.isLastKillFromPlayer = true;
             if (UndercastData.isNextKillFirstBlood) {
                 if (UndercastConfig.showFirstBloodAchievement) {
                     printFirstBloodAchievement();
@@ -53,10 +52,13 @@ public class UndercastKillsHandler {
             killOrKilled = false;
             this.printAchievement();
         } else if (message.toLowerCase().contains("game over")) {
-            if (isLastKillYourKill()) {
+            if (UndercastData.isLastKillFromPlayer && UndercastConfig.showLastKillAchievement) {
                 printLastKillAchievement();
             }
-
+        } //When someone die
+        else if ((message.contains("by ") || message.contains("took ") || message.contains("fury of ")) && !message.toLowerCase().endsWith(" team")) {
+            UndercastData.isLastKillFromPlayer = false;
+            UndercastData.isNextKillFirstBlood = false;
         }
     }
 
@@ -135,24 +137,6 @@ public class UndercastKillsHandler {
         Thread t2 = new Thread(r2);
         t1.start();
         t2.start();
-    }
-
-    public boolean isLastKillYourKill() {
-        String username = FMLClientHandler.instance().getClient().thePlayer.username;
-        for (int i = 0; i < UndercastModClass.lastChatLines.length; i++) {
-            String message = UndercastModClass.lastChatLines[i];
-            if (message != null) {
-                if (message.contains("by ") || message.contains("took ") || message.contains("fury of ")) {
-                    if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username))) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        }
-        return false;
-
     }
 
     public void printLastKillAchievement() {

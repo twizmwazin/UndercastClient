@@ -78,10 +78,7 @@ public class UndercastChatHandler {
                 && !message.toLowerCase().contains(" destroyed by ")) {
             UndercastData.addKills(1);
             UndercastData.addKillstreak(1);
-        } //When someone die
-        else if ((message.contains("by ") || message.contains("took ") || message.contains("fury of ")) && !message.toLowerCase().endsWith(" team")) {
-            UndercastData.isNextKillFirstBlood = false;
-        } //when you join a match
+        }  //when you join a match
         else if (message.contains("You joined the")) {
             try {
                 UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
