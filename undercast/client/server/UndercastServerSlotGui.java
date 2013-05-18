@@ -11,7 +11,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
 
-public abstract class Undercast_ServerSlotGui {
+public abstract class UndercastServerSlotGui {
 
     /**
      * The width of the GuiScreen. Affects the container rendering, but not the
@@ -81,9 +81,9 @@ public abstract class Undercast_ServerSlotGui {
     private boolean field_77243_s;
     private int field_77242_t;
     private DoubleBuffer doubleBuffer;
-    private Undercast_ServerGUI parent;
+    private UndercastServerGUI parent;
 
-    public Undercast_ServerSlotGui(Undercast_ServerGUI guiservers, int par2, int par3, int par4, int par5, int par6) {
+    public UndercastServerSlotGui(UndercastServerGUI guiservers, int par2, int par3, int par4, int par5, int par6) {
         this.parent = guiservers;
         this.width = par2;
         this.height = par3;

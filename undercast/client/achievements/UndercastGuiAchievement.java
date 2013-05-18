@@ -57,6 +57,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     private String killerName;
     private String firstLine;
     private String secondLine;
+    private boolean doesItNeedNewBuffer = true;
 
     public UndercastGuiAchievement(Minecraft par1Minecraft) {
         super(par1Minecraft);
@@ -93,6 +94,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.firstLine = this.killerName;
         this.secondLine = this.killedOrDied ? "+1 Kill" : "+1 Death";
         this.waitingBuffer = killerBuffer;
+        doesItNeedNewBuffer = true;
     }
 
     public void addFakeAchievementToMyList(Achievement par1Achievement, boolean killedOrDied, String killerName, BufferedImage killerBuffer, String firstLine, String secondLine) {
@@ -106,7 +108,8 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.killerName = killerName;
         this.firstLine = firstLine;
         this.secondLine = secondLine;
-        this.killerBuffer = killerBuffer;
+        this.waitingBuffer = killerBuffer;
+        doesItNeedNewBuffer = true;
     }
 
     /**
@@ -155,8 +158,11 @@ public class UndercastGuiAchievement extends GuiAchievement {
 
             if (!this.haveAchiement && (d0 < 0.0D || d0 > 1.0D)) {
                 this.achievementTime = 0L;
-                this.killerBuffer = this.waitingBuffer;
             } else {
+                if (doesItNeedNewBuffer) {
+                    this.killerBuffer = this.waitingBuffer;
+                    doesItNeedNewBuffer = false;
+                }
                 this.updateAchievementWindowScale();
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glDepthMask(false);

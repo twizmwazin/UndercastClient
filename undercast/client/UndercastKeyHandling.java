@@ -1,24 +1,15 @@
 package undercast.client;
 
-import undercast.client.achievements.UndercastKillsHandler;
-import undercast.client.achievements.UndercastGuiAchievement;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
 import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.EnumSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.Item;
-import net.minecraft.stats.Achievement;
 import org.lwjgl.input.Keyboard;
 import undercast.client.UndercastData.Teams;
-import undercast.client.server.Undercast_ServerGUI;
+import undercast.client.server.UndercastServerGUI;
 import undercast.client.settings.SettingsGUI;
 
 /**
@@ -56,7 +47,7 @@ public class UndercastKeyHandling extends KeyHandler {
             if (kb == keyGuiHide) {
                 UndercastData.guiShowing = !UndercastData.guiShowing;
             } else if (kb == keyGuiServer) {
-                mc.displayGuiScreen(new Undercast_ServerGUI(true));
+                mc.displayGuiScreen(new UndercastServerGUI(true));
             } else if (UndercastData.isPlayingOvercastNetwork() && kb == keyGuiFullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver) && UndercastConfig.fullBright) {
                 if (mc.inGameHasFocus) {
                     UndercastModClass.brightActive = !UndercastModClass.brightActive;

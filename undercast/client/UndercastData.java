@@ -49,6 +49,7 @@ public class UndercastData {
     public static boolean serverDetectionCommandExecuted = false;
     public static boolean isNextKillFirstBlood = false;
     public static boolean isLastKillFromPlayer = false;
+    public static String latestVersion;
     public static enum Teams {
 
         Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown

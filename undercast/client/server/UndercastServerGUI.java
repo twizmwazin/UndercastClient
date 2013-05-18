@@ -4,36 +4,32 @@ package undercast.client.server;
 //You may not claim this to be your own
 //You may not remove these comments
 
+import net.minecraft.client.Minecraft;
+import undercast.client.*;
+
 import java.awt.*;
 import java.net.URI;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.StringTranslate;
-import undercast.client.UndercastData;
-import undercast.client.GuiButtonTooltip;
-import undercast.client.UndercastCustomMethods;
 
-public class Undercast_ServerGUI extends GuiScreen {
+public class UndercastServerGUI extends GuiScreen {
 
-    private Undercast_ServerInfoSlotGui guiServerInfoSlot;
+    private UndercastServerInfoSlotGui guiServerInfoSlot;
     private UndercastServer selectedServer;
     private int selected = -1;
     private GuiButton guibuttonrefresh;
     public Boolean inGame;
-    private boolean toggletooltip;
-    private int sortIndex;
-    private String[] sortNames = {"Web", "Match", "Player", "Abc"};
 
     /**
      * Default constructor
      *
      * @param inGame Boolean if you are on a server or not
      */
-    public Undercast_ServerGUI(boolean inGame) {
+    public UndercastServerGUI(boolean inGame) {
         this.inGame = inGame;
         UndercastData.reload();
     }
@@ -49,9 +45,12 @@ public class Undercast_ServerGUI extends GuiScreen {
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
         this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel"), "Close the server list"));
         this.buttonList.add(new GuiButtonTooltip(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats", "Open your player stats in the browser"));
-        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
+        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
-        guiServerInfoSlot = new Undercast_ServerInfoSlotGui(this);
+        if (!UndercastData.isUpdate()) {
+            this.buttonList.add(new GuiButtonTooltip(6, this.width - 54, 21, 48, 20, "Upadate", "Opens the download website for the latest version."));
+        }
+        guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
 
     /**
@@ -103,6 +102,12 @@ public class Undercast_ServerGUI extends GuiScreen {
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
         }
+        if (guibutton.id == 6) {
+            try {
+                Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     /**
@@ -115,6 +120,10 @@ public class Undercast_ServerGUI extends GuiScreen {
         }
         this.guiServerInfoSlot.drawScreen(i, j, f);
         this.drawCenteredString(this.fontRenderer, "Overcast Network Server List", this.width / 2, 20, 16777215);
+        if (!UndercastData.isUpdate()) {
+            mc.fontRenderer.drawString("Used version: " + UndercastModClass.MOD_VERSION, (this.width - 4) - mc.fontRenderer.getStringWidth("Used version: " + UndercastModClass.MOD_VERSION), 3, 13369344);
+            mc.fontRenderer.drawString("Latest version: " + UndercastData.latestVersion, (this.width - 4) - mc.fontRenderer.getStringWidth("Latest version: " + UndercastData.latestVersion), 12, 255);
+        }
         super.drawScreen(i, j, f);
     }
 

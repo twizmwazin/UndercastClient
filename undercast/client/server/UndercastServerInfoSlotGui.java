@@ -4,9 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import undercast.client.UndercastData;
 
-class Undercast_ServerInfoSlotGui extends Undercast_ServerSlotGui {
+class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
-    final Undercast_ServerGUI parent;
+    final UndercastServerGUI parent;
 
     /**
      * Default constructor to create list
@@ -14,7 +14,7 @@ class Undercast_ServerInfoSlotGui extends Undercast_ServerSlotGui {
      * @param guiservers Main server gui screen
      * @param servers list of servers
      */
-    public Undercast_ServerInfoSlotGui(Undercast_ServerGUI guiservers) {
+    public UndercastServerInfoSlotGui(UndercastServerGUI guiservers) {
         super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
         this.parent = guiservers;
     }

@@ -36,6 +36,7 @@ public class Undercast_UpdaterThread extends Thread{
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();
             readline2 = in.readLine();
+            UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);
             UndercastData.setUpdateLink("Could not get update information.");

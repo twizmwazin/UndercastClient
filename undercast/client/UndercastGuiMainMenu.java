@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.util.StringTranslate;
-import undercast.client.server.Undercast_ServerGUI;
+import undercast.client.server.UndercastServerGUI;
 
 @SideOnly(Side.CLIENT)
 public class UndercastGuiMainMenu extends GuiMainMenu {
@@ -24,7 +24,7 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
     protected void actionPerformed(GuiButton par1GuiButton) {
         super.actionPerformed(par1GuiButton);
         if (par1GuiButton.id == 7) {
-            mc.displayGuiScreen(new Undercast_ServerGUI(false));
+            mc.displayGuiScreen(new UndercastServerGUI(false));
         }
     }
 }
