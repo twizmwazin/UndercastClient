@@ -12,10 +12,7 @@ import net.minecraft.util.StringUtils;
  * @author Flv92
  */
 public class ChatListener implements IChatListener {
-
-    public UndercastChatHandler chatHandler;
     public ChatListener() {
-        chatHandler = new UndercastChatHandler();
     }
 
     @Override
@@ -25,20 +22,21 @@ public class ChatListener implements IChatListener {
 
     @Override
     public Packet3Chat clientChat(NetHandler handler, Packet3Chat packet) {
+        UndercastModClass UCInstance = UndercastModClass.getInstance();
         try {
             Minecraft mc = FMLClientHandler.instance().getClient();
             EntityPlayer player = mc.thePlayer;
-            UndercastModClass.getInstance().username = mc.thePlayer.username;
+            UCInstance.username = mc.thePlayer.username;
             String message = StringUtils.stripControlCodes(packet.message);
             // stop global msg to go through
             if (!message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
                 addLineToChatLines(message);
-                if(!(chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message)))
+                if(!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message)))
                 {
                     packet.message = null;
                 }
                 if (UndercastConfig.showAchievements) {
-                    new UndercastKillsHandler(message, UndercastModClass.getInstance().username, player);
+                    UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player);
                 }
             }
         } catch (Exception e) {

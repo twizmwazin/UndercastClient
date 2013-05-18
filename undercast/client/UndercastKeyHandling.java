@@ -1,11 +1,21 @@
 package undercast.client;
 
+import undercast.client.achievements.UndercastKillsHandler;
+import undercast.client.achievements.UndercastGuiAchievement;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraft.stats.Achievement;
 import org.lwjgl.input.Keyboard;
 import undercast.client.UndercastData.Teams;
 import undercast.client.server.Undercast_ServerGUI;
@@ -20,6 +30,7 @@ public class UndercastKeyHandling extends KeyHandler {
     static KeyBinding keyGuiServer = new KeyBinding("undercast.inGameGui", Keyboard.KEY_L);
     static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
     static KeyBinding keySettingsGui = new KeyBinding("undercast.settings", Keyboard.KEY_P);
+    public BufferedImage killerBuffer;
 
     public UndercastKeyHandling() {
         //the first value is an array of KeyBindings, the second is whether or not the call
@@ -56,6 +67,55 @@ public class UndercastKeyHandling extends KeyHandler {
                     }
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }
+                Runnable r1 = new Runnable() {
+                    public void run() {
+                        URLConnection spoof = null;
+                        try {
+                            spoof = new URL("https://minotar.net/helm/" + FMLClientHandler.instance().getClient().thePlayer.username + "/16.png").openConnection();
+                            spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
+                            killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                            Thread.sleep(1000L);
+                            Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+                            Minecraft client = FMLClientHandler.instance().getClient();
+                            ((UndercastGuiAchievement) client.guiAchievement)
+                                    .addFakeAchievementToMyList(custom, true, client.thePlayer.username, killerBuffer, client.thePlayer.username, "got the first Blood!");
+                            Thread.sleep(500L);
+                            spoof = new URL("https://minotar.net/helm/palechip" + "/16.png").openConnection();
+                            spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
+                            killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                            Thread.sleep(1000L);
+                            ((UndercastGuiAchievement) client.guiAchievement)
+                                    .addFakeAchievementToMyList(custom, true, client.thePlayer.username, killerBuffer, "palechip", "got the first Blood!");
+                            Thread.sleep(500L);
+                            spoof = new URL("https://minotar.net/helm/goldbattle" + "/16.png").openConnection();
+                            spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
+                            killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                            Thread.sleep(1000L);
+                            ((UndercastGuiAchievement) client.guiAchievement)
+                                    .addFakeAchievementToMyList(custom, true, "palechip", killerBuffer, "goldbattle", "got the first Blood!");
+
+                        } catch (Exception ex) {
+                            Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                };
+                Runnable r2 = new Runnable() {
+                    public void run() {
+                        try {
+                            Thread.sleep(1000L);
+                            Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+                            Minecraft client = FMLClientHandler.instance().getClient();
+                            ((UndercastGuiAchievement) client.guiAchievement)
+                                    .addFakeAchievementToMyList(custom, true, client.thePlayer.username, killerBuffer, client.thePlayer.username, "got the first Blood!");
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                };
+                Thread t1 = new Thread(r1);
+                Thread t2 = new Thread(r2);
+                t1.start();
+                t2.start();
 
             } else if (kb == keySettingsGui) {
                 FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI());

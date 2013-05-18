@@ -1,5 +1,7 @@
 package undercast.client;
 
+import undercast.client.achievements.UndercastKillsHandler;
+import undercast.client.achievements.UndercastGuiAchievement;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
@@ -42,6 +44,8 @@ public class UndercastModClass {
     private static UndercastModClass instance;
     public PlayTimeCounterThread playTimeCounter;
     public static String[] lastChatLines = new String[100];
+    public UndercastChatHandler chatHandler;
+    public UndercastKillsHandler achievementChatHandler;
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -59,6 +63,8 @@ public class UndercastModClass {
         if (oldConfig.exists() && !newConfig.exists()) {
             oldConfig.renameTo(newConfig);
         }
+        chatHandler = new UndercastChatHandler();
+        achievementChatHandler = new UndercastKillsHandler();
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
         CONFIG = new Configuration(newConfig);
         new UndercastConfig(CONFIG, event.getSuggestedConfigurationFile());
@@ -71,7 +77,7 @@ public class UndercastModClass {
                 try {
                     spoof = new URL("https://minotar.net/helm/d4jsgn9fsrl9ergn0/16.png").openConnection(); //Just hope no one will ever be named like this
                     spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    UndercastKillsHandler.steveHeadBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
+                    achievementChatHandler.steveHeadBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
                 } catch (Exception ex) {
                     Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -79,6 +85,7 @@ public class UndercastModClass {
         };
         Thread t1 = new Thread(r1);
         t1.start();
+
     }
 
     @Mod.Init

@@ -76,12 +76,6 @@ public class UndercastChatHandler {
         } //if you kill a person
         else if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username))
                 && !message.toLowerCase().contains(" destroyed by ")) {
-            if (UndercastData.isNextKillFirstBlood) {
-                if (UndercastConfig.showFirstBloodAchievement) {
-                    printFirstBloodAchievement();
-                }
-                UndercastData.isNextKillFirstBlood = false;
-            }
             UndercastData.addKills(1);
             UndercastData.addKillstreak(1);
         } //When someone die
@@ -98,10 +92,6 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("game over")) {
             UndercastData.isGameOver = true;
             UndercastData.isNextKillFirstBlood = false;
-            if (isLastKillYourKill()) {
-                printLastKillAchievement();
-            }
-
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
@@ -164,97 +154,5 @@ public class UndercastChatHandler {
         } catch (NullPointerException e) {
             return null;
         }
-    }
-
-    public static void printFirstBloodAchievement() {
-        final long waitingTime;
-        if (UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
-            waitingTime = 4000L;
-        } else {
-            waitingTime = 0L;
-        }
-        UndercastKillsHandler.killerBuffer = UndercastKillsHandler.steveHeadBuffer;
-        //Thread charged to load the achievment gui
-        Runnable r1 = new Runnable() {
-            public void run() {
-                URLConnection spoof = null;
-                try {
-                    System.out.println("Beginning");
-                    spoof = new URL("https://minotar.net/helm/" + FMLClientHandler.instance().getClient().thePlayer.username + "/16.png").openConnection();
-                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    UndercastKillsHandler.killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                    System.out.println("finished");
-                } catch (Exception ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Runnable r2 = new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(waitingTime);
-                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                    Minecraft client = FMLClientHandler.instance().getClient();
-                    ((UndercastGuiAchievement) client.guiAchievement)
-                            .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
-        t1.start();
-        t2.start();
-    }
-
-    public static boolean isLastKillYourKill() {
-        String username = FMLClientHandler.instance().getClient().thePlayer.username;
-        for (int i = 0; i < UndercastModClass.lastChatLines.length; i++) {
-            String message = UndercastModClass.lastChatLines[i];
-            if (message != null) {
-                if (message.contains("by ") || message.contains("took ") || message.contains("fury of ")) {
-                    if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username))) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        }
-        return false;
-
-    }
-
-    public static void printLastKillAchievement() {
-        UndercastKillsHandler.killerBuffer = UndercastKillsHandler.steveHeadBuffer;
-        //Thread charged to load the achievment gui
-        Runnable r1 = new Runnable() {
-            public void run() {
-                URLConnection spoof = null;
-                try {
-                    System.out.println("Beginning");
-                    spoof = new URL("https://minotar.net/helm/" + FMLClientHandler.instance().getClient().thePlayer.username + "/16.png").openConnection();
-                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    UndercastKillsHandler.killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                    System.out.println("finished");
-                } catch (Exception ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Runnable r2 = new Runnable() {
-            public void run() {
-                Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                Minecraft client = FMLClientHandler.instance().getClient();
-                ((UndercastGuiAchievement) client.guiAchievement)
-                        .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
-
-            }
-        };
-        Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
-        t1.start();
-        t2.start();
     }
 }

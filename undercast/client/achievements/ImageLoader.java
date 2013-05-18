@@ -1,4 +1,4 @@
-package undercast.client;
+package undercast.client.achievements;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
