@@ -101,23 +101,45 @@ public class UndercastCustomMethods {
         // if it's a map with time limit and it's enabled in the config
         if(!UndercastData.incrementMatchTime && UndercastConfig.showMatchTimeSeconds) {
             if(UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
-                return "Playing Time: \u00A7E" + UndercastData.matchTimeSec + "\u00A7Fsec";
-            } else if (UndercastData.matchTimeHours == 0) {
-                return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin \u00A7E" + UndercastData.matchTimeSec + "\u00A7Fsec";
-            } else {
-                return "Playing Time: \u00A7E" + UndercastData.matchTimeHours + "\u00A7Fh \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin \u00A7E" + UndercastData.matchTimeSec + "\u00A7Fsec";
-            }
-        } else {
-            if(UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
-                if(UndercastData.matchTimeSec <= 0) {
-                    return "Playing Time: \u00A7E0\u00A7Fmin";
+                if(UndercastData.matchTimeSec < 10) {
+                    return "Match Time: \u00A7E0:0" + UndercastData.matchTimeSec;
                 } else {
-                    return "Playing Time: \u00A7E>1\u00A7Fmin";
+                    return "Match Time: \u00A7E0:" + UndercastData.matchTimeSec;
                 }
             } else if (UndercastData.matchTimeHours == 0) {
-                return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin";
+                if(UndercastData.matchTimeSec < 10) {
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
+                } else {
+                    return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                }
             } else {
-                return "Playing Time: \u00A7E" + UndercastData.matchTimeHours + "\u00A7Fh \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin";
+                if(UndercastData.matchTimeMin < 10) {
+                    if(UndercastData.matchTimeSec < 10) {
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
+                    } else {
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                    }
+                } else {
+                    if(UndercastData.matchTimeSec < 10) {
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
+                    } else {
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                    }
+                }
+            }
+        } else {
+            if (UndercastData.matchTimeHours == 0) {
+                if(UndercastData.matchTimeMin < 10) {
+                    return "Match Time: \u00A7E0:0" + UndercastData.matchTimeMin;
+                } else {
+                    return "Match Time: \u00A7E0:" + UndercastData.matchTimeMin;
+                }
+            } else {
+                if(UndercastData.matchTimeMin < 10) {
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin;
+                } else {
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin;
+                }
             }
         }
     }
@@ -126,10 +148,18 @@ public class UndercastCustomMethods {
      * This is used in order to only display hours if you play at least for one
      */
     public static String getPlayingTimeString() {
-        if (UndercastData.playTimeHours == 0) {
-            return "Playing Time: \u00A7E" + UndercastData.playTimeMin + "\u00A7Fmin";
+        if(UndercastData.playTimeHours == 0) {
+            if(UndercastData.playTimeMin < 10) {
+                return "Playing Time: \u00A7E0:0" + UndercastData.playTimeMin;
+            } else {
+                return "Playing Time: \u00A7E0:" + UndercastData.playTimeMin;
+            }
         } else {
-            return "Playing Time: \u00A7E" + UndercastData.playTimeHours + "\u00A7Fh \u00A7E" + UndercastData.playTimeMin + "\u00A7Fmin";
+            if(UndercastData.playTimeMin < 10) {
+                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
+            } else {
+                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
+            }
         }
     }
 
