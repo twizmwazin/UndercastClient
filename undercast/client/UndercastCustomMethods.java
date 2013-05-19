@@ -85,8 +85,43 @@ public class UndercastCustomMethods {
         UndercastData.resetKillstreak();
         UndercastData.resetLargestKillstreak();
         UndercastData.isGameOver = false;
-    }
 
+        // stop the timer and reset it
+        try {
+            UndercastData.matchTimer.stop();
+        } catch (Exception ignored) {
+        }
+        //and start one which starts from 0
+        UndercastData.incrementMatchTime = true;
+        UndercastData.matchTimeHours = 0;
+        UndercastData.matchTimeMin = 0;
+        UndercastData.matchTimeSec = 0;
+    }
+    public static String getMatchTimeString() {
+        // if it's a map with time limit and it's enabled in the config
+        if(!UndercastData.incrementMatchTime && UndercastConfig.showMatchTimeSeconds) {
+            if(UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
+                return "Playing Time: \u00A7E" + UndercastData.matchTimeSec + "\u00A7Fsec";
+            } else if (UndercastData.matchTimeHours == 0) {
+                return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin \u00A7E" + UndercastData.matchTimeSec + "\u00A7Fsec";
+            } else {
+                return "Playing Time: \u00A7E" + UndercastData.matchTimeHours + "\u00A7Fh \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin \u00A7E" + UndercastData.matchTimeSec + "\u00A7Fsec";
+            }
+        } else {
+            if(UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
+                if(UndercastData.matchTimeSec <= 0) {
+                    return "Playing Time: \u00A7E0\u00A7Fmin";
+                } else {
+                    return "Playing Time: \u00A7E>1\u00A7Fmin";
+                }
+            } else if (UndercastData.matchTimeHours == 0) {
+                return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin";
+            } else {
+                return "Playing Time: \u00A7E" + UndercastData.matchTimeHours + "\u00A7Fh \u00A7E" + UndercastData.matchTimeMin + "\u00A7Fmin";
+            }
+        }
+    }
+ 
     /**
      * This is used in order to only display hours if you play at least for one
      */
@@ -99,7 +134,8 @@ public class UndercastCustomMethods {
     }
 
     /**
-     * Sorts UndercastData.sortedServerInformation using the UndercastData.sortindex
+     * Sorts UndercastData.sortedServerInformation using the
+     * UndercastData.sortindex
      */
     public static void sortServers() {
         // if the index is moving to web then use the downloaded server list

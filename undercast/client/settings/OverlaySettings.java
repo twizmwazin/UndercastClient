@@ -8,11 +8,11 @@ import org.lwjgl.input.Keyboard;
 public class OverlaySettings extends GuiScreen {
 
     public String[] toggleSettings = new String[]{"showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap",
-        "showNextMap", "showStreak", "showPlayingTime", "fullBright"};
+        "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds"};
     public String[] enabledStrings = new String[]{"FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Friends shown", "Current map shown",
-        "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled"};
+        "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled", "Match Time shown", "Match time seconds shown"};
     public String[] disabledStrings = new String[]{"FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Friends hidden", "Current map hidden",
-        "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled"};
+        "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled", "Match time hidden", "Match time seconds hidden"};
 
     @Override
     public void initGui() {

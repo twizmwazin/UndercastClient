@@ -31,6 +31,8 @@ public class UndercastConfig {
     public static boolean showGuiChat;
     public static boolean showGuiMulti;
     public static boolean showPlayingTime;
+    public static boolean showMatchTime;
+    public static boolean showMatchTimeSeconds;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
@@ -81,6 +83,8 @@ public class UndercastConfig {
         showDeathAchievements = config.get("UndercastMod", "showDeathAchievements", true).getBoolean(true);
         showFirstBloodAchievement = config.get("UndercastMod", "showFirstBloodAchievement", true).getBoolean(true);
         showLastKillAchievement = config.get("UndercastMod", "showLastKillAchievement", true).getBoolean(true);
+        showMatchTime = config.get("UndercastMod", "showMatchTime", true).getBoolean(true);
+        showMatchTimeSeconds = config.get("UndercastMod", "showMatchTimeSeconds", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

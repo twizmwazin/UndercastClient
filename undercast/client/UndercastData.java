@@ -50,6 +50,12 @@ public class UndercastData {
     public static boolean isNextKillFirstBlood = false;
     public static boolean isLastKillFromPlayer = false;
     public static String latestVersion;
+    public static int matchTimeSec;
+    public static int matchTimeMin;
+    public static int matchTimeHours;
+    public static boolean incrementMatchTime;
+    public static MatchTimer matchTimer;
+
     public static enum Teams {
 
         Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown
@@ -271,5 +277,11 @@ public class UndercastData {
 
     public static void setUpdateLink(String updateLink) {
         UndercastData.updateLink = updateLink;
+    }
+
+    public static void resetMatchTime() {
+        matchTimeHours = 0;
+        matchTimeMin = 0;
+        matchTimeSec = 0;
     }
 }

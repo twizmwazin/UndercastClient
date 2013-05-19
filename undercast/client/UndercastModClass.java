@@ -163,6 +163,11 @@ public class UndercastModClass {
                 mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getPlayingTimeString(), width, height, 16777215);
                 height += 8;
             }
+            // Match Time display:
+            if (UndercastConfig.showMatchTime && !UndercastData.isLobby) {
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getMatchTimeString(), width, height, 16777215);
+                height += 8;
+            }
             // Map fetcher:
             if (UndercastConfig.showMap && !UndercastData.isLobby) {
                 if (UndercastData.getMap() != null) {
