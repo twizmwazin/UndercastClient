@@ -1,5 +1,15 @@
 The changelog exists since version 1.4.0
 
+1.5.4
+ - you get an achievement when doing the first kill of a game
+ - you get an achievement when doing the last kill of a game
+ - update button in the server list gui when an update is available
+ - added match time and remaining time (according to the map)
+ - fix breaking core counted as a kill
+ - should fix all random weird texture rendering on other guy
+ - fix death achievement on joining a game with "/toggle jms" active
+ - minor bug fixes
+
 1.5.3
  - ingame config (use P-key) (config gets resetted when switching to this version)
  - renamed the mod to Undercast Client
