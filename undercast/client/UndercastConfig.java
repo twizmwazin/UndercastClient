@@ -96,7 +96,7 @@ public class UndercastConfig {
             FileWriter fr = new FileWriter(tempFile);
             String line;
             while ((line = br.readLine()) != null) {
-                if (!line.contains("B:" + name)) {
+                if (!line.contains("B:" + name + "=")) {
                     fr.write(line + "\n");
                 } else {
                     if (bool) {

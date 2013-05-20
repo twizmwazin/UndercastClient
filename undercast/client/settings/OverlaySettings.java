@@ -7,6 +7,8 @@ import org.lwjgl.input.Keyboard;
 
 public class OverlaySettings extends GuiScreen {
 
+    public int pageIndex = 0;
+    public int buttonPerPage = 14;
     public String[] toggleSettings = new String[]{"showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap",
         "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds"};
     public String[] enabledStrings = new String[]{"FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Friends shown", "Current map shown",
@@ -20,16 +22,31 @@ public class OverlaySettings extends GuiScreen {
         int x1 = width / 2 - 150;
         int x2 = width / 2 + 10;
         int y = height / 2 - 80;
-        for (int i = 0; i < toggleSettings.length / 2; i++) {
-            this.buttonList.add(new SettingsToggleButton(i, x1, y + (i * 25), 150, 20, "", enabledStrings[i], disabledStrings[i], toggleSettings[i]));
+        for (int i = 0; i < 7; i++) {
+            int j = pageIndex * buttonPerPage + i;
+            if (j < toggleSettings.length) {
+
+                this.buttonList.add(new SettingsToggleButton(i, x1, y + (i * 25), 150, 20, "", enabledStrings[j], disabledStrings[j], toggleSettings[j]));
+            }
         }
         y = height / 2 - 80;
-        for (int i = toggleSettings.length / 2; i < toggleSettings.length; i++) {
-            this.buttonList.add(new SettingsToggleButton(i, x2, y + ((i - toggleSettings.length / 2) * 25), 150, 20, "", enabledStrings[i], disabledStrings[i], toggleSettings[i]));
+        for (int i = 7; i < 14; i++) {
+            int j = pageIndex * buttonPerPage + i;
+            if (j < toggleSettings.length) {
+                this.buttonList.add(new SettingsToggleButton(i, x2, y + ((i - this.buttonPerPage / 2) * 25), 150, 20, "", enabledStrings[j], disabledStrings[j], toggleSettings[j]));
+            }
         }
         int x = width / 2 - 75;
-        y = y + toggleSettings.length / 2 * 25;
+        y = y + this.buttonPerPage / 2 * 25;
         this.buttonList.add(new GuiButton(1, x, y, 150, 20, "Back"));
+        this.buttonList.add(new GuiButton(15, this.width - 40, y, 20, 20, ">"));
+        this.buttonList.add(new GuiButton(16, 20, y, 20, 20, "<"));
+        if (this.pageIndex == 0) {
+            ((GuiButton) this.buttonList.get(this.buttonList.size() - 1)).enabled = false;
+        }
+        if (this.toggleSettings.length < (pageIndex + 1) * buttonPerPage) {
+            ((GuiButton) this.buttonList.get(this.buttonList.size() - 2)).enabled = false;
+        }
     }
 
     @Override
@@ -56,6 +73,14 @@ public class OverlaySettings extends GuiScreen {
         if (guibutton instanceof SettingsToggleButton) {
             SettingsToggleButton button = (SettingsToggleButton) guibutton;
             button.buttonPressed();
+        } else if (guibutton.id == 15) {
+            this.pageIndex++;
+            this.buttonList.clear();
+            this.initGui();
+        } else if (guibutton.id == 16) {
+            this.pageIndex--;
+            this.buttonList.clear();
+            this.initGui();
         } else {
             ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
         }
