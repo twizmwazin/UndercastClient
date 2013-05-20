@@ -57,7 +57,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
     private String killerName;
     private String firstLine;
     private String secondLine;
-    private boolean doesItNeedNewBuffer = true;
 
     public UndercastGuiAchievement(Minecraft par1Minecraft) {
         super(par1Minecraft);
@@ -99,7 +98,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 this.waitingBuffer[i] = killerBuffer;
             }
         }
-        doesItNeedNewBuffer = true;
     }
 
     public void addFakeAchievementToMyList(Achievement par1Achievement, boolean killedOrDied, String killerName, BufferedImage killerBuffer, String firstLine, String secondLine) {
@@ -118,7 +116,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 this.waitingBuffer[i] = killerBuffer;
             }
         }
-        doesItNeedNewBuffer = true;
     }
 
     /**
@@ -174,7 +171,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
                         waitingBuffer[i - 1] = waitingBuffer[i];
                     }
                     waitingBuffer[waitingBuffer.length - 1] = null;
-                    doesItNeedNewBuffer = false;
                 }
                 this.updateAchievementWindowScale();
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
