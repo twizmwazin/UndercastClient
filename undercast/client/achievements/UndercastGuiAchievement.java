@@ -52,7 +52,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     FileOutputStream fos = null;
     InputStream is = null;
     private BufferedImage killerBuffer;
-    private BufferedImage waitingBuffer;
+    private BufferedImage waitingBuffer[];
     private ImageLoader imgLoader;
     private String killerName;
     private String firstLine;
@@ -66,6 +66,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
         isFakeAchievement = false;
         killedOrDied = false;
         this.imgLoader = new ImageLoader(par1Minecraft.texturePackList, par1Minecraft.gameSettings);
+        waitingBuffer = new BufferedImage[10];
     }
 
     /**
@@ -93,7 +94,11 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.killerName = killerName;
         this.firstLine = this.killerName;
         this.secondLine = this.killedOrDied ? "+1 Kill" : "+1 Death";
-        this.waitingBuffer = killerBuffer;
+        for (int i = 0; i < waitingBuffer.length; i++) {
+            if (waitingBuffer[i] == null) {
+                this.waitingBuffer[i] = killerBuffer;
+            }
+        }
         doesItNeedNewBuffer = true;
     }
 
@@ -108,7 +113,11 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.killerName = killerName;
         this.firstLine = firstLine;
         this.secondLine = secondLine;
-        this.waitingBuffer = killerBuffer;
+        for (int i = 0; i < waitingBuffer.length; i++) {
+            if (waitingBuffer[i] == null) {
+                this.waitingBuffer[i] = killerBuffer;
+            }
+        }
         doesItNeedNewBuffer = true;
     }
 
@@ -159,8 +168,12 @@ public class UndercastGuiAchievement extends GuiAchievement {
             if (!this.haveAchiement && (d0 < 0.0D || d0 > 1.0D)) {
                 this.achievementTime = 0L;
             } else {
-                if (doesItNeedNewBuffer) {
-                    this.killerBuffer = this.waitingBuffer;
+                if (waitingBuffer[0] != null) {
+                    this.killerBuffer = this.waitingBuffer[0];
+                    for(int i = 1; i< waitingBuffer.length ; i++){
+                        waitingBuffer[i - 1] = waitingBuffer[i];
+                    }
+                    waitingBuffer[waitingBuffer.length - 1] = null;
                     doesItNeedNewBuffer = false;
                 }
                 this.updateAchievementWindowScale();
