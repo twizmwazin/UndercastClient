@@ -4,18 +4,9 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import cpw.mods.fml.client.FMLClientHandler;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet3Chat;
-import net.minecraft.stats.Achievement;
 
 public class UndercastChatHandler {
 

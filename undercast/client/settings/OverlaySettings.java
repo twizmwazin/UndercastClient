@@ -1,8 +1,8 @@
 package undercast.client.settings;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.src.ModLoader;
 import org.lwjgl.input.Keyboard;
 
 public class OverlaySettings extends GuiScreen {
@@ -69,7 +69,6 @@ public class OverlaySettings extends GuiScreen {
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
             mc.displayGuiScreen(null);
-            return;
         }
     }
 
@@ -88,7 +87,7 @@ public class OverlaySettings extends GuiScreen {
             this.buttonList.clear();
             this.initGui();
         } else {
-            ModLoader.openGUI(mc.thePlayer, parentScreen);
+            FMLClientHandler.instance().getClient().displayGuiScreen(parentScreen);
         }
     }
 

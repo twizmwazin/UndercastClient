@@ -1,7 +1,5 @@
 package undercast.client;
 
-import undercast.client.achievements.UndercastKillsHandler;
-import undercast.client.achievements.UndercastGuiAchievement;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
@@ -23,6 +21,8 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
 import undercast.client.UndercastData.Teams;
+import undercast.client.achievements.UndercastGuiAchievement;
+import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.update.Undercast_UpdaterThread;
 
 /**
@@ -72,8 +72,9 @@ public class UndercastModClass {
         new UndercastData();
         new Undercast_UpdaterThread();
         Runnable r1 = new Runnable() {
+            @Override
             public void run() {
-                URLConnection spoof = null;
+                URLConnection spoof;
                 try {
                     spoof = new URL("https://minotar.net/helm/d4jsgn9fsrl9ergn0/16.png").openConnection(); //Just hope no one will ever be named like this
                     spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
@@ -98,9 +99,6 @@ public class UndercastModClass {
         LanguageRegistry.instance().addStringLocalization("undercast.inGameGui", "Change server");
         LanguageRegistry.instance().addStringLocalization("undercast.fullBright", "Toggle fullbright");
         LanguageRegistry.instance().addStringLocalization("undercast.settings", "Show Undercast mod settings");
-
-
-        //the player connects/disconnects to a server
     }
 
     /**

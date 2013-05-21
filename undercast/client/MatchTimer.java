@@ -61,7 +61,7 @@ public class MatchTimer {
     public void stop() {
         try {
             timer.cancel();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
         }
     }
 }

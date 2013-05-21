@@ -71,6 +71,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     /**
      * Queue a taken achievement to be displayed.
      */
+    @Override
     public void queueTakenAchievement(Achievement par1Achievement) {
         this.achievementGetLocalText = StatCollector.translateToLocal("achievement.get");
         this.achievementStatName = StatCollector.translateToLocal(par1Achievement.getName());
@@ -121,6 +122,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     /**
      * Queue a information about a achievement to be displayed.
      */
+    @Override
     public void queueAchievementInformation(Achievement par1Achievement) {
         this.achievementGetLocalText = StatCollector.translateToLocal(par1Achievement.getName());
         this.achievementStatName = par1Achievement.getDescription();
@@ -158,6 +160,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
      * Updates the small achievement tooltip window, showing a queued
      * achievement if is needed.
      */
+    @Override
     public void updateAchievementWindow() {
         if (this.theAchievement != null && this.achievementTime != 0L) {
             double d0 = (double) (Minecraft.getSystemTime() - this.achievementTime) / 3000.0D;
@@ -167,7 +170,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
             } else {
                 if (waitingBuffer[0] != null) {
                     this.killerBuffer = this.waitingBuffer[0];
-                    for(int i = 1; i< waitingBuffer.length ; i++){
+                    for (int i = 1; i < waitingBuffer.length; i++) {
                         waitingBuffer[i - 1] = waitingBuffer[i];
                     }
                     waitingBuffer[waitingBuffer.length - 1] = null;

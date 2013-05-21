@@ -1,16 +1,17 @@
 package undercast.client.server;
 
-import undercast.client.UndercastData;
+import undercast.client.UndercastData.MatchState;
 import undercast.client.UndercastData.ServerType;
-import undercast.client.UndercastData.MatchState;;
 
 public class UndercastServer {
+
     public String name;
     public String currentMap;
     public String nextMap;
     public int playerCount;
     public ServerType type;
     public MatchState matchState;
+
     /**
      * Default constructor
      */

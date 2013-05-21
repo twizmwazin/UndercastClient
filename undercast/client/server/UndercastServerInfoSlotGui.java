@@ -22,30 +22,33 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
     /**
      * Main draw method for the individual server boxes
      */
+    @Override
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
         UndercastServer server = UndercastData.sortedServerInformation[i];
 
         parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
-        int serveNameWidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(getServerName(server));
-        int serverwidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(server.name);
         parent.drawString(Minecraft.getMinecraft().fontRenderer, Integer.toString(server.getPlayerCount()), j + 198, k + 1, 8421504);
         parent.drawString(Minecraft.getMinecraft().fontRenderer, server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
         parent.drawString(Minecraft.getMinecraft().fontRenderer, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
 
     }
 
+    @Override
     protected int getContentHeight() {
         return (this.getSize()) * 36;
     }
 
+    @Override
     protected int getSize() {
         return UndercastData.serverCount;
     }
 
+    @Override
     protected boolean isSelected(int i) {
         return parent.serverIndexSelected(i);
     }
 
+    @Override
     protected void drawBackground() {
         if (!parent.inGame) {
             parent.drawDefaultBackground();
@@ -56,6 +59,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
         return ("\2475" + Character.toUpperCase(server.name.charAt(0)) + server.name.substring(1) + "\247f");
     }
 
+    @Override
     protected void elementClicked(int i, boolean flag) {
         //flag = double click
         if (flag) {

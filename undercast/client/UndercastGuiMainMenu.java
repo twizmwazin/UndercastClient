@@ -14,6 +14,7 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
         super();
     }
 
+    @Override
     public void initGui() {
         super.initGui();
         this.buttonList.remove(1);
@@ -21,6 +22,7 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
         this.buttonList.add(new GuiButtonTooltip(7, this.width / 2 + 1, this.height / 4 + 72, 99, 20, "Overcast Network", "Serverlist with Overcast Network Servers"));
     }
 
+    @Override
     protected void actionPerformed(GuiButton par1GuiButton) {
         super.actionPerformed(par1GuiButton);
         if (par1GuiButton.id == 7) {

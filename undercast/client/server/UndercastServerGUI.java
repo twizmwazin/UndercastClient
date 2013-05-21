@@ -4,17 +4,18 @@ package undercast.client.server;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import net.minecraft.client.Minecraft;
-import undercast.client.*;
-
 import java.awt.*;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.StringTranslate;
+import undercast.client.*;
 
 public class UndercastServerGUI extends GuiScreen {
 
@@ -38,6 +39,7 @@ public class UndercastServerGUI extends GuiScreen {
      * This is init of the gui when it is about to get drawn. You should only
      * have buttons/control elements in here.
      */
+    @Override
     public void initGui() {
         StringTranslate stringtranslate = StringTranslate.getInstance();
 
@@ -57,6 +59,7 @@ public class UndercastServerGUI extends GuiScreen {
      * If a button is clicked this method gets called. The id is the number
      * given to the button during init.
      */
+    @Override
     protected void actionPerformed(GuiButton guibutton) {
         //join button
         if (guibutton.id == 0) {
@@ -79,7 +82,7 @@ public class UndercastServerGUI extends GuiScreen {
             String username = this.mc.session.username;
             try {
                 Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
-            } catch (Exception ignored) {
+            } catch (URISyntaxException | IOException ignored) {
             }
         }
         //sort button
@@ -105,7 +108,7 @@ public class UndercastServerGUI extends GuiScreen {
         if (guibutton.id == 6) {
             try {
                 Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
-            } catch (Exception ignored) {
+            } catch (URISyntaxException | IOException ignored) {
             }
         }
     }
@@ -114,6 +117,7 @@ public class UndercastServerGUI extends GuiScreen {
      * This method is a override method for drawing a gui All "painting" should
      * take place in here If you are ingame; do not draw the default background
      */
+    @Override
     public void drawScreen(int i, int j, float f) {
         if (!inGame) {
             drawDefaultBackground();

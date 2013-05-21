@@ -5,32 +5,35 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-/**
- InformationLoaderThread by molenzwiebel
- This class will take a url and load the contents in an
- other thread.
- A link that might be interesting to fetch:
- http://api.thijsmolendijk.nl/mod/servers.php -> Server:Players:Current map:Next map
- And player stats:
- http://api.thijsmolendijk.nl/user/parse.php?para1=<user> -> YAML with player data (I can change it to a different format, just poke me)
- Or, use the ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT HTTP!!
- */
 
+/**
+ * InformationLoaderThread by molenzwiebel This class will take a url and load
+ * the contents in an other thread. A link that might be interesting to fetch:
+ * http://api.thijsmolendijk.nl/mod/servers.php -> Server:Players:Current
+ * map:Next map And player stats:
+ * http://api.thijsmolendijk.nl/user/parse.php?para1=<user> -> YAML with player
+ * data (I can change it to a different format, just poke me) Or, use the
+ * ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT
+ * HTTP!!
+ */
 public class InformationLoaderThread extends Thread {
+
     private URL urlToLoad;
     private String contents;
+
     public InformationLoaderThread(URL url) { // constructor starts the thread.
         urlToLoad = url;
         try {
             start();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
+
+    @Override
     public void run() {
         InputStream in = null;
         try {
@@ -47,8 +50,9 @@ public class InformationLoaderThread extends Thread {
             // Read the contents
             while (true) {
                 int ch = r.read();
-                if (ch < 0)
+                if (ch < 0) {
                     break;
+                }
                 buf.append((char) ch);
             }
             contents = buf.toString();
@@ -68,7 +72,7 @@ public class InformationLoaderThread extends Thread {
             }
         }
     }
-    
+
     public String getContents() {
         return this.contents;
     }

@@ -1,10 +1,9 @@
 package undercast.client.settings;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.src.ModLoader;
-
 import org.lwjgl.input.Keyboard;
 import undercast.client.UndercastConfig;
 
@@ -130,7 +129,7 @@ public class GeneralSettings extends GuiScreen {
             button.buttonPressed();
         } else if (guibutton.id == 1) {
             //secure reading of the int values
-            int x, y = 0;
+            int x, y;
             try {
                 x = Integer.parseInt(xTextField.getText());
             } catch (Exception e) {
@@ -147,7 +146,7 @@ public class GeneralSettings extends GuiScreen {
             UndercastConfig.x = x;
             UndercastConfig.setIntProperty("Y", y);
             UndercastConfig.y = y;
-            ModLoader.openGUI(mc.thePlayer, parentScreen);
+            FMLClientHandler.instance().getClient().displayGuiScreen(parentScreen);
         }
 
         //Handle +/-

@@ -53,6 +53,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
         //update notifier
         if (!UndercastData.isUpdate()) {
             Thread thread = new Thread() {
+                @Override
                 public void run() {
                     try {
                         Thread.sleep(3000);

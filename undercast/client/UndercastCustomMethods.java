@@ -12,8 +12,6 @@ import net.minecraft.client.Minecraft;
 
 public class UndercastCustomMethods {
 
-    private static Minecraft mc = Minecraft.getMinecraft();
-
     // simple rounding method
     private static double round(double d) {
         d = d * 100;
@@ -97,30 +95,31 @@ public class UndercastCustomMethods {
         UndercastData.matchTimeMin = 0;
         UndercastData.matchTimeSec = 0;
     }
+
     public static String getMatchTimeString() {
         // if it's a map with time limit and it's enabled in the config
-        if(!UndercastData.incrementMatchTime && UndercastConfig.showMatchTimeSeconds) {
-            if(UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
-                if(UndercastData.matchTimeSec < 10) {
+        if (!UndercastData.incrementMatchTime && UndercastConfig.showMatchTimeSeconds) {
+            if (UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
+                if (UndercastData.matchTimeSec < 10) {
                     return "Match Time: \u00A7E0:0" + UndercastData.matchTimeSec;
                 } else {
                     return "Match Time: \u00A7E0:" + UndercastData.matchTimeSec;
                 }
             } else if (UndercastData.matchTimeHours == 0) {
-                if(UndercastData.matchTimeSec < 10) {
+                if (UndercastData.matchTimeSec < 10) {
                     return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                 } else {
                     return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                 }
             } else {
-                if(UndercastData.matchTimeMin < 10) {
-                    if(UndercastData.matchTimeSec < 10) {
+                if (UndercastData.matchTimeMin < 10) {
+                    if (UndercastData.matchTimeSec < 10) {
                         return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                     } else {
                         return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                     }
                 } else {
-                    if(UndercastData.matchTimeSec < 10) {
+                    if (UndercastData.matchTimeSec < 10) {
                         return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                     } else {
                         return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
@@ -129,13 +128,13 @@ public class UndercastCustomMethods {
             }
         } else {
             if (UndercastData.matchTimeHours == 0) {
-                if(UndercastData.matchTimeMin < 10) {
+                if (UndercastData.matchTimeMin < 10) {
                     return "Match Time: \u00A7E0:0" + UndercastData.matchTimeMin;
                 } else {
                     return "Match Time: \u00A7E0:" + UndercastData.matchTimeMin;
                 }
             } else {
-                if(UndercastData.matchTimeMin < 10) {
+                if (UndercastData.matchTimeMin < 10) {
                     return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin;
                 } else {
                     return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin;
@@ -143,19 +142,19 @@ public class UndercastCustomMethods {
             }
         }
     }
- 
+
     /**
      * This is used in order to only display hours if you play at least for one
      */
     public static String getPlayingTimeString() {
-        if(UndercastData.playTimeHours == 0) {
-            if(UndercastData.playTimeMin < 10) {
+        if (UndercastData.playTimeHours == 0) {
+            if (UndercastData.playTimeMin < 10) {
                 return "Playing Time: \u00A7E0:0" + UndercastData.playTimeMin;
             } else {
                 return "Playing Time: \u00A7E0:" + UndercastData.playTimeMin;
             }
         } else {
-            if(UndercastData.playTimeMin < 10) {
+            if (UndercastData.playTimeMin < 10) {
                 return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
             } else {
                 return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
@@ -170,10 +169,7 @@ public class UndercastCustomMethods {
     public static void sortServers() {
         // if the index is moving to web then use the downloaded server list
         if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("web")) {
-            // just keep the order
-            for (int c = 0; c < UndercastData.serverCount; c++) {
-                UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[c];
-            }
+            System.arraycopy(UndercastData.serverInformation, 0, UndercastData.sortedServerInformation, 0, UndercastData.serverCount);
         } // sort based on matchStatus
         else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("match")) {
             int index = 0;
@@ -247,7 +243,10 @@ public class UndercastCustomMethods {
         } // if the servers are being sorted abc sort the list and update
         else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("abc")) {
             // extract the server names to an Array list
+            // We can't use the diamond operator since it is java 7 only and we want the mod to be java 6 compatible
+            // redundant type arguments in new expression for java 7 use
             ArrayList<String> serverNames = new ArrayList<String>(UndercastData.serverCount);
+            // ArrayList<String> serverNames = new ArrayList<>(UndercastData.serverCount); (java 7)
             for (int c = 0; c < UndercastData.serverCount; c++) {
                 serverNames.add(c, UndercastData.serverInformation[c].name);
             }

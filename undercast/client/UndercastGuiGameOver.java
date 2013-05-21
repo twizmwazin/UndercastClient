@@ -23,33 +23,28 @@ public class UndercastGuiGameOver extends GuiScreen {
     /**
      * Adds the buttons (and other controls) to the screen in question.
      */
+    @Override
     public void initGui() {
         this.buttonList.clear();
 
-        if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
-        {
-            if (this.mc.isIntegratedServerRunning())
-            {
+        if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
+            if (this.mc.isIntegratedServerRunning()) {
                 this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.deleteWorld")));
-            } else
-            {
+            } else {
                 this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.leaveServer")));
             }
-        } else
-        {
+        } else {
             this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, StatCollector.translateToLocal("deathScreen.respawn")));
             this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.titleScreen")));
 
-            if (this.mc.session == null)
-            {
+            if (this.mc.session == null) {
                 ((GuiButton) this.buttonList.get(1)).enabled = false;
             }
         }
 
         GuiButton guibutton;
 
-        for (Iterator iterator = this.buttonList.iterator(); iterator.hasNext(); guibutton.enabled = false)
-        {
+        for (Iterator iterator = this.buttonList.iterator(); iterator.hasNext(); guibutton.enabled = false) {
             guibutton = (GuiButton) iterator.next();
         }
     }
@@ -58,6 +53,7 @@ public class UndercastGuiGameOver extends GuiScreen {
      * Fired when a key is typed. This is the equivalent of
      * KeyListener.keyTyped(KeyEvent e).
      */
+    @Override
     protected void keyTyped(char par1, int par2) {
     }
 
@@ -65,9 +61,9 @@ public class UndercastGuiGameOver extends GuiScreen {
      * Fired when a control is clicked. This is the equivalent of
      * ActionListener.actionPerformed(ActionEvent e).
      */
+    @Override
     protected void actionPerformed(GuiButton par1GuiButton) {
-        switch (par1GuiButton.id)
-        {
+        switch (par1GuiButton.id) {
             case 1:
                 this.mc.thePlayer.respawnPlayer();
                 this.mc.currentScreen = null;
@@ -82,6 +78,7 @@ public class UndercastGuiGameOver extends GuiScreen {
     /**
      * Draws the screen and all the components in it.
      */
+    @Override
     public void drawScreen(int par1, int par2, float par3) {
         this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
         GL11.glPushMatrix();
@@ -91,8 +88,7 @@ public class UndercastGuiGameOver extends GuiScreen {
         this.drawCenteredString(this.fontRenderer, s, this.width / 2 / 2, 30, 16777215);
         GL11.glPopMatrix();
 
-        if (flag)
-        {
+        if (flag) {
             this.drawCenteredString(this.fontRenderer, StatCollector.translateToLocal("deathScreen.hardcoreInfo"), this.width / 2, 144, 16777215);
         }
 
@@ -104,6 +100,7 @@ public class UndercastGuiGameOver extends GuiScreen {
      * Returns true if this GUI should pause the game when it is displayed in
      * single-player
      */
+    @Override
     public boolean doesGuiPauseGame() {
         return false;
     }
@@ -111,15 +108,14 @@ public class UndercastGuiGameOver extends GuiScreen {
     /**
      * Called from the main game loop to update the screen.
      */
+    @Override
     public void updateScreen() {
         super.updateScreen();
         ++this.cooldownTimer;
         GuiButton guibutton;
 
-        if (this.cooldownTimer == 20)
-        {
-            for (Iterator iterator = this.buttonList.iterator(); iterator.hasNext(); guibutton.enabled = true)
-            {
+        if (this.cooldownTimer == 20) {
+            for (Iterator iterator = this.buttonList.iterator(); iterator.hasNext(); guibutton.enabled = true) {
                 guibutton = (GuiButton) iterator.next();
             }
         }

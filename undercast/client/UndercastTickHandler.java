@@ -4,11 +4,9 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.TickType;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
@@ -35,12 +33,11 @@ public class UndercastTickHandler implements ITickHandler {
             current = mc.currentScreen;
             if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
                 mc.displayGuiScreen(new UndercastGuiMainMenu());
-            }
-            else if(current instanceof GuiOptions) {
-                List customButtonList = new ArrayList();
-                customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions)current, "buttonList");
+            } else if (current instanceof GuiOptions) {
+                List customButtonList;
+                customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, "buttonList");
                 customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
-                ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions)current, customButtonList, "buttonList");
+                ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, "buttonList");
             }
             boolean hasWorld = mc.theWorld != null;
             if (hasWorld) {

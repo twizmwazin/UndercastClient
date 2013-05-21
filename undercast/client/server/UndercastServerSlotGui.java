@@ -1,15 +1,14 @@
 package undercast.client.server;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import java.nio.DoubleBuffer;
+import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.ModLoader;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-
-import java.nio.DoubleBuffer;
-import java.util.List;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.Tessellator;
 
 public abstract class UndercastServerSlotGui {
 
@@ -290,7 +289,7 @@ public abstract class UndercastServerSlotGui {
                 }
             }
         } else {
-            while (!ModLoader.getMinecraftInstance().gameSettings.touchscreen && Mouse.next()) {
+            while (!FMLClientHandler.instance().getClient().gameSettings.touchscreen && Mouse.next()) {
                 int var16 = Mouse.getEventDWheel();
 
                 if (var16 != 0) {
@@ -317,7 +316,7 @@ public abstract class UndercastServerSlotGui {
         GL11.glDisable(GL11.GL_FOG);
         Tessellator var18 = Tessellator.instance;
         if (!this.parent.inGame) {
-            ModLoader.getMinecraftInstance().renderEngine.bindTexture("/gui/background.png");
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture("/gui/background.png");
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
         if (this.parent.inGame) {
@@ -466,7 +465,7 @@ public abstract class UndercastServerSlotGui {
      */
     private void overlayBackground(int par1, int par2, int par3, int par4) {
         Tessellator var5 = Tessellator.instance;
-        ModLoader.getMinecraftInstance().renderEngine.bindTexture("/gui/background.png");
+        FMLClientHandler.instance().getClient().renderEngine.bindTexture("/gui/background.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float var6 = 32.0F;
         var5.startDrawingQuads();

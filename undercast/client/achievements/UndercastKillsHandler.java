@@ -13,7 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.stats.Achievement;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastData;
-import undercast.client.UndercastModClass;
 
 /**
  * @author Flv92
@@ -30,7 +29,7 @@ public class UndercastKillsHandler {
 
     public void handleMessage(String message, String username, EntityPlayer player) {
         //When you die from someone
-        if (UndercastConfig.showDeathAchievements && message.startsWith(username)&& !message.toLowerCase().contains(" the game ") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
+        if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game ") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
             killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
             killOrKilled = false;
             this.printAchievement();
@@ -66,8 +65,9 @@ public class UndercastKillsHandler {
         killerBuffer = steveHeadBuffer;
         //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
+            @Override
             public void run() {
-                URLConnection spoof = null;
+                URLConnection spoof;
                 try {
                     System.out.println("Beginning");
                     spoof = new URL("https://minotar.net/helm/" + killer + "/16.png").openConnection();
@@ -80,6 +80,7 @@ public class UndercastKillsHandler {
             }
         };
         Runnable r2 = new Runnable() {
+            @Override
             public void run() {
                 try {
                     Thread.sleep(1000L);
@@ -107,8 +108,9 @@ public class UndercastKillsHandler {
         killerBuffer = steveHeadBuffer;
         //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
+            @Override
             public void run() {
-                URLConnection spoof = null;
+                URLConnection spoof;
                 try {
                     System.out.println("Beginning");
                     spoof = new URL("https://minotar.net/helm/" + FMLClientHandler.instance().getClient().thePlayer.username + "/16.png").openConnection();
@@ -121,6 +123,7 @@ public class UndercastKillsHandler {
             }
         };
         Runnable r2 = new Runnable() {
+            @Override
             public void run() {
                 try {
                     Thread.sleep(waitingTime);
@@ -143,8 +146,9 @@ public class UndercastKillsHandler {
         killerBuffer = steveHeadBuffer;
         //Thread charged to load the achievment gui
         Runnable r1 = new Runnable() {
+            @Override
             public void run() {
-                URLConnection spoof = null;
+                URLConnection spoof;
                 try {
                     System.out.println("Beginning");
                     spoof = new URL("https://minotar.net/helm/" + FMLClientHandler.instance().getClient().thePlayer.username + "/16.png").openConnection();
@@ -157,6 +161,7 @@ public class UndercastKillsHandler {
             }
         };
         Runnable r2 = new Runnable() {
+            @Override
             public void run() {
                 Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                 Minecraft client = FMLClientHandler.instance().getClient();

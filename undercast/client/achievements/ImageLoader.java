@@ -25,15 +25,13 @@ public class ImageLoader extends RenderEngine {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 
-        if (this.prevImage != par1BufferedImage)
-        {
+        if (this.prevImage != par1BufferedImage) {
             int[] var5 = new int[y * x];
             byte[] var6 = new byte[x * y * 4];
 
             par1BufferedImage.getRGB(0, 0, x, y, var5, 0, x);
 
-            for (int var7 = 0; var7 < var5.length; ++var7)
-            {
+            for (int var7 = 0; var7 < var5.length; ++var7) {
                 int var8 = var5[var7] >> 24 & 255;
                 int var9 = var5[var7] >> 16 & 255;
                 int var10 = var5[var7] >> 8 & 255;

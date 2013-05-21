@@ -1,7 +1,6 @@
 package undercast.client.settings;
 
 import net.minecraft.client.gui.GuiButton;
-import undercast.client.UndercastModClass;
 import net.minecraft.util.EnumChatFormatting;
 import undercast.client.UndercastConfig;
 

@@ -3,8 +3,6 @@ package undercast.client.settings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.src.ModLoader;
-
 import org.lwjgl.input.Keyboard;
 
 public class SettingsGUI extends GuiScreen {
@@ -53,7 +51,6 @@ public class SettingsGUI extends GuiScreen {
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
             mc.displayGuiScreen(null);
-            return;
         }
     }
 

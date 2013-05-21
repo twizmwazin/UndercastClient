@@ -13,8 +13,6 @@ import net.minecraftforge.common.Configuration;
  */
 public class UndercastConfig {
 
-    //update this value to change the config version.
-    private static int version = 3;
     public static Configuration config;
     public static boolean showFPS;
     public static boolean showKills;
@@ -91,9 +89,7 @@ public class UndercastConfig {
 
     public static void setBooleanProperty(String name, boolean bool) {
         File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(configFile));
-            FileWriter fr = new FileWriter(tempFile);
+        try (BufferedReader br = new BufferedReader(new FileReader(configFile)); FileWriter fr = new FileWriter(tempFile)) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.contains("B:" + name + "=")) {
@@ -106,10 +102,6 @@ public class UndercastConfig {
                     }
                 }
             }
-            fr.close();
-            br.close();
-            configFile.delete();
-            tempFile.renameTo(configFile);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
@@ -119,9 +111,7 @@ public class UndercastConfig {
 
     public static void setIntProperty(String name, int newInt) {
         File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(configFile));
-            FileWriter fr = new FileWriter(tempFile);
+        try (BufferedReader br = new BufferedReader(new FileReader(configFile)); FileWriter fr = new FileWriter(tempFile);) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.contains("I:" + name)) {
@@ -130,10 +120,6 @@ public class UndercastConfig {
                     fr.write(line.substring(0, line.lastIndexOf("=") + 1) + newInt + "\n");
                 }
             }
-            fr.close();
-            br.close();
-            configFile.delete();
-            tempFile.renameTo(configFile);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {

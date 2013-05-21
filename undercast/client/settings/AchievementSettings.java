@@ -1,9 +1,8 @@
 package undercast.client.settings;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-
-import net.minecraft.src.ModLoader;
 import org.lwjgl.input.Keyboard;
 
 public class AchievementSettings extends GuiScreen {
@@ -50,7 +49,6 @@ public class AchievementSettings extends GuiScreen {
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
             mc.displayGuiScreen(null);
-            return;
         }
     }
 
@@ -61,7 +59,7 @@ public class AchievementSettings extends GuiScreen {
             SettingsToggleButton button = (SettingsToggleButton) guibutton;
             button.buttonPressed();
         } else {
-            ModLoader.openGUI(mc.thePlayer, parentScreen);
+            FMLClientHandler.instance().getClient().displayGuiScreen(parentScreen);
         }
     }
 

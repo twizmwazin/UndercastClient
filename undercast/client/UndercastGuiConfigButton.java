@@ -23,6 +23,7 @@ public class UndercastGuiConfigButton extends GuiButton {
         parentScreen = gs;
     }
 
+    @Override
     public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
         if (this.enabled && this.drawButton && par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height) {
             FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(parentScreen));

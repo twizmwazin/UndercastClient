@@ -4,15 +4,11 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import org.lwjgl.input.Keyboard;
-
+import java.net.URL;
+import java.util.HashSet;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.server.UndercastServer;
-
-import java.net.URL;
-import java.util.HashSet;
-import net.minecraft.client.settings.KeyBinding;
 
 public class UndercastData {
     //Data Varibles
@@ -24,6 +20,7 @@ public class UndercastData {
     public static double killed;
     public static int killstreak;
     public static int largestKillstreak;
+    // redudant assignation but kept for being java 6 compatible
     public static HashSet<String> friends = new HashSet<String>();
     public static String server;
     public static Teams team;
