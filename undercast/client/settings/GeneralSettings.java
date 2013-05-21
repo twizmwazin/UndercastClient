@@ -24,6 +24,12 @@ public class GeneralSettings extends GuiScreen {
     public GuiTextField yTextField;
     // Allowed chars
     public String allowedChars = "0123456789-\b";
+    public GuiScreen parentScreen;
+
+    public GeneralSettings(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
 
     @Override
     public void initGui() {
@@ -141,7 +147,7 @@ public class GeneralSettings extends GuiScreen {
             UndercastConfig.x = x;
             UndercastConfig.setIntProperty("Y", y);
             UndercastConfig.y = y;
-            ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
+            ModLoader.openGUI(mc.thePlayer, parentScreen);
         }
 
         //Handle +/-

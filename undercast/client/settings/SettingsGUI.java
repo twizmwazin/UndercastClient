@@ -9,6 +9,12 @@ import org.lwjgl.input.Keyboard;
 
 public class SettingsGUI extends GuiScreen {
 
+    public GuiScreen parentScreen;
+
+    public SettingsGUI(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
     public String[] toggleSettings = new String[]{"showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap",
         "showNextMap", "showStreak", "showGuiChat", "showGuiMulti", "showPlayingTime", "toggleTitleScreenButton", "filterTips",
         "fullBright", "matchOnServerJoin", "enableButtonTooltips"};
@@ -54,16 +60,16 @@ public class SettingsGUI extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton guibutton) {
         if (guibutton.id == 1) {
-            Minecraft.getMinecraft().displayGuiScreen(new OverlaySettings());
+            Minecraft.getMinecraft().displayGuiScreen(new OverlaySettings(this));
         }
         if (guibutton.id == 2) {
-            Minecraft.getMinecraft().displayGuiScreen(new GeneralSettings());
+            Minecraft.getMinecraft().displayGuiScreen(new GeneralSettings(this));
         }
         if (guibutton.id == 3) {
-            Minecraft.getMinecraft().displayGuiScreen(new AchievementSettings());
+            Minecraft.getMinecraft().displayGuiScreen(new AchievementSettings(this));
         }
         if (guibutton.id == 4) {
-            mc.displayGuiScreen(null);
+            mc.displayGuiScreen(parentScreen);
         }
     }
 

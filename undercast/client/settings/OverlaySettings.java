@@ -9,12 +9,18 @@ public class OverlaySettings extends GuiScreen {
 
     public int pageIndex = 0;
     public int buttonPerPage = 14;
+    public GuiScreen parentScreen;
     public String[] toggleSettings = new String[]{"showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap",
         "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds"};
     public String[] enabledStrings = new String[]{"FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Friends shown", "Current map shown",
         "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled", "Match Time shown", "Match time seconds shown"};
     public String[] disabledStrings = new String[]{"FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Friends hidden", "Current map hidden",
         "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled", "Match time hidden", "Match time seconds hidden"};
+
+    public OverlaySettings(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
 
     @Override
     public void initGui() {
@@ -82,7 +88,7 @@ public class OverlaySettings extends GuiScreen {
             this.buttonList.clear();
             this.initGui();
         } else {
-            ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
+            ModLoader.openGUI(mc.thePlayer, parentScreen);
         }
     }
 

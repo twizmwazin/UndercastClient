@@ -8,9 +8,15 @@ import org.lwjgl.input.Keyboard;
 
 public class AchievementSettings extends GuiScreen {
 
+    public GuiScreen parentScreen;
     public String[] toggleSettings = new String[]{"showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement", "showLastKillAchievement"};
     public String[] enabledStrings = new String[]{"Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown", "Last Kill shown"};
     public String[] disabledStrings = new String[]{"No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement", "No Last Kill Achievement"};
+
+    public AchievementSettings(GuiScreen gs) {
+        super();
+        parentScreen = gs;
+    }
 
     @Override
     public void initGui() {
@@ -55,7 +61,7 @@ public class AchievementSettings extends GuiScreen {
             SettingsToggleButton button = (SettingsToggleButton) guibutton;
             button.buttonPressed();
         } else {
-            ModLoader.openGUI(mc.thePlayer, new SettingsGUI());
+            ModLoader.openGUI(mc.thePlayer, parentScreen);
         }
     }
 

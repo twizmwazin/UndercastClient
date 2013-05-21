@@ -59,7 +59,7 @@ public class UndercastKeyHandling extends KeyHandler {
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }
             } else if (kb == keySettingsGui) {
-                FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI());
+                FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(null));
             }
         } //if you are an obs;have the config to true; toggle fullbright and play sound
     }
