@@ -36,7 +36,12 @@ public class UndercastTickHandler implements ITickHandler {
             } else if (current instanceof GuiOptions) {
                 List customButtonList;
                 customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, "buttonList");
-                customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
+                if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
+                    UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
+                }
+                if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
+                    customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
+                }
                 ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, "buttonList");
             }
             boolean hasWorld = mc.theWorld != null;

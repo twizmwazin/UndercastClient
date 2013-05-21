@@ -33,6 +33,7 @@ public class UndercastModClass {
 
     public final static String MOD_VERSION = "1.5.4";
     public final static String MOD_NAME = "UndercastMod";
+    public Integer buttonListSizeOfGuiOptions;
     protected String username = "Not_Found";
     protected Minecraft mc = Minecraft.getMinecraft();
     private boolean mainMenuActive;
