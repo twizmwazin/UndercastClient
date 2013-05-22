@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import net.minecraft.client.Minecraft;
 
 public class UndercastCustomMethods {
 
@@ -109,7 +108,7 @@ public class UndercastCustomMethods {
                 if (UndercastData.matchTimeSec < 10) {
                     return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                 } else {
-                    return "Playing Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                 }
             } else {
                 if (UndercastData.matchTimeMin < 10) {
