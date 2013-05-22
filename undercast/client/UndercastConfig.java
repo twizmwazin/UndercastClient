@@ -102,11 +102,16 @@ public class UndercastConfig {
                     }
                 }
             }
+            fr.close();
+            br.close();
+            configFile.delete();
+            tempFile.renameTo(configFile);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+
     }
 
     public static void setIntProperty(String name, int newInt) {
@@ -120,6 +125,10 @@ public class UndercastConfig {
                     fr.write(line.substring(0, line.lastIndexOf("=") + 1) + newInt + "\n");
                 }
             }
+            fr.close();
+            br.close();
+            configFile.delete();
+            tempFile.renameTo(configFile);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
