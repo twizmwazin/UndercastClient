@@ -89,7 +89,9 @@ public class UndercastConfig {
 
     public static void setBooleanProperty(String name, boolean bool) {
         File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
-        try (BufferedReader br = new BufferedReader(new FileReader(configFile)); FileWriter fr = new FileWriter(tempFile)) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(configFile));
+            FileWriter fr = new FileWriter(tempFile);
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.contains("B:" + name + "=")) {
@@ -116,7 +118,9 @@ public class UndercastConfig {
 
     public static void setIntProperty(String name, int newInt) {
         File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
-        try (BufferedReader br = new BufferedReader(new FileReader(configFile)); FileWriter fr = new FileWriter(tempFile);) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(configFile));
+            FileWriter fr = new FileWriter(tempFile);
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.contains("I:" + name)) {

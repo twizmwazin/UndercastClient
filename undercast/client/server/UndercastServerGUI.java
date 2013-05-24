@@ -82,7 +82,7 @@ public class UndercastServerGUI extends GuiScreen {
             String username = this.mc.session.username;
             try {
                 Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
-            } catch (URISyntaxException | IOException ignored) {
+            } catch (Exception ignored) {
             }
         }
         //sort button
@@ -108,7 +108,7 @@ public class UndercastServerGUI extends GuiScreen {
         if (guibutton.id == 6) {
             try {
                 Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
-            } catch (URISyntaxException | IOException ignored) {
+            } catch (Exception ignored) {
             }
         }
     }
