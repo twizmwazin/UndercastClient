@@ -79,12 +79,12 @@ public class UndercastData {
         setTeam(Teams.Observers);
         guiShowing = true;
         mapLoaderFinished = false;
-        serverInformation = new UndercastServer[20];
+        serverInformation = new UndercastServer[30];
         serverCount = 0;
         for (int c = 0; c < serverInformation.length; c++) {
             serverInformation[c] = new UndercastServer();
         }
-        sortedServerInformation = new UndercastServer[20];
+        sortedServerInformation = new UndercastServer[30];
         for (int c = 0; c < sortedServerInformation.length; c++) {
             sortedServerInformation[c] = new UndercastServer();
         }
@@ -102,7 +102,7 @@ public class UndercastData {
             mapLoaderFinished = true;
             try {
                 String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-
+                serverCount = mapData.lenght - 1; //-1 for lobby
                 for (int c = 0; c < mapData.length; c++) {
                     serverInformation[c].name = mapData[c][0];
                     try {
