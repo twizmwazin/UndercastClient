@@ -64,7 +64,7 @@ class Parser extends HTMLEditorKit.ParserCallback {
     // # of map currently parsing
     private int mapCount = -1;
     // Data
-    public String[][] mapData = new String[20][4];
+    public String[][] mapData = new String[30][4];
 
     // Function called when a tag (<tagName>) is opened
     @Override
@@ -104,7 +104,7 @@ class NextParser extends HTMLEditorKit.ParserCallback {
     // # of map currently parsing
     private int mapCount = 0;
     // Data
-    public String[] mapData = new String[20];
+    public String[] mapData = new String[30];
 
     // Function called when a tag (<tagName>) is opened
     @Override
