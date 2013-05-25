@@ -102,7 +102,7 @@ public class UndercastData {
             mapLoaderFinished = true;
             try {
                 String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-                serverCount = mapData.lenght - 1; //-1 for lobby
+                serverCount = mapData.length - 1; //-1 for lobby
                 for (int c = 0; c < mapData.length; c++) {
                     serverInformation[c].name = mapData[c][0];
                     try {
