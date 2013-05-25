@@ -4,6 +4,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
 import java.util.EnumSet;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -35,14 +36,17 @@ public class UndercastTickHandler implements ITickHandler {
                 mc.displayGuiScreen(new UndercastGuiMainMenu());
             } else if (current instanceof GuiOptions) {
                 List customButtonList;
-                customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, "buttonList");
-                if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
-                    UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
+                try {
+                    customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 4);
+                    if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
+                        UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
+                    }
+                    if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
+                        customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
+                    }
+                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 4);
+                } catch (UnableToAccessFieldException e) {
                 }
-                if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
-                    customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
-                }
-                ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, "buttonList");
             }
             boolean hasWorld = mc.theWorld != null;
             if (hasWorld) {
