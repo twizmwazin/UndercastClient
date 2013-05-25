@@ -1,5 +1,10 @@
 The changelog exists since version 1.4.0
 
+1.5.5
+ - Fix a bug where the server list would be empty after the Ghost Squadron servers were added. 
+ - Hopefully fixes the error with weird head appearing everywhere.
+ - Fix achievement bugs with fist kills and potions kills.
+ - Added a Config button inside the options gui
 1.5.4
  - you get an achievement when doing the first kill of a game
  - you get an achievement when doing the last kill of a game
