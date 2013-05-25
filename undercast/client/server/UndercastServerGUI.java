@@ -50,7 +50,7 @@ public class UndercastServerGUI extends GuiScreen {
         this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
         if (!UndercastData.isUpdate()) {
-            this.buttonList.add(new GuiButtonTooltip(6, this.width - 54, 21, 48, 20, "Upadate", "Opens the download website for the latest version."));
+            this.buttonList.add(new GuiButtonTooltip(6, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
