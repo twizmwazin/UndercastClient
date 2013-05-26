@@ -65,7 +65,7 @@ public class UndercastData {
 
     public static enum ServerType {
 
-        Lobby, Blitz, OvercastNetwork, Unknown
+        Lobby, Blitz, OvercastNetwork, GhostSquadron, Unknown
     };
     public static String[] sortNames = {"Web", "Match", "Players", "Abc"};
 
@@ -113,7 +113,11 @@ public class UndercastData {
                     serverInformation[c].currentMap = mapData[c][2];
                     serverInformation[c].nextMap = mapData[c][3];
                     serverInformation[c].matchState = MatchState.Started; //API support
-                    serverInformation[c].type = ServerType.Unknown;
+                    try {
+                        serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace(" ", ""));
+                    } catch (Exception e) {
+                        serverInformation[c].type = ServerType.Unknown;
+                    }
                 }
 
                 // set the map
