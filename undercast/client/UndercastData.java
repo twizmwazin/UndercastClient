@@ -6,6 +6,7 @@ package undercast.client;
 
 import java.net.URL;
 import java.util.HashSet;
+import net.minecraft.client.Minecraft;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.server.UndercastServer;
@@ -15,7 +16,7 @@ public class UndercastData {
 
     public static String map;
     public static String nextMap;
-    public static ServerType currentServerType = ServerType.Unknown; 
+    public static ServerType currentServerType = ServerType.Unknown;
     public static double kills;
     public static double deaths;
     public static double killed;
@@ -114,7 +115,9 @@ public class UndercastData {
                     }
                     serverInformation[c].currentMap = mapData[c][2];
                     serverInformation[c].nextMap = mapData[c][3];
-                    serverInformation[c].matchState = MatchState.Started; //API support
+                    if (serverInformation[c].matchState == null) {
+                        serverInformation[c].matchState = MatchState.Unknown;
+                    }
                     try {
                         serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace(" ", ""));
                     } catch (Exception e) {
@@ -142,7 +145,7 @@ public class UndercastData {
         }
     }
 
-    public static void reload() {
+    public static void reload(boolean getMatchState) {
         map = "Loading...";
         nextMap = "Loading...";
 
@@ -151,6 +154,9 @@ public class UndercastData {
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
+        }
+        if (isOC && getMatchState) {
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers");
         }
         mapLoaderFinished = false;
     }
@@ -260,7 +266,7 @@ public class UndercastData {
 
     public static void setServer(String servers) {
         server = servers;
-        reload();
+        reload(false);
     }
 
     public static String getServer() {

@@ -32,7 +32,7 @@ public class UndercastServerGUI extends GuiScreen {
      */
     public UndercastServerGUI(boolean inGame) {
         this.inGame = inGame;
-        UndercastData.reload();
+        UndercastData.reload(true);
     }
 
     /**
@@ -67,7 +67,7 @@ public class UndercastServerGUI extends GuiScreen {
         }
         //refresh button
         if (guibutton.id == 1) {
-            UndercastData.reload();
+            UndercastData.reload(true);
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {

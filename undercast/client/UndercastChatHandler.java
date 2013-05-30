@@ -55,7 +55,7 @@ public class UndercastChatHandler {
             message = message.replace("Now playing ", "");
             UndercastData.setMap((message.split(" by ")[0]));
             if (UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new match or observer or noob
-                UndercastData.reload();
+                UndercastData.reload(false);
             }
         } //if you die
         else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
@@ -150,7 +150,6 @@ public class UndercastChatHandler {
             }
         } // start and sync the match timer
         else if (message.toLowerCase().contains("time:") || message.toLowerCase().contains("score:") || message.toLowerCase().contains("time remaining: ")) {
-            System.out.println(message);
             String time = "-2:-2";
             String messageToReplace;
             // stop the timer

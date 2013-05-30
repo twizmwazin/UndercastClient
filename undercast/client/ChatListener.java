@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet3Chat;
 import net.minecraft.util.StringUtils;
+import undercast.client.internetTools.ServersCommandParser;
 
 /**
  * @author Flv92
@@ -38,6 +39,7 @@ public class ChatListener implements IChatListener {
                 if (UndercastConfig.showAchievements) {
                     UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player);
                 }
+                ServersCommandParser.handleChatMessage(message, packet.message);
             }
         } catch (Exception e) {
         }
