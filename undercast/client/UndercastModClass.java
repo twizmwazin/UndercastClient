@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
+import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
@@ -151,6 +152,11 @@ public class UndercastModClass {
             // Team display (based on color)
             if (UndercastConfig.showTeam && !UndercastData.isLobby) {
                 mc.fontRenderer.drawStringWithShadow("Team: " + UndercastData.getTeam(), width, height, getTeamColors());
+                height += 8;
+            }
+            // Class display (Ghost Squadron only)
+            if (UndercastConfig.showGSClass && UndercastData.currentServerType == ServerType.GhostSquadron) {
+                mc.fontRenderer.drawStringWithShadow("Class: " + UndercastData.currentGSClass, width, height, 2446535);
                 height += 8;
             }
             // Friend display:

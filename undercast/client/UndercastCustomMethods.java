@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import net.minecraft.client.Minecraft;
+import undercast.client.UndercastData.ServerType;
 
 public class UndercastCustomMethods {
 
@@ -93,6 +95,19 @@ public class UndercastCustomMethods {
         UndercastData.matchTimeHours = 0;
         UndercastData.matchTimeMin = 0;
         UndercastData.matchTimeSec = 0;
+
+        // in order to prevent spam /class is not executed if
+        // the display is disabled.
+        if (UndercastConfig.showGSClass) {
+            //get the server type for the new server (does not need to wait for an update)
+            for (int c = 0; c < UndercastData.serverInformation.length; c++) {
+                if (UndercastData.server.equals(UndercastData.serverInformation[c].name)) {
+                    if (UndercastData.serverInformation[c].type == ServerType.GhostSquadron) {
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
+                    }
+                }
+            }
+        }
     }
 
     public static String getMatchTimeString() {

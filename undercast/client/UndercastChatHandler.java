@@ -182,6 +182,10 @@ public class UndercastChatHandler {
             }
             // start the timer
             UndercastData.matchTimer = new MatchTimer();
+        } else if (message.startsWith("Current class:")) {
+            UndercastData.currentGSClass = message.replace("Current class: ", "");
+        } else if (message.startsWith("You have selected")) {
+            UndercastData.currentGSClass = message.replace("You have selected ", "");
         }
         return returnStatement;
 

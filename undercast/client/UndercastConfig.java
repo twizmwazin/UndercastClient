@@ -31,6 +31,7 @@ public class UndercastConfig {
     public static boolean showPlayingTime;
     public static boolean showMatchTime;
     public static boolean showMatchTimeSeconds;
+    public static boolean showGSClass;
     public static int x;
     public static int y;
     public static boolean toggleTitleScreenButton;
@@ -83,6 +84,7 @@ public class UndercastConfig {
         showLastKillAchievement = config.get("UndercastMod", "showLastKillAchievement", true).getBoolean(true);
         showMatchTime = config.get("UndercastMod", "showMatchTime", true).getBoolean(true);
         showMatchTimeSeconds = config.get("UndercastMod", "showMatchTimeSeconds", true).getBoolean(true);
+        showGSClass = config.get("UndercastMod", "showGSClass", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

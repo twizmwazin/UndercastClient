@@ -15,6 +15,7 @@ public class UndercastData {
 
     public static String map;
     public static String nextMap;
+    public static ServerType currentServerType = ServerType.Unknown; 
     public static double kills;
     public static double deaths;
     public static double killed;
@@ -52,6 +53,7 @@ public class UndercastData {
     public static int matchTimeHours;
     public static boolean incrementMatchTime;
     public static MatchTimer matchTimer;
+    public static String currentGSClass = "Unknown";
 
     public static enum Teams {
 
@@ -129,6 +131,7 @@ public class UndercastData {
                     if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
                         map = serverInformation[c].currentMap;
                         nextMap = serverInformation[c].nextMap;
+                        currentServerType = serverInformation[c].type;
                     }
                 }
                 UndercastCustomMethods.sortServers();
