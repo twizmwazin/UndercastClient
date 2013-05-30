@@ -56,6 +56,7 @@ public class UndercastData {
     public static boolean incrementMatchTime;
     public static MatchTimer matchTimer;
     public static String currentGSClass = "Unknown";
+    public static boolean removeNextChatMessage = false;
 
     public static enum Teams {
 
@@ -116,7 +117,7 @@ public class UndercastData {
                     }
                     serverInformation[c].currentMap = mapData[c][2];
                     serverInformation[c].nextMap = mapData[c][3];
-                    if (serverInformation[c].matchState == null) {
+                    if (serverInformation[c].matchState == null || !isOC) {
                         serverInformation[c].matchState = MatchState.Unknown;
                     }
                     try {
@@ -157,8 +158,9 @@ public class UndercastData {
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         if (isOC && getMatchState) {
-            ServersCommandParser.castedByMod = true; 
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers");
+            removeNextChatMessage = true;
+            ServersCommandParser.castByMod();
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
         }
         mapLoaderFinished = false;
     }

@@ -39,7 +39,12 @@ public class ChatListener implements IChatListener {
                 if (UndercastConfig.showAchievements) {
                     UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player);
                 }
-                ServersCommandParser.handleChatMessage(message, packet.message);
+                if(ServersCommandParser.handleChatMessage(message, packet.message)){
+                    packet.message = null;
+                }
+            }
+            if(message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()){
+                UndercastData.removeNextChatMessage = false;
             }
         } catch (Exception e) {
         }

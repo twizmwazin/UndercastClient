@@ -74,6 +74,7 @@ public class UndercastServerGUI extends GuiScreen {
             if (!inGame) {
                 this.mc.displayGuiScreen(new GuiMainMenu());
             } else {
+                UndercastData.removeNextChatMessage = false;
                 this.mc.setIngameFocus();
             }
         }
@@ -166,6 +167,13 @@ public class UndercastServerGUI extends GuiScreen {
                 ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
+        }
+    }
+
+    protected void keyTyped(char par1, int par2) {
+        if (par2 == 1) //Escape button
+        {
+            UndercastData.removeNextChatMessage = false;
         }
     }
 }
