@@ -9,6 +9,7 @@ import java.util.HashSet;
 import net.minecraft.client.Minecraft;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.ServerStatusHTMLParser;
+import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 
 public class UndercastData {
@@ -156,6 +157,7 @@ public class UndercastData {
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         if (isOC && getMatchState) {
+            ServersCommandParser.castedByMod = true; 
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers");
         }
         mapLoaderFinished = false;
