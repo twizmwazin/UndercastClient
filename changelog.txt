@@ -1,5 +1,11 @@
 The changelog exists since version 1.4.0
 
+1.5.6
+ - get the match state (only when online as it is taken from /servers)
+ - filter button for the custom server gui (filters by server type)
+ - class display for Ghost Squadron
+ - fix the wrong display of next maps when ser
+ - minor bug fixes
 1.5.5
  - Fix a bug where the server list would be empty after the Ghost Squadron servers were added. 
  - Hopefully fixes the error with weird head appearing everywhere.
