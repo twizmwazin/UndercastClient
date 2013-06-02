@@ -72,7 +72,7 @@ public class OverlaySettings extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
-            if (UndercastConfig.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.GhostSquadron) {
+            if (UndercastConfig.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.ghostsquadron) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
             }
             mc.displayGuiScreen(null);
@@ -94,7 +94,7 @@ public class OverlaySettings extends GuiScreen {
             this.buttonList.clear();
             this.initGui();
         } else {
-            if (UndercastConfig.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.GhostSquadron) {
+            if (UndercastConfig.showGSClass && UndercastData.currentGSClass.equals("Unknown") && UndercastData.currentServerType == ServerType.ghostsquadron) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
             }
             FMLClientHandler.instance().getClient().displayGuiScreen(parentScreen);

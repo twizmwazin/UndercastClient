@@ -44,6 +44,7 @@ public class UndercastConfig {
     public static boolean showDeathAchievements;
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
+    public static boolean parseMatchState;
     public static File configFile;
 
     public UndercastConfig(Configuration configuration, File configF) {
@@ -85,6 +86,7 @@ public class UndercastConfig {
         showMatchTime = config.get("UndercastMod", "showMatchTime", true).getBoolean(true);
         showMatchTimeSeconds = config.get("UndercastMod", "showMatchTimeSeconds", true).getBoolean(true);
         showGSClass = config.get("UndercastMod", "showGSClass", true).getBoolean(true);
+        parseMatchState = config.get("UndercastMod", "parseMatchState", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

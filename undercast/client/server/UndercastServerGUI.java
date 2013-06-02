@@ -5,9 +5,9 @@ package undercast.client.server;
 //You may not remove these comments
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -47,10 +47,11 @@ public class UndercastServerGUI extends GuiScreen {
         this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
         this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel"), "Close the server list"));
         this.buttonList.add(new GuiButtonTooltip(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats", "Open your player stats in the browser"));
-        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers - Match is currently disabled (because we don't know the status)"));
+        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
+        this.buttonList.add(new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
         if (!UndercastData.isUpdate()) {
-            this.buttonList.add(new GuiButtonTooltip(6, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
+            this.buttonList.add(new GuiButtonTooltip(7, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
@@ -68,6 +69,16 @@ public class UndercastServerGUI extends GuiScreen {
         //refresh button
         if (guibutton.id == 1) {
             UndercastData.reload(true);
+            GuiButtonTooltip refreshButton = (GuiButtonTooltip) buttonList.get(1);
+            refreshButton.enabled = false;
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    GuiButtonTooltip refreshButton = (GuiButtonTooltip) buttonList.get(1);
+                    refreshButton.enabled = true;
+                }
+            }, 3000);
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {
@@ -95,8 +106,8 @@ public class UndercastServerGUI extends GuiScreen {
                 UndercastData.sortIndex = 0;
             }
             // update button
-            this.buttonList.set(4, new GuiButton(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex]));
-            UndercastCustomMethods.sortServers();
+            this.buttonList.set(4, new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
+            UndercastCustomMethods.sortAndFilterServers();
         }
         if (guibutton.id == 5) {
             if (inGame && UndercastData.isPlayingOvercastNetwork()) {
@@ -107,6 +118,17 @@ public class UndercastServerGUI extends GuiScreen {
             }
         }
         if (guibutton.id == 6) {
+            // move filter index
+            UndercastData.filterIndex++;
+            // auto spill over function
+            if (UndercastData.filterIndex > UndercastData.filterNames.length - 1) {
+                UndercastData.filterIndex = 0;
+            }
+            //update the buttons
+            this.buttonList.set(6, new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
+            UndercastCustomMethods.sortAndFilterServers();
+        }
+        if (guibutton.id == 7) {
             try {
                 Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
             } catch (Exception ignored) {

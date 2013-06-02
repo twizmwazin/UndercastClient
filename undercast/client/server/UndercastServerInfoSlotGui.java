@@ -40,7 +40,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
     @Override
     protected int getSize() {
-        return UndercastData.serverCount;
+        return UndercastData.filteredServerCount;
     }
 
     @Override

@@ -32,7 +32,7 @@ import undercast.client.update.Undercast_UpdaterThread;
 @Mod(modid = UndercastModClass.MOD_NAME, name = UndercastModClass.MOD_NAME, version = UndercastModClass.MOD_VERSION)
 public class UndercastModClass {
 
-    public final static String MOD_VERSION = "1.5.6";
+    public final static String MOD_VERSION = "1.5.8";
     public final static String MOD_NAME = "UndercastMod";
     public Integer buttonListSizeOfGuiOptions;
     protected String username = "Not_Found";
@@ -155,7 +155,7 @@ public class UndercastModClass {
                 height += 8;
             }
             // Class display (Ghost Squadron only)
-            if (UndercastConfig.showGSClass && UndercastData.currentServerType == ServerType.GhostSquadron) {
+            if (UndercastConfig.showGSClass && UndercastData.currentServerType == ServerType.ghostsquadron) {
                 mc.fontRenderer.drawStringWithShadow("Class: " + UndercastData.currentGSClass, width, height, 2446535);
                 height += 8;
             }

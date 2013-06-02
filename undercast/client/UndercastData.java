@@ -36,6 +36,7 @@ public class UndercastData {
     public static UndercastServer[] serverInformation;
     public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
+    public static int filteredServerCount;
     // if it's true, the /server comand isn't executed after a "Welcome to Overcast Network" message
     public static boolean welcomeMessageExpected = true;
     public static boolean redirect = false;
@@ -45,6 +46,7 @@ public class UndercastData {
     public static int playTimeHours;
     public static int playTimeMin;
     public static int sortIndex;
+    public static int filterIndex;
     // saves if a /server command (without argument) was executed, if it's false, the user executed it 
     public static boolean serverDetectionCommandExecuted = false;
     public static boolean isNextKillFirstBlood = false;
@@ -70,9 +72,10 @@ public class UndercastData {
 
     public static enum ServerType {
 
-        Lobby, Blitz, OvercastNetwork, GhostSquadron, Unknown
+        lobby, blitz, projectares, ghostsquadron, Unknown
     };
     public static String[] sortNames = {"Web", "Match", "Players", "Abc"};
+    public static String[] filterNames = {"All", "PA", "Blitz", "GS"};
 
     public UndercastData() {
         update = true;
@@ -84,16 +87,18 @@ public class UndercastData {
         setTeam(Teams.Observers);
         guiShowing = true;
         mapLoaderFinished = false;
-        serverInformation = new UndercastServer[30];
+        serverInformation = new UndercastServer[999];
         serverCount = 0;
+        filteredServerCount = 0;
         for (int c = 0; c < serverInformation.length; c++) {
             serverInformation[c] = new UndercastServer();
         }
-        sortedServerInformation = new UndercastServer[30];
+        sortedServerInformation = new UndercastServer[999];
         for (int c = 0; c < sortedServerInformation.length; c++) {
             sortedServerInformation[c] = new UndercastServer();
         }
         sortIndex = 0;
+        filterIndex = 0;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch (Exception e) {
@@ -121,7 +126,7 @@ public class UndercastData {
                         serverInformation[c].matchState = MatchState.Unknown;
                     }
                     try {
-                        serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace(" ", ""));
+                        serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
                     } catch (Exception e) {
                         serverInformation[c].type = ServerType.Unknown;
                     }
@@ -139,7 +144,8 @@ public class UndercastData {
                         currentServerType = serverInformation[c].type;
                     }
                 }
-                UndercastCustomMethods.sortServers();
+                filteredServerCount = serverCount;
+                UndercastCustomMethods.sortAndFilterServers();
             } catch (Exception e) {
                 System.out.println("[UndercastMod]: Failed to parse maps");
                 System.out.println("[UndercastMod]: ERROR: " + e.toString());

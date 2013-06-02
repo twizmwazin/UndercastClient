@@ -1,5 +1,10 @@
 The changelog exists since version 1.4.0
 
+1.5.8
+ - setting for toggling match state parsing
+ - only parse a few relevant pages
+1.5.7
+ - hot fix for the website parser 
 1.5.6
  - get the match state (only when online as it is taken from /servers)
  - filter button for the custom server gui (filters by server type)

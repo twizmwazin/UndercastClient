@@ -17,10 +17,10 @@ public class ServersCommandParser {
         if (isListening) {
             // check if the message belongs to the command
             boolean commandEnded = false;
-            if (!message.contains("Online: ") && !message.contains("--------- Overcast Network Servers")) {
+            if (!message.contains("Online: ") && !message.contains("-------- Overcast Network Servers")) {
                 isListening = false;
                 castedByMod = nextCastedByMod;
-                UndercastCustomMethods.sortServers();
+                UndercastCustomMethods.sortAndFilterServers();
                 commandEnded = true;
                 UndercastData.removeNextChatMessage = false;
             }
@@ -68,12 +68,12 @@ public class ServersCommandParser {
             }
         }
 
-        if (!isListening && message.contains("--------- Overcast Network Servers (1 of ")) {
+        if (!isListening && message.contains("-------- Overcast Network Servers (1 of ") && UndercastData.removeNextChatMessage) {
             // get the page count
             try {
-                pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.indexOf("of ") + 4));
+                pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.indexOf("of ") + 5));
             } catch (Exception e) {
-                pages = 3;
+                pages = 10;
             }
             // get the other pages
             for (int i = 2; i <= pages; i++) {

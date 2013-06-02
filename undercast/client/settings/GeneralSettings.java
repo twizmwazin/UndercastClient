@@ -10,9 +10,9 @@ import undercast.client.UndercastConfig;
 public class GeneralSettings extends GuiScreen {
 
     // Toggle settings
-    public String[] toggleSettings = new String[]{"showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips"};
-    public String[] enabledStrings = new String[]{"Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown"};
-    public String[] disabledStrings = new String[]{"Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden"};
+    public String[] toggleSettings = new String[]{"showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState"};
+    public String[] enabledStrings = new String[]{"Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown", "Match state shown"};
+    public String[] disabledStrings = new String[]{"Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden"};
     // X Offset vars
     public GuiButton xPlusButton;
     public GuiButton xMinusButton;
@@ -52,17 +52,17 @@ public class GeneralSettings extends GuiScreen {
         x2 = width / 2 + 75;
 
         //X and Y Offset
-        xPlusButton = new GuiButton(3, x1, y - 40, 15, 20, "+");
-        yPlusButton = new GuiButton(4, x2, y - 40, 15, 20, "+");
-        xMinusButton = new GuiButton(5, x1 + 60, y - 40, 15, 20, "-");
-        yMinusButton = new GuiButton(6, x2 + 60, y - 40, 15, 20, "-");
+        xPlusButton = new GuiButton(3, x1, y - 35, 15, 20, "+");
+        yPlusButton = new GuiButton(4, x2, y - 35, 15, 20, "+");
+        xMinusButton = new GuiButton(5, x1 + 60, y - 35, 15, 20, "-");
+        yMinusButton = new GuiButton(6, x2 + 60, y - 35, 15, 20, "-");
         this.buttonList.add(xPlusButton);
         this.buttonList.add(yPlusButton);
         this.buttonList.add(xMinusButton);
         this.buttonList.add(yMinusButton);
-        xTextField = new GuiTextField(mc.fontRenderer, x1 + 20, y - 40, 35, 20);
+        xTextField = new GuiTextField(mc.fontRenderer, x1 + 20, y - 35, 35, 20);
         xTextField.setText(Integer.toString(UndercastConfig.x));
-        yTextField = new GuiTextField(mc.fontRenderer, x2 + 20, y - 40, 35, 20);
+        yTextField = new GuiTextField(mc.fontRenderer, x2 + 20, y - 35, 35, 20);
         yTextField.setText(Integer.toString(UndercastConfig.y));
 
         // Back button
@@ -81,8 +81,8 @@ public class GeneralSettings extends GuiScreen {
                 x2 = width / 2 + 75,
                 x1 = width / 2 - 150;
         int y = (height / 2 - 120) + toggleSettings.length * 25;
-        drawCenteredString(fontRenderer, "X Offset", x1 + 40, y - 52, 0xffffff);
-        drawCenteredString(fontRenderer, "Y Offset", x2 + 40, y - 52, 0xffffff);
+        drawCenteredString(fontRenderer, "X Offset", x1 + 40, y - 38, 0xffffff);
+        drawCenteredString(fontRenderer, "Y Offset", x2 + 40, y - 38, 0xffffff);
         // Draw buttons
         super.drawScreen(par1, par2, par3);
     }

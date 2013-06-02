@@ -10,8 +10,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import net.minecraft.client.Minecraft;
 import undercast.client.UndercastData.ServerType;
+import undercast.client.server.UndercastServer;
 
 public class UndercastCustomMethods {
+
+    private static Minecraft mc = Minecraft.getMinecraft();
 
     // simple rounding method
     private static double round(double d) {
@@ -31,16 +34,12 @@ public class UndercastCustomMethods {
         double d = UndercastData.getDeaths();
         if (k == d && k == 0) {
             return 0D;
+        } else if (k > 0 && d == 0) {
+            return k;
+        } else if (k == d && k > 0) {
+            return 1D;
         } else {
-            if (k > 0 && d == 0) {
-                return k;
-            } else {
-                if (k == d && k > 0) {
-                    return 1D;
-                } else {
-                    return round(k / d);
-                }
-            }
+            return round(k / d);
         }
     }
 
@@ -54,16 +53,12 @@ public class UndercastCustomMethods {
         double kk = UndercastData.getKilled();
         if (k == kk && k == 0) {
             return 0D;
+        } else if (k > 0 && kk == 0) {
+            return k;
+        } else if (k == kk && kk > 0) {
+            return 1D;
         } else {
-            if (k > 0 && kk == 0) {
-                return k;
-            } else {
-                if (k == kk && kk > 0) {
-                    return 1D;
-                } else {
-                    return round(k / kk);
-                }
-            }
+            return round(k / kk);
         }
     }
 
@@ -102,10 +97,29 @@ public class UndercastCustomMethods {
             //get the server type for the new server (does not need to wait for an update)
             for (int c = 0; c < UndercastData.serverInformation.length; c++) {
                 if (UndercastData.server.equals(UndercastData.serverInformation[c].name)) {
-                    if (UndercastData.serverInformation[c].type == ServerType.GhostSquadron) {
+                    if (UndercastData.serverInformation[c].type == ServerType.ghostsquadron) {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * This is used in order to only display hours if you play at least for one
+     */
+    public static String getPlayingTimeString() {
+        if (UndercastData.playTimeHours == 0) {
+            if (UndercastData.playTimeMin < 10) {
+                return "Playing Time: \u00A7E0:0" + UndercastData.playTimeMin;
+            } else {
+                return "Playing Time: \u00A7E0:" + UndercastData.playTimeMin;
+            }
+        } else {
+            if (UndercastData.playTimeMin < 10) {
+                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
+            } else {
+                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
             }
         }
     }
@@ -158,32 +172,16 @@ public class UndercastCustomMethods {
     }
 
     /**
-     * This is used in order to only display hours if you play at least for one
-     */
-    public static String getPlayingTimeString() {
-        if (UndercastData.playTimeHours == 0) {
-            if (UndercastData.playTimeMin < 10) {
-                return "Playing Time: \u00A7E0:0" + UndercastData.playTimeMin;
-            } else {
-                return "Playing Time: \u00A7E0:" + UndercastData.playTimeMin;
-            }
-        } else {
-            if (UndercastData.playTimeMin < 10) {
-                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
-            } else {
-                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
-            }
-        }
-    }
-
-    /**
      * Sorts UndercastData.sortedServerInformation using the
      * UndercastData.sortindex
      */
-    public static void sortServers() {
+    public static void sortAndFilterServers() {
         // if the index is moving to web then use the downloaded server list
         if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("web")) {
-            System.arraycopy(UndercastData.serverInformation, 0, UndercastData.sortedServerInformation, 0, UndercastData.serverCount);
+            // just keep the order
+            for (int c = 0; c < UndercastData.serverCount; c++) {
+                UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[c];
+            }
         } // sort based on matchStatus
         else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("match")) {
             int index = 0;
@@ -257,10 +255,7 @@ public class UndercastCustomMethods {
         } // if the servers are being sorted abc sort the list and update
         else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("abc")) {
             // extract the server names to an Array list
-            // We can't use the diamond operator since it is java 7 only and we want the mod to be java 6 compatible
-            // redundant type arguments in new expression for java 7 use
             ArrayList<String> serverNames = new ArrayList<String>(UndercastData.serverCount);
-            // ArrayList<String> serverNames = new ArrayList<>(UndercastData.serverCount); (java 7)
             for (int c = 0; c < UndercastData.serverCount; c++) {
                 serverNames.add(c, UndercastData.serverInformation[c].name);
             }
@@ -277,6 +272,40 @@ public class UndercastCustomMethods {
                     }
 
                 }
+            }
+        }
+
+        // filter the servers
+        //reset the filtered server count
+        UndercastData.filteredServerCount = UndercastData.serverCount;
+        // show which filter is chosen
+        if (!UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("all")) {
+            ServerType shownType = ServerType.Unknown;
+            if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("PA")) {
+                shownType = ServerType.projectares;
+            } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("Blitz")) {
+                shownType = ServerType.blitz;
+            } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("GS")) {
+                shownType = ServerType.ghostsquadron;
+            }
+
+            // if the shownType detection failed: do nothing
+            if (shownType == ServerType.Unknown) {
+                return;
+            }
+
+            // extract the servers
+            ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
+            for (int c = 0; c < UndercastData.serverCount; c++) {
+                if (UndercastData.sortedServerInformation[c].type == shownType) {
+                    filteredServers.add(UndercastData.sortedServerInformation[c]);
+                }
+            }
+
+            UndercastData.filteredServerCount = filteredServers.size();
+            // and put them back to the serverList
+            for (int c = 0; c < filteredServers.size(); c++) {
+                UndercastData.sortedServerInformation[c] = filteredServers.get(c);
             }
         }
     }

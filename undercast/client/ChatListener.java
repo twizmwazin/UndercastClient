@@ -30,8 +30,8 @@ public class ChatListener implements IChatListener {
             EntityPlayer player = mc.thePlayer;
             UCInstance.username = mc.thePlayer.username;
             String message = StringUtils.stripControlCodes(packet.message);
-            // stop global msg to go through
-            if (!message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
+            // stop global msg and team chat and whispered messages to go through
+            if (!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ") && UndercastData.isOC) {
                 addLineToChatLines(message);
                 if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message))) {
                     packet.message = null;
@@ -39,11 +39,13 @@ public class ChatListener implements IChatListener {
                 if (UndercastConfig.showAchievements) {
                     UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player);
                 }
-                if(ServersCommandParser.handleChatMessage(message, packet.message)){
-                    packet.message = null;
+                if (UndercastConfig.parseMatchState) {
+                    if (ServersCommandParser.handleChatMessage(message, packet.message)) {
+                        packet.message = null;
+                    }
                 }
             }
-            if(message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()){
+            if (message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
                 UndercastData.removeNextChatMessage = false;
             }
         } catch (Exception e) {
