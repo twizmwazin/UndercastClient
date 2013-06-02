@@ -75,10 +75,10 @@ public class ServersCommandParser {
             } catch (Exception e) {
                 pages = 10;
             }
-            // get the other pages
-            for (int i = 2; i <= pages; i++) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + i);
-            }
+            // get the pages 2, 3 and the last page
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 2");
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 3");
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + pages);
 
             if (castedByMod) {
                 isListening = true;
