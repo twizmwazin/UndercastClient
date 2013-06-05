@@ -65,7 +65,16 @@ public class UndercastChatHandler {
             }
             UndercastData.addDeaths(1);
             UndercastData.resetKillstreak();
-        } //if you kill a person
+        } else if (message.startsWith(username + " scored") && message.toLowerCase().contains(" team")) {
+            int score;
+            try {
+                score = Integer.parseInt(message.substring(message.indexOf(" scored ") + 8, message.indexOf(" points")));
+                System.out.println(score);
+            } catch (Exception e) {
+                score = 0;
+            }
+            UndercastData.addScore(score);
+        }//if you kill a person
         else if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username))
                 && !message.toLowerCase().contains(" destroyed by ")) {
             UndercastData.addKills(1);

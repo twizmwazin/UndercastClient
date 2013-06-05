@@ -220,6 +220,11 @@ public class UndercastModClass {
                 mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) UndercastData.getKillstreak() + "/" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
                 height += 8;
             }
+            // Score display
+            if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0){
+                mc.fontRenderer.drawStringWithShadow("Score: \u00A79" + UndercastData.score, width, height, 16777215);
+                height += 8;
+            }
         }
 
         //if you not on obs turn it off

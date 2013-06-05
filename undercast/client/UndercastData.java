@@ -23,6 +23,7 @@ public class UndercastData {
     public static double killed;
     public static int killstreak;
     public static int largestKillstreak;
+    public static int score;
     // redudant assignation but kept for being java 6 compatible
     public static HashSet<String> friends = new HashSet<String>();
     public static String server;
@@ -84,6 +85,7 @@ public class UndercastData {
         resetDeaths();
         resetKilled();
         resetLargestKillstreak();
+        resetScore();
         setTeam(Teams.Observers);
         guiShowing = true;
         mapLoaderFinished = false;
@@ -174,9 +176,16 @@ public class UndercastData {
     public static void addKills(double d) {
         kills += d;
     }
+    public static void addScore(int i){
+        score += i;
+    }
 
     public static void resetKills() {
         kills = 0;
+    }
+
+    public static void resetScore() {
+        score = 0;
     }
 
     public static double getKills() {
