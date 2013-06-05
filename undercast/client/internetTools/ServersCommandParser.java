@@ -41,6 +41,7 @@ public class ServersCommandParser {
                     //c == red
                     //e == yellow
                     //a = green
+                    //f = white 
                     switch (matchStatusColor) {
                         case 'a':
                             state = MatchState.Starting;
@@ -50,6 +51,9 @@ public class ServersCommandParser {
                             break;
                         case 'e':
                             state = MatchState.Started;
+                            break;
+                        case 'f':
+                            state = MatchState.Waiting;
                             break;
                         default:
                             state = MatchState.Unknown;
@@ -61,6 +65,7 @@ public class ServersCommandParser {
                             if (UndercastData.serverInformation[c].name.equals(name)) {
                                 UndercastData.serverInformation[c].currentMap = map;
                                 UndercastData.serverInformation[c].matchState = state;
+                                break;
                             }
                         }
                     }

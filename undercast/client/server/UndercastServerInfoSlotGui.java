@@ -78,7 +78,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
             case Finished:
                 return 0x990000; // red
             case Waiting:
-                return 0x000000; // white
+                return 0x0000A0; // blue like on the signs
             default:
                 return 0xF87431; // Sienna1 = orange
         }
