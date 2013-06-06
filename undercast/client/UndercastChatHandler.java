@@ -69,7 +69,6 @@ public class UndercastChatHandler {
             int score;
             try {
                 score = Integer.parseInt(message.substring(message.indexOf(" scored ") + 8, message.indexOf(" points")));
-                System.out.println(score);
             } catch (Exception e) {
                 score = 0;
             }
