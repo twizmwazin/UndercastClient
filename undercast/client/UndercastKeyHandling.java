@@ -17,10 +17,10 @@ import undercast.client.settings.SettingsGUI;
  */
 public class UndercastKeyHandling extends KeyHandler {
 
-    static KeyBinding keyGuiHide = new KeyBinding("undercast.gui", Keyboard.KEY_F6);
-    static KeyBinding keyGuiServer = new KeyBinding("undercast.inGameGui", Keyboard.KEY_L);
-    static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
-    static KeyBinding keySettingsGui = new KeyBinding("undercast.settings", Keyboard.KEY_P);
+    public static KeyBinding keyGuiHide = new KeyBinding("undercast.gui", Keyboard.KEY_F6);
+    public static KeyBinding keyGuiServer = new KeyBinding("undercast.inGameGui", Keyboard.KEY_L);
+    public static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
+    public static KeyBinding keySettingsGui = new KeyBinding("undercast.settings", Keyboard.KEY_P);
     public BufferedImage killerBuffer;
 
     public UndercastKeyHandling() {

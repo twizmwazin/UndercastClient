@@ -199,7 +199,7 @@ public class UndercastServerGUI extends GuiScreen {
         {
             UndercastData.removeNextChatMessage = false;
         }
-        if (par2 == Minecraft.getMinecraft().gameSettings.keyBindInventory.keyCode) {
+        if (par2 == Minecraft.getMinecraft().gameSettings.keyBindInventory.keyCode || par2 == UndercastKeyHandling.keyGuiServer.keyCode) {
             if (!inGame) {
                 this.mc.displayGuiScreen(new GuiMainMenu());
             } else {
