@@ -193,10 +193,20 @@ public class UndercastServerGUI extends GuiScreen {
         }
     }
 
+    @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == 1) //Escape button
         {
             UndercastData.removeNextChatMessage = false;
         }
+        if (par2 == Minecraft.getMinecraft().gameSettings.keyBindInventory.keyCode) {
+            if (!inGame) {
+                this.mc.displayGuiScreen(new GuiMainMenu());
+            } else {
+                UndercastData.removeNextChatMessage = false;
+                this.mc.setIngameFocus();
+            }
+        }
+        super.keyTyped(par1, par2);
     }
 }
