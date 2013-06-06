@@ -47,6 +47,7 @@ public class UndercastConfig {
     public static boolean parseMatchState;
     public static boolean showScore;
     public static File configFile;
+    public static int lastUsedFilter;
 
     public UndercastConfig(Configuration configuration, File configF) {
         config = configuration;
@@ -89,6 +90,7 @@ public class UndercastConfig {
         showGSClass = config.get("UndercastMod", "showGSClass", true).getBoolean(true);
         parseMatchState = config.get("UndercastMod", "parseMatchState", true).getBoolean(true);
         showScore = config.get("UndercastMod", "showScore", true).getBoolean(true);
+        lastUsedFilter = config.get("UndercastMod", "lastUsedFilter", 0, "0: All\n1: PA\n2: Blitz\n3: GS").getInt();
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

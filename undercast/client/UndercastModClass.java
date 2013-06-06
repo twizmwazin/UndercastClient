@@ -101,6 +101,7 @@ public class UndercastModClass {
         LanguageRegistry.instance().addStringLocalization("undercast.inGameGui", "Change server");
         LanguageRegistry.instance().addStringLocalization("undercast.fullBright", "Toggle fullbright");
         LanguageRegistry.instance().addStringLocalization("undercast.settings", "Show Undercast mod settings");
+        UndercastData.filterIndex = UndercastConfig.lastUsedFilter;
     }
 
     /**
