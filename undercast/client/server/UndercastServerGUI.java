@@ -82,12 +82,7 @@ public class UndercastServerGUI extends GuiScreen {
         }
         //cancel/back to main menu
         if (guibutton.id == 2) {
-            if (!inGame) {
-                this.mc.displayGuiScreen(new GuiMainMenu());
-            } else {
-                UndercastData.removeNextChatMessage = false;
-                this.mc.setIngameFocus();
-            }
+            closeGui();
         }
         //stats button
         if (guibutton.id == 3) {
@@ -197,16 +192,17 @@ public class UndercastServerGUI extends GuiScreen {
     protected void keyTyped(char par1, int par2) {
         if (par2 == 1) //Escape button
         {
-            UndercastData.removeNextChatMessage = false;
-        }
-        if (par2 == Minecraft.getMinecraft().gameSettings.keyBindInventory.keyCode || par2 == UndercastKeyHandling.keyGuiServer.keyCode) {
-            if (!inGame) {
-                this.mc.displayGuiScreen(new GuiMainMenu());
-            } else {
-                UndercastData.removeNextChatMessage = false;
-                this.mc.setIngameFocus();
-            }
+            closeGui();
         }
         super.keyTyped(par1, par2);
+    }
+
+    public void closeGui() {
+        if (!inGame) {
+            this.mc.displayGuiScreen(new GuiMainMenu());
+        } else {
+            UndercastData.removeNextChatMessage = false;
+            this.mc.setIngameFocus();
+        }
     }
 }

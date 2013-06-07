@@ -61,7 +61,11 @@ public class UndercastKeyHandling extends KeyHandler {
             } else if (kb == keySettingsGui) {
                 FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(null));
             }
-        } //if you are an obs;have the config to true; toggle fullbright and play sound
+        } else if (tickEnd) {
+            if (kb == keyGuiServer && mc.currentScreen instanceof UndercastServerGUI) {
+                ((UndercastServerGUI) mc.currentScreen).closeGui();
+            }
+        }
     }
 
     @Override
