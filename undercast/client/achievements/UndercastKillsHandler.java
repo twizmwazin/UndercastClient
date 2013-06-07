@@ -75,11 +75,9 @@ public class UndercastKillsHandler {
             public void run() {
                 URLConnection spoof;
                 try {
-                    System.out.println("Beginning");
                     spoof = new URL("https://minotar.net/helm/" + killer + "/16.png").openConnection();
                     spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
                     killerBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                    System.out.println("finished");
                 } catch (Exception ex) {
                     Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
