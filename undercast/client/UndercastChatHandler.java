@@ -127,15 +127,24 @@ public class UndercastChatHandler {
             UndercastData.resetLargestKillstreak();
             UndercastData.setTeam(UndercastData.Teams.Observers);
             return false;
-        } //sends /match when you join a server.
+        } // redirection and lobby detection
         else if (message.contains("Welcome to the Overcast Network")) {
-            if (UndercastData.redirect && UndercastData.server.equalsIgnoreCase("lobby")) {
+            if (UndercastData.redirect) {
                 UndercastData.redirect = false;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.directionServer);
+            } else {
+                UndercastData.setServer("Lobby");
+                UndercastCustomMethods.handleServerSwap();
             }
         } //server detection
         else if (message.contains("Teleporting you to ")) {
             UndercastData.setServer(message.replace("Teleporting you to ", ""));
+            if (!message.toLowerCase().contains("lobby")) {
+                UndercastData.welcomeMessageExpected = true;
+            }
+            UndercastCustomMethods.handleServerSwap();
+        } else if (message.contains("Connecting to ")) {
+            UndercastData.setServer(message.replace("Connecting to ", ""));
             if (!message.toLowerCase().contains("lobby")) {
                 UndercastData.welcomeMessageExpected = true;
             }
