@@ -5,9 +5,7 @@ package undercast.client;
 //You may not remove these comments
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import net.minecraft.client.Minecraft;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.ServerStatusHTMLParser;
@@ -29,7 +27,7 @@ public class UndercastData {
     // redudant assignation but kept for being java 6 compatible
     // first String is the username of the player
     // second one is the current server (offline if the player is not connected)
-    public static HashMap<String,String> friends;
+    public static HashMap<String,String> friends = new HashMap<String,String>();
     public static String server;
     public static Teams team;
     public static boolean isOC = false;
@@ -91,7 +89,6 @@ public class UndercastData {
         resetLargestKillstreak();
         resetScore();
         setTeam(Teams.Observers);
-        friends = new HashMap<String,String>();
         guiShowing = true;
         mapLoaderFinished = false;
         serverInformation = new UndercastServer[999];
