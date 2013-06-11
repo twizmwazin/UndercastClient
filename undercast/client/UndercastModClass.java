@@ -24,6 +24,7 @@ import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
+import undercast.client.internetTools.FriendHandler;
 import undercast.client.update.Undercast_UpdaterThread;
 
 /**
@@ -48,6 +49,7 @@ public class UndercastModClass {
     public static String[] lastChatLines = new String[100];
     public UndercastChatHandler chatHandler;
     public UndercastKillsHandler achievementChatHandler;
+    public FriendHandler friendHandler;
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -67,6 +69,7 @@ public class UndercastModClass {
         }
         chatHandler = new UndercastChatHandler();
         achievementChatHandler = new UndercastKillsHandler();
+        friendHandler = new FriendHandler();
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
         CONFIG = new Configuration(newConfig);
         new UndercastConfig(CONFIG, event.getSuggestedConfigurationFile());
@@ -162,7 +165,7 @@ public class UndercastModClass {
             }
             // Friend display:
             if (UndercastConfig.showFriends) {
-                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + UndercastData.getFriends(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + UndercastCustomMethods.getOnlineFriends(), width, height, 16777215);
                 height += 8;
             }
             // Playing Time display:
@@ -222,7 +225,7 @@ public class UndercastModClass {
                 height += 8;
             }
             // Score display
-            if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0){
+            if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0) {
                 mc.fontRenderer.drawStringWithShadow("Score: \u00A79" + UndercastData.score, width, height, 16777215);
                 height += 8;
             }

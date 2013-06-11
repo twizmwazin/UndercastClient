@@ -5,6 +5,8 @@ package undercast.client;
 //You may not remove these comments
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import net.minecraft.client.Minecraft;
 import undercast.client.internetTools.InformationLoaderThread;
@@ -25,7 +27,9 @@ public class UndercastData {
     public static int largestKillstreak;
     public static int score;
     // redudant assignation but kept for being java 6 compatible
-    public static HashSet<String> friends = new HashSet<String>();
+    // first String is the username of the player
+    // second one is the current server (offline if the player is not connected)
+    public static HashMap<String,String> friends;
     public static String server;
     public static Teams team;
     public static boolean isOC = false;
@@ -87,6 +91,7 @@ public class UndercastData {
         resetLargestKillstreak();
         resetScore();
         setTeam(Teams.Observers);
+        friends = new HashMap<String,String>();
         guiShowing = true;
         mapLoaderFinished = false;
         serverInformation = new UndercastServer[999];
@@ -237,26 +242,6 @@ public class UndercastData {
 
     public static double getLargestKillstreak() {
         return largestKillstreak;
-    }
-
-    public static int getFriends() {
-        return friends.size();
-    }
-
-    public static void addFriend(String s) {
-        friends.add(s);
-    }
-
-    public static void removeFriend(String s) {
-        friends.remove(s);
-    }
-
-    public static void clearFriends() {
-        friends.clear();
-    }
-
-    public static boolean isFriend(String s) {
-        return friends.contains(s);
     }
 
     public static boolean isPlayingOvercastNetwork() {

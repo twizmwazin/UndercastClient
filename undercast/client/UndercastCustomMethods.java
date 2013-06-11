@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import net.minecraft.client.Minecraft;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.server.UndercastServer;
@@ -309,5 +310,17 @@ public class UndercastCustomMethods {
                 UndercastData.sortedServerInformation[c] = filteredServers.get(c);
             }
         }
+    }
+
+    public static int getOnlineFriends() {
+        int number = 0;
+        for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
+            String key = ir.next();
+            String value = UndercastData.friends.get(key);
+            if(value != "offline"){
+                number++;
+            }  
+        }
+        return number;
     }
 }

@@ -30,25 +30,35 @@ public class UndercastChatHandler {
         //Friend tracking Joining.
         if (message.contains(" joined the game")) {
             String name;
+            String server;
             message = message.replace(" joined the game", "");
             if (message.contains("[")) {
                 name = message.split(" ")[1];
+                server = message.split(" ")[0].replace("[", "").replace("]", "");
             } else {
                 name = message;
+                server = UndercastData.server;
+            }
+            if (UndercastData.friends.containsKey(name)) {
+                UndercastData.friends.put(name, server);
             }
 
-            UndercastData.addFriend(name);
         } //friend traking. Leaving
         else if (message.contains("left the game")) {
             String name;
+            String server;
             message = message.replace(" left the game", "");
             if (message.contains("[")) {
                 name = message.split(" ")[1];
+                server = message.split(" ")[0].replace("[", "").replace("]", "");
             } else {
                 name = message;
+                server = UndercastData.server;
             }
-            if (UndercastData.isFriend(name)) {
-                UndercastData.removeFriend(name);
+            if (UndercastData.friends.containsKey(name)) {
+                if (UndercastData.friends.get(name).equals(server)) {
+                    UndercastData.friends.put(name, "offline");
+                }
             }
         } //update what map you are playing on
         else if (message.contains("Now playing")) {
@@ -136,6 +146,19 @@ public class UndercastChatHandler {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
             }
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                        UndercastModClass.getInstance().friendHandler.isListening = true;
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/fr");
+                    } catch (InterruptedException ex) {
+                    }
+
+                }
+            });
+            t1.start();
         } //server detection
         else if (message.contains("Teleporting you to ")) {
             UndercastData.setServer(message.replace("Teleporting you to ", ""));

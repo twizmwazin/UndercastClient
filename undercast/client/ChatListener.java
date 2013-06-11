@@ -44,6 +44,11 @@ public class ChatListener implements IChatListener {
                         packet.message = null;
                     }
                 }
+                if(UndercastConfig.showFriends){
+                    if(!UCInstance.friendHandler.handleMessage(message)){
+                        packet.message = null;
+                    }
+                }
             }
             if (message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
                 UndercastData.removeNextChatMessage = false;
