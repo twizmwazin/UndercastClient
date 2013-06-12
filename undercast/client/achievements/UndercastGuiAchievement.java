@@ -9,6 +9,7 @@ import java.io.InputStream;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.achievement.GuiAchievement;
+import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.stats.Achievement;
@@ -51,9 +52,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
     BufferedReader buffer = null;
     FileOutputStream fos = null;
     InputStream is = null;
-    private BufferedImage killerBuffer;
-    private BufferedImage waitingBuffer[];
-    private ImageLoader imgLoader;
     private String killerName;
     private String firstLine;
     private String secondLine;
@@ -64,8 +62,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.itemRender = new RenderItem();
         isFakeAchievement = false;
         killedOrDied = false;
-        this.imgLoader = new ImageLoader(par1Minecraft.texturePackList, par1Minecraft.gameSettings);
-        waitingBuffer = new BufferedImage[10];
     }
 
     /**
@@ -83,7 +79,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
 
     }
 
-    public void addFakeAchievementToMyList(Achievement par1Achievement, boolean killedOrDied, String killerName, BufferedImage killerBuffer) {
+    public void addFakeAchievementToMyList(Achievement par1Achievement, boolean killedOrDied, String killerName) {
         this.achievementGetLocalText = StatCollector.translateToLocal("achievement.get");
         this.achievementStatName = StatCollector.translateToLocal(par1Achievement.getName());
         this.achievementTime = Minecraft.getSystemTime();
@@ -94,14 +90,9 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.killerName = killerName;
         this.firstLine = this.killerName;
         this.secondLine = this.killedOrDied ? "+1 Kill" : "+1 Death";
-        for (int i = 0; i < waitingBuffer.length; i++) {
-            if (waitingBuffer[i] == null) {
-                this.waitingBuffer[i] = killerBuffer;
-            }
-        }
     }
 
-    public void addFakeAchievementToMyList(Achievement par1Achievement, boolean killedOrDied, String killerName, BufferedImage killerBuffer, String firstLine, String secondLine) {
+    public void addFakeAchievementToMyList(Achievement par1Achievement, boolean killedOrDied, String killerName, String firstLine, String secondLine) {
         this.achievementGetLocalText = StatCollector.translateToLocal("achievement.get");
         this.achievementStatName = StatCollector.translateToLocal(par1Achievement.getName());
         this.achievementTime = Minecraft.getSystemTime();
@@ -112,11 +103,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.killerName = killerName;
         this.firstLine = firstLine;
         this.secondLine = secondLine;
-        for (int i = 0; i < waitingBuffer.length; i++) {
-            if (waitingBuffer[i] == null) {
-                this.waitingBuffer[i] = killerBuffer;
-            }
-        }
     }
 
     /**
@@ -168,13 +154,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
             if (!this.haveAchiement && (d0 < 0.0D || d0 > 1.0D)) {
                 this.achievementTime = 0L;
             } else {
-                if (waitingBuffer[0] != null) {
-                    this.killerBuffer = this.waitingBuffer[0];
-                    for (int i = 1; i < waitingBuffer.length; i++) {
-                        waitingBuffer[i - 1] = waitingBuffer[i];
-                    }
-                    waitingBuffer[waitingBuffer.length - 1] = null;
-                }
                 this.updateAchievementWindowScale();
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glDepthMask(false);
@@ -219,18 +198,16 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 if (!this.isFakeAchievement) {
                     this.itemRender.renderItemAndEffectIntoGUI(this.theGame.fontRenderer, this.theGame.renderEngine, this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
-                    GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
-                    try {
-                        //Loading the buffer as a readable image and set it as GL11 texture
-                        //100 is a unique id, and both 16 are for the size of the image
-                        this.imgLoader.setupTexture(this.killerBuffer, 222, 16, 16);
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
+                    String str = "https://minotar.net/helm/" + this.killerName + "/16.png";
+                    if (!Minecraft.getMinecraft().renderEngine.hasImageData(str)) {
+                        Minecraft.getMinecraft().renderEngine.obtainImageData(str, new ImageBufferDownload());
                     }
+                    GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
+                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTextureForDownloadableImage(str, ""));
                     GL11.glColor4f(1, 1, 1, 1); // White light on the image
-                    GL11.glScalef(1F / 16F, 1F / 16F, 1F);// Resizing the image (divided by 16 in the diagonal)
-                    GL11.glTranslatef((i + 8) * 16F, (j + 8) * 16F, 0);// Translating the image in the gui
-                    this.drawTexturedModalRect(0, 0, 0, 0, 256, 256); // Drawing the image
+                    GL11.glScalef(1F / 4F, 1F / 8F, 1F);// Resizing the image (height/4 and width/8)
+                    GL11.glTranslatef((i+8) * 4F, (j+8) * 8F, 0);// Translating the image in the gui
+                    this.drawTexturedModalRect(0, 0, 0, 0, 64, 128); // Drawing the image
                     GL11.glPopMatrix();
                 }
                 GL11.glDisable(GL11.GL_LIGHTING);

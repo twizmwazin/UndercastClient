@@ -317,9 +317,9 @@ public class UndercastCustomMethods {
         for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
             String key = ir.next();
             String value = UndercastData.friends.get(key);
-            if(value != "offline"){
+            if (!value.equals("offline")) {
                 number++;
-            }  
+            }
         }
         return number;
     }

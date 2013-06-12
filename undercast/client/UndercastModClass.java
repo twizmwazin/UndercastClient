@@ -76,21 +76,6 @@ public class UndercastModClass {
         KeyBindingRegistry.registerKeyBinding(new UndercastKeyHandling());
         new UndercastData();
         new Undercast_UpdaterThread();
-        Runnable r1 = new Runnable() {
-            @Override
-            public void run() {
-                URLConnection spoof;
-                try {
-                    spoof = new URL("https://minotar.net/helm/d4jsgn9fsrl9ergn0/16.png").openConnection(); //Just hope no one will ever be named like this
-                    spoof.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0; H010818)");
-                    achievementChatHandler.steveHeadBuffer = ((BufferedImage) ImageIO.read(spoof.getInputStream()));
-                } catch (Exception ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
 
     }
 
