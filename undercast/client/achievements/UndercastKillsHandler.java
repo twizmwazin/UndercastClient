@@ -66,27 +66,17 @@ public class UndercastKillsHandler {
     }
 
     private void printAchievement() {
-        Runnable r1 = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000L);
-                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                    ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
-                            .addFakeAchievementToMyList(custom, killOrKilled, killer);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
+
+        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
+                .addFakeAchievementToMyList(custom, killOrKilled, killer);
+
     }
 
     public void printFirstBloodAchievement() {
         final long waitingTime;
         if (UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
-            waitingTime = 4000L;
+            waitingTime = 4000L; //This is to get enough time between two achievements
         } else {
             waitingTime = 0L;
         }
@@ -109,17 +99,11 @@ public class UndercastKillsHandler {
     }
 
     public void printLastKillAchievement() {
-        Runnable r1 = new Runnable() {
-            @Override
-            public void run() {
-                Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                Minecraft client = FMLClientHandler.instance().getClient();
-                ((UndercastGuiAchievement) client.guiAchievement)
-                        .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
 
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
+        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+        Minecraft client = FMLClientHandler.instance().getClient();
+        ((UndercastGuiAchievement) client.guiAchievement)
+                .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
+
     }
 }
