@@ -52,7 +52,7 @@ public class UndercastChatHandler {
                 name = message.split(" ")[1];
                 server = message.split(" ")[0].replace("[", "").replace("]", "");
             } else {
-                name = message;
+                name = message.substring(message.lastIndexOf("*") + 1, message.length());
                 server = UndercastData.server;
             }
             if (UndercastData.friends.containsKey(name)) {
