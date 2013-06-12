@@ -71,6 +71,9 @@ public class UndercastChatHandler {
         else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
             // if you die form someone
             if ((message.contains(" by ") || message.contains(" took ") || message.contains(" fury of"))) {
+                if (message.contains(" by ") && UndercastCustomMethods.isTeamkill(normalMessage, username, message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s")))) {
+                    return returnStatement;
+                }
                 UndercastData.addKilled(1);
             }
             UndercastData.addDeaths(1);
@@ -86,8 +89,11 @@ public class UndercastChatHandler {
         }//if you kill a person
         else if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username))
                 && !message.toLowerCase().contains(" destroyed by ")) {
-            UndercastData.addKills(1);
-            UndercastData.addKillstreak(1);
+            if (!UndercastCustomMethods.isTeamkill(normalMessage, username, message.substring(0, message.indexOf(" ")))) {
+                UndercastData.addKills(1);
+                UndercastData.addKillstreak(1);
+            }
+
         } //when you join a match
         else if (message.contains("You joined the")) {
             try {

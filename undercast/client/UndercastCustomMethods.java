@@ -323,4 +323,15 @@ public class UndercastCustomMethods {
         }
         return number;
     }
+
+    public static boolean isTeamkill(String unstripedMessage, String player1, String player2) {
+        char colorchar1, colorchar2;
+        colorchar1 = unstripedMessage.charAt(unstripedMessage.indexOf(player1) - 1);
+        colorchar2 = unstripedMessage.charAt(unstripedMessage.indexOf(player2) - 1);
+        if (colorchar1 == colorchar2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
