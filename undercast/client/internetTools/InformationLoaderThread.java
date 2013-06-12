@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import undercast.client.UndercastData;
 
 /**
  * InformationLoaderThread by molenzwiebel This class will take a url and load
@@ -62,8 +63,7 @@ public class InformationLoaderThread extends Thread {
         } catch (Exception e) {
             // Do something here, such as saying "Could not fetch server status" in a gui
         } finally {
-            // Do something to let a class know that the fetching is done,
-            // in a gui this could be: gui.updateScreen().
+            UndercastData.websiteLoaded(urlToLoad.toString(), contents);
             if (in != null) {
                 try {
                     in.close();
