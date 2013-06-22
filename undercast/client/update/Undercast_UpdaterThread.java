@@ -29,6 +29,7 @@ public class Undercast_UpdaterThread extends Thread {
     public void run() {
         String readline = "";
         String readline2 = "Could not get update information.";
+        String readline3 = "1:2:3:-1";
         errorOccured = false;
         try {
             //download link
@@ -36,6 +37,7 @@ public class Undercast_UpdaterThread extends Thread {
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();
             readline2 = in.readLine();
+            readline3 = in.readLine();
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);
@@ -47,6 +49,18 @@ public class Undercast_UpdaterThread extends Thread {
                 UndercastData.setUpdateLink(readline2);
             } else {
                 UndercastData.setUpdateLink("An unknown error occured while getting the update information.");
+            }
+        }
+        if (readline3 != null) {
+            try {
+                Integer[] pagesInt;
+                String[] pagesStr = readline3.split("[:]{1}");
+                pagesInt = new Integer[pagesStr.length];
+                for (int c = 0; c < pagesInt.length; c++) {
+                    pagesInt[c] = Integer.parseInt(pagesStr[c]);
+                }
+                UndercastData.parsedPages = pagesInt;
+            } catch (Exception e) {
             }
         }
         finished = true;

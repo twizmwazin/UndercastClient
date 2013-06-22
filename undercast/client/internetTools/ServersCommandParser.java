@@ -80,10 +80,13 @@ public class ServersCommandParser {
             } catch (Exception e) {
                 pages = 10;
             }
-            // get the pages 2, 3 and the last page
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 2");
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 3");
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + pages);
+            for (int c = 1; c < UndercastData.parsedPages.length; c++) {
+                int page = UndercastData.parsedPages[c];
+                if (page < 0) {
+                    page = pages + (page + 1); // + 1 is for not removing anything from pages (keep in mind that I'm adding a negative value)
+                }
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + page);
+            }
 
             if (castedByMod) {
                 isListening = true;
