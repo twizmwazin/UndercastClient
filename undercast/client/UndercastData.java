@@ -120,7 +120,6 @@ public class UndercastData {
 
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
