@@ -110,6 +110,5 @@ public class UndercastConnectionHandler implements IConnectionHandler {
 
     @Override
     public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
-        UndercastData.update();
     }
 }

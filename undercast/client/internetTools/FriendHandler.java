@@ -25,7 +25,7 @@ public class FriendHandler {
      * @return true to display the chat message
      */
     public boolean handleMessage(String message) {
-        if(message.contains("joined the game") || message.contains("left the game")){
+        if (message.contains("joined the game") || message.contains("left the game")) {
             return true;
         }
         if (isListening) {

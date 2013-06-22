@@ -201,7 +201,7 @@ public class UndercastServerGUI extends GuiScreen {
         if (!inGame) {
             this.mc.displayGuiScreen(new GuiMainMenu());
         } else {
-            UndercastData.removeNextChatMessage = false;
+            //UndercastData.removeNextChatMessage = false;
             this.mc.setIngameFocus();
         }
     }

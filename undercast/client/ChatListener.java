@@ -8,6 +8,7 @@ import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet3Chat;
 import net.minecraft.util.StringUtils;
 import undercast.client.internetTools.ServersCommandParser;
+import undercast.client.server.UndercastServerGUI;
 
 /**
  * @author Flv92
@@ -40,7 +41,7 @@ public class ChatListener implements IChatListener {
                     UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player);
                 }
                 if (UndercastConfig.parseMatchState) {
-                    if (ServersCommandParser.handleChatMessage(message, packet.message)) {
+                    if (ServersCommandParser.handleChatMessage(message, packet.message) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
                         packet.message = null;
                     }
                 }
@@ -48,6 +49,10 @@ public class ChatListener implements IChatListener {
                     if(!UCInstance.friendHandler.handleMessage(message)){
                         packet.message = null;
                     }
+                }
+                
+                if(FMLClientHandler.instance().isGUIOpen(UndercastServerGUI.class) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))){
+                    packet.message = null;
                 }
             }
             if (message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {

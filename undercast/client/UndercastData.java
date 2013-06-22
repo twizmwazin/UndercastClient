@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import net.minecraft.client.Minecraft;
 import undercast.client.internetTools.InformationLoaderThread;
+import undercast.client.internetTools.PlayerStatsHTMLParser;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
@@ -35,13 +36,13 @@ public class UndercastData {
     public static boolean update;
     public static String updateLink;
     private static InformationLoaderThread mapLoader;
-    private static boolean mapLoaderFinished;
+    private static InformationLoaderThread statsLoader;
     public static UndercastServer[] serverInformation;
     public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
     public static int filteredServerCount;
     // if it's true, the /server comand isn't executed after a "Welcome to Overcast Network" message
-    public static boolean welcomeMessageExpected = true;
+    public static boolean welcomeMessageExpected = false;
     public static boolean redirect = false;
     public static String directionServer;
     public static boolean guiShowing;
@@ -90,7 +91,6 @@ public class UndercastData {
         resetScore();
         setTeam(Teams.Observers);
         guiShowing = true;
-        mapLoaderFinished = false;
         serverInformation = new UndercastServer[999];
         serverCount = 0;
         filteredServerCount = 0;
@@ -105,55 +105,10 @@ public class UndercastData {
         filterIndex = 0;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
         } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to load maps");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
-        }
-    }
-
-    public static void update() {
-        if (!mapLoaderFinished && mapLoader.getContents() != null) {
-            mapLoaderFinished = true;
-            try {
-                String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-                serverCount = mapData.length - 1; //-1 for lobby
-                for (int c = 0; c < mapData.length; c++) {
-                    serverInformation[c].name = mapData[c][0];
-                    try {
-                        serverInformation[c].playerCount = Integer.parseInt(mapData[c][1]);
-                    } catch (Exception e) {
-                        serverInformation[c].playerCount = -1;
-                    }
-                    serverInformation[c].currentMap = mapData[c][2];
-                    serverInformation[c].nextMap = mapData[c][3];
-                    if (serverInformation[c].matchState == null || !isOC) {
-                        serverInformation[c].matchState = MatchState.Unknown;
-                    }
-                    try {
-                        serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
-                    } catch (Exception e) {
-                        serverInformation[c].type = ServerType.Unknown;
-                    }
-                }
-
-                // set the map
-                for (int c = 0; c < serverInformation.length; c++) {
-                    if (serverInformation[c].getServerName() == null) {
-                        serverCount = c - 1;
-                        break;
-                    }
-                    if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
-                        map = serverInformation[c].currentMap;
-                        nextMap = serverInformation[c].nextMap;
-                        currentServerType = serverInformation[c].type;
-                    }
-                }
-                filteredServerCount = serverCount;
-                UndercastCustomMethods.sortAndFilterServers();
-            } catch (Exception e) {
-                System.out.println("[UndercastMod]: Failed to parse maps");
-                System.out.println("[UndercastMod]: ERROR: " + e.toString());
-            }
         }
     }
 
@@ -163,8 +118,9 @@ public class UndercastData {
 
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
         } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to load maps");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         if (isOC && getMatchState) {
@@ -172,10 +128,34 @@ public class UndercastData {
             ServersCommandParser.castByMod();
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers 1");
         }
-        mapLoaderFinished = false;
     }
 
     public static void websiteLoaded(String url, String contents) {
+        if (url.equals("https://oc.tc/play")) {
+            updateMap(contents);
+        } else {
+            updateStats(contents);
+        }
+    }
+
+    private static void updateStats(String cont) {
+        if (UndercastConfig.realtimeStats == false) {
+            return;
+        }
+        try {
+            String[] data = PlayerStatsHTMLParser.parse(cont);
+            resetKills();
+            addKills(Integer.parseInt(data[0]));
+            resetDeaths();
+            addDeaths(Integer.parseInt(data[1]));
+        } catch (Exception e) {
+            System.out.println("[UndercastMod]: Failed to parse player stats");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    private static void updateMap(String cont) {
         try {
             String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
             serverCount = mapData.length - 1; //-1 for lobby exclusion 
@@ -214,12 +194,11 @@ public class UndercastData {
             filteredServerCount = serverCount;
             UndercastCustomMethods.sortAndFilterServers();
         } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to parse maps");
+            System.out.println("[UndercastMod]: Failed to load maps");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
             e.printStackTrace();
         }
     }
-
     public static void addKills(double d) {
         kills += d;
     }
