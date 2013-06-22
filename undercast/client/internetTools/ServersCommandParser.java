@@ -76,7 +76,7 @@ public class ServersCommandParser {
         if (!isListening && message.contains("-------- Overcast Network Servers (1 of ") && UndercastData.removeNextChatMessage) {
             // get the page count
             try {
-                pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.indexOf("of ") + 5));
+                pages = Integer.parseInt(message.substring(message.indexOf("of ") + 3, message.lastIndexOf(")")));
             } catch (Exception e) {
                 pages = 10;
             }
