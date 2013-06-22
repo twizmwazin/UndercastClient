@@ -55,7 +55,7 @@ __Reporting Bugs__
     * Include a crash report if present.
 * Don't:
     * Post duplicate bugs.
-    * Don't give so little information that the bug can't be fixed.
+    * Give so little information that the bug can't be fixed.
 
 * * *
 
