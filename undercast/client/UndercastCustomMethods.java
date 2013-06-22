@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import net.minecraft.client.Minecraft;
 import undercast.client.UndercastData.ServerType;
+import undercast.client.UndercastData.Teams;
 import undercast.client.server.UndercastServer;
 
 public class UndercastCustomMethods {
@@ -81,6 +82,7 @@ public class UndercastCustomMethods {
         UndercastData.resetLargestKillstreak();
         UndercastData.resetScore();
         UndercastData.isGameOver = false;
+        UndercastData.reloadStats();
 
         // stop the timer and reset it
         try {
@@ -333,5 +335,31 @@ public class UndercastCustomMethods {
         } else {
             return false;
         }
+    }
+
+    public static String getKillDisplayString() {
+        String str;
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0) {
+            str = "Total Kills: \u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
+        } else {
+            str = "Kills: \u00A7a" + (int) UndercastData.getKills();
+            if (UndercastConfig.realtimeStats) {
+                str += "\u00A7f/\u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
+            }
+        }
+        return str;
+    }
+
+    public static String getDeathDisplayString() {
+        String str;
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0) {
+            str = "Total Deaths: \u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
+        } else {
+            str = "Deaths: \u00A74" + (int) UndercastData.getDeaths();
+            if (UndercastConfig.realtimeStats) {
+                str += "\u00A7f/\u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
+            }
+        }
+        return str;
     }
 }

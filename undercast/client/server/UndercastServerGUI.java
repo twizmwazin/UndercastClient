@@ -32,7 +32,7 @@ public class UndercastServerGUI extends GuiScreen {
      */
     public UndercastServerGUI(boolean inGame) {
         this.inGame = inGame;
-        UndercastData.reload(true);
+        UndercastData.reloadServerInformations(true);
     }
 
     /**
@@ -68,7 +68,7 @@ public class UndercastServerGUI extends GuiScreen {
         }
         //refresh button
         if (guibutton.id == 1) {
-            UndercastData.reload(true);
+            UndercastData.reloadServerInformations(true);
             GuiButtonTooltip refreshButton = (GuiButtonTooltip) buttonList.get(1);
             refreshButton.enabled = false;
             Timer timer = new Timer();

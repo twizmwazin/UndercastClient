@@ -62,6 +62,7 @@ public class UndercastData {
     public static boolean incrementMatchTime;
     public static MatchTimer matchTimer;
     public static String currentGSClass = "Unknown";
+    public static PlayerStats stats;
     public static boolean removeNextChatMessage = false;
 
     public static enum Teams {
@@ -90,6 +91,7 @@ public class UndercastData {
         resetLargestKillstreak();
         resetScore();
         setTeam(Teams.Observers);
+        stats = new PlayerStats();
         guiShowing = true;
         serverInformation = new UndercastServer[999];
         serverCount = 0;
@@ -112,7 +114,7 @@ public class UndercastData {
         }
     }
 
-    public static void reload(boolean getMatchState) {
+    public static void reloadServerInformations(boolean getMatchState) {
         map = "Loading...";
         nextMap = "Loading...";
 
@@ -130,24 +132,46 @@ public class UndercastData {
         }
     }
 
+    public static void reloadStats() {
+        try {
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
+        } catch (Exception e) {
+            System.out.println("[UndercastMod]: Failed to start information loaders");
+            System.out.println("[UndercastMod]: ERROR: " + e.toString());
+        }
+    }
+
     public static void websiteLoaded(String url, String contents) {
         if (url.equals("https://oc.tc/play")) {
             updateMap(contents);
         } else {
-            updateStats(contents);
+            updateStats(contents, url);
         }
     }
 
-    private static void updateStats(String cont) {
+    private static void updateStats(String cont, String url) {
         if (UndercastConfig.realtimeStats == false) {
             return;
         }
         try {
             String[] data = PlayerStatsHTMLParser.parse(cont);
-            resetKills();
-            addKills(Integer.parseInt(data[0]));
-            resetDeaths();
-            addDeaths(Integer.parseInt(data[1]));
+            PlayerStats stats = new PlayerStats();
+            stats.kills = Integer.parseInt(data[0]);
+            stats.deaths = Integer.parseInt(data[1]);
+            stats.friendCount = Integer.parseInt(data[2]);
+            stats.kd = Double.parseDouble(data[3]);
+            stats.kk = Double.parseDouble(data[4]);
+            stats.serverJoins = Integer.parseInt(data[5]);
+            stats.forumPosts = Integer.parseInt(data[6]);
+            stats.startedTopics = Integer.parseInt(data[7]);
+            stats.wools = Integer.parseInt(data[8]);
+            stats.cores = Integer.parseInt(data[9]);
+            stats.monuments = Integer.parseInt(data[10]);
+            stats.name = url.replace("https://oc.tc/", "");
+            // only if no data relates on the current stats
+            if (UndercastData.kills == 0 && UndercastData.deaths == 0) {
+                UndercastData.stats = stats;
+            }
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to parse player stats");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -199,6 +223,7 @@ public class UndercastData {
             e.printStackTrace();
         }
     }
+
     public static void addKills(double d) {
         kills += d;
     }
@@ -292,7 +317,7 @@ public class UndercastData {
 
     public static void setServer(String servers) {
         server = servers;
-        reload(false);
+        reloadServerInformations(false);
     }
 
     public static String getServer() {

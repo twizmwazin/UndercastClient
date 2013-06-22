@@ -195,17 +195,17 @@ public class UndercastModClass {
             }
             //show amount of kills
             if (UndercastConfig.showKills && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Kills: \u00A7a" + UndercastData.getKills(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getKillDisplayString(), width, height, 16777215);
                 height += 8;
             }
             //show amount of deaths
             if (UndercastConfig.showDeaths && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Deaths: \u00A74" + UndercastData.getDeaths(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getDeathDisplayString(), width, height, 16777215);
                 height += 8;
             }
             // Kill Streak display
             if (UndercastConfig.showStreak && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) UndercastData.getKillstreak() + "/" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
                 height += 8;
             }
             // Score display

@@ -65,7 +65,8 @@ public class UndercastChatHandler {
             message = message.replace("Now playing ", "");
             UndercastData.setMap((message.split(" by ")[0]));
             if (UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new match or observer or noob
-                UndercastData.reload(false);
+                UndercastData.reloadServerInformations(false);
+                UndercastData.reloadStats();
             }
         } //if you die
         else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
@@ -96,6 +97,7 @@ public class UndercastChatHandler {
 
         } //when you join a match
         else if (message.contains("You joined the")) {
+            UndercastData.reloadStats();
             try {
                 UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
             } catch (Exception e) {
@@ -113,7 +115,7 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
-
+            UndercastData.reloadStats();
             // stop the timer
             try {
                 UndercastData.matchTimer.stop();
@@ -132,10 +134,10 @@ public class UndercastChatHandler {
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
             player.addChatMessage("Final Stats:");
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Kills: " + UndercastData.getKills());
-            player.addChatMessage("Deaths: " + UndercastData.getDeaths());
+            player.addChatMessage("Kills: " + (int) UndercastData.getKills() + " Total: " + (int) (UndercastData.kills + UndercastData.stats.kills));
+            player.addChatMessage("Deaths: " + (int) UndercastData.getDeaths() + " Total: " + (int) (UndercastData.deaths + UndercastData.stats.deaths));
             player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
-            player.addChatMessage("Kill Streak: " + UndercastData.getLargestKillstreak());
+            player.addChatMessage("Kill Streak: " + (int) UndercastData.getLargestKillstreak());
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
