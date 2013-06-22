@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.stats.Achievement;
 import undercast.client.UndercastConfig;
+import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
 
 /**
@@ -25,7 +26,7 @@ public class UndercastKillsHandler {
     public UndercastKillsHandler() {
     }
 
-    public void handleMessage(String message, String username, EntityPlayer player) {
+    public void handleMessage(String message, String username, EntityPlayer player, String unstripedMessage) {
         //When you die from someone
         if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
             if (!message.contains("fury of") && !message.contains("took ")) {
@@ -36,12 +37,20 @@ public class UndercastKillsHandler {
                 killer = message.substring(message.indexOf("took ") + 5).split("'s")[0];
             }
             killOrKilled = false;
-            this.printAchievement();
+            if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
+                this.printTeamKillAchievement();
+            } else {
+                this.printAchievement();
+            }
         } //if you kill a person
         else if (UndercastConfig.showKillAchievements && !message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
-            this.printAchievement();
+            if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
+                this.printTeamKillAchievement();
+            } else {
+                this.printAchievement();
+            }
             UndercastData.isLastKillFromPlayer = true;
             if (UndercastData.isNextKillFirstBlood) {
                 if (UndercastConfig.showFirstBloodAchievement) {
@@ -70,7 +79,12 @@ public class UndercastKillsHandler {
         Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
         ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
                 .addFakeAchievementToMyList(custom, killOrKilled, killer);
+    }
 
+    private void printTeamKillAchievement() {
+        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
+        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
+                .addFakeAchievementToMyList(custom, !killOrKilled, killer, killer, "Teamkill!");
     }
 
     public void printFirstBloodAchievement() {

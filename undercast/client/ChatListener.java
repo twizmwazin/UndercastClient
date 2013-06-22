@@ -38,7 +38,7 @@ public class ChatListener implements IChatListener {
                     packet.message = null;
                 }
                 if (UndercastConfig.showAchievements) {
-                    UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player);
+                    UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message);
                 }
                 if (UndercastConfig.parseMatchState) {
                     if (ServersCommandParser.handleChatMessage(message, packet.message) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
