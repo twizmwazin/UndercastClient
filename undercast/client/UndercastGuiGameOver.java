@@ -93,6 +93,7 @@ public class UndercastGuiGameOver extends GuiScreen {
         }
 
         this.drawCenteredString(this.fontRenderer, StatCollector.translateToLocal("deathScreen.score") + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
+        this.drawCenteredString(this.fontRenderer, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int)UndercastData.getPreviousKillstreak(), this.width / 2, 110, 16777215); 
         super.drawScreen(par1, par2, par3);
     }
 

@@ -24,6 +24,7 @@ public class UndercastData {
     public static double killed;
     public static int killstreak;
     public static int largestKillstreak;
+    public static int previousKillstreak;
     public static int score;
     // redudant assignation but kept for being java 6 compatible
     // first String is the username of the player
@@ -280,6 +281,18 @@ public class UndercastData {
 
     public static double getKillstreak() {
         return killstreak;
+    }
+
+    public static double getPreviousKillstreak() {
+        return previousKillstreak;
+    }
+
+    public static void resetPreviousKillstreak() {
+        previousKillstreak = 0;
+    }
+
+    public static void setPreviousKillstreak(int i) {
+        previousKillstreak = i;
     }
 
     public static void resetLargestKillstreak() {
