@@ -14,6 +14,7 @@ public class Undercast_UpdaterThread extends Thread {
 
     boolean errorOccured;
     public static boolean finished = false;
+    boolean emergencyParser = false; //If we should use the emergency parser 
 
     public Undercast_UpdaterThread() {
         errorOccured = false;
@@ -38,6 +39,8 @@ public class Undercast_UpdaterThread extends Thread {
             readline = in.readLine();
             readline2 = in.readLine();
             readline3 = in.readLine();
+            emergencyParser = Boolean.parseBoolean(in.readLine());
+            UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);

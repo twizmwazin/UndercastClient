@@ -41,7 +41,24 @@ public class ServerStatusHTMLParser {
         return str;
     }
 
+    public static String[][] emergencyParse(String string) throws Exception {
+        string = string.replace("emergency_parser@", "");
+        String[][] toReturn = new String[999][5];
+        int index = 0;
+        for (String str : string.split("@")) {
+            String[] data = str.split("\\|");
+            for (int i = 0; i < data.length; i++) {
+                toReturn[index][i] = data[i];
+            }
+            index++;
+        }
+        return toReturn;
+    }
+
     public static String[][] parse(String string) throws Exception {
+        if (string.startsWith("emergency_parser@")) {
+            return emergencyParse(string);
+        }
         String realSource = string;
         //realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='span4'>"), realSource.indexOf("<div class='span8'>")), "");
         realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='tab-pane active' id='main'>"), realSource.indexOf("<div class='tab-pane' id='project-ares'>")), "");

@@ -36,6 +36,7 @@ public class UndercastData {
     public static boolean isLobby;
     public static boolean update;
     public static String updateLink;
+    public static boolean emergencyParser;
     private static InformationLoaderThread mapLoader;
     private static InformationLoaderThread statsLoader;
     public static UndercastServer[] serverInformation;
@@ -113,7 +114,11 @@ public class UndercastData {
         sortIndex = 0;
         filterIndex = 0;
         try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            if (!emergencyParser) {
+                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            } else {
+                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
+            }
             statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
@@ -126,7 +131,11 @@ public class UndercastData {
         nextMap = "Loading...";
 
         try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            if (!emergencyParser) {
+                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+            } else {
+                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
+            }
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -148,7 +157,7 @@ public class UndercastData {
     }
 
     public static void websiteLoaded(String url, String contents) {
-        if (url.equals("https://oc.tc/play")) {
+        if (url.equals("https://oc.tc/play") || url.contains("undercast-team.netau.net")) {
             updateMap(contents);
         } else {
             updateStats(contents, url);
