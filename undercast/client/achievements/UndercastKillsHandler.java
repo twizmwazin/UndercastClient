@@ -49,6 +49,21 @@ public class UndercastKillsHandler {
             if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
                 this.printTeamKillAchievement();
             } else {
+                // check if there is a special kill coming
+                int kills = (int) UndercastData.getKills() + UndercastData.stats.kills;
+                if (isSpecialKill(kills + 10)) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c10\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 10) + ")");
+                } else if (isSpecialKill(kills + 5)) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c5\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 5) + ")");
+                } else if (isSpecialKill(kills + 2)) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c2\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 2) + ")");
+                } else if (isSpecialKill(kills + 1)) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f kill away from a \u00A7ospecial kill\u00A7r (" + (kills + 1) + ")");
+                }
+                if (isSpecialKill(kills)) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7" + killer);
+                    SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
+                }
                 this.printAchievement();
             }
             UndercastData.isLastKillFromPlayer = true;
@@ -119,5 +134,40 @@ public class UndercastKillsHandler {
         ((UndercastGuiAchievement) client.guiAchievement)
                 .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
 
+    }
+
+    public static boolean isSpecialKill(int kill) {
+        if (kill > 99) {
+            if (kill < 1000) {
+                // detect special kills like 100, 200, 300, 500, 900
+                int i = kill / 100;
+                if (i * 100 == kill) {
+                    return true;
+                }
+            } else {
+                // detect special kills like 1000m 5000, 7500, 10500
+                int i1 = kill / 1000;
+                int i2 = (kill + 500) / 1000;
+                if ((i1 * 1000 == kill) || (i2 * 1000 == kill + 500)) {
+                    return true;
+                }
+            }
+            // detect special kills like 3333, 5555, 16666
+            String s = String.valueOf(kill);
+            char c1, c2, c3, c4;
+            c1 = s.charAt(s.length() - 1);
+            c2 = s.charAt(s.length() - 2);
+            c3 = s.charAt(s.length() - 3);
+            if (s.length() > 3) {
+                c4 = s.charAt(s.length() - 4);
+            } else {
+                c4 = c3;
+            }
+
+            if (c1 == c2 && c1 == c3 && c1 == c4) {
+                return true;
+            }
+        }
+        return false;
     }
 }
