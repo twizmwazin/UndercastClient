@@ -16,6 +16,11 @@ public class UndercastServer {
      * Default constructor
      */
     public UndercastServer() {
+        name = "";
+        currentMap = "";
+        nextMap = "";
+        type = ServerType.Unknown;
+        matchState = MatchState.Unknown;
     }
 
     public String getServerName() {
