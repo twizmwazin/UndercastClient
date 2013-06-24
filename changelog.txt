@@ -1,5 +1,18 @@
 The changelog exists since version 1.4.0
 
+1.6.0
+ - total stats display (called realtime stats)
+ - log and display special kills (1000th kill, 7500th kill, 5555th kill)
+ - notify the user before special kills
+ - improved and fixed friendcounter
+ - teamkills aren't counted anymore
+ - teamkill achievements
+ - see your killstreak on the death screen
+ - instant achievements
+ - emergency parser for oc.tc/play ( = reduce the time while the server list doesn't work when oc.tc/play changes)
+ - make sure to always parse the right match states
+ - minor fixes / improvements
+
 1.5.9
  - score display (if you run into the scorebox)
  - save the latest filter
@@ -21,7 +34,7 @@ The changelog exists since version 1.4.0
  - minor bug fixes
 
 1.5.5
- - Fix a bug where the server list would be empty after the Ghost Squadron servers were added. 
+ - Fix a bug where the server list would be empty after the Ghost Squadron servers were added.
  - Hopefully fixes the error with weird head appearing everywhere.
  - Fix achievement bugs with fist kills and potions kills.
  - Added a Config button inside the options gui
