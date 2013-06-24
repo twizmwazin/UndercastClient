@@ -154,6 +154,7 @@ public class UndercastChatHandler {
             UndercastData.resetDeaths();
             UndercastData.resetKillstreak();
             UndercastData.resetLargestKillstreak();
+            UndercastData.resetScore();
             UndercastData.setTeam(UndercastData.Teams.Observers);
             return false;
         } // redirection and lobby detection
