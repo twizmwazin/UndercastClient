@@ -46,6 +46,7 @@ public class UndercastConfig {
     public static boolean showLastKillAchievement;
     public static boolean parseMatchState;
     public static boolean showScore;
+    public static boolean showTotalKills;
     public static File configFile;
     public static int lastUsedFilter;
     public static boolean realtimeStats;
@@ -92,7 +93,8 @@ public class UndercastConfig {
         parseMatchState = config.get("UndercastMod", "parseMatchState", true).getBoolean(true);
         showScore = config.get("UndercastMod", "showScore", true).getBoolean(true);
         lastUsedFilter = config.get("UndercastMod", "lastUsedFilter", 0, "0: All\n1: PA\n2: Blitz\n3: GS").getInt();
-        realtimeStats = config.get("UndercastMod", "realtimeStats", false).getBoolean(false);
+        realtimeStats = config.get("UndercastMod", "realtimeStats", true).getBoolean(true);
+        showTotalKills = config.get("UndercastMod", "showTotalKills", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
