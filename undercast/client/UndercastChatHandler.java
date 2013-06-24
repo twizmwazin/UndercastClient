@@ -165,7 +165,7 @@ public class UndercastChatHandler {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
             }
-            if (UndercastConfig.showFriends) {
+            if (UndercastConfig.showFriends && UndercastData.friends.isEmpty()) {
                 Thread t1 = new Thread(new Runnable() {
                     @Override
                     public void run() {
