@@ -37,6 +37,8 @@ public class UndercastKillsHandler {
                 killer = message.substring(message.indexOf("took ") + 5).split("'s")[0];
             }
             killOrKilled = false;
+            UndercastData.isLastKillFromPlayer = false;
+            UndercastData.isNextKillFirstBlood = false;
             if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
                 this.printTeamKillAchievement();
             } else {

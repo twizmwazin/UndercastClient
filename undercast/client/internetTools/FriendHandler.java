@@ -53,6 +53,11 @@ public class FriendHandler {
                         UndercastData.friends.put(friend, "offline");
                     }
                 }
+            } else if (message.contains(" is online")) {
+                String friend = message.split(" ")[0].replace("*", "");
+                if (!UndercastData.friends.containsKey(friend)) {
+                    UndercastData.friends.put(friend, UndercastData.server);
+                }
             }
             if (UndercastData.friends.size() % 8 == 0 && currentPage < pages && !UndercastData.friends.isEmpty() && !message.contains("Your Friends")) {
                 Thread t1 = new Thread(new Runnable() {
