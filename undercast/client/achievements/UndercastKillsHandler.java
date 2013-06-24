@@ -61,7 +61,7 @@ public class UndercastKillsHandler {
                     Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f kill away from a \u00A7ospecial kill\u00A7r (" + (kills + 1) + ")");
                 }
                 if (isSpecialKill(kills)) {
-                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7" + killer);
+                    Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7c" + killer);
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
                 this.printAchievement();
