@@ -80,6 +80,7 @@ public class UndercastCustomMethods {
         UndercastData.resetKilled();
         UndercastData.resetKillstreak();
         UndercastData.resetLargestKillstreak();
+        UndercastData.resetPreviousKillstreak();
         UndercastData.resetScore();
         UndercastData.isGameOver = false;
         UndercastData.reloadStats();

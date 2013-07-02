@@ -38,7 +38,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
     public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
         UndercastData.setTeam(UndercastData.Teams.Observers);
         //if logging onto an OvercastNetwork server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc")) {
+        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc") && !((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("mc.oc.tc")) {
             // What happens if logs into OvercastNetwork
             UndercastData.isOC = true;
             UndercastData.isLobby = true;
@@ -100,6 +100,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
         UndercastData.resetDeaths();
         UndercastData.resetKillstreak();
         UndercastData.resetLargestKillstreak();
+        UndercastData.resetPreviousKillstreak();
         UndercastData.setMap("Attempting to fetch map...");
         if (mc.gameSettings.gammaSetting >= UndercastModClass.getInstance().brightLevel) {
             UndercastModClass.brightActive = false;
