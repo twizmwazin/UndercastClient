@@ -2,17 +2,18 @@ package undercast.client.achievements;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.achievement.GuiAchievement;
-import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.stats.Achievement;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -55,6 +56,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     private String killerName;
     private String firstLine;
     private String secondLine;
+    private static final ResourceLocation field_110331_a = new ResourceLocation("textures/gui/achievement/achievement_background.png");
 
     public UndercastGuiAchievement(Minecraft par1Minecraft) {
         super(par1Minecraft);
@@ -176,7 +178,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 int j = 0 - (int) (d1 * 36.0D);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
-                this.theGame.renderEngine.bindTexture("/achievement/bg.png");
+                this.theGame.func_110434_K().func_110577_a(field_110331_a);
                 GL11.glDisable(GL11.GL_LIGHTING);
                 this.drawTexturedModalRect(i, j, 96, 202, 160, 32);
 
@@ -198,16 +200,18 @@ public class UndercastGuiAchievement extends GuiAchievement {
                 if (!this.isFakeAchievement) {
                     this.itemRender.renderItemAndEffectIntoGUI(this.theGame.fontRenderer, this.theGame.renderEngine, this.theAchievement.theItemStack, i + 8, j + 8);
                 } else {
-                    String str = "https://minotar.net/helm/" + this.killerName + "/16.png";
-                    if (!Minecraft.getMinecraft().renderEngine.hasImageData(str)) {
-                        Minecraft.getMinecraft().renderEngine.obtainImageData(str, new ImageBufferDownload());
-                    }
+                    String str = this.killerName;
+                    ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(str);
+                    AbstractClientPlayer.func_110304_a(resourcelocation, str);
                     GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
-                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, Minecraft.getMinecraft().renderEngine.getTextureForDownloadableImage(str, ""));
+                    TextureManager texturemanager = Minecraft.getMinecraft().renderEngine;
+                    if (texturemanager != null) {
+                        texturemanager.func_110577_a(resourcelocation);
+                    }
                     GL11.glColor4f(1, 1, 1, 1); // White light on the image
-                    GL11.glScalef(1F / 4F, 1F / 8F, 1F);// Resizing the image (height/4 and width/8)
-                    GL11.glTranslatef((i+8) * 4F, (j+8) * 8F, 0);// Translating the image in the gui
-                    this.drawTexturedModalRect(0, 0, 0, 0, 64, 128); // Drawing the image
+                    GL11.glScalef(1F / 2F, 1F / 4F, 1F);// Resizing the image (height/4 and width/8)
+                    GL11.glTranslatef((i + 8) * 2F, (j + 8) * 4F, 0);// Translating the image in the gui
+                    this.drawTexturedModalRect(0, 0, 32, 64, 32, 64); // Drawing the image
                     GL11.glPopMatrix();
                 }
                 GL11.glDisable(GL11.GL_LIGHTING);

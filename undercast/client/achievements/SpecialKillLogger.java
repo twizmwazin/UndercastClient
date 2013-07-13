@@ -13,7 +13,7 @@ public class SpecialKillLogger {
 
     static {
         try {
-            LOG_PATH = Minecraft.getMinecraftDir().getCanonicalPath() + File.separatorChar + "logs" + File.separatorChar + "UndercastClient" + File.separatorChar;
+            LOG_PATH = Minecraft.getMinecraft().mcDataDir.getCanonicalPath() + File.separatorChar + "logs" + File.separatorChar + "UndercastClient" + File.separatorChar;
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to get log path.");
         }

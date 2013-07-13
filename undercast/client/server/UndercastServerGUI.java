@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StringTranslate;
 import undercast.client.*;
 
@@ -41,11 +42,9 @@ public class UndercastServerGUI extends GuiScreen {
      */
     @Override
     public void initGui() {
-        StringTranslate stringtranslate = StringTranslate.getInstance();
-
-        this.buttonList.add(new GuiButtonTooltip(0, this.width / 2 - 100, height - 52, 98, 20, stringtranslate.translateKey("selectServer.select"), "Join / Swap to the selected server"));
-        this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, stringtranslate.translateKey("selectServer.refresh"), "Refresh the server list"));
-        this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, stringtranslate.translateKey("gui.cancel"), "Close the server list"));
+        this.buttonList.add(new GuiButtonTooltip(0, this.width / 2 - 100, height - 52, 98, 20, I18n.func_135053_a("selectServer.select"), "Join / Swap to the selected server"));
+        this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, I18n.func_135053_a("selectServer.refresh"), "Refresh the server list"));
+        this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, I18n.func_135053_a("gui.cancel"), "Close the server list"));
         this.buttonList.add(new GuiButtonTooltip(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats", "Open your player stats in the browser"));
         this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
         this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
@@ -86,7 +85,7 @@ public class UndercastServerGUI extends GuiScreen {
         }
         //stats button
         if (guibutton.id == 3) {
-            String username = this.mc.session.username;
+            String username = Minecraft.getMinecraft().func_110432_I().func_111285_a();
             try {
                 Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
             } catch (Exception ignored) {

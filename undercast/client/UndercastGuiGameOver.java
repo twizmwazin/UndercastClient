@@ -37,7 +37,7 @@ public class UndercastGuiGameOver extends GuiScreen {
             this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, StatCollector.translateToLocal("deathScreen.respawn")));
             this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.titleScreen")));
 
-            if (this.mc.session == null) {
+            if (this.mc.func_110432_I() == null) {
                 ((GuiButton) this.buttonList.get(1)).enabled = false;
             }
         }

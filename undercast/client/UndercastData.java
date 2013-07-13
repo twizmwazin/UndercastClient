@@ -119,7 +119,7 @@ public class UndercastData {
             } else {
                 mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
             }
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -149,7 +149,7 @@ public class UndercastData {
 
     public static void reloadStats() {
         try {
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().session.username));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
