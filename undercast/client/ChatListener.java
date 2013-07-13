@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet3Chat;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.StringUtils;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServerGUI;
@@ -26,32 +27,33 @@ public class ChatListener implements IChatListener {
     @Override
     public Packet3Chat clientChat(NetHandler handler, Packet3Chat packet) {
         UndercastModClass UCInstance = UndercastModClass.getInstance();
+        String messageWithOutJson = ChatMessageComponent.func_111078_c(packet.message).func_111068_a(true);
+        String message = StringUtils.stripControlCodes(messageWithOutJson);
         try {
             Minecraft mc = FMLClientHandler.instance().getClient();
             EntityPlayer player = mc.thePlayer;
             UCInstance.username = mc.thePlayer.username;
-            String message = StringUtils.stripControlCodes(packet.message);
             // stop global msg and team chat and whispered messages to go through
             if (!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ") && UndercastData.isOC) {
                 addLineToChatLines(message);
-                if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message))) {
+                if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson))) {
                     packet.message = null;
                 }
                 if (UndercastConfig.showAchievements) {
-                    UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, packet.message);
+                    UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson);
                 }
                 if (UndercastConfig.parseMatchState) {
-                    if (ServersCommandParser.handleChatMessage(message, packet.message) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
+                    if (ServersCommandParser.handleChatMessage(message, messageWithOutJson) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
                         packet.message = null;
                     }
                 }
-                if(UndercastConfig.showFriends){
-                    if(!UCInstance.friendHandler.handleMessage(message)){
+                if (UndercastConfig.showFriends) {
+                    if (!UCInstance.friendHandler.handleMessage(message)) {
                         packet.message = null;
                     }
                 }
-                
-                if(FMLClientHandler.instance().isGUIOpen(UndercastServerGUI.class) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))){
+
+                if (FMLClientHandler.instance().isGUIOpen(UndercastServerGUI.class) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
                     packet.message = null;
                 }
             }
@@ -60,7 +62,7 @@ public class ChatListener implements IChatListener {
             }
         } catch (Exception e) {
         }
-        packet.message = UndercastChatHandler.handleTip(packet);
+        packet.message = UndercastChatHandler.handleTip(messageWithOutJson);
         return packet;
     }
 
