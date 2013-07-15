@@ -206,7 +206,7 @@ public class UndercastChatHandler {
                 UndercastData.setServer(message.replace("You are currently on ", ""));
                 UndercastCustomMethods.handleServerSwap();
             }
-        } else if (normalMessage.equals("�c�c�e�e�c�c")) {
+        } else if (normalMessage.equals("§c§c§e§e§c§c")) {
             if (!UndercastData.welcomeMessageExpected) {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
@@ -260,14 +260,14 @@ public class UndercastChatHandler {
 
     }
 
-    public static String handleTip(String message) {
+    public static boolean handleTip(String message) {
         try {
             if (message.contains("Tip") && UndercastConfig.filterTips) {
-                return null;
+                return true;
             }
-            return message;
+            return false;
         } catch (NullPointerException e) {
-            return null;
+            return true;
         }
     }
 }

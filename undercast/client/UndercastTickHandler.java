@@ -37,14 +37,14 @@ public class UndercastTickHandler implements ITickHandler {
             } else if (current instanceof GuiOptions) {
                 List customButtonList;
                 try {
-                    customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 4);
+                    customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 3);
                     if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
                         UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
                     }
                     if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
                         customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
                     }
-                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 4);
+                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 3);
                 } catch (UnableToAccessFieldException e) {
                 }
             }

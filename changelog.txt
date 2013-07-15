@@ -1,5 +1,15 @@
 The changelog exists since version 1.4.0
 
+1.6.2
+ - Updated for Minecraft 1.6.2
+ - fix achievements for 1.6
+ - fix tracking for death messages which have a distance message e.g. (12 blocks)
+
+1.6.1dev
+ - Updated for Minecraft 1.6.1
+ - reset Score properly
+ - disable the killstreak on the death screen on other servers
+
 1.6.0
  - total stats display (called realtime stats)
  - log and display special kills (1000th kill, 7500th kill, 5555th kill)

@@ -34,6 +34,7 @@ public class ChatListener implements IChatListener {
             EntityPlayer player = mc.thePlayer;
             UCInstance.username = mc.thePlayer.username;
             // stop global msg and team chat and whispered messages to go through
+            System.out.println(messageWithOutJson);
             if (!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ") && UndercastData.isOC) {
                 addLineToChatLines(message);
                 if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson))) {
@@ -62,7 +63,7 @@ public class ChatListener implements IChatListener {
             }
         } catch (Exception e) {
         }
-        packet.message = UndercastChatHandler.handleTip(messageWithOutJson);
+        packet.message = UndercastChatHandler.handleTip(messageWithOutJson) ? null : packet.message;
         return packet;
     }
 
