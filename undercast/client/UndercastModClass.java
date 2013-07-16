@@ -100,11 +100,7 @@ public class UndercastModClass {
      * ticks in order to correctly render text inside a gui
      *
      */
-    public void onGameTick(Minecraft mc) {
-        try {
-            System.out.println(mc.currentScreen.getClass().getCanonicalName());
-        } catch (NullPointerException e) {
-        }
+    public void onGameTick(Minecraft mc) { 
         //if the game over screen is active then you have died
         //if it is the first time it is active count a death
         //if it is not don't do anything
