@@ -212,22 +212,31 @@ public class UndercastChatHandler {
             }
         } // server detection
         else if (message.contains("Teleporting you to ")) {
-            UndercastData.setServer(message.replace("Teleporting you to ", ""));
-            if (!message.toLowerCase().contains("lobby")) {
-                UndercastData.welcomeMessageExpected = true;
+            String server = message.replace("Teleporting you to ", "");
+            if(!server.equals(UndercastData.server)) {
+                UndercastData.setServer(server);
+                if(!message.toLowerCase().contains("lobby")) {
+                    UndercastData.welcomeMessageExpected = true;
+                }
+                UndercastCustomMethods.handleServerSwap();
             }
-            UndercastCustomMethods.handleServerSwap();
         } else if (message.contains("Connecting to ")) {
-            UndercastData.setServer(message.replace("Connecting to ", ""));
-            if (!message.toLowerCase().contains("lobby")) {
-                UndercastData.welcomeMessageExpected = true;
+            String server = message.replace("Connecting to ", "");
+            if(!server.equals(UndercastData.server)) {
+                UndercastData.setServer(server);
+                if(!message.toLowerCase().contains("lobby")) {
+                    UndercastData.welcomeMessageExpected = true;
+                }
+                UndercastCustomMethods.handleServerSwap();
             }
-            UndercastCustomMethods.handleServerSwap();
         } else if (message.contains("You are currently on ")) {
             if (UndercastData.serverDetectionCommandExecuted) {
                 UndercastData.serverDetectionCommandExecuted = false;
-                UndercastData.setServer(message.replace("You are currently on ", ""));
-                UndercastCustomMethods.handleServerSwap();
+                String server = message.replace("You are currently on ", "");
+                if(!server.equals(UndercastData.server)) {
+                    UndercastData.setServer(server);
+                    UndercastCustomMethods.handleServerSwap();
+                }
             }
         } else if (normalMessage.equals("§c§c§e§e§c§c")) {
             if (!UndercastData.welcomeMessageExpected) {
