@@ -41,10 +41,13 @@ public class MatchTimer {
                         UndercastData.matchTimeHours -= 1;
                     }
                     // stop the timer if it reaches 0 or the it's game over
-                    if ((UndercastData.matchTimeSec <= 0 && UndercastData.matchTimeMin <= 0 && UndercastData.matchTimeHours <= 0) || UndercastData.isGameOver) {
+                    if ((UndercastData.matchTimeSec <= 0
+                            && UndercastData.matchTimeMin <= 0 && UndercastData.matchTimeHours <= 0)
+                            || UndercastData.isGameOver) {
                         this.cancel();
                     }
-                    //stop the timer if hours are negative, it indicates that it wants to decrement from 0:00
+                    // stop the timer if hours are negative, it indicates that
+                    // it wants to decrement from 0:00
                     if (UndercastData.matchTimeHours < 0) {
                         this.cancel();
                         UndercastData.matchTimeHours = 0;

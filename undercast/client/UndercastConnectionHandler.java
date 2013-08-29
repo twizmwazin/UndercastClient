@@ -18,27 +18,33 @@ import undercast.client.update.Undercast_UpdaterThread;
 public class UndercastConnectionHandler implements IConnectionHandler {
 
     @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
+    public void playerLoggedIn(Player player, NetHandler netHandler,
+            INetworkManager manager) {
     }
 
     @Override
-    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager) {
+    public String connectionReceived(NetLoginHandler netHandler,
+            INetworkManager manager) {
         return null;
     }
 
     /**
      * Fired when a remote connection is opened CLIENT SIDE
-     *
+     * 
      * @param netClientHandler
      * @param server
      * @param port
      * @param manager
      */
     @Override
-    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
+    public void connectionOpened(NetHandler netClientHandler, String server,
+            int port, INetworkManager manager) {
         UndercastData.setTeam(UndercastData.Teams.Observers);
-        //if logging onto an OvercastNetwork server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc") && !((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("mc.oc.tc")) {
+        // if logging onto an OvercastNetwork server, then enable the main mod
+        if (((NetClientHandler) netClientHandler).getNetManager()
+                .getSocketAddress().toString().contains(".oc.tc")
+                && !((NetClientHandler) netClientHandler).getNetManager()
+                        .getSocketAddress().toString().contains("mc.oc.tc")) {
             // What happens if logs into OvercastNetwork
             UndercastData.isOC = true;
             UndercastData.isLobby = true;
@@ -50,14 +56,15 @@ public class UndercastConnectionHandler implements IConnectionHandler {
         } else {
             UndercastData.isOC = false;
         }
-        //update notifier
+        // update notifier
         if (!UndercastData.isUpdate()) {
             Thread thread = new Thread() {
                 @Override
                 public void run() {
                     try {
                         Thread.sleep(3000);
-                        for (int c = 0; c < 10; c++) { // don't wait longer than 10 sec
+                        for (int c = 0; c < 10; c++) { // don't wait longer than
+                                                       // 10 sec
                             Thread.sleep(1000);
                             if (Undercast_UpdaterThread.finished) {
                                 break;
@@ -66,10 +73,14 @@ public class UndercastConnectionHandler implements IConnectionHandler {
                     } catch (InterruptedException e) {
                     }
                     Minecraft mc = FMLClientHandler.instance().getClient();
-                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-                    mc.thePlayer.addChatMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
-                    mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74" + UndercastData.updateLink);
-                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+                    mc.thePlayer
+                            .addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+                    mc.thePlayer
+                            .addChatMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
+                    mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74"
+                            + UndercastData.updateLink);
+                    mc.thePlayer
+                            .addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
                 }
             };
             thread.start();
@@ -77,16 +88,17 @@ public class UndercastConnectionHandler implements IConnectionHandler {
     }
 
     /**
-     *
+     * 
      * Fired when a local connection is opened
-     *
+     * 
      * CLIENT SIDE
-     *
+     * 
      * @param netClientHandler
      * @param server
      */
     @Override
-    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager) {
+    public void connectionOpened(NetHandler netClientHandler,
+            MinecraftServer server, INetworkManager manager) {
     }
 
     @Override
@@ -110,6 +122,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
     }
 
     @Override
-    public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
+    public void clientLoggedIn(NetHandler clientHandler,
+            INetworkManager manager, Packet1Login login) {
     }
 }

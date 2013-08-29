@@ -1,4 +1,5 @@
 package undercast.client;
+
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -13,46 +14,55 @@ public class UndercastChatHandler {
     public UndercastChatHandler() {
     }
 
-    public boolean handleMessage(String message, String username, EntityPlayer player) {
+    public boolean handleMessage(String message, String username,
+            EntityPlayer player) {
         return handleMessage(message, username, player, message);
     }
 
     /**
      * handle a chat message received by the playe
-     *
-     * @param message The message received
-     * @param username The player's username receiving the message
-     * @param player an EntityPlayer instance linking to the client-player
+     * 
+     * @param message
+     *            The message received
+     * @param username
+     *            The player's username receiving the message
+     * @param player
+     *            an EntityPlayer instance linking to the client-player
      * @return true if the message should be displayed to the user
      */
-    public boolean handleMessage(String message, String username, EntityPlayer player, String normalMessage) {
+    public boolean handleMessage(String message, String username,
+            EntityPlayer player, String normalMessage) {
         boolean returnStatement = true;
-        //Friend tracking Joining.
+        // Friend tracking Joining.
         if (message.contains(" joined the game")) {
             String name;
             String server;
             message = message.replace(" joined the game", "");
             if (message.contains("[")) {
                 name = message.split(" ")[1];
-                server = message.split(" ")[0].replace("[", "").replace("]", "");
+                server = message.split(" ")[0].replace("[", "")
+                        .replace("]", "");
             } else {
-                name = message.substring(message.lastIndexOf("*") + 1, message.length());
+                name = message.substring(message.lastIndexOf("*") + 1,
+                        message.length());
                 server = UndercastData.server;
             }
             if (UndercastData.friends.containsKey(name)) {
                 UndercastData.friends.put(name, server);
             }
 
-        } //friend tracking. Leaving
+        } // friend tracking. Leaving
         else if (message.contains("left the game")) {
             String name;
             String server;
             message = message.replace(" left the game", "");
             if (message.contains("[")) {
                 name = message.split(" ")[1];
-                server = message.split(" ")[0].replace("[", "").replace("]", "");
+                server = message.split(" ")[0].replace("[", "")
+                        .replace("]", "");
             } else {
-                name = message.substring(message.lastIndexOf("*") + 1, message.length());
+                name = message.substring(message.lastIndexOf("*") + 1,
+                        message.length());
                 server = UndercastData.server;
             }
             if (UndercastData.friends.containsKey(name)) {
@@ -66,62 +76,85 @@ public class UndercastChatHandler {
             String server;
             message = message.replace(" changed servers", "");
             name = message.substring(message.indexOf("]") + 2);
-            server = message.substring(message.indexOf("» ") + 2, message.indexOf("]"));
+            server = message.substring(message.indexOf("» ") + 2,
+                    message.indexOf("]"));
             if (UndercastData.friends.containsKey(name)) {
                 UndercastData.friends.put(name, server);
             }
-        } //update what map you are playing on
+        } // update what map you are playing on
         else if (message.contains("Now playing")) {
             message = message.replace("Now playing ", "");
             UndercastData.setMap((message.split(" by ")[0]));
-            if (UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new match or observer or noob
+            if (UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new
+                                                                                   // match
+                                                                                   // or
+                                                                                   // observer
+                                                                                   // or
+                                                                                   // noob
                 UndercastData.reloadServerInformations(false);
                 UndercastData.reloadStats();
             }
-        } //if you die
-        else if (message.startsWith(username) && !message.toLowerCase().endsWith(" team")) {
+        } // if you die
+        else if (message.startsWith(username)
+                && !message.toLowerCase().endsWith(" team")) {
             // if you die form someone
-            if ((message.contains(" by ") || message.contains(" took ") || message.contains(" fury of"))) {
-                String killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
+            if ((message.contains(" by ") || message.contains(" took ") || message
+                    .contains(" fury of"))) {
+                String killer = message.substring(message.indexOf("by") + 3,
+                        message.lastIndexOf("'s") == -1 ? message.length()
+                                : message.lastIndexOf("'s"));
                 // cut the distance message
                 if (killer.contains(" ")) {
                     killer = killer.substring(0, killer.indexOf(' '));
                 }
 
-                if (message.contains(" by ") && UndercastCustomMethods.isTeamkill(normalMessage, username, killer)) {
+                if (message.contains(" by ")
+                        && UndercastCustomMethods.isTeamkill(normalMessage,
+                                username, killer)) {
                     return true;
                 }
                 UndercastData.addKilled(1);
             }
             UndercastData.addDeaths(1);
-            UndercastData.setPreviousKillstreak((int) UndercastData.getKillstreak());
+            UndercastData.setPreviousKillstreak((int) UndercastData
+                    .getKillstreak());
             UndercastData.resetKillstreak();
-        } else if (message.startsWith(username + " scored") && message.toLowerCase().contains(" team")) {
+        } else if (message.startsWith(username + " scored")
+                && message.toLowerCase().contains(" team")) {
             int score;
             try {
-                score = Integer.parseInt(message.substring(message.indexOf(" scored ") + 8, message.indexOf(" points")));
+                score = Integer.parseInt(message.substring(
+                        message.indexOf(" scored ") + 8,
+                        message.indexOf(" points")));
             } catch (Exception e) {
                 score = 0;
             }
             UndercastData.addScore(score);
-        }//if you kill a person
-        else if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username))
+        }// if you kill a person
+        else if ((message.contains("by " + username)
+                || message.contains("took " + username) || message
+                    .contains("fury of " + username))
                 && !message.toLowerCase().contains(" destroyed by ")) {
-            if (!UndercastCustomMethods.isTeamkill(normalMessage, username, message.substring(0, message.indexOf(" ")))) {
+            if (!UndercastCustomMethods.isTeamkill(normalMessage, username,
+                    message.substring(0, message.indexOf(" ")))) {
                 UndercastData.addKills(1);
                 UndercastData.addKillstreak(1);
             }
 
-        } //when you join a match
+        } // when you join a match
         else if (message.contains("You joined the")) {
             UndercastData.reloadStats();
             try {
-                UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
+                UndercastData.setTeam(UndercastData.Teams.valueOf(message
+                        .replace("You joined the ", "").replace(" Team", "")
+                        .replace(" team", "")));
             } catch (Exception e) {
-                // if the team set fails because of an alias, set the team to Unknown
+                // if the team set fails because of an alias, set the team to
+                // Unknown
                 UndercastData.setTeam(UndercastData.Teams.Unknown);
             }
-        } else if (!message.startsWith("<") && message.toLowerCase().contains("game over")) {
+        } else if (!message.startsWith("<")
+                && message.toLowerCase().contains("game over")) {
             UndercastData.isGameOver = true;
             UndercastData.isNextKillFirstBlood = false;
             try {
@@ -129,7 +162,8 @@ public class UndercastChatHandler {
                 UndercastData.matchTimer.stop();
             } catch (Exception ignored) {
             }
-        } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
+        } else if (!message.startsWith("<")
+                && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
             UndercastData.reloadStats();
@@ -138,23 +172,32 @@ public class UndercastChatHandler {
                 UndercastData.matchTimer.stop();
             } catch (Exception ignored) {
             }
-            //and start one which starts from 0
+            // and start one which starts from 0
             UndercastData.incrementMatchTime = true;
             UndercastData.matchTimeHours = 0;
             UndercastData.matchTimeMin = 0;
             UndercastData.matchTimeSec = 0;
             UndercastData.matchTimer = new MatchTimer();
 
-        } //when a map is done. Display all the stats
-        else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
+        } // when a map is done. Display all the stats
+        else if (!message.startsWith("<")
+                && message.toLowerCase().contains("cycling to")
+                && message.contains("1 second")) {
             player.addChatMessage(normalMessage);
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
             player.addChatMessage("Final Stats:");
             player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Kills: " + (int) UndercastData.getKills() + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.kills + UndercastData.stats.kills)) : ""));
-            player.addChatMessage("Deaths: " + (int) UndercastData.getDeaths() + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.deaths + UndercastData.stats.deaths)) : ""));
+            player.addChatMessage("Kills: "
+                    + (int) UndercastData.getKills()
+                    + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.kills + UndercastData.stats.kills))
+                            : ""));
+            player.addChatMessage("Deaths: "
+                    + (int) UndercastData.getDeaths()
+                    + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.deaths + UndercastData.stats.deaths))
+                            : ""));
             player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
-            player.addChatMessage("Kill Streak: " + (int) UndercastData.getLargestKillstreak());
+            player.addChatMessage("Kill Streak: "
+                    + (int) UndercastData.getLargestKillstreak());
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
@@ -167,7 +210,8 @@ public class UndercastChatHandler {
         else if (message.contains("Welcome to the Overcast Network")) {
             if (UndercastData.redirect) {
                 UndercastData.redirect = false;
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.directionServer);
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/server "
+                        + UndercastData.directionServer);
             } else {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
@@ -179,7 +223,8 @@ public class UndercastChatHandler {
                         try {
                             Thread.sleep(2000);
                             UndercastModClass.getInstance().friendHandler.isListening = true;
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage("/fr");
+                            Minecraft.getMinecraft().thePlayer
+                                    .sendChatMessage("/fr");
                         } catch (InterruptedException ex) {
                         }
 
@@ -187,7 +232,7 @@ public class UndercastChatHandler {
                 });
                 t1.start();
             }
-        } //server detection
+        } // server detection
         else if (message.contains("Teleporting you to ")) {
             UndercastData.setServer(message.replace("Teleporting you to ", ""));
             if (!message.toLowerCase().contains("lobby")) {
@@ -203,7 +248,8 @@ public class UndercastChatHandler {
         } else if (message.contains("You are currently on ")) {
             if (UndercastData.serverDetectionCommandExecuted) {
                 UndercastData.serverDetectionCommandExecuted = false;
-                UndercastData.setServer(message.replace("You are currently on ", ""));
+                UndercastData.setServer(message.replace(
+                        "You are currently on ", ""));
                 UndercastCustomMethods.handleServerSwap();
             }
         } else if (normalMessage.equals("§c§c§e§e§c§c")) {
@@ -213,11 +259,14 @@ public class UndercastChatHandler {
             } else {
                 UndercastData.welcomeMessageExpected = false;
             }
-            if (UndercastConfig.matchOnServerJoin || UndercastConfig.showMatchTime) {
+            if (UndercastConfig.matchOnServerJoin
+                    || UndercastConfig.showMatchTime) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
             }
         } // start and sync the match timer
-        else if (message.toLowerCase().contains("time:") || message.toLowerCase().contains("score:") || message.toLowerCase().contains("time remaining: ")) {
+        else if (message.toLowerCase().contains("time:")
+                || message.toLowerCase().contains("score:")
+                || message.toLowerCase().contains("time remaining: ")) {
             String time = "-2:-2";
             String messageToReplace;
             // stop the timer
@@ -226,7 +275,8 @@ public class UndercastChatHandler {
             } catch (Exception ignored) {
             }
             // extract the time
-            messageToReplace = message.split("[0-9]{1,2}[:]{1}[0-5]?[0-9]{1}[:]?[0-5]?[0-9]?")[0];
+            messageToReplace = message
+                    .split("[0-9]{1,2}[:]{1}[0-5]?[0-9]{1}[:]?[0-5]?[0-9]?")[0];
             time = message.replace(messageToReplace, "");
 
             // detect if it should increment or decrement
@@ -250,11 +300,14 @@ public class UndercastChatHandler {
             // start the timer
             UndercastData.matchTimer = new MatchTimer();
         } else if (message.startsWith("Current class:")) {
-            UndercastData.currentGSClass = message.replace("Current class: ", "");
+            UndercastData.currentGSClass = message.replace("Current class: ",
+                    "");
         } else if (message.startsWith("You have selected")) {
-            UndercastData.currentGSClass = message.replace("You have selected ", "");
+            UndercastData.currentGSClass = message.replace(
+                    "You have selected ", "");
         } else if (message.startsWith("You have chosen: ")) {
-            UndercastData.currentGSClass = message.replace("You have chosen: ", "");
+            UndercastData.currentGSClass = message.replace("You have chosen: ",
+                    "");
         }
         return returnStatement;
 

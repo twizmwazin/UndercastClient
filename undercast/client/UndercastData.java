@@ -1,4 +1,5 @@
 package undercast.client;
+
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -14,7 +15,7 @@ import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 
 public class UndercastData {
-    //Data Varibles
+    // Data Varibles
 
     public static String map;
     public static String nextMap;
@@ -43,7 +44,8 @@ public class UndercastData {
     public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
     public static int filteredServerCount;
-    // if it's true, the /server comand isn't executed after a "Welcome to Overcast Network" message
+    // if it's true, the /server comand isn't executed after a
+    // "Welcome to Overcast Network" message
     public static boolean welcomeMessageExpected = false;
     public static boolean redirect = false;
     public static String directionServer;
@@ -53,7 +55,8 @@ public class UndercastData {
     public static int playTimeMin;
     public static int sortIndex;
     public static int filterIndex;
-    // saves if a /server command (without argument) was executed, if it's false, the user executed it 
+    // saves if a /server command (without argument) was executed, if it's
+    // false, the user executed it
     public static boolean serverDetectionCommandExecuted = false;
     public static boolean isNextKillFirstBlood = false;
     public static boolean isLastKillFromPlayer = false;
@@ -82,8 +85,9 @@ public class UndercastData {
 
         lobby, blitz, projectares, ghostsquadron, Unknown
     };
-    public static String[] sortNames = {"Web", "Match", "Players", "Abc"};
-    public static String[] filterNames = {"All", "PA", "Blitz", "GS"};
+
+    public static String[] sortNames = { "Web", "Match", "Players", "Abc" };
+    public static String[] filterNames = { "All", "PA", "Blitz", "GS" };
 
     public UndercastData() {
         update = true;
@@ -115,13 +119,17 @@ public class UndercastData {
         filterIndex = 0;
         try {
             if (!emergencyParser) {
-                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+                mapLoader = new InformationLoaderThread(new URL(
+                        "https://oc.tc/play"));
             } else {
-                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
+                mapLoader = new InformationLoaderThread(new URL(
+                        "http://undercast-team.netau.net"));
             }
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"
+                    + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to start information loaders");
+            System.out
+                    .println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
@@ -132,12 +140,15 @@ public class UndercastData {
 
         try {
             if (!emergencyParser) {
-                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
+                mapLoader = new InformationLoaderThread(new URL(
+                        "https://oc.tc/play"));
             } else {
-                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
+                mapLoader = new InformationLoaderThread(new URL(
+                        "http://undercast-team.netau.net"));
             }
         } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to start information loaders");
+            System.out
+                    .println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         if (isOC && getMatchState) {
@@ -149,15 +160,18 @@ public class UndercastData {
 
     public static void reloadStats() {
         try {
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"
+                    + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to start information loaders");
+            System.out
+                    .println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
 
     public static void websiteLoaded(String url, String contents) {
-        if (url.equals("https://oc.tc/play") || url.contains("undercast-team.netau.net")) {
+        if (url.equals("https://oc.tc/play")
+                || url.contains("undercast-team.netau.net")) {
             updateMap(contents);
         } else {
             updateStats(contents, url);
@@ -196,12 +210,14 @@ public class UndercastData {
 
     private static void updateMap(String cont) {
         try {
-            String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
-            serverCount = mapData.length - 1; //-1 for lobby exclusion 
+            String[][] mapData = ServerStatusHTMLParser.parse(mapLoader
+                    .getContents());
+            serverCount = mapData.length - 1; // -1 for lobby exclusion
             for (int c = 0; c < mapData.length; c++) {
                 serverInformation[c].name = mapData[c][0];
                 try {
-                    serverInformation[c].playerCount = Integer.parseInt(mapData[c][1]);
+                    serverInformation[c].playerCount = Integer
+                            .parseInt(mapData[c][1]);
                 } catch (Exception e) {
                     serverInformation[c].playerCount = -1;
                 }
@@ -211,7 +227,8 @@ public class UndercastData {
                     serverInformation[c].matchState = MatchState.Unknown;
                 }
                 try {
-                    serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
+                    serverInformation[c].type = ServerType
+                            .valueOf(mapData[c][4].replace("-", ""));
                 } catch (Exception e) {
                     serverInformation[c].type = ServerType.Unknown;
                 }
@@ -223,7 +240,10 @@ public class UndercastData {
                     serverCount = c - 1;
                     break;
                 }
-                if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that space in the server name has taken me a lot of time
+                if (serverInformation[c].name.replace(" ", "")
+                        .equalsIgnoreCase(server)) { // that space in the server
+                                                     // name has taken me a lot
+                                                     // of time
                     map = serverInformation[c].currentMap;
                     nextMap = serverInformation[c].nextMap;
                     currentServerType = serverInformation[c].type;
