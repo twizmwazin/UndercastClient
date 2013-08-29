@@ -38,8 +38,23 @@ public class InformationLoaderThread extends Thread {
     public void run() {
         InputStream in = null;
         try {
-            HttpURLConnection connection = (HttpURLConnection) urlToLoad.openConnection(); //I changed this, because it gives error 403 (forbidden) if you send no user agent.
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76"); //See ^^
+            HttpURLConnection connection = (HttpURLConnection) urlToLoad.openConnection(); // I
+                                                                                           // changed
+                                                                                           // this,
+                                                                                           // because
+                                                                                           // it
+                                                                                           // gives
+                                                                                           // error
+                                                                                           // 403
+                                                                                           // (forbidden)
+                                                                                           // if
+                                                                                           // you
+                                                                                           // send
+                                                                                           // no
+                                                                                           // user
+                                                                                           // agent.
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76"); // See
+                                                                         // ^^
             in = connection.getInputStream();
             // Try to get the charset
             Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
@@ -61,7 +76,8 @@ public class InformationLoaderThread extends Thread {
             in.close();
             in = null;
         } catch (Exception e) {
-            // Do something here, such as saying "Could not fetch server status" in a gui
+            // Do something here, such as saying "Could not fetch server status"
+            // in a gui
         } finally {
             UndercastData.websiteLoaded(urlToLoad.toString(), contents);
             if (in != null) {

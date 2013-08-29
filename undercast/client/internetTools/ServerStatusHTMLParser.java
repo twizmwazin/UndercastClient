@@ -9,11 +9,12 @@ import javax.swing.text.html.parser.ParserDelegator;
 
 /**
  * @author molenzwiebel ServerStatusHTMLParser, a class which will try parse the
- * given html to get the current map, name, players and next map. Returns: A
- * String[][] with as first value the server (0 = alpha, 11 = nostalgia) and as
- * second value the thing you want. 0 = Name, 1 = Players, 2 = Now playing map,
- * 3 = Next map, 4 = Gametype So, data[0][2] will give the now playing map on
- * Alpha and data[11][1] will give the players on Nostalgia
+ *         given html to get the current map, name, players and next map.
+ *         Returns: A String[][] with as first value the server (0 = alpha, 11 =
+ *         nostalgia) and as second value the thing you want. 0 = Name, 1 =
+ *         Players, 2 = Now playing map, 3 = Next map, 4 = Gametype So,
+ *         data[0][2] will give the now playing map on Alpha and data[11][1]
+ *         will give the players on Nostalgia
  */
 public class ServerStatusHTMLParser {
     // Function to remove the last character is it is a space
@@ -60,7 +61,9 @@ public class ServerStatusHTMLParser {
             return emergencyParse(string);
         }
         String realSource = string;
-        //realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='span4'>"), realSource.indexOf("<div class='span8'>")), "");
+        // realSource =
+        // realSource.replace(realSource.substring(realSource.indexOf("<div class='span4'>"),
+        // realSource.indexOf("<div class='span8'>")), "");
         realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='tab-pane active' id='main'>"), realSource.indexOf("<div class='tab-pane' id='project-ares'>")), "");
         String goodSource = compile(realSource);
         // Create 2 readers
@@ -96,7 +99,7 @@ class Parser extends HTMLEditorKit.ParserCallback {
     // Currently in a h4 tag?
 
     private boolean inTD = false;
-    //Currently in a p tag?
+    // Currently in a p tag?
     private boolean inP = false;
     // The number of attributes already gotten (such as name, players, map)
     private int count = 0;
@@ -104,7 +107,7 @@ class Parser extends HTMLEditorKit.ParserCallback {
     private int mapCount = -1;
     // Data
     public String[][] mapData = new String[999][5];
-    //The current gametype
+    // The current gametype
     public String gametype;
     public String rawData;
 
@@ -112,6 +115,7 @@ class Parser extends HTMLEditorKit.ParserCallback {
 
         return a.containsAttribute(HTML.Attribute.ID, "project-ares") || a.containsAttribute(HTML.Attribute.ID, "blitz") || a.containsAttribute(HTML.Attribute.ID, "ghost-squadron") || a.containsAttribute(HTML.Attribute.ID, "lobby");
     }
+
     // Function called when a tag (<tagName>) is opened
 
     @Override

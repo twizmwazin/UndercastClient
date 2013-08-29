@@ -48,7 +48,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     private boolean haveAchiement;
     public boolean isFakeAchievement;
     public String kindOfKill;
-    //True for killed, false for died
+    // True for killed, false for died
     public boolean killedOrDied;
     BufferedReader buffer = null;
     FileOutputStream fos = null;
@@ -77,7 +77,6 @@ public class UndercastGuiAchievement extends GuiAchievement {
         this.theAchievement = par1Achievement;
         this.haveAchiement = false;
         this.isFakeAchievement = false;
-
 
     }
 
@@ -203,15 +202,23 @@ public class UndercastGuiAchievement extends GuiAchievement {
                     String str = this.killerName;
                     ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(str);
                     AbstractClientPlayer.func_110304_a(resourcelocation, str);
-                    GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
+                    GL11.glPushMatrix(); // New GL11 matrix to not affect other
+                                         // part of the gui
                     TextureManager texturemanager = Minecraft.getMinecraft().renderEngine;
                     if (texturemanager != null) {
                         texturemanager.func_110577_a(resourcelocation);
                     }
                     GL11.glColor4f(1, 1, 1, 1); // White light on the image
-                    GL11.glScalef(1F / 2F, 1F / 4F, 1F);// Resizing the image (height/4 and width/8)
-                    GL11.glTranslatef((i + 8) * 2F, (j + 8) * 4F, 0);// Translating the image in the gui
-                    this.drawTexturedModalRect(0, 0, 32, 64, 32, 64); // Drawing the image
+                    GL11.glScalef(1F / 2F, 1F / 4F, 1F);// Resizing the image
+                                                        // (height/4 and
+                                                        // width/8)
+                    GL11.glTranslatef((i + 8) * 2F, (j + 8) * 4F, 0);// Translating
+                                                                     // the
+                                                                     // image in
+                                                                     // the gui
+                    this.drawTexturedModalRect(0, 0, 32, 64, 32, 64); // Drawing
+                                                                      // the
+                                                                      // image
                     GL11.glPopMatrix();
                 }
                 GL11.glDisable(GL11.GL_LIGHTING);

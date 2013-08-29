@@ -17,8 +17,7 @@ public class UndercastGuiAchievement2 extends GuiScreen {
 
     private Minecraft client;
     private ArrayList<UndercastAchievement> achievements = new ArrayList();
-    private static final ResourceLocation achievementBackground = new ResourceLocation(
-            "textures/gui/achievement/achievement_background.png");
+    private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
 
     public UndercastGuiAchievement2(Minecraft mc) {
         client = mc;
@@ -46,7 +45,7 @@ public class UndercastGuiAchievement2 extends GuiScreen {
             GL11.glDisable(GL11.GL_LIGHTING);
             float y = 0;
             if (ac.achievementTime < 256) {
-                y = -28 + (ac.achievementTime/8) + (ac.achievementTime % 24) / 24;
+                y = -28 + (ac.achievementTime / 8) + (ac.achievementTime % 24) / 24;
             } else {
                 y = 4;
             }
@@ -59,26 +58,28 @@ public class UndercastGuiAchievement2 extends GuiScreen {
             String str = ac.killerName;
             ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(str);
             AbstractClientPlayer.func_110304_a(resourcelocation, str);
-            GL11.glPushMatrix(); // New GL11 matrix to not affect other part of the gui
+            GL11.glPushMatrix(); // New GL11 matrix to not affect other part of
+                                 // the gui
             TextureManager texturemanager = Minecraft.getMinecraft().renderEngine;
             if (texturemanager != null) {
                 texturemanager.func_110577_a(resourcelocation);
             }
-            GL11.glScalef(1F / 2F, 1F / 4F, 1F);// Resizing the image (height/4 and width/8)
-            this.drawTexturedModalRect(24, 48, 32, 64, 32, 64); // Drawing the image
+            GL11.glScalef(1F / 2F, 1F / 4F, 1F);// Resizing the image (height/4
+                                                // and width/8)
+            this.drawTexturedModalRect(24, 48, 32, 64, 32, 64); // Drawing the
+                                                                // image
             GL11.glPopMatrix();
             GL11.glPopMatrix();
             ac.achievementTime++;
-            if(ac.achievementTime > 5120){
-                if(ac.achievementTime % 5 == 0){
-                    ac.xOffset+= ac.xOffset / 20;
+            if (ac.achievementTime > 5120) {
+                if (ac.achievementTime % 5 == 0) {
+                    ac.xOffset += ac.xOffset / 20;
                 }
-                if(ac.xOffset > 170){
+                if (ac.xOffset > 170) {
                     achievements.remove(achievementIndex);
                 }
             }
         }
     }
-
 
 }

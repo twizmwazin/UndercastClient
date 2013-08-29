@@ -10,8 +10,7 @@ public class SettingsToggleButton extends GuiButton {
     private String disabledString;
     private String setting;
 
-    public SettingsToggleButton(int par1, int par2, int par3, int par4, int par5,
-            String par6Str, String en, String dis, String set) {
+    public SettingsToggleButton(int par1, int par2, int par3, int par4, int par5, String par6Str, String en, String dis, String set) {
         super(par1, par2, par3, par4, par5, par6Str);
         this.enabledString = en;
         this.disabledString = dis;

@@ -103,11 +103,9 @@ public class UndercastCustomMethods {
             // get the server type for the new server (does not need to wait for
             // an update)
             for (int c = 0; c < UndercastData.serverInformation.length; c++) {
-                if (UndercastData.server
-                        .equals(UndercastData.serverInformation[c].name)) {
+                if (UndercastData.server.equals(UndercastData.serverInformation[c].name)) {
                     if (UndercastData.serverInformation[c].type == ServerType.ghostsquadron) {
-                        Minecraft.getMinecraft().thePlayer
-                                .sendChatMessage("/class");
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/class");
                     }
                 }
             }
@@ -126,77 +124,55 @@ public class UndercastCustomMethods {
             }
         } else {
             if (UndercastData.playTimeMin < 10) {
-                return "Playing Time: \u00A7E" + UndercastData.playTimeHours
-                        + ":0" + UndercastData.playTimeMin;
+                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
             } else {
-                return "Playing Time: \u00A7E" + UndercastData.playTimeHours
-                        + ":" + UndercastData.playTimeMin;
+                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
             }
         }
     }
 
     public static String getMatchTimeString() {
         // if it's a map with time limit and it's enabled in the config
-        if (!UndercastData.incrementMatchTime
-                && UndercastConfig.showMatchTimeSeconds) {
-            if (UndercastData.matchTimeHours == 0
-                    && UndercastData.matchTimeMin == 0) {
+        if (!UndercastData.incrementMatchTime && UndercastConfig.showMatchTimeSeconds) {
+            if (UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
                 if (UndercastData.matchTimeSec < 10) {
-                    return "Match Time: \u00A7E0:0"
-                            + UndercastData.matchTimeSec;
+                    return "Match Time: \u00A7E0:0" + UndercastData.matchTimeSec;
                 } else {
                     return "Match Time: \u00A7E0:" + UndercastData.matchTimeSec;
                 }
             } else if (UndercastData.matchTimeHours == 0) {
                 if (UndercastData.matchTimeSec < 10) {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin
-                            + ":0" + UndercastData.matchTimeSec;
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                 } else {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin
-                            + ":" + UndercastData.matchTimeSec;
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                 }
             } else {
                 if (UndercastData.matchTimeMin < 10) {
                     if (UndercastData.matchTimeSec < 10) {
-                        return "Match Time: \u00A7E"
-                                + UndercastData.matchTimeHours + ":0"
-                                + UndercastData.matchTimeMin + ":0"
-                                + UndercastData.matchTimeSec;
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                     } else {
-                        return "Match Time: \u00A7E"
-                                + UndercastData.matchTimeHours + ":0"
-                                + UndercastData.matchTimeMin + ":"
-                                + UndercastData.matchTimeSec;
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                     }
                 } else {
                     if (UndercastData.matchTimeSec < 10) {
-                        return "Match Time: \u00A7E"
-                                + UndercastData.matchTimeHours + ":"
-                                + UndercastData.matchTimeMin + ":0"
-                                + UndercastData.matchTimeSec;
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                     } else {
-                        return "Match Time: \u00A7E"
-                                + UndercastData.matchTimeHours + ":"
-                                + UndercastData.matchTimeMin + ":"
-                                + UndercastData.matchTimeSec;
+                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                     }
                 }
             }
         } else {
             if (UndercastData.matchTimeHours == 0) {
                 if (UndercastData.matchTimeMin < 10) {
-                    return "Match Time: \u00A7E0:0"
-                            + UndercastData.matchTimeMin;
+                    return "Match Time: \u00A7E0:0" + UndercastData.matchTimeMin;
                 } else {
                     return "Match Time: \u00A7E0:" + UndercastData.matchTimeMin;
                 }
             } else {
                 if (UndercastData.matchTimeMin < 10) {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours
-                            + ":0" + UndercastData.matchTimeMin;
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin;
                 } else {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours
-                            + ":" + UndercastData.matchTimeMin;
+                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin;
                 }
             }
         }
@@ -208,15 +184,13 @@ public class UndercastCustomMethods {
      */
     public static void sortAndFilterServers() {
         // if the index is moving to web then use the downloaded server list
-        if (UndercastData.sortNames[UndercastData.sortIndex]
-                .equalsIgnoreCase("web")) {
+        if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("web")) {
             // just keep the order
             for (int c = 0; c < UndercastData.serverCount; c++) {
                 UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[c];
             }
         } // sort based on matchStatus
-        else if (UndercastData.sortNames[UndercastData.sortIndex]
-                .equalsIgnoreCase("match")) {
+        else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("match")) {
             int index = 0;
             // Starting
             for (int c = 0; c < UndercastData.serverCount; c++) {
@@ -261,8 +235,7 @@ public class UndercastCustomMethods {
                 }
             }
         } // sort based on player count
-        else if (UndercastData.sortNames[UndercastData.sortIndex]
-                .equalsIgnoreCase("players")) {
+        else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("players")) {
             // copy the player counts to an int array
             int[][] playerCounts = new int[UndercastData.serverCount][2];
             for (int c = 0; c < UndercastData.serverCount; c++) {
@@ -286,11 +259,9 @@ public class UndercastCustomMethods {
                 UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[playerCounts[c][1]];
             }
         } // if the servers are being sorted abc sort the list and update
-        else if (UndercastData.sortNames[UndercastData.sortIndex]
-                .equalsIgnoreCase("abc")) {
+        else if (UndercastData.sortNames[UndercastData.sortIndex].equalsIgnoreCase("abc")) {
             // extract the server names to an Array list
-            ArrayList<String> serverNames = new ArrayList<String>(
-                    UndercastData.serverCount);
+            ArrayList<String> serverNames = new ArrayList<String>(UndercastData.serverCount);
             for (int c = 0; c < UndercastData.serverCount; c++) {
                 serverNames.add(c, UndercastData.serverInformation[c].name);
             }
@@ -301,8 +272,7 @@ public class UndercastCustomMethods {
             // put the whole server into order
             for (int c = 0; c < serverNames.size(); c++) {
                 for (int i = 0; i < UndercastData.serverCount; i++) {
-                    if (serverNames.get(c).equals(
-                            UndercastData.serverInformation[i].name)) {
+                    if (serverNames.get(c).equals(UndercastData.serverInformation[i].name)) {
                         UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[i];
                         break;
                     }
@@ -315,17 +285,13 @@ public class UndercastCustomMethods {
         // reset the filtered server count
         UndercastData.filteredServerCount = UndercastData.serverCount;
         // show which filter is chosen
-        if (!UndercastData.filterNames[UndercastData.filterIndex]
-                .equalsIgnoreCase("all")) {
+        if (!UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("all")) {
             ServerType shownType = ServerType.Unknown;
-            if (UndercastData.filterNames[UndercastData.filterIndex]
-                    .equalsIgnoreCase("PA")) {
+            if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("PA")) {
                 shownType = ServerType.projectares;
-            } else if (UndercastData.filterNames[UndercastData.filterIndex]
-                    .equalsIgnoreCase("Blitz")) {
+            } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("Blitz")) {
                 shownType = ServerType.blitz;
-            } else if (UndercastData.filterNames[UndercastData.filterIndex]
-                    .equalsIgnoreCase("GS")) {
+            } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("GS")) {
                 shownType = ServerType.ghostsquadron;
             }
 
@@ -335,28 +301,24 @@ public class UndercastCustomMethods {
             }
 
             // extract the servers
-            ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(
-                    UndercastData.serverCount);
+            ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
             for (int c = 0; c < UndercastData.serverCount; c++) {
                 if (UndercastData.sortedServerInformation[c].type == shownType) {
-                    filteredServers
-                            .add(UndercastData.sortedServerInformation[c]);
+                    filteredServers.add(UndercastData.sortedServerInformation[c]);
                 }
             }
 
             UndercastData.filteredServerCount = filteredServers.size();
             // and put them back to the serverList
             for (int c = 0; c < filteredServers.size(); c++) {
-                UndercastData.sortedServerInformation[c] = filteredServers
-                        .get(c);
+                UndercastData.sortedServerInformation[c] = filteredServers.get(c);
             }
         }
     }
 
     public static int getOnlineFriends() {
         int number = 0;
-        for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir
-                .hasNext();) {
+        for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
             String key = ir.next();
             String value = UndercastData.friends.get(key);
             if (!value.equals("offline")) {
@@ -366,13 +328,10 @@ public class UndercastCustomMethods {
         return number;
     }
 
-    public static boolean isTeamkill(String unstripedMessage, String player1,
-            String player2) {
+    public static boolean isTeamkill(String unstripedMessage, String player1, String player2) {
         char colorchar1, colorchar2;
-        colorchar1 = unstripedMessage
-                .charAt(unstripedMessage.indexOf(player1) - 1);
-        colorchar2 = unstripedMessage
-                .charAt(unstripedMessage.indexOf(player2) - 1);
+        colorchar1 = unstripedMessage.charAt(unstripedMessage.indexOf(player1) - 1);
+        colorchar2 = unstripedMessage.charAt(unstripedMessage.indexOf(player2) - 1);
         if (colorchar1 == colorchar2) {
             return true;
         } else {
@@ -382,19 +341,16 @@ public class UndercastCustomMethods {
 
     public static String getKillDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0
-                && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
-                str = "Total Kills: \u00A7a"
-                        + (int) (UndercastData.getKills() + UndercastData.stats.kills);
+                str = "Total Kills: \u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
             } else {
                 str = "Kills: \u00A7a" + (int) (UndercastData.getKills());
             }
         } else {
             str = "Kills: \u00A7a" + (int) UndercastData.getKills();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
-                str += "\u00A7f/\u00A7a"
-                        + (int) (UndercastData.getKills() + UndercastData.stats.kills);
+                str += "\u00A7f/\u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
             }
         }
         return str;
@@ -402,21 +358,55 @@ public class UndercastCustomMethods {
 
     public static String getDeathDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0
-                && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
-                str = "Total Deaths: \u00A74"
-                        + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
+                str = "Total Deaths: \u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
             } else {
                 str = "Deaths: \u00A74" + (int) (UndercastData.getDeaths());
             }
         } else {
             str = "Deaths: \u00A74" + (int) UndercastData.getDeaths();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
-                str += "\u00A7f/\u00A74"
-                        + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
+                str += "\u00A7f/\u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
             }
         }
         return str;
     }
+
+    public static String getKDDisplayString() {
+        String str;
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+            if (UndercastConfig.showTotalKills) {
+                str = "Total K/D: \u00A73" + (UndercastData.stats.kd);
+            } else {
+                str = "K/D: \u00A73" + (getKD());
+            }
+        } else {
+            str = "K/D: \u00A73" + getKD();
+            if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
+                str += "\u00A7f/\u00A73" + ((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.deaths + UndercastData.stats.deaths));
+                str = str.substring(0, str.lastIndexOf('.') + 4);
+            }
+        }
+        return str;
+    }
+
+    public static String getKKDisplayString() {
+        String str;
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+            if (UndercastConfig.showTotalKills) {
+                str = "Total K/K: \u00A73" + (UndercastData.stats.kk);
+            } else {
+                str = "K/K: \u00A73" + (getKK());
+            }
+        } else {
+            str = "K/K: \u00A73" + getKK();
+            if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
+                str += "\u00A7f/\u00A73" + (((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.killed + UndercastData.stats.getKilled())));
+                str = str.substring(0, str.lastIndexOf('.') + 4);
+            }
+        }
+        return str;
+    }
+
 }

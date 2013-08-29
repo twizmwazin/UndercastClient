@@ -30,4 +30,8 @@ public class PlayerStats {
         monuments = 0;
     }
 
+    public int getKilled() {
+        return (int) Math.round((float) kills / kk);
+    }
+
 }

@@ -1,4 +1,5 @@
 package undercast.client.server;
+
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -28,8 +29,9 @@ public class UndercastServerGUI extends GuiScreen {
 
     /**
      * Default constructor
-     *
-     * @param inGame Boolean if you are on a server or not
+     * 
+     * @param inGame
+     *            Boolean if you are on a server or not
      */
     public UndercastServerGUI(boolean inGame) {
         this.inGame = inGame;
@@ -61,11 +63,11 @@ public class UndercastServerGUI extends GuiScreen {
      */
     @Override
     protected void actionPerformed(GuiButton guibutton) {
-        //join button
+        // join button
         if (guibutton.id == 0) {
             joinSelectedServer();
         }
-        //refresh button
+        // refresh button
         if (guibutton.id == 1) {
             UndercastData.reloadServerInformations(true);
             GuiButtonTooltip refreshButton = (GuiButtonTooltip) buttonList.get(1);
@@ -79,11 +81,11 @@ public class UndercastServerGUI extends GuiScreen {
                 }
             }, 3000);
         }
-        //cancel/back to main menu
+        // cancel/back to main menu
         if (guibutton.id == 2) {
             closeGui();
         }
-        //stats button
+        // stats button
         if (guibutton.id == 3) {
             String username = Minecraft.getMinecraft().func_110432_I().func_111285_a();
             try {
@@ -91,7 +93,7 @@ public class UndercastServerGUI extends GuiScreen {
             } catch (Exception ignored) {
             }
         }
-        //sort button
+        // sort button
         if (guibutton.id == 4) {
             // move sort index
             UndercastData.sortIndex++;
@@ -118,7 +120,7 @@ public class UndercastServerGUI extends GuiScreen {
             if (UndercastData.filterIndex > UndercastData.filterNames.length - 1) {
                 UndercastData.filterIndex = 0;
             }
-            //update the buttons
+            // update the buttons
             this.buttonList.set(6, new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
             UndercastCustomMethods.sortAndFilterServers();
             UndercastConfig.setIntProperty("lastUsedFilter", UndercastData.filterIndex);
@@ -151,8 +153,9 @@ public class UndercastServerGUI extends GuiScreen {
 
     /**
      * Gets the current selected server
-     *
-     * @param var1 gets the server based on passed index
+     * 
+     * @param var1
+     *            gets the server based on passed index
      */
     public void selectServerIndex(int var1) {
         this.selected = var1;
@@ -171,8 +174,7 @@ public class UndercastServerGUI extends GuiScreen {
     }
 
     /**
-     * *
-     * Join selected server
+     * * Join selected server
      */
     public void joinSelectedServer() {
         if (selected != -1) {
@@ -189,7 +191,7 @@ public class UndercastServerGUI extends GuiScreen {
 
     @Override
     protected void keyTyped(char par1, int par2) {
-        if (par2 == 1) //Escape button
+        if (par2 == 1) // Escape button
         {
             closeGui();
         }

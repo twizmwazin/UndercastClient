@@ -1,4 +1,5 @@
 package undercast.client.update;
+
 //You may not release this source under any condition, it must be linked to this page
 //You may recompile and publish as long as skipperguy12 and Guru_Fraser are given credit
 //You may not claim this to be your own
@@ -14,7 +15,7 @@ public class Undercast_UpdaterThread extends Thread {
 
     boolean errorOccured;
     public static boolean finished = false;
-    boolean emergencyParser = false; //If we should use the emergency parser 
+    boolean emergencyParser = false; // If we should use the emergency parser
 
     public Undercast_UpdaterThread() {
         errorOccured = false;
@@ -33,8 +34,15 @@ public class Undercast_UpdaterThread extends Thread {
         String readline3 = "1:2:3:-1";
         errorOccured = false;
         try {
-            //download link
-            URL data = new URL("https://raw.github.com/UndercastTeam/UndercastClient/forge/version.txt"); // forge version should use forge instead of master
+            // download link
+            URL data = new URL("https://raw.github.com/UndercastTeam/UndercastClient/forge/version.txt"); // forge
+                                                                                                          // version
+                                                                                                          // should
+                                                                                                          // use
+                                                                                                          // forge
+                                                                                                          // instead
+                                                                                                          // of
+                                                                                                          // master
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();
             readline2 = in.readLine();
@@ -71,7 +79,7 @@ public class Undercast_UpdaterThread extends Thread {
 
     /**
      * @return true if the current version number is lower than the latest
-     * version = update necessary
+     *         version = update necessary
      */
     private boolean compareVersions(String internetVersion) {
         try {

@@ -119,17 +119,13 @@ public class UndercastData {
         filterIndex = 0;
         try {
             if (!emergencyParser) {
-                mapLoader = new InformationLoaderThread(new URL(
-                        "https://oc.tc/play"));
+                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
             } else {
-                mapLoader = new InformationLoaderThread(new URL(
-                        "http://undercast-team.netau.net"));
+                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
             }
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"
-                    + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
-            System.out
-                    .println("[UndercastMod]: Failed to start information loaders");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
@@ -140,15 +136,12 @@ public class UndercastData {
 
         try {
             if (!emergencyParser) {
-                mapLoader = new InformationLoaderThread(new URL(
-                        "https://oc.tc/play"));
+                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
             } else {
-                mapLoader = new InformationLoaderThread(new URL(
-                        "http://undercast-team.netau.net"));
+                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
             }
         } catch (Exception e) {
-            System.out
-                    .println("[UndercastMod]: Failed to start information loaders");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
         if (isOC && getMatchState) {
@@ -160,18 +153,15 @@ public class UndercastData {
 
     public static void reloadStats() {
         try {
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/"
-                    + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
-            System.out
-                    .println("[UndercastMod]: Failed to start information loaders");
+            System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
     }
 
     public static void websiteLoaded(String url, String contents) {
-        if (url.equals("https://oc.tc/play")
-                || url.contains("undercast-team.netau.net")) {
+        if (url.equals("https://oc.tc/play") || url.contains("undercast-team.netau.net")) {
             updateMap(contents);
         } else {
             updateStats(contents, url);
@@ -210,14 +200,12 @@ public class UndercastData {
 
     private static void updateMap(String cont) {
         try {
-            String[][] mapData = ServerStatusHTMLParser.parse(mapLoader
-                    .getContents());
+            String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
             serverCount = mapData.length - 1; // -1 for lobby exclusion
             for (int c = 0; c < mapData.length; c++) {
                 serverInformation[c].name = mapData[c][0];
                 try {
-                    serverInformation[c].playerCount = Integer
-                            .parseInt(mapData[c][1]);
+                    serverInformation[c].playerCount = Integer.parseInt(mapData[c][1]);
                 } catch (Exception e) {
                     serverInformation[c].playerCount = -1;
                 }
@@ -227,8 +215,7 @@ public class UndercastData {
                     serverInformation[c].matchState = MatchState.Unknown;
                 }
                 try {
-                    serverInformation[c].type = ServerType
-                            .valueOf(mapData[c][4].replace("-", ""));
+                    serverInformation[c].type = ServerType.valueOf(mapData[c][4].replace("-", ""));
                 } catch (Exception e) {
                     serverInformation[c].type = ServerType.Unknown;
                 }
@@ -240,10 +227,19 @@ public class UndercastData {
                     serverCount = c - 1;
                     break;
                 }
-                if (serverInformation[c].name.replace(" ", "")
-                        .equalsIgnoreCase(server)) { // that space in the server
-                                                     // name has taken me a lot
-                                                     // of time
+                if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that
+                                                                                           // space
+                                                                                           // in
+                                                                                           // the
+                                                                                           // server
+                                                                                           // name
+                                                                                           // has
+                                                                                           // taken
+                                                                                           // me
+                                                                                           // a
+                                                                                           // lot
+                                                                                           // of
+                                                                                           // time
                     map = serverInformation[c].currentMap;
                     nextMap = serverInformation[c].nextMap;
                     currentServerType = serverInformation[c].type;

@@ -18,34 +18,34 @@ import javax.swing.text.html.parser.ParserDelegator;
 public class PlayerStatsHTMLParser {
 
     public static String[] parse(String string) throws Exception {
-        //Create a reader
+        // Create a reader
         Reader HTMLReader = new StringReader(string);
-        //Create a reader
+        // Create a reader
         ParserDelegator pd = new ParserDelegator();
-        //Create our own parse handler
+        // Create our own parse handler
         PlayerParser p = new PlayerParser();
         NextParser p2 = new NextParser();
-        //Parse
+        // Parse
         pd.parse(HTMLReader, p, false);
-        //Return data
+        // Return data
         return p.playerData;
     }
 }
 
 class PlayerParser extends HTMLEditorKit.ParserCallback {
-    //Currently in a h4 tag?
+    // Currently in a h4 tag?
 
     private boolean inTD = false;
-    //The number of attributes already gotten (such as name, players, map)
+    // The number of attributes already gotten (such as name, players, map)
     private int count = 0;
-    //# of map currently parsing
-    //Data
+    // # of map currently parsing
+    // Data
     public String[] playerData = new String[11];
 
-    //Function called when a tag (<tagName>) is opened
+    // Function called when a tag (<tagName>) is opened
     @Override
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {
-        //If it is a tag we want, make sure to have a look at it
+        // If it is a tag we want, make sure to have a look at it
         if (t.equals(HTML.Tag.H2)) {
             inTD = true;
         }
@@ -53,7 +53,7 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
 
     @Override
     public void handleEndTag(HTML.Tag t, int pos) {
-        //Close the tag (</tagName>)
+        // Close the tag (</tagName>)
         if (t.equals(HTML.Tag.H2)) {
             inTD = false;
         }
@@ -61,16 +61,18 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
 
     @Override
     public void handleText(char[] data, int pos) {
-        //Handle the text in between tags (<tag>TEXT</tag>)
+        // Handle the text in between tags (<tag>TEXT</tag>)
         if (inTD) {
             try {
-                //If it is not a integer, it will stop after this line (I replace . with "" for ease, it works fine if you parse the string as a double)
+                // If it is not a integer, it will stop after this line (I
+                // replace . with "" for ease, it works fine if you parse the
+                // string as a double)
                 Integer.parseInt(new String(data).replace(" ", "").replace(".", ""));
-                //It is a integer, store the string data
+                // It is a integer, store the string data
                 playerData[count] = new String(data).replace(" ", "");
                 count++;
             } catch (Exception e) {
-                //Not a number, just do nothing
+                // Not a number, just do nothing
             }
         }
     }

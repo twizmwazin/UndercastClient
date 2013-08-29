@@ -8,7 +8,7 @@ import undercast.client.UndercastData.MatchState;
 public class ServersCommandParser {
 
     private static boolean isListening = false;
-    //is set to true if the mod casts /servers in order to delete the messages
+    // is set to true if the mod casts /servers in order to delete the messages
     public static boolean castedByMod = false;
     public static boolean nextCastedByMod = true;
     public static int pages = 0;
@@ -27,7 +27,7 @@ public class ServersCommandParser {
 
             // don't try to handle it if the command ended
             if (!commandEnded) {
-                //our only interest is the MatchState
+                // our only interest is the MatchState
                 if (message.contains("Current Map: ")) {
                     String name;
                     String map;
@@ -38,28 +38,28 @@ public class ServersCommandParser {
                     map = message.substring(message.indexOf("Current Map: ") + 13);
                     matchStatusColor = unstripedMessage.charAt(unstripedMessage.indexOf("Current Map§f: ") + 16);
 
-                    //c == red
-                    //e == yellow
-                    //a = green
-                    //f = white 
+                    // c == red
+                    // e == yellow
+                    // a = green
+                    // f = white
                     switch (matchStatusColor) {
-                        case 'a':
-                            state = MatchState.Starting;
-                            break;
-                        case 'c':
-                            state = MatchState.Finished;
-                            break;
-                        case 'e':
-                            state = MatchState.Started;
-                            break;
-                        case 'f':
-                            state = MatchState.Waiting;
-                            break;
-                        default:
-                            state = MatchState.Unknown;
+                    case 'a':
+                        state = MatchState.Starting;
+                        break;
+                    case 'c':
+                        state = MatchState.Finished;
+                        break;
+                    case 'e':
+                        state = MatchState.Started;
+                        break;
+                    case 'f':
+                        state = MatchState.Waiting;
+                        break;
+                    default:
+                        state = MatchState.Unknown;
                     }
 
-                    //insert the data
+                    // insert the data
                     for (int c = 0; c < UndercastData.serverInformation.length; c++) {
                         if (!(UndercastData.serverInformation[c].name == null)) {
                             if (UndercastData.serverInformation[c].name.equals(name)) {
@@ -83,7 +83,10 @@ public class ServersCommandParser {
             for (int c = 1; c < UndercastData.parsedPages.length; c++) {
                 int page = UndercastData.parsedPages[c];
                 if (page < 0) {
-                    page = pages + (page + 1); // + 1 is for not removing anything from pages (keep in mind that I'm adding a negative value)
+                    page = pages + (page + 1); // + 1 is for not removing
+                                               // anything from pages (keep in
+                                               // mind that I'm adding a
+                                               // negative value)
                 }
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + page);
             }

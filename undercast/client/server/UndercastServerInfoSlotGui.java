@@ -10,9 +10,11 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
     /**
      * Default constructor to create list
-     *
-     * @param guiservers Main server gui screen
-     * @param servers list of servers
+     * 
+     * @param guiservers
+     *            Main server gui screen
+     * @param servers
+     *            list of servers
      */
     public UndercastServerInfoSlotGui(UndercastServerGUI guiservers) {
         super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
@@ -61,7 +63,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
     @Override
     protected void elementClicked(int i, boolean flag) {
-        //flag = double click
+        // flag = double click
         if (flag) {
             parent.joinSelectedServer();
         } else {
@@ -71,16 +73,16 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
     private int getMatchColor(UndercastServer server) {
         switch (server.matchState) {
-            case Started:
-                return 0xFFFF00; // yellow
-            case Starting:
-                return 0x00FF00; // actually Lime
-            case Finished:
-                return 0x990000; // red
-            case Waiting:
-                return 0x0000A0; // blue like on the signs
-            default:
-                return 0xF87431; // Sienna1 = orange
+        case Started:
+            return 0xFFFF00; // yellow
+        case Starting:
+            return 0x00FF00; // actually Lime
+        case Finished:
+            return 0x990000; // red
+        case Waiting:
+            return 0x0000A0; // blue like on the signs
+        default:
+            return 0xF87431; // Sienna1 = orange
         }
     }
 }

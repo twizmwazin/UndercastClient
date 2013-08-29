@@ -18,13 +18,11 @@ import undercast.client.update.Undercast_UpdaterThread;
 public class UndercastConnectionHandler implements IConnectionHandler {
 
     @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler,
-            INetworkManager manager) {
+    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
     }
 
     @Override
-    public String connectionReceived(NetLoginHandler netHandler,
-            INetworkManager manager) {
+    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager) {
         return null;
     }
 
@@ -37,14 +35,10 @@ public class UndercastConnectionHandler implements IConnectionHandler {
      * @param manager
      */
     @Override
-    public void connectionOpened(NetHandler netClientHandler, String server,
-            int port, INetworkManager manager) {
+    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
         UndercastData.setTeam(UndercastData.Teams.Observers);
         // if logging onto an OvercastNetwork server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager()
-                .getSocketAddress().toString().contains(".oc.tc")
-                && !((NetClientHandler) netClientHandler).getNetManager()
-                        .getSocketAddress().toString().contains("mc.oc.tc")) {
+        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc") && !((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("mc.oc.tc")) {
             // What happens if logs into OvercastNetwork
             UndercastData.isOC = true;
             UndercastData.isLobby = true;
@@ -75,10 +69,8 @@ public class UndercastConnectionHandler implements IConnectionHandler {
                     Minecraft mc = FMLClientHandler.instance().getClient();
                     mc.thePlayer
                             .addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-                    mc.thePlayer
-                            .addChatMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
-                    mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74"
-                            + UndercastData.updateLink);
+                    mc.thePlayer.addChatMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
+                    mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74" + UndercastData.updateLink);
                     mc.thePlayer
                             .addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
                 }
@@ -97,8 +89,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
      * @param server
      */
     @Override
-    public void connectionOpened(NetHandler netClientHandler,
-            MinecraftServer server, INetworkManager manager) {
+    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager) {
     }
 
     @Override
@@ -122,7 +113,6 @@ public class UndercastConnectionHandler implements IConnectionHandler {
     }
 
     @Override
-    public void clientLoggedIn(NetHandler clientHandler,
-            INetworkManager manager, Packet1Login login) {
+    public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
     }
 }

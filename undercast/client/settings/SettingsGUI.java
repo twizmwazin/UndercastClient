@@ -13,19 +13,16 @@ public class SettingsGUI extends GuiScreen {
         super();
         parentScreen = gs;
     }
-    public String[] toggleSettings = new String[]{"showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap",
-        "showNextMap", "showStreak", "showGuiChat", "showGuiMulti", "showPlayingTime", "toggleTitleScreenButton", "filterTips",
-        "fullBright", "matchOnServerJoin", "enableButtonTooltips"};
-    public String[] enabledStrings = new String[]{"FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Friends shown", "Current map shown",
-        "Next map shown", "Killstreak shown", "Chat gui shown", "Multi gui shown", "Playing time shown", "Title screen button", "Tips filtered",
-        "Full bright enabled", "/match on server join", "Button tooltips shown"};
-    public String[] disabledStrings = new String[]{"FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Friends hidden", "Current map hidden",
-        "Next map hidden", "Killstreak hidden", "Chat gui hidden", "Multi gui hidden", "Playing time hidden", "No title screen button", "No tips filtered",
-        "Full bright disabled", "No /match on server join", "Button tooltips hidden"};
+
+    public String[] toggleSettings = new String[] { "showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showFriends", "showMap", "showNextMap", "showStreak", "showGuiChat", "showGuiMulti", "showPlayingTime", "toggleTitleScreenButton", "filterTips", "fullBright", "matchOnServerJoin", "enableButtonTooltips" };
+    public String[] enabledStrings = new String[] { "FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Friends shown", "Current map shown", "Next map shown", "Killstreak shown", "Chat gui shown", "Multi gui shown", "Playing time shown", "Title screen button", "Tips filtered", "Full bright enabled", "/match on server join",
+            "Button tooltips shown" };
+    public String[] disabledStrings = new String[] { "FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Friends hidden", "Current map hidden", "Next map hidden", "Killstreak hidden", "Chat gui hidden", "Multi gui hidden", "Playing time hidden", "No title screen button", "No tips filtered", "Full bright disabled",
+            "No /match on server join", "Button tooltips hidden" };
 
     @Override
     public void initGui() {
-        // Add buttons		
+        // Add buttons
         int x = width / 2 - 75;
         int y = height / 2;
         this.buttonList.add(new GuiButton(1, x, y - 50, 150, 20, "Overlay Settings"));

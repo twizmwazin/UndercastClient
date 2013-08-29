@@ -32,28 +32,19 @@ public class UndercastTickHandler implements ITickHandler {
         if (type.equals(EnumSet.of(TickType.CLIENT))) {
             mc = FMLClientHandler.instance().getClient();
             current = mc.currentScreen;
-            if (current instanceof GuiMainMenu
-                    && !(current instanceof UndercastGuiMainMenu)) {
+            if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
                 mc.displayGuiScreen(new UndercastGuiMainMenu());
             } else if (current instanceof GuiOptions) {
                 List customButtonList;
                 try {
-                    customButtonList = ObfuscationReflectionHelper
-                            .getPrivateValue(GuiScreen.class,
-                                    (GuiOptions) current, 3);
+                    customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 3);
                     if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
-                        UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList
-                                .size();
+                        UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
                     }
-                    if (customButtonList.size() == UndercastModClass
-                            .getInstance().buttonListSizeOfGuiOptions) {
-                        customButtonList.add(new UndercastGuiConfigButton(301,
-                                current.width / 2 + 5, current.height / 6 + 60,
-                                150, 20, "Undercast config", current));
+                    if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
+                        customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
                     }
-                    ObfuscationReflectionHelper.setPrivateValue(
-                            GuiScreen.class, (GuiOptions) current,
-                            customButtonList, 3);
+                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 3);
                 } catch (UnableToAccessFieldException e) {
                 }
             }

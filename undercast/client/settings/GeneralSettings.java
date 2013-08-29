@@ -10,9 +10,11 @@ import undercast.client.UndercastConfig;
 public class GeneralSettings extends GuiScreen {
 
     // Toggle settings
-    public String[] toggleSettings = new String[]{"showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState", "realtimeStats"};
-    public String[] enabledStrings = new String[]{"Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown", "Match state shown", "Realtime stats"};
-    public String[] disabledStrings = new String[]{"Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden", "Game stats"};     // X Offset vars
+    public String[] toggleSettings = new String[] { "showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState", "realtimeStats" };
+    public String[] enabledStrings = new String[] { "Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown", "Match state shown", "Realtime stats" };
+    public String[] disabledStrings = new String[] { "Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden", "Game stats" }; // X
+                                                                                                                                                                                                                                           // Offset
+                                                                                                                                                                                                                                           // vars
     public GuiButton xPlusButton;
     public GuiButton xMinusButton;
     public GuiTextField xTextField;
@@ -50,7 +52,7 @@ public class GeneralSettings extends GuiScreen {
         int x = width / 2 - 77;
         x2 = width / 2 + 75;
 
-        //X and Y Offset
+        // X and Y Offset
         xPlusButton = new GuiButton(3, x1, y - 35, 15, 20, "+");
         yPlusButton = new GuiButton(4, x2, y - 35, 15, 20, "+");
         xMinusButton = new GuiButton(5, x1 + 60, y - 35, 15, 20, "-");
@@ -76,9 +78,7 @@ public class GeneralSettings extends GuiScreen {
         xTextField.drawTextBox();
         yTextField.drawTextBox();
 
-        int x = width / 2 - 77,
-                x2 = width / 2 + 75,
-                x1 = width / 2 - 150;
+        int x = width / 2 - 77, x2 = width / 2 + 75, x1 = width / 2 - 150;
         int y = (height / 2 - 120) + toggleSettings.length * 25;
         drawCenteredString(fontRenderer, "X Offset", x1 + 40, y - 38, 0xffffff);
         drawCenteredString(fontRenderer, "Y Offset", x2 + 40, y - 38, 0xffffff);
@@ -89,7 +89,7 @@ public class GeneralSettings extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
-            //secure reading of the int values
+            // secure reading of the int values
             int x, y = 0;
             try {
                 x = Integer.parseInt(xTextField.getText());
@@ -123,11 +123,11 @@ public class GeneralSettings extends GuiScreen {
     protected void actionPerformed(GuiButton guibutton) {
         // If the button is clicked, toggle and save the setting
         if (guibutton instanceof SettingsToggleButton) {
-            //Toggle button
+            // Toggle button
             SettingsToggleButton button = (SettingsToggleButton) guibutton;
             button.buttonPressed();
         } else if (guibutton.id == 1) {
-            //secure reading of the int values
+            // secure reading of the int values
             int x, y;
             try {
                 x = Integer.parseInt(xTextField.getText());
@@ -140,7 +140,7 @@ public class GeneralSettings extends GuiScreen {
                 y = 0;
             }
 
-            //Close screen
+            // Close screen
             UndercastConfig.setIntProperty("X", x);
             UndercastConfig.x = x;
             UndercastConfig.setIntProperty("Y", y);
@@ -148,7 +148,7 @@ public class GeneralSettings extends GuiScreen {
             FMLClientHandler.instance().getClient().displayGuiScreen(parentScreen);
         }
 
-        //Handle +/-
+        // Handle +/-
         if (guibutton.id == 3) {
             xTextField.setText(Integer.toString(Integer.parseInt(xTextField.getText()) + 1));
         }

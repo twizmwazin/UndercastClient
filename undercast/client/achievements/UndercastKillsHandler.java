@@ -27,7 +27,7 @@ public class UndercastKillsHandler {
     }
 
     public void handleMessage(String message, String username, EntityPlayer player, String unstripedMessage) {
-        //When you die from someone
+        // When you die from someone
         if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
             if (!message.contains("fury of") && !message.contains("took ")) {
                 killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
@@ -48,7 +48,7 @@ public class UndercastKillsHandler {
             } else {
                 this.printAchievement();
             }
-        } //if you kill a person
+        } // if you kill a person
         else if (UndercastConfig.showKillAchievements && !message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
@@ -83,7 +83,7 @@ public class UndercastKillsHandler {
                 }
                 UndercastData.isNextKillFirstBlood = false;
             }
-        } //when you die, but nobody killed you.
+        } // when you die, but nobody killed you.
         else if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team")) {
             killer = username;
             killOrKilled = false;
@@ -92,7 +92,7 @@ public class UndercastKillsHandler {
             if (UndercastData.isLastKillFromPlayer && UndercastConfig.showLastKillAchievement) {
                 printLastKillAchievement();
             }
-        } //When someone die
+        } // When someone die
         else if ((message.contains("by ") || message.contains("took ") || message.contains("fury of ")) && !message.toLowerCase().endsWith(" team")) {
             UndercastData.isLastKillFromPlayer = false;
             UndercastData.isNextKillFirstBlood = false;
@@ -102,20 +102,19 @@ public class UndercastKillsHandler {
     private void printAchievement() {
 
         Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
-                .addFakeAchievementToMyList(custom, killOrKilled, killer);
+        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement).addFakeAchievementToMyList(custom, killOrKilled, killer);
     }
 
     private void printTeamKillAchievement() {
         Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement)
-                .addFakeAchievementToMyList(custom, !killOrKilled, killer, killer, "Teamkill!");
+        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement).addFakeAchievementToMyList(custom, !killOrKilled, killer, killer, "Teamkill!");
     }
 
     public void printFirstBloodAchievement() {
         final long waitingTime;
         if (UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
-            waitingTime = 4000L; //This is to get enough time between two achievements
+            waitingTime = 4000L; // This is to get enough time between two
+                                 // achievements
         } else {
             waitingTime = 0L;
         }
@@ -126,8 +125,7 @@ public class UndercastKillsHandler {
                     Thread.sleep(waitingTime);
                     Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
                     Minecraft client = FMLClientHandler.instance().getClient();
-                    ((UndercastGuiAchievement) client.guiAchievement)
-                            .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
+                    ((UndercastGuiAchievement) client.guiAchievement).addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -141,8 +139,7 @@ public class UndercastKillsHandler {
 
         Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
         Minecraft client = FMLClientHandler.instance().getClient();
-        ((UndercastGuiAchievement) client.guiAchievement)
-                .addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
+        ((UndercastGuiAchievement) client.guiAchievement).addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
 
     }
 

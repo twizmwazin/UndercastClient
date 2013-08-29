@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import undercast.client.UndercastData;
 
 /**
- *
+ * 
  * @author Flv92
  */
 public class FriendHandler {
@@ -20,7 +20,7 @@ public class FriendHandler {
     }
 
     /**
-     *
+     * 
      * @param message
      * @return true to display the chat message
      */
@@ -29,7 +29,7 @@ public class FriendHandler {
             return true;
         }
         if (isListening) {
-            //Getting the number of pages if it is not already known
+            // Getting the number of pages if it is not already known
             if (pages == -1 && message.contains("------------  Your Friends")) {
                 int lengthOfNumber = message.substring(message.lastIndexOf(" of ") + 4, message.lastIndexOf(")")).length();
                 try {

@@ -17,22 +17,17 @@ import undercast.client.settings.SettingsGUI;
  */
 public class UndercastKeyHandling extends KeyHandler {
 
-    public static KeyBinding keyGuiHide = new KeyBinding("undercast.gui",
-            Keyboard.KEY_F6);
-    public static KeyBinding keyGuiServer = new KeyBinding(
-            "undercast.inGameGui", Keyboard.KEY_L);
-    public static KeyBinding keyGuiFullBright = new KeyBinding(
-            "undercast.fullBright", Keyboard.KEY_G);
-    public static KeyBinding keySettingsGui = new KeyBinding(
-            "undercast.settings", Keyboard.KEY_P);
+    public static KeyBinding keyGuiHide = new KeyBinding("undercast.gui", Keyboard.KEY_F6);
+    public static KeyBinding keyGuiServer = new KeyBinding("undercast.inGameGui", Keyboard.KEY_L);
+    public static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
+    public static KeyBinding keySettingsGui = new KeyBinding("undercast.settings", Keyboard.KEY_P);
     public BufferedImage killerBuffer;
 
     public UndercastKeyHandling() {
         // the first value is an array of KeyBindings, the second is whether or
         // not the call
         // keyDown should repeat as long as the key is down
-        super(new KeyBinding[] { keyGuiHide, keyGuiServer, keyGuiFullBright,
-                keySettingsGui }, new boolean[] { false, false, false, false });
+        super(new KeyBinding[] { keyGuiHide, keyGuiServer, keyGuiFullBright, keySettingsGui }, new boolean[] { false, false, false, false });
     }
 
     @Override
@@ -41,8 +36,7 @@ public class UndercastKeyHandling extends KeyHandler {
     }
 
     @Override
-    public void keyDown(EnumSet<TickType> types, KeyBinding kb,
-            boolean tickEnd, boolean isRepeat) {
+    public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
         Minecraft mc = FMLClientHandler.instance().getClient();
         if (mc.inGameHasFocus && tickEnd) // Using this boolean because keyDown
                                           // is called two times, at the start
@@ -54,28 +48,21 @@ public class UndercastKeyHandling extends KeyHandler {
                 UndercastData.guiShowing = !UndercastData.guiShowing;
             } else if (kb == keyGuiServer) {
                 mc.displayGuiScreen(new UndercastServerGUI(true));
-            } else if (UndercastData.isPlayingOvercastNetwork()
-                    && kb == keyGuiFullBright
-                    && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)
-                    && UndercastConfig.fullBright) {
+            } else if (UndercastData.isPlayingOvercastNetwork() && kb == keyGuiFullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver) && UndercastConfig.fullBright) {
                 if (mc.inGameHasFocus) {
                     UndercastModClass.brightActive = !UndercastModClass.brightActive;
                     if (UndercastModClass.brightActive) {
-                        mc.gameSettings.gammaSetting = UndercastModClass
-                                .getInstance().brightLevel;
+                        mc.gameSettings.gammaSetting = UndercastModClass.getInstance().brightLevel;
                     } else {
-                        mc.gameSettings.gammaSetting = UndercastModClass
-                                .getInstance().defaultLevel;
+                        mc.gameSettings.gammaSetting = UndercastModClass.getInstance().defaultLevel;
                     }
                     mc.sndManager.playSoundFX("random.click", 0.5F, 1.0F);
                 }
             } else if (kb == keySettingsGui) {
-                FMLClientHandler.instance().getClient()
-                        .displayGuiScreen(new SettingsGUI(null));
+                FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(null));
             }
         } else if (tickEnd) {
-            if (kb == keyGuiServer
-                    && mc.currentScreen instanceof UndercastServerGUI) {
+            if (kb == keyGuiServer && mc.currentScreen instanceof UndercastServerGUI) {
                 ((UndercastServerGUI) mc.currentScreen).closeGui();
             }
         }
