@@ -124,7 +124,7 @@ public class UndercastChatHandler {
         else if (message.contains("You joined the")) {
             UndercastData.reloadStats();
             try {
-                UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "")));
+                UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "").replace(" Squad", "")));
             } catch (Exception e) {
                 // if the team set fails because of an alias, set the team to
                 // Unknown
