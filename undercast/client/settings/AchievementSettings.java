@@ -8,9 +8,10 @@ import org.lwjgl.input.Keyboard;
 public class AchievementSettings extends GuiScreen {
 
     public GuiScreen parentScreen;
-    public String[] toggleSettings = new String[] { "showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement", "showLastKillAchievement", "displaySpecialKillMessages" };
-    public String[] enabledStrings = new String[] { "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown", "Last Kill shown", "Special Kill display enabled" };
-    public String[] disabledStrings = new String[] { "No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement", "No Last Kill Achievement", "Special Kill display disabled" };
+    public String[] toggleSettings = new String[]{"showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement", "showLastKillAchievement", "displaySpecialKillMessages", "displaySpecialObjectives"};
+    public String[] enabledStrings = new String[]{ "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown", "Last Kill shown", "Special Kill display enabled", "Special Objective display"};
+    public String[] disabledStrings = new String[]{ "No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement", "No Last Kill Achievement", "Special Kill display disabled", "No Special Objective display"};
+
 
     public AchievementSettings(GuiScreen gs) {
         super();

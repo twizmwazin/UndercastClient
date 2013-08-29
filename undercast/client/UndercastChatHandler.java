@@ -79,11 +79,11 @@ public class UndercastChatHandler {
             message = message.replace("Now playing ", "");
             UndercastData.setMap((message.split(" by ")[0]));
             if (UndercastData.getKills() == 0 && UndercastData.getDeaths() == 0) { // new
-                                                                                   // match
-                                                                                   // or
-                                                                                   // observer
-                                                                                   // or
-                                                                                   // noob
+                // match
+                // or
+                // observer
+                // or
+                // noob
                 UndercastData.reloadServerInformations(false);
                 UndercastData.reloadStats();
             }
@@ -141,6 +141,7 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
+            UndercastData.isObjectiveReload = true;
             UndercastData.reloadStats();
             // stop the timer
             try {
@@ -164,12 +165,25 @@ public class UndercastChatHandler {
             player.addChatMessage("Deaths: " + (int) UndercastData.getDeaths() + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.deaths + UndercastData.stats.deaths)) : ""));
             player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
             player.addChatMessage("Kill Streak: " + (int) UndercastData.getLargestKillstreak());
+            if(UndercastData.woolsDifference > 0) {
+                player.addChatMessage("Wools: +" + UndercastData.woolsDifference + ((UndercastConfig.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.wools + UndercastData.woolsDifference)) : ""));
+            }
+            if(UndercastData.coresDifference > 0) {
+                player.addChatMessage("Cores: +" + UndercastData.coresDifference + ((UndercastConfig.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.cores + UndercastData.coresDifference)) : ""));
+            }
+            if(UndercastData.monumentDifference > 0) {
+                player.addChatMessage("Monuments: +" + UndercastData.monumentDifference + ((UndercastConfig.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.monuments + UndercastData.monumentDifference)) : ""));
+            }
+
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
             UndercastData.resetKillstreak();
             UndercastData.resetLargestKillstreak();
             UndercastData.resetScore();
+            UndercastData.woolsDifference = 0;
+            UndercastData.coresDifference = 0;
+            UndercastData.monumentDifference = 0;
             UndercastData.setTeam(UndercastData.Teams.Observers);
             return false;
         } // redirection and lobby detection

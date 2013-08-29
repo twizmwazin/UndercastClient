@@ -49,6 +49,7 @@ public class UndercastConfig {
     public static boolean showTotalKills;
     public static boolean realtimeStats;
     public static boolean displaySpecialKillMessages;
+    public static boolean displaySpecialObjectives;
     public static int lastUsedFilter;
     public static File configFile;
 
@@ -97,6 +98,7 @@ public class UndercastConfig {
         realtimeStats = config.get("UndercastMod", "realtimeStats", true).getBoolean(true);
         showTotalKills = config.get("UndercastMod", "showTotalKills", true).getBoolean(true);
         displaySpecialKillMessages = config.get("UndercastMod", "displaySpecialKillMessages", true).getBoolean(true);
+        displaySpecialObjectives = config.get("UndercastMod", "displaySpecialObjectives", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
