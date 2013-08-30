@@ -76,6 +76,7 @@ public class UndercastData {
     public static boolean isObjectiveReload = false;
     public static boolean removeNextChatMessage = false;
     public static FinalStats finalStats;
+    public static boolean isEU;
 
     public static enum Teams {
 
@@ -94,6 +95,7 @@ public class UndercastData {
 
     public static String[] sortNames = { "Web", "Match", "Players", "Abc" };
     public static String[] filterNames = { "All", "PA", "Blitz", "GS" };
+    public static String[] locationNames = {"US", "EU"};
 
     public UndercastData() {
         update = true;

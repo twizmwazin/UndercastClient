@@ -38,7 +38,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
     public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
         UndercastData.setTeam(UndercastData.Teams.Observers);
         // if logging onto an OvercastNetwork server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains(".oc.tc") && !((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().contains("mc.oc.tc")) {
+        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().toLowerCase().contains(".oc.tc") && !((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().toLowerCase().contains("mc.oc.tc")) {
             // What happens if logs into OvercastNetwork
             UndercastData.isOC = true;
             UndercastData.isLobby = true;
@@ -47,6 +47,12 @@ public class UndercastConnectionHandler implements IConnectionHandler {
             UndercastData.setTeam(UndercastData.Teams.Observers);
             UndercastData.setServer("Lobby");
             UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
+            if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().toLowerCase().contains("eu.oc.tc")) {
+                UndercastData.isEU = true;
+            } else {
+                UndercastData.isEU = false;
+            }
+
         } else {
             UndercastData.isOC = false;
         }
@@ -57,7 +63,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
                 public void run() {
                     try {
                         Thread.sleep(3000);
-                        for (int c = 0; c < 10; c++) { // don't wait longer than
+                        for (int c = 0; c < 10; c++) { // don't wait longer that
                                                        // 10 sec
                             Thread.sleep(1000);
                             if (Undercast_UpdaterThread.finished) {
@@ -67,12 +73,10 @@ public class UndercastConnectionHandler implements IConnectionHandler {
                     } catch (InterruptedException e) {
                     }
                     Minecraft mc = FMLClientHandler.instance().getClient();
-                    mc.thePlayer
-                            .addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
                     mc.thePlayer.addChatMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
                     mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74" + UndercastData.updateLink);
-                    mc.thePlayer
-                            .addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
                 }
             };
             thread.start();

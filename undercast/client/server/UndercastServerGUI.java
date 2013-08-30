@@ -54,6 +54,9 @@ public class UndercastServerGUI extends GuiScreen {
         if (!UndercastData.isUpdate()) {
             this.buttonList.add(new GuiButtonTooltip(7, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
+        this.buttonList.add(new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.isEU ? 1 : 0], "Toggle between US and EU servers."));
+        //temporary:
+        ((GuiButtonTooltip)this.buttonList.get(this.buttonList.size() - 1)).enabled = false;
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
 
