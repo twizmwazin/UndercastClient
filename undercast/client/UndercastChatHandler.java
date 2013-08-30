@@ -141,8 +141,7 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
-            UndercastData.isObjectiveReload = true;
-            UndercastData.reloadStats();
+            UndercastData.finalStats = new FinalStats();
             // stop the timer
             try {
                 UndercastData.matchTimer.stop();
@@ -157,33 +156,12 @@ public class UndercastChatHandler {
 
         } // when a map is done. Display all the stats
         else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
-            player.addChatMessage(normalMessage);
-            player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Final Stats:");
-            player.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-            player.addChatMessage("Kills: " + (int) UndercastData.getKills() + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.kills + UndercastData.stats.kills)) : ""));
-            player.addChatMessage("Deaths: " + (int) UndercastData.getDeaths() + ((UndercastConfig.realtimeStats) ? (" Total: " + (int) (UndercastData.deaths + UndercastData.stats.deaths)) : ""));
-            player.addChatMessage("K/D: " + UndercastCustomMethods.getKD());
-            player.addChatMessage("Kill Streak: " + (int) UndercastData.getLargestKillstreak());
-            if(UndercastData.woolsDifference > 0) {
-                player.addChatMessage("Wools: +" + UndercastData.woolsDifference + ((UndercastConfig.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.wools + UndercastData.woolsDifference)) : ""));
-            }
-            if(UndercastData.coresDifference > 0) {
-                player.addChatMessage("Cores: +" + UndercastData.coresDifference + ((UndercastConfig.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.cores + UndercastData.coresDifference)) : ""));
-            }
-            if(UndercastData.monumentDifference > 0) {
-                player.addChatMessage("Monuments: +" + UndercastData.monumentDifference + ((UndercastConfig.realtimeStats) ? (" Total: " + (int)(UndercastData.stats.monuments + UndercastData.monumentDifference)) : ""));
-            }
-
             UndercastData.resetKills();
             UndercastData.resetKilled();
             UndercastData.resetDeaths();
             UndercastData.resetKillstreak();
             UndercastData.resetLargestKillstreak();
             UndercastData.resetScore();
-            UndercastData.woolsDifference = 0;
-            UndercastData.coresDifference = 0;
-            UndercastData.monumentDifference = 0;
             UndercastData.setTeam(UndercastData.Teams.Observers);
             return false;
         } // redirection and lobby detection
@@ -213,18 +191,18 @@ public class UndercastChatHandler {
         } // server detection
         else if (message.contains("Teleporting you to ")) {
             String server = message.replace("Teleporting you to ", "");
-            if(!server.equals(UndercastData.server)) {
+            if (!server.equals(UndercastData.server)) {
                 UndercastData.setServer(server);
-                if(!message.toLowerCase().contains("lobby")) {
+                if (!message.toLowerCase().contains("lobby")) {
                     UndercastData.welcomeMessageExpected = true;
                 }
                 UndercastCustomMethods.handleServerSwap();
             }
         } else if (message.contains("Connecting to ")) {
             String server = message.replace("Connecting to ", "");
-            if(!server.equals(UndercastData.server)) {
+            if (!server.equals(UndercastData.server)) {
                 UndercastData.setServer(server);
-                if(!message.toLowerCase().contains("lobby")) {
+                if (!message.toLowerCase().contains("lobby")) {
                     UndercastData.welcomeMessageExpected = true;
                 }
                 UndercastCustomMethods.handleServerSwap();
@@ -233,7 +211,7 @@ public class UndercastChatHandler {
             if (UndercastData.serverDetectionCommandExecuted) {
                 UndercastData.serverDetectionCommandExecuted = false;
                 String server = message.replace("You are currently on ", "");
-                if(!server.equals(UndercastData.server)) {
+                if (!server.equals(UndercastData.server)) {
                     UndercastData.setServer(server);
                     UndercastCustomMethods.handleServerSwap();
                 }

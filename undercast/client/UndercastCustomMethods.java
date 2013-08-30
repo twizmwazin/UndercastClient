@@ -75,6 +75,9 @@ public class UndercastCustomMethods {
         } else {
             UndercastData.isLobby = false;
         }
+        if(!UndercastData.previousServer.equalsIgnoreCase("lobby")) {
+            UndercastData.finalStats = new FinalStats();
+        }
         UndercastData.setTeam(UndercastData.Teams.Observers);
         UndercastData.resetDeaths();
         UndercastData.resetKills();
@@ -408,7 +411,7 @@ public class UndercastCustomMethods {
         }
         return str;
     }
-    
+
     public static boolean isSpecialObjective(int obj) {
         // detect special objectives like 50, 100, 150, 200, 250...
         int i1 = obj / 100;
