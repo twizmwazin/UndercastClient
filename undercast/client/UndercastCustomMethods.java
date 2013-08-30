@@ -386,7 +386,11 @@ public class UndercastCustomMethods {
             str = (UndercastConfig.lessObstructive ? "KD: " : "K/D: ") + "\u00A73" + getKD();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
                 str += "\u00A7f/\u00A73" + ((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.deaths + UndercastData.stats.deaths));
-                str = str.substring(0, str.lastIndexOf('.') + 4);
+                try {
+                    // cut the kd, throws an exception if it's shorter
+                    str = str.substring(0, str.lastIndexOf('.') + 4);
+                } catch (Exception e) {
+                }
             }
         }
         return str;
