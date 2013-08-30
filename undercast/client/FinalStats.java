@@ -26,7 +26,7 @@ public class FinalStats {
         this.kd = UndercastCustomMethods.getKD();
         this.totalKD = "";
         if (UndercastConfig.realtimeStats) {
-            this.totalKD = "\u00A7f Total: \u00A73" + (((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.killed + UndercastData.stats.getKilled())));
+            this.totalKD = "\u00A7f Total: \u00A73" + (((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.deaths + UndercastData.stats.deaths)));
             this.totalKD = totalKD.substring(0, totalKD.lastIndexOf('.') + 4);
         }
         this.killstreak = (int) UndercastData.getLargestKillstreak();
