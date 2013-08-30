@@ -75,7 +75,7 @@ public class UndercastCustomMethods {
         } else {
             UndercastData.isLobby = false;
         }
-        if(!UndercastData.previousServer.equalsIgnoreCase("lobby")) {
+        if (!UndercastData.previousServer.equalsIgnoreCase("lobby")) {
             UndercastData.finalStats = new FinalStats();
         }
         UndercastData.setTeam(UndercastData.Teams.Observers);
@@ -121,15 +121,15 @@ public class UndercastCustomMethods {
     public static String getPlayingTimeString() {
         if (UndercastData.playTimeHours == 0) {
             if (UndercastData.playTimeMin < 10) {
-                return "Playing Time: \u00A7E0:0" + UndercastData.playTimeMin;
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:0" + UndercastData.playTimeMin;
             } else {
-                return "Playing Time: \u00A7E0:" + UndercastData.playTimeMin;
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:" + UndercastData.playTimeMin;
             }
         } else {
             if (UndercastData.playTimeMin < 10) {
-                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
             } else {
-                return "Playing Time: \u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
             }
         }
     }
@@ -139,43 +139,43 @@ public class UndercastCustomMethods {
         if (!UndercastData.incrementMatchTime && UndercastConfig.showMatchTimeSeconds) {
             if (UndercastData.matchTimeHours == 0 && UndercastData.matchTimeMin == 0) {
                 if (UndercastData.matchTimeSec < 10) {
-                    return "Match Time: \u00A7E0:0" + UndercastData.matchTimeSec;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + " \u00A7E0:0" + UndercastData.matchTimeSec;
                 } else {
-                    return "Match Time: \u00A7E0:" + UndercastData.matchTimeSec;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E0:" + UndercastData.matchTimeSec;
                 }
             } else if (UndercastData.matchTimeHours == 0) {
                 if (UndercastData.matchTimeSec < 10) {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                 } else {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                 }
             } else {
                 if (UndercastData.matchTimeMin < 10) {
                     if (UndercastData.matchTimeSec < 10) {
-                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
+                        return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                     } else {
-                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                        return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                     }
                 } else {
                     if (UndercastData.matchTimeSec < 10) {
-                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
+                        return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":0" + UndercastData.matchTimeSec;
                     } else {
-                        return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
+                        return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin + ":" + UndercastData.matchTimeSec;
                     }
                 }
             }
         } else {
             if (UndercastData.matchTimeHours == 0) {
                 if (UndercastData.matchTimeMin < 10) {
-                    return "Match Time: \u00A7E0:0" + UndercastData.matchTimeMin;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E0:0" + UndercastData.matchTimeMin;
                 } else {
-                    return "Match Time: \u00A7E0:" + UndercastData.matchTimeMin;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E0:" + UndercastData.matchTimeMin;
                 }
             } else {
                 if (UndercastData.matchTimeMin < 10) {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeHours + ":0" + UndercastData.matchTimeMin;
                 } else {
-                    return "Match Time: \u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin;
+                    return (UndercastConfig.lessObstructive ? "MT: " : "Match Time: ") + "\u00A7E" + UndercastData.matchTimeHours + ":" + UndercastData.matchTimeMin;
                 }
             }
         }
@@ -346,12 +346,12 @@ public class UndercastCustomMethods {
         String str;
         if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
-                str = "Total Kills: \u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
+                str = (UndercastConfig.lessObstructive ? "TK: " : "Total Kills: ") + "\u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
             } else {
-                str = "Kills: \u00A7a" + (int) (UndercastData.getKills());
+                str = (UndercastConfig.lessObstructive ? "K: " : "Kills: ") + "\u00A7a" + (int) (UndercastData.getKills());
             }
         } else {
-            str = "Kills: \u00A7a" + (int) UndercastData.getKills();
+            str = (UndercastConfig.lessObstructive ? "K: " : "Kills: ") + "\u00A7a" + (int) UndercastData.getKills();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
                 str += "\u00A7f/\u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
             }
@@ -363,12 +363,12 @@ public class UndercastCustomMethods {
         String str;
         if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
-                str = "Total Deaths: \u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
+                str = (UndercastConfig.lessObstructive ? "TD: " : "Total Deaths: ") + "\u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
             } else {
-                str = "Deaths: \u00A74" + (int) (UndercastData.getDeaths());
+                str = (UndercastConfig.lessObstructive ? "D: " : "Deaths: ") + "\u00A74" + (int) (UndercastData.getDeaths());
             }
         } else {
-            str = "Deaths: \u00A74" + (int) UndercastData.getDeaths();
+            str = (UndercastConfig.lessObstructive ? "D: " : "Deaths: ") + "\u00A74" + (int) UndercastData.getDeaths();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
                 str += "\u00A7f/\u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
             }
@@ -380,12 +380,12 @@ public class UndercastCustomMethods {
         String str;
         if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
-                str = "Total K/D: \u00A73" + (UndercastData.stats.kd);
+                str = (UndercastConfig.lessObstructive ? "TKD: " : "Total K/D: ") + "\u00A73" + (UndercastData.stats.kd);
             } else {
-                str = "K/D: \u00A73" + (getKD());
+                str = (UndercastConfig.lessObstructive ? "KD: " : "K/D: ") + "\u00A73" + (getKD());
             }
         } else {
-            str = "K/D: \u00A73" + getKD();
+            str = (UndercastConfig.lessObstructive ? "KD: " : "K/D: ") + "\u00A73" + getKD();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
                 str += "\u00A7f/\u00A73" + ((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.deaths + UndercastData.stats.deaths));
                 str = str.substring(0, str.lastIndexOf('.') + 4);
@@ -398,12 +398,12 @@ public class UndercastCustomMethods {
         String str;
         if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
-                str = "Total K/K: \u00A73" + (UndercastData.stats.kk);
+                str = (UndercastConfig.lessObstructive ? "TKK: " : "Total K/K: ") + "\u00A73" + (UndercastData.stats.kk);
             } else {
-                str = "K/K: \u00A73" + (getKK());
+                str = (UndercastConfig.lessObstructive ? "KK: " : "K/K: ") + "\u00A73" + (getKK());
             }
         } else {
-            str = "K/K: \u00A73" + getKK();
+            str = (UndercastConfig.lessObstructive ? "KK: " : "K/K: ") + "\u00A73" + getKK();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
                 str += "\u00A7f/\u00A73" + (((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.killed + UndercastData.stats.getKilled())));
                 str = str.substring(0, str.lastIndexOf('.') + 4);
@@ -416,7 +416,7 @@ public class UndercastCustomMethods {
         // detect special objectives like 50, 100, 150, 200, 250...
         int i1 = obj / 100;
         int i2 = (obj + 50) / 100;
-        if ((i1 * 100 == obj) || (i2 * 100 == obj + 50) ) {
+        if ((i1 * 100 == obj) || (i2 * 100 == obj + 50)) {
             return true;
         }
 
@@ -426,17 +426,16 @@ public class UndercastCustomMethods {
         c1 = s.charAt(s.length() - 1);
         c2 = s.charAt(s.length() - 2);
         c3 = s.charAt(s.length() - 3);
-        if(s.length() > 3) {
-            c4 = s.charAt(s.length() -4);
+        if (s.length() > 3) {
+            c4 = s.charAt(s.length() - 4);
         } else {
             c4 = c3;
         }
 
-        if(c1 == c2 && c1 == c3 && c1 == c4) {
+        if (c1 == c2 && c1 == c3 && c1 == c4) {
             return true;
         }
         return false;
     }
-
 
 }

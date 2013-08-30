@@ -133,23 +133,23 @@ public class UndercastModClass {
         if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
             // Server display
             if (UndercastConfig.showServer) {
-                mc.fontRenderer.drawStringWithShadow("Server: \u00A76" + UndercastData.getServer(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215);
                 height += 8;
             }
 
             // Team display (based on color)
             if (UndercastConfig.showTeam && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Team: " + UndercastData.getTeam(), width, height, getTeamColors());
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "T: " : "Team: ") + UndercastData.getTeam(), width, height, getTeamColors());
                 height += 8;
             }
             // Class display (Ghost Squadron only)
             if (UndercastConfig.showGSClass && UndercastData.currentServerType == ServerType.ghostsquadron) {
-                mc.fontRenderer.drawStringWithShadow("Class: " + UndercastData.currentGSClass, width, height, 2446535);
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "Cl: " : "Class: ") + UndercastData.currentGSClass, width, height, 2446535);
                 height += 8;
             }
             // Friend display:
             if (UndercastConfig.showFriends) {
-                mc.fontRenderer.drawStringWithShadow("Friends Online: \u00A73" + UndercastCustomMethods.getOnlineFriends(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "Fr: " : "Friends Online: ") + "\u00A73" + UndercastCustomMethods.getOnlineFriends(), width, height, 16777215);
                 height += 8;
             }
             // Playing Time display:
@@ -165,21 +165,21 @@ public class UndercastModClass {
             // Map fetcher:
             if (UndercastConfig.showMap && !UndercastData.isLobby) {
                 if (UndercastData.getMap() != null) {
-                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A7d" + UndercastData.getMap(), width, height, 16777215);
+                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "M: " : "Current Map: ") + "\u00A7d" + UndercastData.getMap(), width, height, 16777215);
                     height += 8;
                 } else {
                     UndercastData.setMap("Fetching...");
-                    mc.fontRenderer.drawStringWithShadow("Current Map: \u00A78" + UndercastData.getMap(), width, height, 16777215);
+                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "M: " : "Current Map: ") + "\u00A78" + UndercastData.getMap(), width, height, 16777215);
                     height += 8;
                 }
             }
             // Show next map
             if (UndercastConfig.showNextMap && !UndercastData.isLobby) {
                 if (UndercastData.getNextMap() != null) {
-                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
+                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
                     height += 8;
                 } else {
-                    mc.fontRenderer.drawStringWithShadow("Next Map: \u00A78Loading...", width, height, 16777215);
+                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A78Loading...", width, height, 16777215);
                     height += 8;
                 }
             }
@@ -205,12 +205,12 @@ public class UndercastModClass {
             }
             // Kill Streak display
             if (UndercastConfig.showStreak && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow("Current Killstreak: \u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "K: " : "Current Killstreak: ") + "\u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
                 height += 8;
             }
             // Score display
             if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0) {
-                mc.fontRenderer.drawStringWithShadow("Score: \u00A79" + UndercastData.score, width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "Sc: " : "Score: ") + "\u00A79" + UndercastData.score, width, height, 16777215);
                 height += 8;
             }
         }
@@ -231,11 +231,11 @@ public class UndercastModClass {
         // gui display for obs if you have brightness
         if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
             if (brightActive && UndercastConfig.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)) {
-                mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A72ON", width, height, 16777215);
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A72ON", width, height, 16777215);
                 height += 8;
             } else {
                 if (!brightActive && UndercastConfig.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)) {
-                    mc.fontRenderer.drawStringWithShadow("Full Bright: \u00A7cOFF", width, height, 16777215);
+                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A7cOFF", width, height, 16777215);
                     height += 8;
                 }
             }

@@ -50,6 +50,7 @@ public class UndercastConfig {
     public static boolean realtimeStats;
     public static boolean displaySpecialKillMessages;
     public static boolean displaySpecialObjectives;
+    public static boolean lessObstructive;
     public static int lastUsedFilter;
     public static File configFile;
 
@@ -99,6 +100,7 @@ public class UndercastConfig {
         showTotalKills = config.get("UndercastMod", "showTotalKills", true).getBoolean(true);
         displaySpecialKillMessages = config.get("UndercastMod", "displaySpecialKillMessages", true).getBoolean(true);
         displaySpecialObjectives = config.get("UndercastMod", "displaySpecialObjectives", true).getBoolean(true);
+        lessObstructive = config.get("UndercastMod", "lessObstructive", false).getBoolean(false);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

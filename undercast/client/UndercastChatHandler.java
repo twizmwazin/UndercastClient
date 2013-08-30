@@ -133,6 +133,7 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("game over")) {
             UndercastData.isGameOver = true;
             UndercastData.isNextKillFirstBlood = false;
+            UndercastData.finalStats = new FinalStats();
             try {
                 // stop the timer
                 UndercastData.matchTimer.stop();
@@ -141,7 +142,6 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
-            UndercastData.finalStats = new FinalStats();
             // stop the timer
             try {
                 UndercastData.matchTimer.stop();
