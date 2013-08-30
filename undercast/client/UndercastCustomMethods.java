@@ -422,18 +422,24 @@ public class UndercastCustomMethods {
 
         // detect special objectives like 111, 222, 1111...
         String s = String.valueOf(obj);
-        char c1, c2, c3, c4;
-        c1 = s.charAt(s.length() - 1);
-        c2 = s.charAt(s.length() - 2);
-        c3 = s.charAt(s.length() - 3);
-        if (s.length() > 3) {
-            c4 = s.charAt(s.length() - 4);
-        } else {
-            c4 = c3;
-        }
+        if (s.length() >= 2) {
+            char c1, c2, c3, c4;
+            c1 = s.charAt(s.length() - 1);
+            c2 = s.charAt(s.length() - 2);
+            if (s.length() > 2) {
+                c3 = s.charAt(s.length() - 3);
+            } else {
+                c3 = c2;
+            }
+            if (s.length() > 3) {
+                c4 = s.charAt(s.length() - 4);
+            } else {
+                c4 = c3;
+            }
 
-        if (c1 == c2 && c1 == c3 && c1 == c4) {
-            return true;
+            if (c1 == c2 && c1 == c3 && c1 == c4) {
+                return true;
+            }
         }
         return false;
     }
