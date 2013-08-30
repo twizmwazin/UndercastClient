@@ -26,13 +26,13 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
      */
     @Override
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
-        try{
+        try {
             UndercastServer server = UndercastData.sortedServerInformation[i];
             parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
             parent.drawString(Minecraft.getMinecraft().fontRenderer, Integer.toString(server.getPlayerCount()), j + 198, k + 1, 8421504);
             parent.drawString(Minecraft.getMinecraft().fontRenderer, server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);}
-        catch(Exception e){
+            parent.drawString(Minecraft.getMinecraft().fontRenderer, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
+        } catch (Exception e) {
 
         }
 

@@ -78,8 +78,7 @@ public class Undercast_UpdaterThread extends Thread {
     }
 
     /**
-     * @return true if the current version number is lower than the latest
-     *         version = update necessary
+     * @return true if the current version number is lower than the latest version = update necessary
      */
     private boolean compareVersions(String internetVersion) {
         try {

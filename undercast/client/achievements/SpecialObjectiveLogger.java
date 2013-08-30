@@ -15,7 +15,7 @@ public class SpecialObjectiveLogger {
     static {
         try {
             LOG_PATH = ModLoader.getMinecraftInstance().mcDataDir.getCanonicalPath() + File.separatorChar + "logs" + File.separatorChar + "UndercastClient" + File.separatorChar;
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to get log path.");
         }
     }
@@ -28,7 +28,7 @@ public class SpecialObjectiveLogger {
 
         try {
             log = new File(LOG_PATH + LOG_FILE_NAME);
-            if(!log.exists()) {
+            if (!log.exists()) {
                 File folder = new File(LOG_PATH);
                 folder.mkdirs();
                 log.createNewFile();

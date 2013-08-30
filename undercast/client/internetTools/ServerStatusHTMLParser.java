@@ -8,13 +8,8 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
 
 /**
- * @author molenzwiebel ServerStatusHTMLParser, a class which will try parse the
- *         given html to get the current map, name, players and next map.
- *         Returns: A String[][] with as first value the server (0 = alpha, 11 =
- *         nostalgia) and as second value the thing you want. 0 = Name, 1 =
- *         Players, 2 = Now playing map, 3 = Next map, 4 = Gametype So,
- *         data[0][2] will give the now playing map on Alpha and data[11][1]
- *         will give the players on Nostalgia
+ * @author molenzwiebel ServerStatusHTMLParser, a class which will try parse the given html to get the current map, name, players and next map. Returns: A String[][] with as first value the server (0 = alpha, 11 = nostalgia) and as second value the thing you want. 0 = Name, 1 = Players, 2 = Now playing map, 3 = Next map, 4 = Gametype So, data[0][2] will give the now playing map on Alpha and
+ *         data[11][1] will give the players on Nostalgia
  */
 public class ServerStatusHTMLParser {
     // Function to remove the last character is it is a space

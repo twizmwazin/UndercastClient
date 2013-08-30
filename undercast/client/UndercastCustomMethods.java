@@ -66,8 +66,7 @@ public class UndercastCustomMethods {
     }
 
     /**
-     * Detects if the server is the lobby and resets values which need to be
-     * reseted
+     * Detects if the server is the lobby and resets values which need to be reseted
      */
     public static void handleServerSwap() {
         if (UndercastData.server.equalsIgnoreCase("lobby")) {
@@ -182,8 +181,7 @@ public class UndercastCustomMethods {
     }
 
     /**
-     * Sorts UndercastData.sortedServerInformation using the
-     * UndercastData.sortindex
+     * Sorts UndercastData.sortedServerInformation using the UndercastData.sortindex
      */
     public static void sortAndFilterServers() {
         // if the index is moving to web then use the downloaded server list

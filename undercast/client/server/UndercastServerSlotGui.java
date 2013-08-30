@@ -14,13 +14,11 @@ import org.lwjgl.opengl.GL11;
 public abstract class UndercastServerSlotGui {
 
     /**
-     * The width of the GuiScreen. Affects the container rendering, but not the
-     * overlays.
+     * The width of the GuiScreen. Affects the container rendering, but not the overlays.
      */
     private int width;
     /**
-     * The height of the GuiScreen. Affects the container rendering, but not the
-     * overlays or the scrolling.
+     * The height of the GuiScreen. Affects the container rendering, but not the overlays or the scrolling.
      */
     private int height;
     /**
@@ -58,8 +56,7 @@ public abstract class UndercastServerSlotGui {
      */
     private float initialClickY = -2.0F;
     /**
-     * what to multiply the amount you moved your mouse by(used for slowing down
-     * scrolling when over the items and no on scroll bar)
+     * what to multiply the amount you moved your mouse by(used for slowing down scrolling when over the items and no on scroll bar)
      */
     private float scrollMultiplier;
     /**
@@ -122,8 +119,7 @@ public abstract class UndercastServerSlotGui {
     protected abstract int getSize();
 
     /**
-     * the element in the slot that was clicked, boolean for wether it was
-     * double clicked or not
+     * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
     protected abstract void elementClicked(int var1, boolean var2);
 
@@ -214,8 +210,7 @@ public abstract class UndercastServerSlotGui {
     }
 
     /**
-     * draws the slot to the screen, pass in mouse's current x and y and partial
-     * ticks
+     * draws the slot to the screen, pass in mouse's current x and y and partial ticks
      */
     public void drawScreen(int par1, int par2, float par3) {
         this.mouseX = par1;

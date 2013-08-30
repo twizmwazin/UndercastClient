@@ -41,8 +41,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     private Achievement theAchievement;
     private long achievementTime;
     /**
-     * Holds a instance of RenderItem, used to draw the achievement icons on
-     * screen (is based on ItemStack)
+     * Holds a instance of RenderItem, used to draw the achievement icons on screen (is based on ItemStack)
      */
     private RenderItem itemRender;
     private boolean haveAchiement;
@@ -144,8 +143,7 @@ public class UndercastGuiAchievement extends GuiAchievement {
     }
 
     /**
-     * Updates the small achievement tooltip window, showing a queued
-     * achievement if is needed.
+     * Updates the small achievement tooltip window, showing a queued achievement if is needed.
      */
     @Override
     public void updateAchievementWindow() {

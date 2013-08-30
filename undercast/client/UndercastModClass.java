@@ -54,8 +54,7 @@ public class UndercastModClass {
     /**
      * preInitialisation method automatically called by Forge with
      * 
-     * @Mod.PreInit use Must be used to load config and start downloading thread
-     *              if necessary.
+     * @Mod.PreInit use Must be used to load config and start downloading thread if necessary.
      * @param event
      */
     @Mod.PreInit
@@ -93,11 +92,7 @@ public class UndercastModClass {
     }
 
     /**
-     * onGameTick custom method called from the tickHandler
-     * UndercastTickHandler. Only called from two kind of ticks, TickType.CLIENT
-     * and TickType.RENDER Client ticks are for remplace a gui at the exact
-     * moment where the gui appears so this is invisible Render ticks are gui
-     * ticks in order to correctly render text inside a gui
+     * onGameTick custom method called from the tickHandler UndercastTickHandler. Only called from two kind of ticks, TickType.CLIENT and TickType.RENDER Client ticks are for remplace a gui at the exact moment where the gui appears so this is invisible Render ticks are gui ticks in order to correctly render text inside a gui
      * 
      */
     public void onGameTick(Minecraft mc) {

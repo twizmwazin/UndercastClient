@@ -39,8 +39,7 @@ public class UndercastServerGUI extends GuiScreen {
     }
 
     /**
-     * This is init of the gui when it is about to get drawn. You should only
-     * have buttons/control elements in here.
+     * This is init of the gui when it is about to get drawn. You should only have buttons/control elements in here.
      */
     @Override
     public void initGui() {
@@ -55,14 +54,13 @@ public class UndercastServerGUI extends GuiScreen {
             this.buttonList.add(new GuiButtonTooltip(7, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
         this.buttonList.add(new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.isEU ? 1 : 0], "Toggle between US and EU servers."));
-        //temporary:
-        ((GuiButtonTooltip)this.buttonList.get(this.buttonList.size() - 1)).enabled = false;
+        // temporary:
+        ((GuiButtonTooltip) this.buttonList.get(this.buttonList.size() - 1)).enabled = false;
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
 
     /**
-     * If a button is clicked this method gets called. The id is the number
-     * given to the button during init.
+     * If a button is clicked this method gets called. The id is the number given to the button during init.
      */
     @Override
     protected void actionPerformed(GuiButton guibutton) {
@@ -137,8 +135,7 @@ public class UndercastServerGUI extends GuiScreen {
     }
 
     /**
-     * This method is a override method for drawing a gui All "painting" should
-     * take place in here If you are ingame; do not draw the default background
+     * This method is a override method for drawing a gui All "painting" should take place in here If you are ingame; do not draw the default background
      */
     @Override
     public void drawScreen(int i, int j, float f) {

@@ -10,14 +10,8 @@ import java.util.regex.Pattern;
 import undercast.client.UndercastData;
 
 /**
- * InformationLoaderThread by molenzwiebel This class will take a url and load
- * the contents in an other thread. A link that might be interesting to fetch:
- * http://api.thijsmolendijk.nl/mod/servers.php -> Server:Players:Current
- * map:Next map And player stats:
- * http://api.thijsmolendijk.nl/user/parse.php?para1=<user> -> YAML with player
- * data (I can change it to a different format, just poke me) Or, use the
- * ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT
- * HTTP!!
+ * InformationLoaderThread by molenzwiebel This class will take a url and load the contents in an other thread. A link that might be interesting to fetch: http://api.thijsmolendijk.nl/mod/servers.php -> Server:Players:Current map:Next map And player stats: http://api.thijsmolendijk.nl/user/parse.php?para1=<user> -> YAML with player data (I can change it to a different format, just poke me) Or, use
+ * the ServerStatusHTMLParser class. NOTE: Use as link httpS://oc.tc/play !!! NOT HTTP!!
  */
 public class InformationLoaderThread extends Thread {
 

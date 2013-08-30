@@ -15,8 +15,7 @@ import org.lwjgl.opengl.GL11;
 public class UndercastGuiGameOver extends GuiScreen {
 
     /**
-     * The cooldown timer for the buttons, increases every tick and enables all
-     * buttons when reaching 20.
+     * The cooldown timer for the buttons, increases every tick and enables all buttons when reaching 20.
      */
     private int cooldownTimer;
 
@@ -50,16 +49,14 @@ public class UndercastGuiGameOver extends GuiScreen {
     }
 
     /**
-     * Fired when a key is typed. This is the equivalent of
-     * KeyListener.keyTyped(KeyEvent e).
+     * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
     @Override
     protected void keyTyped(char par1, int par2) {
     }
 
     /**
-     * Fired when a control is clicked. This is the equivalent of
-     * ActionListener.actionPerformed(ActionEvent e).
+     * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
     @Override
     protected void actionPerformed(GuiButton par1GuiButton) {
@@ -100,8 +97,7 @@ public class UndercastGuiGameOver extends GuiScreen {
     }
 
     /**
-     * Returns true if this GUI should pause the game when it is displayed in
-     * single-player
+     * Returns true if this GUI should pause the game when it is displayed in single-player
      */
     @Override
     public boolean doesGuiPauseGame() {
