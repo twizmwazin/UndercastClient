@@ -223,7 +223,7 @@ public class UndercastChatHandler {
                     UndercastCustomMethods.handleServerSwap();
                 }
             }
-        } else if (normalMessage.equals("§c§c§e§e§c§c")) {
+        } else if (normalMessage.equals("§c§c§e§e§c§c") || message.equals("To view classes, type /classes")) { // GS servers do not send "§c§c§e§e§c§c"
             if (!UndercastData.welcomeMessageExpected) {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
