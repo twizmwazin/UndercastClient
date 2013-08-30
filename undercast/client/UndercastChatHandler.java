@@ -190,13 +190,20 @@ public class UndercastChatHandler {
             }
         } // server detection
         else if (message.contains("Teleporting you to ")) {
-            String server = message.replace("Teleporting you to ", "");
-            if (!server.equals(UndercastData.server)) {
-                UndercastData.setServer(server);
-                if (!message.toLowerCase().contains("lobby")) {
-                    UndercastData.welcomeMessageExpected = true;
-                }
+            // usage of the /hub or /lobby command
+            if (message.contains("the lobby...")) {
+                UndercastData.setServer("Lobby");
+
                 UndercastCustomMethods.handleServerSwap();
+            } else {
+                String server = message.replace("Teleporting you to ", "");
+                if (!server.equals(UndercastData.server)) {
+                    UndercastData.setServer(server);
+                    if (!message.toLowerCase().contains("lobby")) {
+                        UndercastData.welcomeMessageExpected = true;
+                    }
+                    UndercastCustomMethods.handleServerSwap();
+                }
             }
         } else if (message.contains("Connecting to ")) {
             String server = message.replace("Connecting to ", "");
