@@ -9,21 +9,24 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
-import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
+import undercast.client.achievements2.UndercastGuiAchievement2;
 import undercast.client.internetTools.FriendHandler;
 import undercast.client.update.Undercast_UpdaterThread;
 
@@ -33,7 +36,7 @@ import undercast.client.update.Undercast_UpdaterThread;
 @Mod(modid = UndercastModClass.MOD_NAME, name = UndercastModClass.MOD_NAME, version = UndercastModClass.MOD_VERSION)
 public class UndercastModClass {
 
-    public final static String MOD_VERSION = "1.6.2";
+    public final static String MOD_VERSION = "1.6.3";
     public final static String MOD_NAME = "UndercastMod";
     public Integer buttonListSizeOfGuiOptions;
     protected String username = "Not_Found";
@@ -49,6 +52,7 @@ public class UndercastModClass {
     public static String[] lastChatLines = new String[100];
     public UndercastChatHandler chatHandler;
     public UndercastKillsHandler achievementChatHandler;
+    public UndercastGuiAchievement2 guiAchievement;
     public FriendHandler friendHandler;
 
     /**
@@ -75,6 +79,7 @@ public class UndercastModClass {
         KeyBindingRegistry.registerKeyBinding(new UndercastKeyHandling());
         new UndercastData();
         new Undercast_UpdaterThread();
+        guiAchievement = new UndercastGuiAchievement2(mc);
 
     }
 
@@ -83,7 +88,6 @@ public class UndercastModClass {
         TickRegistry.registerTickHandler(new UndercastTickHandler(), Side.CLIENT);
         NetworkRegistry.instance().registerChatListener(new ChatListener());
         NetworkRegistry.instance().registerConnectionHandler(new UndercastConnectionHandler());
-        FMLClientHandler.instance().getClient().guiAchievement = new UndercastGuiAchievement(FMLClientHandler.instance().getClient());
         LanguageRegistry.instance().addStringLocalization("undercast.gui", "Toggle Overcast Network mod gui");
         LanguageRegistry.instance().addStringLocalization("undercast.inGameGui", "Change server");
         LanguageRegistry.instance().addStringLocalization("undercast.fullBright", "Toggle fullbright");
@@ -96,6 +100,7 @@ public class UndercastModClass {
      * 
      */
     public void onGameTick(Minecraft mc) {
+        guiAchievement.updateScreen();
         // if the game over screen is active then you have died
         // if it is the first time it is active count a death
         // if it is not don't do anything

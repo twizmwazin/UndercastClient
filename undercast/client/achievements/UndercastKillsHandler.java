@@ -1,12 +1,15 @@
 package undercast.client.achievements;
 
 import cpw.mods.fml.client.FMLClientHandler;
+
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,6 +17,8 @@ import net.minecraft.stats.Achievement;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
+import undercast.client.UndercastModClass;
+import undercast.client.achievements2.UndercastAchievement;
 
 /**
  * @author Flv92
@@ -101,46 +106,25 @@ public class UndercastKillsHandler {
 
     private void printAchievement() {
 
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement).addFakeAchievementToMyList(custom, killOrKilled, killer);
+        UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled);
+        UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     private void printTeamKillAchievement() {
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        ((UndercastGuiAchievement) FMLClientHandler.instance().getClient().guiAchievement).addFakeAchievementToMyList(custom, !killOrKilled, killer, killer, "Teamkill!");
+        UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled ? "\u00A7a" + killer : "\u00A74" + killer,killOrKilled ? "\u00A7aTeam Kill" : "\u00A74Team Kill");
+        UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     public void printFirstBloodAchievement() {
-        final long waitingTime;
-        if (UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
-            waitingTime = 4000L; // This is to get enough time between two
-                                 // achievements
-        } else {
-            waitingTime = 0L;
-        }
-        Runnable r1 = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(waitingTime);
-                    Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-                    Minecraft client = FMLClientHandler.instance().getClient();
-                    ((UndercastGuiAchievement) client.guiAchievement).addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the first Blood!");
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(UndercastKillsHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        Thread t1 = new Thread(r1);
-        t1.start();
+        Minecraft client = Minecraft.getMinecraft();
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username,"\u00A7agot the first Blood!");
+        UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     public void printLastKillAchievement() {
-
-        Achievement custom = (new Achievement(27, "custom", 1, 4, Item.ingotIron, (Achievement) null));
-        Minecraft client = FMLClientHandler.instance().getClient();
-        ((UndercastGuiAchievement) client.guiAchievement).addFakeAchievementToMyList(custom, true, client.thePlayer.username, client.thePlayer.username, "got the last Kill!");
-
+        Minecraft client = Minecraft.getMinecraft();
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username,"\u00A7agot the last Kill!");
+        UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     public static boolean isSpecialKill(int kill) {

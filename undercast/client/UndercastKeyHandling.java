@@ -3,12 +3,19 @@ package undercast.client;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
+
 import java.awt.image.BufferedImage;
 import java.util.EnumSet;
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityLivingBase;
+
 import org.lwjgl.input.Keyboard;
+
 import undercast.client.UndercastData.Teams;
+import undercast.client.achievements2.UndercastAchievement;
 import undercast.client.server.UndercastServerGUI;
 import undercast.client.settings.SettingsGUI;
 
@@ -22,6 +29,7 @@ public class UndercastKeyHandling extends KeyHandler {
     public static KeyBinding keyGuiFullBright = new KeyBinding("undercast.fullBright", Keyboard.KEY_G);
     public static KeyBinding keySettingsGui = new KeyBinding("undercast.settings", Keyboard.KEY_P);
     public BufferedImage killerBuffer;
+    public double x, y, z;
 
     public UndercastKeyHandling() {
         // the first value is an array of KeyBindings, the second is whether or
@@ -38,6 +46,21 @@ public class UndercastKeyHandling extends KeyHandler {
     @Override
     public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
         Minecraft mc = FMLClientHandler.instance().getClient();
+        if (kb == keyGuiServer && tickEnd) {
+            Random r = new Random();
+            switch (r.nextInt(3)) {
+            case 0:
+                UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(new UndercastAchievement("molenzwiebel", "molenzwiebel", "+1 Kill"));
+                break;
+            case 1:
+                UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(new UndercastAchievement("tuturo92", "tuturo92", "+1 Kill"));
+                break;
+            case 2:
+                UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(new UndercastAchievement("palechip", "palechip", "+1 Kill"));
+                break;
+            }
+            return;
+        }
         if (mc.inGameHasFocus && tickEnd) // Using this boolean because keyDown
                                           // is called two times, at the start
                                           // of a tick and at the end of it.
