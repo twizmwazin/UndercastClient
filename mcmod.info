@@ -1,7 +1,7 @@
 [
 {
-  "modid": "mod_Ares",
-  "name": "Unofficial Overcast Network Mod",
+  "modid": "UndercastMod",
+  "name": "UndercastMod",
   "description": "A custom made mod that tracks gameplay stats and has custom guis made for the oc.tc servers",
   "version": "1.6.3",
   "url": "https://oc.tc/forums/topics/514fa995ba6087bdca000186",
