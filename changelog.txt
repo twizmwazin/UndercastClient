@@ -1,5 +1,14 @@
 The changelog exists since version 1.4.0
 
+1.6.3
+ - added total k/d and total k/k
+ - Final stats improved: colors, always show up & added objectives
+ - track special objectives
+ - Less Obstructive mode for the display (Check out the second page of the Overlay settings)
+ - Begin EU server support. (Not done yet)
+ - multiple fixes for the server determination
+ - minor fixes
+
 1.6.2
  - Updated for Minecraft 1.6.2
  - fix achievements for 1.6
