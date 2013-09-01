@@ -52,6 +52,10 @@ public class UndercastConfig {
     public static boolean displaySpecialObjectives;
     public static boolean lessObstructive;
     public static int lastUsedFilter;
+    public static boolean achievementAnimation;
+    public static double achievementAnimationDuration;
+    public static boolean displaySkinBorder;
+    
     public static File configFile;
 
     public UndercastConfig(Configuration configuration, File configF) {
@@ -101,6 +105,9 @@ public class UndercastConfig {
         displaySpecialKillMessages = config.get("UndercastMod", "displaySpecialKillMessages", true).getBoolean(true);
         displaySpecialObjectives = config.get("UndercastMod", "displaySpecialObjectives", true).getBoolean(true);
         lessObstructive = config.get("UndercastMod", "lessObstructive", false).getBoolean(false);
+        achievementAnimation = config.get("UndercastMod", "achievementAnimation", false).getBoolean(false);
+        achievementAnimationDuration = config.get("UndercastMod", "achievementAnimationDuration", 1.0F).getDouble(1.0F);
+        displaySkinBorder = config.get("UndercastMod", "displaySkinBorder", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
@@ -145,6 +152,30 @@ public class UndercastConfig {
                     fr.write(line + "\n");
                 } else {
                     fr.write(line.substring(0, line.lastIndexOf("=") + 1) + newInt + "\n");
+                }
+            }
+            fr.close();
+            br.close();
+            configFile.delete();
+            tempFile.renameTo(configFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public static void setDoubleProperty(String name, double newDouble) {
+        File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(configFile));
+            FileWriter fr = new FileWriter(tempFile);
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (!line.contains("D:" + name)) {
+                    fr.write(line + "\n");
+                } else {
+                    fr.write(line.substring(0, line.lastIndexOf("=") + 1) + newDouble + "\n");
                 }
             }
             fr.close();

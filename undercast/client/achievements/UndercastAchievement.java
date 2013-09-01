@@ -1,13 +1,15 @@
-package undercast.client.achievements2;
+package undercast.client.achievements;
 
 import org.lwjgl.opengl.GL11;
 
+import undercast.client.UndercastConfig;
 import undercast.client.UndercastModClass;
-import undercast.client.achievements2.animation.UndercastAchievementAccessor;
+import undercast.client.achievements.animation.UndercastAchievementAccessor;
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.*;
 import net.minecraft.client.Minecraft;
@@ -20,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 public class UndercastAchievement implements TweenCallback {
 
     private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
-    private static final ResourceLocation ingameWidgets = new ResourceLocation("textures/gui/widgets.png");
+    private static final ResourceLocation ingameWidgets = new ResourceLocation("UndercastMod", "border.png");
     public String killerName;
     public String line1;
     public String line2;
@@ -31,7 +33,11 @@ public class UndercastAchievement implements TweenCallback {
     TweenManager manager;
     private int rank = 0;
     public float alpha = 0.0F;
-    
+    // Only used for non animated achievement
+    // Just delete the achievement when animationTime reached UndercastConfig.achievementAnimationDuration
+    public long animationTime = 0;
+    public TweenEquation easeEquation;
+
     public UndercastAchievement(String name, String l1, String l2) {
         manager = new TweenManager();
         ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
@@ -41,28 +47,34 @@ public class UndercastAchievement implements TweenCallback {
         posX = scr.getScaledWidth() + 30;
         posY = 10;
         lastRenderTime = System.currentTimeMillis();
-        Timeline.createSequence().beginParallel().push(Tween.to(this, UndercastAchievementAccessor.POSITION_X, 1.0f).target(scr.getScaledWidth() - 170).ease(Bounce.OUT)).push(Tween.to(this, UndercastAchievementAccessor.ALPHA, 0.7f).target(1.0f)).end().pushPause(4.0f).beginParallel().push(Tween.to(this, UndercastAchievementAccessor.POSITION_X, 1.0f).target(scr.getScaledWidth() + 80).ease(Bounce.OUT)).push(Tween.to(this, UndercastAchievementAccessor.ALPHA, 1.0f).target(0.0F)).end().setCallback(this).start(manager);
+
+        if (UndercastConfig.achievementAnimation) {
+            manager = new TweenManager();
+            posX = scr.getScaledWidth() + 30;
+            Timeline.createSequence().beginParallel().push(Tween.to(this, UndercastAchievementAccessor.POSITION_X, 1.0f).target(scr.getScaledWidth() - 170).ease(Sine.OUT)).push(Tween.to(this, UndercastAchievementAccessor.ALPHA, 0.7f).target(1.0f)).end().pushPause((float) UndercastConfig.achievementAnimationDuration).beginParallel().push(Tween.to(this, UndercastAchievementAccessor.POSITION_X, 1.0f).target(scr.getScaledWidth() + 80).ease(Sine.OUT)).push(Tween.to(this, UndercastAchievementAccessor.ALPHA, 1.0f).target(0.0F)).end().setCallback(this).start(manager);
+        } else {
+            posX = scr.getScaledWidth() - 170;
+            alpha = 1.0F;
+        }
     }
-    
-    //Constructor for compatibility with old achievements
+
+    // Constructor for compatibility with old achievements
     public UndercastAchievement(String name, boolean killOrKilled) {
-        manager = new TweenManager();
-        ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
-        killerName = name;
-        line1 = killOrKilled ? "\u00A7a" + name : "\u00A74" + name;
-        line2 = killOrKilled ? "\u00A7a" + "+1 Kill" : "\u00A74" + "+1 Death";
-        posX = scr.getScaledWidth() + 30;
-        posY = 10;
-        lastRenderTime = System.currentTimeMillis();
-        Timeline.createSequence().beginParallel().push(Tween.to(this, UndercastAchievementAccessor.POSITION_X, 1.0f).target(scr.getScaledWidth() - 170).ease(Bounce.OUT)).push(Tween.to(this, UndercastAchievementAccessor.ALPHA, 0.7f).target(1.0f)).end().pushPause(4.0f).beginParallel().push(Tween.to(this, UndercastAchievementAccessor.POSITION_X, 1.0f).target(scr.getScaledWidth() + 80).ease(Bounce.OUT)).push(Tween.to(this, UndercastAchievementAccessor.ALPHA, 1.0f).target(0.0F)).end().setCallback(this).start(manager);
+        this(name, killOrKilled ? "\u00A7a" + name : "\u00A74" + name, killOrKilled ? "\u00A7a" + "+1 Kill" : "\u00A74" + "+1 Death");
     }
 
     public void update(long deltaTime) {
-        float deltaTimeF = (float) deltaTime / 1000.0F;
-        manager.update(deltaTimeF);
+        if (UndercastConfig.achievementAnimation) {
+            float deltaTimeF = (float) deltaTime / 1000.0F;
+            manager.update(deltaTimeF);
+        } else {
+            animationTime += deltaTime;
+        }
+
     }
 
     public void draw() {
+        System.out.println(ingameWidgets.toString());
         update(System.currentTimeMillis() - lastRenderTime);
         lastRenderTime = System.currentTimeMillis();
         GL11.glPushMatrix();
@@ -77,10 +89,12 @@ public class UndercastAchievement implements TweenCallback {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
         Minecraft.getMinecraft().fontRenderer.drawString(this.line1, (int) posX + 30, (int) posY + 7, 16777215);
         Minecraft.getMinecraft().fontRenderer.drawString(this.line2, (int) posX + 30, (int) posY + 18, 16777215);
-        // Drawing skin border
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(ingameWidgets);
-        this.drawTexturedModalRect((int) posX + 6, (int) posY + 6, 1, 1, 20, 20);
+        if (UndercastConfig.displaySkinBorder) {
+            // Drawing skin border
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
+            Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("undercast", "border.png"));
+            this.drawTexturedModalRect((int) posX + 6, (int) posY + 6, 0, 0, 20, 20);
+        }
         // Drawing skin
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
         ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(this.killerName);
@@ -95,6 +109,11 @@ public class UndercastAchievement implements TweenCallback {
         this.drawTexturedModalRect(((int) posX + 8) * 2, ((int) posY + 8) * 4, 32, 64, 32, 64);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
+        if (!UndercastConfig.achievementAnimation) {
+            if ((float) animationTime / 1000.0F >= UndercastConfig.achievementAnimationDuration) {
+                UndercastModClass.getInstance().guiAchievement.removeAchievement(this);
+            }
+        }
     }
 
     /**

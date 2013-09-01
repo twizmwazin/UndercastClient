@@ -18,7 +18,6 @@ import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
 import undercast.client.UndercastModClass;
-import undercast.client.achievements2.UndercastAchievement;
 
 /**
  * @author Flv92
@@ -105,7 +104,6 @@ public class UndercastKillsHandler {
     }
 
     private void printAchievement() {
-
         UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled);
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }

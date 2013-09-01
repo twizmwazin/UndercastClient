@@ -25,8 +25,8 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.common.Configuration;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
+import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
-import undercast.client.achievements2.UndercastGuiAchievement2;
 import undercast.client.internetTools.FriendHandler;
 import undercast.client.update.Undercast_UpdaterThread;
 
@@ -52,7 +52,7 @@ public class UndercastModClass {
     public static String[] lastChatLines = new String[100];
     public UndercastChatHandler chatHandler;
     public UndercastKillsHandler achievementChatHandler;
-    public UndercastGuiAchievement2 guiAchievement;
+    public UndercastGuiAchievement guiAchievement;
     public FriendHandler friendHandler;
 
     /**
@@ -79,7 +79,7 @@ public class UndercastModClass {
         KeyBindingRegistry.registerKeyBinding(new UndercastKeyHandling());
         new UndercastData();
         new Undercast_UpdaterThread();
-        guiAchievement = new UndercastGuiAchievement2(mc);
+        guiAchievement = new UndercastGuiAchievement(mc);
 
     }
 

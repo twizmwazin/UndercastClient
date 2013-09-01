@@ -1,6 +1,6 @@
-package undercast.client.achievements2.animation;
+package undercast.client.achievements.animation;
 
-import undercast.client.achievements2.UndercastAchievement;
+import undercast.client.achievements.UndercastAchievement;
 import aurelienribon.tweenengine.TweenAccessor;
 
 public class UndercastAchievementAccessor implements TweenAccessor<UndercastAchievement> {

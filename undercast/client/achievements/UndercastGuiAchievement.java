@@ -1,4 +1,4 @@
-package undercast.client.achievements2;
+package undercast.client.achievements;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 import org.lwjgl.opengl.GL11;
 
-import undercast.client.achievements2.animation.UndercastAchievementAccessor;
+import undercast.client.achievements.animation.UndercastAchievementAccessor;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Bounce;
@@ -17,7 +17,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 
-public class UndercastGuiAchievement2 extends GuiScreen {
+public class UndercastGuiAchievement extends GuiScreen {
 
     private Minecraft client;
     public ArrayList<UndercastAchievement> achievements = new ArrayList();
@@ -25,7 +25,7 @@ public class UndercastGuiAchievement2 extends GuiScreen {
     ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
     private ArrayList<Integer> usedRank = new ArrayList();
 
-    public UndercastGuiAchievement2(Minecraft mc) {
+    public UndercastGuiAchievement(Minecraft mc) {
         client = mc;
         Tween.registerAccessor(UndercastAchievement.class, new UndercastAchievementAccessor());
     }
