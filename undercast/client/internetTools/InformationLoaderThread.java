@@ -82,8 +82,4 @@ public class InformationLoaderThread extends Thread {
             }
         }
     }
-
-    public String getContents() {
-        return this.contents;
-    }
 }

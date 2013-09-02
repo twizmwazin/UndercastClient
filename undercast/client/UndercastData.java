@@ -283,7 +283,7 @@ public class UndercastData {
 
     private static void updateMap(String cont) {
         try {
-            String[][] mapData = ServerStatusHTMLParser.parse(mapLoader.getContents());
+            String[][] mapData = ServerStatusHTMLParser.parse(cont);
             serverCount = mapData.length - 1; // -1 for lobby exclusion
             for (int c = 0; c < mapData.length; c++) {
                 serverInformation[c].name = mapData[c][0];
