@@ -63,7 +63,7 @@ public class UndercastConnectionHandler implements IConnectionHandler {
                 public void run() {
                     try {
                         Thread.sleep(3000);
-                        for (int c = 0; c < 10; c++) { // don't wait longer that
+                        for (int c = 0; c < 10; c++) { // don't wait longer than
                                                        // 10 sec
                             Thread.sleep(1000);
                             if (Undercast_UpdaterThread.finished) {
