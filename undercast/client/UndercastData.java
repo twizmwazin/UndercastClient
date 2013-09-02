@@ -59,6 +59,7 @@ public class UndercastData {
     public static int playTimeMin;
     public static int sortIndex;
     public static int filterIndex;
+    public static int locationIndex;
     // saves if a /server command (without argument) was executed, if it's
     // false, the user executed it
     public static boolean serverDetectionCommandExecuted = false;
@@ -124,6 +125,8 @@ public class UndercastData {
             sortedServerInformation[c] = new UndercastServer();
         }
         sortIndex = 0;
+        filterIndex = UndercastConfig.lastUsedFilter < filterNames.length ? UndercastConfig.lastUsedFilter : 0;
+        locationIndex = UndercastConfig.lastUsedLocation < locationNames.length ? UndercastConfig.lastUsedLocation : 0;
         filterIndex = 0;
         try {
             if (!emergencyParser) {

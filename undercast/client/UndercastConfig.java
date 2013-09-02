@@ -55,7 +55,8 @@ public class UndercastConfig {
     public static boolean achievementAnimation;
     public static double achievementAnimationDuration;
     public static boolean displaySkinBorder;
-    
+    public static int lastUsedLocation;
+
     public static File configFile;
 
     public UndercastConfig(Configuration configuration, File configF) {
@@ -108,6 +109,7 @@ public class UndercastConfig {
         achievementAnimation = config.get("UndercastMod", "achievementAnimation", false).getBoolean(false);
         achievementAnimationDuration = config.get("UndercastMod", "achievementAnimationDuration", 1.0F).getDouble(1.0F);
         displaySkinBorder = config.get("UndercastMod", "displaySkinBorder", true).getBoolean(true);
+        lastUsedLocation = config.get("UndercastMod", "lastUsedLocation", 0, "0: US\n1: EU").getInt();
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
@@ -164,7 +166,7 @@ public class UndercastConfig {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public static void setDoubleProperty(String name, double newDouble) {
         File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
         try {

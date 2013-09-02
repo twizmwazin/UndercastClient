@@ -53,9 +53,7 @@ public class UndercastServerGUI extends GuiScreen {
         if (!UndercastData.isUpdate()) {
             this.buttonList.add(new GuiButtonTooltip(7, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
         }
-        this.buttonList.add(new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.isEU ? 1 : 0], "Toggle between US and EU servers."));
-        // temporary:
-        ((GuiButtonTooltip) this.buttonList.get(this.buttonList.size() - 1)).enabled = false;
+        this.buttonList.add(new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
 
@@ -107,10 +105,15 @@ public class UndercastServerGUI extends GuiScreen {
             UndercastCustomMethods.sortAndFilterServers();
         }
         if (guibutton.id == 5) {
-            if (inGame && UndercastData.isPlayingOvercastNetwork()) {
+            if (inGame && UndercastData.isPlayingOvercastNetwork() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
-                ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                ServerData joinServer;
+                if (UndercastData.locationIndex == 1) {
+                    joinServer = new ServerData("eu.oc.tc", "eu.oc.tc:25565");
+                } else {
+                    joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                }
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
         }
@@ -132,6 +135,16 @@ public class UndercastServerGUI extends GuiScreen {
             } catch (Exception ignored) {
             }
         }
+        if (guibutton.id == 8) {
+            if (UndercastData.locationIndex < UndercastData.locationNames.length - 1) {
+                UndercastData.locationIndex++;
+            } else {
+                UndercastData.locationIndex = 0;
+            }
+            this.buttonList.set(7, new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
+            UndercastConfig.setIntProperty("lastUsedLocation", UndercastData.locationIndex);
+        }
+
     }
 
     /**
@@ -178,12 +191,17 @@ public class UndercastServerGUI extends GuiScreen {
      */
     public void joinSelectedServer() {
         if (selected != -1) {
-            if (inGame && UndercastData.isPlayingOvercastNetwork()) {
+            if (inGame && UndercastData.isPlayingOvercastNetwork() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.sortedServerInformation[selected].name);
             } else {
                 UndercastData.redirect = true;
                 UndercastData.directionServer = UndercastData.sortedServerInformation[selected].name;
-                ServerData joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                ServerData joinServer;
+                if (UndercastData.locationIndex == 1) {
+                    joinServer = new ServerData("eu.oc.tc", "eu.oc.tc:25565");
+                } else {
+                    joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                }
                 mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
             }
         }
@@ -205,4 +223,15 @@ public class UndercastServerGUI extends GuiScreen {
             this.mc.setIngameFocus();
         }
     }
+
+    public boolean isRightLocation() {
+        if (UndercastData.isEU && UndercastData.locationIndex == 1) {
+            return true;
+        } else if (!UndercastData.isEU && UndercastData.locationIndex == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
