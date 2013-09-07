@@ -55,6 +55,7 @@ public class UndercastConfig {
     public static boolean achievementAnimation;
     public static double achievementAnimationDuration;
     public static boolean displaySkinBorder;
+    public static boolean showRevengeAchievement;
     public static int lastUsedLocation;
 
     public static File configFile;
@@ -110,6 +111,7 @@ public class UndercastConfig {
         achievementAnimationDuration = config.get("UndercastMod", "achievementAnimationDuration", 1.0F).getDouble(1.0F);
         displaySkinBorder = config.get("UndercastMod", "displaySkinBorder", true).getBoolean(true);
         lastUsedLocation = config.get("UndercastMod", "lastUsedLocation", 0, "0: US\n1: EU").getInt();
+        showRevengeAchievement = config.get("UndercastMod", "showRevengeAchievement", true).getBoolean(true);
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }

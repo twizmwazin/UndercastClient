@@ -86,6 +86,8 @@ public class UndercastCustomMethods {
         UndercastData.resetPreviousKillstreak();
         UndercastData.resetScore();
         UndercastData.isGameOver = false;
+        UndercastData.victimList.clear();
+        UndercastData.killerList.clear();
         UndercastData.reloadStats();
 
         // stop the timer and reset it

@@ -10,9 +10,9 @@ import org.lwjgl.input.Keyboard;
 public class AchievementSettings extends GuiScreen {
 
     public GuiScreen parentScreen;
-    public String[] toggleSettings = new String[] { "showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement", "showLastKillAchievement", "displaySpecialKillMessages", "displaySpecialObjectives" };
-    public String[] enabledStrings = new String[] { "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown", "Last Kill shown", "Special Kill display enabled", "Special Objective display" };
-    public String[] disabledStrings = new String[] { "No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement", "No Last Kill Achievement", "Special Kill display disabled", "No Special Objective display" };
+    public String[] toggleSettings = new String[] { "showAchievements", "showDeathAchievements", "showKillAchievements", "showFirstBloodAchievement", "showLastKillAchievement", "displaySpecialKillMessages", "displaySpecialObjectives", "showRevengeAchievement" };
+    public String[] enabledStrings = new String[] { "Enabled Achievements shown", "Death Achievements shown", "Kill Achievements shown", "First Blood shown", "Last Kill shown", "Special Kill display enabled", "Special Objective display", "Revenge Achievements shown" };
+    public String[] disabledStrings = new String[] { "No Achievements shown", "No Death Achievements", "No Kill Achievements", "No First Blood Achievement", "No Last Kill Achievement", "Special Kill display disabled", "No Special Objective display", "Revenge Achievements hidden" };
 
     public AchievementSettings(GuiScreen gs) {
         super();

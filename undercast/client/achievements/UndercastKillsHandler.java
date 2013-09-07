@@ -50,6 +50,19 @@ public class UndercastKillsHandler {
             if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
                 this.printTeamKillAchievement();
             } else {
+                if (UndercastConfig.showRevengeAchievement) {
+                    // add your killer to the list so it can be detected if you take revenge
+                    UndercastData.killerList.add(killer);
+                    for (int c = 0; c < UndercastData.victimList.size(); c++) {
+                        // test if the killer took revenge
+                        if (UndercastData.victimList.get(c).equals(killer)) {
+                            this.printRevengeAchievement();
+                            UndercastData.victimList.remove(c);
+                            break;
+                        }
+                    }
+                }
+
                 this.printAchievement();
             }
         } // if you kill a person
@@ -78,6 +91,19 @@ public class UndercastKillsHandler {
                     }
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
+                if (UndercastConfig.showRevengeAchievement) {
+                    // add the victim to the revenge list in case it takes revenge
+                    UndercastData.victimList.add(killer);
+                    for (int c = 0; c < UndercastData.killerList.size(); c++) {
+                        // test if the player took revenge
+                        if (UndercastData.killerList.get(c).equals(killer)) {
+                            this.printRevengeAchievement();
+                            UndercastData.killerList.remove(c);
+                            break;
+                        }
+                    }
+                }
+
                 this.printAchievement();
             }
             UndercastData.isLastKillFromPlayer = true;
@@ -104,24 +130,29 @@ public class UndercastKillsHandler {
     }
 
     private void printAchievement() {
-        UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled);
+        UndercastAchievement ac = new UndercastAchievement(killer, killOrKilled);
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     private void printTeamKillAchievement() {
-        UndercastAchievement ac = new UndercastAchievement(killer,killOrKilled ? "\u00A7a" + killer : "\u00A74" + killer,killOrKilled ? "\u00A7aTeam Kill" : "\u00A74Team Kill");
+        UndercastAchievement ac = new UndercastAchievement(killer, killOrKilled ? "\u00A7a" + killer : "\u00A74" + killer, killOrKilled ? "\u00A7aTeam Kill" : "\u00A74Team Kill");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
-    public void printFirstBloodAchievement() {
+    private void printFirstBloodAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username,"\u00A7agot the first Blood!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username, "\u00A7agot the first Blood!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
-    public void printLastKillAchievement() {
+    private void printLastKillAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username,"\u00A7agot the last Kill!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username, "\u00A7agot the last Kill!");
+        UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
+    }
+    
+    private void printRevengeAchievement(){
+        UndercastAchievement ac = new UndercastAchievement(killer, killOrKilled ? "\u00A7a" + killer : "\u00A74" + killer,  killOrKilled ? "\u00A7aRevenge Kill!" : "\u00A74took Revenge!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 

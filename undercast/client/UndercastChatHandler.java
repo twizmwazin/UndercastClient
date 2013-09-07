@@ -142,6 +142,9 @@ public class UndercastChatHandler {
         } else if (!message.startsWith("<") && message.toLowerCase().contains("the match has started")) {
             UndercastData.isGameOver = false;
             UndercastData.isNextKillFirstBlood = true;
+            UndercastData.reloadStats();
+            UndercastData.victimList.clear();
+            UndercastData.killerList.clear();
             // stop the timer
             try {
                 UndercastData.matchTimer.stop();

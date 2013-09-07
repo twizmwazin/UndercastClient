@@ -6,6 +6,7 @@ package undercast.client;
 //You may not remove these comments
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
@@ -78,6 +79,9 @@ public class UndercastData {
     public static boolean removeNextChatMessage = false;
     public static FinalStats finalStats;
     public static boolean isEU;
+    // used for the revenge system
+    public static ArrayList<String> victimList = new ArrayList<String>();
+    public static ArrayList<String> killerList = new ArrayList<String>();
 
     public static enum Teams {
 
