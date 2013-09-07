@@ -19,10 +19,10 @@ public class AchievementAnimationSettings extends GuiScreen {
         int x1 = width / 2 - 150;
         int x2 = width / 2 + 10;
         int y = height / 2 - 60;
-        //Animate achievements?
-        this.buttonList.add(new SettingsToggleButton(1,x1, y, 150, 20, "", "Achievements animated", "Animation disabled", "achievementAnimation"));
+        // Animate achievements?
+        this.buttonList.add(new SettingsToggleButton(1, x1, y, 150, 20, "", "Achievements animated", "Animation disabled", "achievementAnimation"));
         this.buttonList.add(new SettingsToggleButton(2, x1, y + 25, 150, 20, "", "Display skin border", "Hide skin border", "displaySkinBorder"));
-        this.buttonList.add(new GuiAchievementDurationSlider(3, x2, y, "Duration: " + UndercastConfig.achievementAnimationDuration + " sec", (float)UndercastConfig.achievementAnimationDuration));
+        this.buttonList.add(new GuiAchievementDurationSlider(3, x2, y, UndercastConfig.achievementAnimationDuration == 0.0F ? "Duration: OFF" : "Duration: " + UndercastConfig.achievementAnimationDuration + " sec", (float) UndercastConfig.achievementAnimationDuration));
     }
 
     @Override
@@ -34,13 +34,14 @@ public class AchievementAnimationSettings extends GuiScreen {
         // Draw buttons
         super.drawScreen(par1, par2, par3);
     }
+
     @Override
     public void actionPerformed(GuiButton button) {
-        if(button instanceof SettingsToggleButton){
-            ((SettingsToggleButton)button).buttonPressed();
+        if (button instanceof SettingsToggleButton) {
+            ((SettingsToggleButton) button).buttonPressed();
             return;
         }
-        if(button instanceof GuiAchievementDurationSlider){
+        if (button instanceof GuiAchievementDurationSlider) {
             return;
         }
         switch (button.id) {

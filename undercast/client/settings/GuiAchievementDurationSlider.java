@@ -45,12 +45,9 @@ public class GuiAchievementDurationSlider extends GuiButton {
                 if (this.sliderValue > 1.0F) {
                     this.sliderValue = 1.0F;
                 }
-                if (sliderValue > 0.0F && sliderValue <= 1.0F) {
-                    this.displayString = "Duration: " + ((float) (int) (sliderValue * 40)) / 10F + "sec";
-                } else {
-                    sliderValue = 0.0F;
-                    this.displayString = "Duration: OFF";
-                }
+                float displayedNumber = (((float) (int) (sliderValue * 40)) / 10F);
+                this.displayString = "Duration: " + ((displayedNumber > 0.0F) ? displayedNumber + "sec" : "OFF");
+
             }
 
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
