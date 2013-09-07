@@ -74,7 +74,6 @@ public class UndercastAchievement implements TweenCallback {
     }
 
     public void draw() {
-        System.out.println(ingameWidgets.toString());
         update(System.currentTimeMillis() - lastRenderTime);
         lastRenderTime = System.currentTimeMillis();
         GL11.glPushMatrix();
