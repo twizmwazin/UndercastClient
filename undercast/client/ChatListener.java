@@ -35,7 +35,6 @@ public class ChatListener implements IChatListener {
             UCInstance.username = mc.thePlayer.username;
             // stop global msg and team chat and whispered messages to go
             // through
-            System.out.println(messageWithOutJson);
             if (!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ") && UndercastData.isOC) {
                 addLineToChatLines(message);
                 if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson))) {
