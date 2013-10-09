@@ -249,8 +249,8 @@ public class UndercastCustomMethods {
 
             // sort the player counts
             Arrays.sort(playerCounts, new Comparator<int[]>() {
-                @Override
                 // just compare the first int of the array (player count)
+                @Override
                 public int compare(final int[] entry1, final int[] entry2) {
                     final Integer int1 = entry1[0];
                     final Integer int2 = entry2[0];
@@ -410,7 +410,11 @@ public class UndercastCustomMethods {
             str = (UndercastConfig.lessObstructive ? "KK: " : "K/K: ") + "\u00A73" + getKK();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
                 str += "\u00A7f/\u00A73" + (((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.killed + UndercastData.stats.getKilled())));
-                str = str.substring(0, str.lastIndexOf('.') + 4);
+                try {
+                    // cut the kd, throws an exception if it's shorter
+                    str = str.substring(0, str.lastIndexOf('.') + 4);
+                } catch (Exception e) {
+                }
             }
         }
         return str;

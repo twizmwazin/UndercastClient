@@ -57,6 +57,7 @@ public class UndercastConfig {
     public static boolean displaySkinBorder;
     public static boolean showRevengeAchievement;
     public static int lastUsedLocation;
+    public static String ignoreVersionUpdateMessage;
 
     public static File configFile;
 
@@ -112,6 +113,7 @@ public class UndercastConfig {
         displaySkinBorder = config.get("UndercastMod", "displaySkinBorder", true).getBoolean(true);
         lastUsedLocation = config.get("UndercastMod", "lastUsedLocation", 0, "0: US\n1: EU").getInt();
         showRevengeAchievement = config.get("UndercastMod", "showRevengeAchievement", true).getBoolean(true);
+        ignoreVersionUpdateMessage = config.get("UndercastMod", "ignoreVersionUpdateMessage", "0.0.0").getString();
         config.save();
         System.out.println("[UndercastMod]: Config loaded!");
     }
@@ -180,6 +182,30 @@ public class UndercastConfig {
                     fr.write(line + "\n");
                 } else {
                     fr.write(line.substring(0, line.lastIndexOf("=") + 1) + newDouble + "\n");
+                }
+            }
+            fr.close();
+            br.close();
+            configFile.delete();
+            tempFile.renameTo(configFile);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public static void setStringProperty(String name, String string) {
+        File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(configFile));
+            FileWriter fr = new FileWriter(tempFile);
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (!line.contains("S:" + name)) {
+                    fr.write(line + "\n");
+                } else {
+                    fr.write(line.substring(0, line.lastIndexOf("=") + 1) + string + "\n");
                 }
             }
             fr.close();
