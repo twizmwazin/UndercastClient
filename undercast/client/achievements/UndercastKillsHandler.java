@@ -50,6 +50,7 @@ public class UndercastKillsHandler {
             if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
                 this.printTeamKillAchievement();
             } else {
+                boolean revengeAchievementShown = false;
                 if (UndercastConfig.showRevengeAchievement) {
                     // add your killer to the list so it can be detected if you take revenge
                     UndercastData.killerList.add(killer);
@@ -57,13 +58,16 @@ public class UndercastKillsHandler {
                         // test if the killer took revenge
                         if (UndercastData.victimList.get(c).equals(killer)) {
                             this.printRevengeAchievement();
+                            revengeAchievementShown = true;
                             UndercastData.victimList.remove(c);
                             break;
                         }
                     }
                 }
 
-                this.printAchievement();
+                if (!revengeAchievementShown) {
+                    this.printAchievement();
+                }
             }
         } // if you kill a person
         else if (UndercastConfig.showKillAchievements && !message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
@@ -91,6 +95,7 @@ public class UndercastKillsHandler {
                     }
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
+                boolean revengeAchievementShown = false;
                 if (UndercastConfig.showRevengeAchievement) {
                     // add the victim to the revenge list in case it takes revenge
                     UndercastData.victimList.add(killer);
@@ -98,13 +103,15 @@ public class UndercastKillsHandler {
                         // test if the player took revenge
                         if (UndercastData.killerList.get(c).equals(killer)) {
                             this.printRevengeAchievement();
+                            revengeAchievementShown = true;
                             UndercastData.killerList.remove(c);
                             break;
                         }
                     }
                 }
-
-                this.printAchievement();
+                if (!revengeAchievementShown) {
+                    this.printAchievement();
+                }
             }
             UndercastData.isLastKillFromPlayer = true;
             if (UndercastData.isNextKillFirstBlood) {
@@ -150,9 +157,9 @@ public class UndercastKillsHandler {
         UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username, "\u00A7agot the last Kill!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
-    
-    private void printRevengeAchievement(){
-        UndercastAchievement ac = new UndercastAchievement(killer, killOrKilled ? "\u00A7a" + killer : "\u00A74" + killer,  killOrKilled ? "\u00A7aRevenge Kill!" : "\u00A74took Revenge!");
+
+    private void printRevengeAchievement() {
+        UndercastAchievement ac = new UndercastAchievement(killer, (killOrKilled ? "\u00A7a" : "\u00A74") + killer, killOrKilled ? "\u00A7aRevengekill!" : "\u00A74 took Revenge!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
