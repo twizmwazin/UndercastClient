@@ -43,20 +43,20 @@ public class ServersCommandParser {
                     // a = green
                     // f = white
                     switch (matchStatusColor) {
-                    case 'a':
-                        state = MatchState.Starting;
-                        break;
-                    case 'c':
-                        state = MatchState.Finished;
-                        break;
-                    case 'e':
-                        state = MatchState.Started;
-                        break;
-                    case 'f':
-                        state = MatchState.Waiting;
-                        break;
-                    default:
-                        state = MatchState.Unknown;
+                        case 'a':
+                            state = MatchState.Starting;
+                            break;
+                        case 'c':
+                            state = MatchState.Finished;
+                            break;
+                        case 'e':
+                            state = MatchState.Started;
+                            break;
+                        case 'f':
+                            state = MatchState.Waiting;
+                            break;
+                        default:
+                            state = MatchState.Unknown;
                     }
 
                     // insert the data
@@ -80,8 +80,8 @@ public class ServersCommandParser {
             } catch (Exception e) {
                 pages = 10;
             }
-            for (int c = 1; c < UndercastData.parsedPages.length; c++) {
-                int page = UndercastData.parsedPages[c];
+            for (int c = 1; c < (UndercastData.isEU ? UndercastData.parsedPagesEU.length : UndercastData.parsedPagesUS.length); c++) {
+                int page = UndercastData.isEU ? UndercastData.parsedPagesEU[c] : UndercastData.parsedPagesUS[c];
                 if (page < 0) {
                     page = pages + (page + 1); // + 1 is for not removing
                                                // anything from pages (keep in
