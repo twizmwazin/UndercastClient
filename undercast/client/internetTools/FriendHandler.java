@@ -48,7 +48,17 @@ public class FriendHandler {
                 String friend = message.split(" ")[0];
                 if (!UndercastData.friends.containsKey(friend)) {
                     if (message.contains(" is online on ")) {
-                        UndercastData.friends.put(friend, message.substring(message.lastIndexOf(" is online on ") + 14));
+                        String server;
+                        if (message.contains(",")) {
+                            if (message.contains(", EU")) {
+                                server = message.substring(message.lastIndexOf(" is online on ") + 14, message.indexOf(",")) + UndercastData.locationNames[1];
+                            } else {
+                                server = message.substring(message.lastIndexOf(" is online on ") + 14, message.indexOf(",")) + UndercastData.locationNames[0];
+                            }
+                        } else {
+                            server = message.substring(message.lastIndexOf(" is online on ") + 14) + (UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0]);
+                        }
+                        UndercastData.friends.put(friend, server);
                     } else {
                         UndercastData.friends.put(friend, "offline");
                     }
@@ -56,7 +66,7 @@ public class FriendHandler {
             } else if (message.contains(" is online")) {
                 String friend = message.split(" ")[0].replace("*", "");
                 if (!UndercastData.friends.containsKey(friend)) {
-                    UndercastData.friends.put(friend, UndercastData.server);
+                    UndercastData.friends.put(friend, UndercastData.server + (UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0]));
                 }
             }
             if (UndercastData.friends.size() % 8 == 0 && currentPage < pages && !UndercastData.friends.isEmpty() && !message.contains("Your Friends")) {

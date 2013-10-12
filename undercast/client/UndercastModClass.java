@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +55,7 @@ public class UndercastModClass {
     public UndercastKillsHandler achievementChatHandler;
     public UndercastGuiAchievement guiAchievement;
     public FriendHandler friendHandler;
+    boolean friendDebugging = false;
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -215,6 +217,20 @@ public class UndercastModClass {
             }
         }
 
+        if (friendDebugging) {
+            int height2 = 2;
+            for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
+                String key = ir.next();
+                String value = UndercastData.friends.get(key);
+                if (value != "offline") {
+                    mc.fontRenderer.drawStringWithShadow("\u00A79" + key + ":" + value, 310, height2, 16777215);
+                } else {
+                    mc.fontRenderer.drawStringWithShadow(key + ":" + value, 310, height2, 16777215);
+                }
+                height2 += 8;
+            }
+        }
+
         // if you not on obs turn it off
         if ((UndercastData.team != Teams.Observers && !UndercastData.isGameOver) || !UndercastData.isPlayingOvercastNetwork()) {
             brightActive = false;
@@ -249,27 +265,27 @@ public class UndercastModClass {
      */
     public int getTeamColors() {
         switch (UndercastData.getTeam()) {
-        case Red:
-        case Cot:
-            return 0x990000;
-        case Blue:
-        case Bot:
-            return 0x0033FF;
-        case Purple:
-            return 0x9933CC;
-        case Cyan:
-            return 0x00AAAA;
-        case Yellow:
-            return 0xFFFF00;
-        case Lime:
-        case Green:
-            return 0x55FF55;
-        case Orange:
-            return 0xFF9900;
-        case Observers:
-            return 0x00FFFF;
-        default:
-            return 0x606060;
+            case Red:
+            case Cot:
+                return 0x990000;
+            case Blue:
+            case Bot:
+                return 0x0033FF;
+            case Purple:
+                return 0x9933CC;
+            case Cyan:
+                return 0x00AAAA;
+            case Yellow:
+                return 0xFFFF00;
+            case Lime:
+            case Green:
+                return 0x55FF55;
+            case Orange:
+                return 0xFF9900;
+            case Observers:
+                return 0x00FFFF;
+            default:
+                return 0x606060;
         }
     }
 

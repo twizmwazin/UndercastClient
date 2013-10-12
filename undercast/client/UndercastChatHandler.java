@@ -36,12 +36,24 @@ public class UndercastChatHandler {
             String name;
             String server;
             message = message.replace(" joined the game", "");
-            if (message.contains("[")) {
+            // If it starts with [EU] or [US]
+            if (message.startsWith("[" + UndercastData.locationNames[1] + "]") || message.startsWith("[" + UndercastData.locationNames[0] + "]")) {
+                name = message.split(" ")[2];
+                server = message.split(" ")[1].replace("[", "").replace("]", "");
+            } else if (message.contains("[")) {
                 name = message.split(" ")[1];
                 server = message.split(" ")[0].replace("[", "").replace("]", "");
             } else {
                 name = message.substring(message.lastIndexOf("*") + 1, message.length());
                 server = UndercastData.server;
+            }
+
+            if (message.startsWith("[" + UndercastData.locationNames[1] + "]")) {
+                server = server + UndercastData.locationNames[1];
+            } else if (message.contains("[" + UndercastData.locationNames[0] + "]")) {
+                server = server + UndercastData.locationNames[0];
+            } else {
+                server = server + (UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0]);
             }
             if (UndercastData.friends.containsKey(name)) {
                 UndercastData.friends.put(name, server);
@@ -51,16 +63,33 @@ public class UndercastChatHandler {
         else if (message.contains("left the game")) {
             String name;
             String server;
+            String location;
             message = message.replace(" left the game", "");
-            if (message.contains("[")) {
+            if (message.startsWith("[" + UndercastData.locationNames[1] + "]") || message.startsWith("[" + UndercastData.locationNames[0] + "]")) {
+                name = message.split(" ")[2];
+                if (message.startsWith("[" + UndercastData.locationNames[0] + "]")) {
+                    location = UndercastData.locationNames[0];
+                    message = message.replace("[" + UndercastData.locationNames[0] + "]", "");
+                } else if (message.startsWith("[" + UndercastData.locationNames[1] + "]")) {
+                    location = UndercastData.locationNames[1];
+                    message = message.replace("[" + UndercastData.locationNames[1] + "]", "");
+                } else {
+                    //This should obviously never happens
+                    location = UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0];
+                }
+
+                server = message.split(" ")[1].replace("[", "").replace("]", "");
+            } else if (message.contains("[")) {
                 name = message.split(" ")[1];
+                location = UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0];
                 server = message.split(" ")[0].replace("[", "").replace("]", "");
             } else {
                 name = message.substring(message.lastIndexOf("*") + 1, message.length());
+                location = UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0];
                 server = UndercastData.server;
             }
             if (UndercastData.friends.containsKey(name)) {
-                if (UndercastData.friends.get(name).equals(server)) {
+                if (UndercastData.friends.get(name).equals(server + location)) {
                     UndercastData.friends.put(name, "offline");
                 }
             }
@@ -68,11 +97,22 @@ public class UndercastChatHandler {
         else if (message.contains(" changed servers")) {
             String name;
             String server;
+            String location;
+            if (message.startsWith("[" + UndercastData.locationNames[0] + "]")) {
+                location = UndercastData.locationNames[0];
+                message = message.replace("[" + UndercastData.locationNames[0] + "]", "");
+            } else if (message.startsWith("[" + UndercastData.locationNames[1] + "]")) {
+                location = UndercastData.locationNames[1];
+                message = message.replace("[" + UndercastData.locationNames[1] + "]", "");
+            } else {
+                location = UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0];
+            }
+
             message = message.replace(" changed servers", "");
             name = message.substring(message.indexOf("]") + 2);
             server = message.substring(message.indexOf("» ") + 2, message.indexOf("]"));
             if (UndercastData.friends.containsKey(name)) {
-                UndercastData.friends.put(name, server);
+                UndercastData.friends.put(name, server + location);
             }
         } // update what map you are playing on
         else if (message.contains("Now playing")) {
