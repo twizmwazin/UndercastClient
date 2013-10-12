@@ -95,8 +95,8 @@ public class UndercastConfig {
         showAchievements = config.get("UndercastMod", "showAchievements", false).getBoolean(false);
         showKillAchievements = config.get("UndercastMod", "showKillAchievements", true).getBoolean(true);
         showDeathAchievements = config.get("UndercastMod", "showDeathAchievements", true).getBoolean(true);
-        showFirstBloodAchievement = config.get("UndercastMod", "showFirstBloodAchievement", true).getBoolean(true);
-        showLastKillAchievement = config.get("UndercastMod", "showLastKillAchievement", true).getBoolean(true);
+        showFirstBloodAchievement = config.get("UndercastMod", "showFirstBloodAchievement", false).getBoolean(false);
+        showLastKillAchievement = config.get("UndercastMod", "showLastKillAchievement", false).getBoolean(false);
         showMatchTime = config.get("UndercastMod", "showMatchTime", true).getBoolean(true);
         showMatchTimeSeconds = config.get("UndercastMod", "showMatchTimeSeconds", true).getBoolean(true);
         showGSClass = config.get("UndercastMod", "showGSClass", true).getBoolean(true);
