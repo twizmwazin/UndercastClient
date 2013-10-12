@@ -16,9 +16,11 @@ import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.PlayerStatsHTMLParser;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
+import undercast.client.server.LocationReaderDelegate;
+import undercast.client.server.ServerLocationReader;
 import undercast.client.server.UndercastServer;
 
-public class UndercastData {
+public class UndercastData implements LocationReaderDelegate {
     // Data Varibles
 
     public static String map;
@@ -37,6 +39,8 @@ public class UndercastData {
     public static HashMap<String, String> friends = new HashMap<String, String>();
     public static String server;
     public static String previousServer = "Lobby";
+    // please note that this isn't the same as isEU. This might as well have the value "Both"
+    public static ServerLocation currentServerLocation;
     public static Teams team;
     public static boolean isOC = false;
     public static boolean isLobby;
@@ -82,6 +86,8 @@ public class UndercastData {
     // used for the revenge system
     public static ArrayList<String> victimList = new ArrayList<String>();
     public static ArrayList<String> killerList = new ArrayList<String>();
+    public static int localLocationCacheVersion = -1;
+    public static int remoteLocationCacheVersion = -1;
 
     public static enum Teams {
 
@@ -96,6 +102,10 @@ public class UndercastData {
     public static enum ServerType {
 
         lobby, blitz, projectares, ghostsquadron, Unknown
+    };
+
+    public static enum ServerLocation {
+        Both, US, EU
     };
 
     public static String[] sortNames = { "Web", "Match", "Players", "Abc" };
@@ -143,6 +153,15 @@ public class UndercastData {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
+        ServerLocationReader.setDelegate((LocationReaderDelegate) this);
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                new ServerLocationReader().read();
+                super.run();
+            }
+        };
+        t.start();
     }
 
     public static void reloadServerInformations(boolean getMatchState) {
@@ -296,7 +315,10 @@ public class UndercastData {
                 } catch (Exception e) {
                     serverInformation[c].playerCount = -1;
                 }
-                serverInformation[c].currentMap = mapData[c][2];
+                // do not overwrite the map if it isn't known
+                if (!(isEU && serverInformation[c].location == ServerLocation.Both)) {
+                    serverInformation[c].currentMap = mapData[c][2];
+                }
                 serverInformation[c].nextMap = mapData[c][3];
                 if (serverInformation[c].matchState == null || !isOC) {
                     serverInformation[c].matchState = MatchState.Unknown;
@@ -306,6 +328,8 @@ public class UndercastData {
                 } catch (Exception e) {
                     serverInformation[c].type = ServerType.Unknown;
                 }
+                serverInformation[c].location = ServerLocationReader.getLocationForServer(serverInformation[c].name);
+
             }
 
             // set the map
@@ -448,6 +472,7 @@ public class UndercastData {
     public static void setServer(String servers) {
         previousServer = server;
         server = servers;
+        currentServerLocation = ServerLocationReader.getLocationForServer(server);
         reloadServerInformations(false);
     }
 
@@ -476,4 +501,10 @@ public class UndercastData {
         matchTimeMin = 0;
         matchTimeSec = 0;
     }
+
+    @Override
+    public void locationReaderFinished() {
+        reloadServerInformations(false);
+    }
+
 }

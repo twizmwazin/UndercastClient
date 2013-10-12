@@ -142,6 +142,7 @@ public class UndercastServerGUI extends GuiScreen {
                 UndercastData.locationIndex = 0;
             }
             this.buttonList.set(7, new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
+            UndercastCustomMethods.sortAndFilterServers();
             UndercastConfig.setIntProperty("lastUsedLocation", UndercastData.locationIndex);
         }
 

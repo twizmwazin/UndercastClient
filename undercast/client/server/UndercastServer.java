@@ -1,6 +1,7 @@
 package undercast.client.server;
 
 import undercast.client.UndercastData.MatchState;
+import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastData.ServerType;
 
 public class UndercastServer {
@@ -11,6 +12,7 @@ public class UndercastServer {
     public int playerCount;
     public ServerType type;
     public MatchState matchState;
+    public ServerLocation location;
 
     /**
      * Default constructor
@@ -21,6 +23,7 @@ public class UndercastServer {
         nextMap = "";
         type = ServerType.Unknown;
         matchState = MatchState.Unknown;
+        location = ServerLocation.Both;
     }
 
     public String getServerName() {
@@ -46,4 +49,9 @@ public class UndercastServer {
     public MatchState getMatchState() {
         return matchState;
     }
+
+    public ServerLocation getLocation() {
+        return location;
+    }
+
 }

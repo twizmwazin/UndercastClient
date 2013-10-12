@@ -12,6 +12,7 @@ import java.net.URL;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastData;
 import undercast.client.UndercastModClass;
+import undercast.client.server.ServerLocationReader;
 
 public class Undercast_UpdaterThread extends Thread {
     boolean errorOccured;
@@ -31,6 +32,7 @@ public class Undercast_UpdaterThread extends Thread {
         String readline = "";
         String readline2 = "Could not get update information.";
         String readline3 = "1:2:3:-1";
+        String readline4 = "-1";
         boolean emergencyParser = false; // If we should use the emergency parser
         errorOccured = false;
         try {
@@ -40,6 +42,7 @@ public class Undercast_UpdaterThread extends Thread {
             readline = in.readLine();
             readline2 = in.readLine();
             readline3 = in.readLine();
+            readline4 = in.readLine();
             emergencyParser = Boolean.parseBoolean(in.readLine());
             UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
@@ -79,6 +82,14 @@ public class Undercast_UpdaterThread extends Thread {
             } catch (Exception e) {
             }
         }
+        try {
+            UndercastData.remoteLocationCacheVersion = Integer.parseInt(readline4);
+        } catch (Exception e) {
+        }
+        if (ServerLocationReader.compareLocaleAndRemoteVersion()) {
+            ServerLocationReader.downloadTheLatestVersion();
+        }
+
         finished = true;
     }
 

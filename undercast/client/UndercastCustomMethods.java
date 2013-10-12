@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+
 import net.minecraft.client.Minecraft;
+import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.server.UndercastServer;
@@ -288,34 +290,27 @@ public class UndercastCustomMethods {
         // reset the filtered server count
         UndercastData.filteredServerCount = UndercastData.serverCount;
         // show which filter is chosen
-        if (!UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("all")) {
-            ServerType shownType = ServerType.Unknown;
-            if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("PA")) {
-                shownType = ServerType.projectares;
-            } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("Blitz")) {
-                shownType = ServerType.blitz;
-            } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("GS")) {
-                shownType = ServerType.ghostsquadron;
-            }
+        ServerType shownType = ServerType.Unknown;
+        if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("PA")) {
+            shownType = ServerType.projectares;
+        } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("Blitz")) {
+            shownType = ServerType.blitz;
+        } else if (UndercastData.filterNames[UndercastData.filterIndex].equalsIgnoreCase("GS")) {
+            shownType = ServerType.ghostsquadron;
+        }
 
-            // if the shownType detection failed: do nothing
-            if (shownType == ServerType.Unknown) {
-                return;
+        // extract the servers
+        ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
+        for(int c = 0; c < UndercastData.serverCount; c++) {
+            if((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU) || UndercastData.sortedServerInformation[c].location == ServerLocation.Both)) {
+                filteredServers.add(UndercastData.sortedServerInformation[c]);
             }
+        }
 
-            // extract the servers
-            ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
-            for (int c = 0; c < UndercastData.serverCount; c++) {
-                if (UndercastData.sortedServerInformation[c].type == shownType) {
-                    filteredServers.add(UndercastData.sortedServerInformation[c]);
-                }
-            }
-
-            UndercastData.filteredServerCount = filteredServers.size();
-            // and put them back to the serverList
-            for (int c = 0; c < filteredServers.size(); c++) {
-                UndercastData.sortedServerInformation[c] = filteredServers.get(c);
-            }
+        UndercastData.filteredServerCount = filteredServers.size();
+        // and put them back to the serverList
+        for(int c = 0; c < filteredServers.size(); c++) {
+            UndercastData.sortedServerInformation[c] = filteredServers.get(c);
         }
     }
 
