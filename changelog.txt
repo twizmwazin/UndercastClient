@@ -1,5 +1,13 @@
 The changelog exists since version 1.4.0
 
+1.7.0
+
+ - full EU support (with some limitations due to lack of information at oc.tc/play)
+ - new achievement system => new options / animation
+ - revenge achievements
+ - add keybinding settings to the "P" menu (Modloader only)
+ - litte fix for the server parsing => improved performance in some cases
+
 1.6.3
  - added total k/d and total k/k
  - Final stats improved: colors, always show up & added objectives
