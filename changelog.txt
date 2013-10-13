@@ -7,6 +7,7 @@ The changelog exists since version 1.4.0
  - revenge achievements
  - add keybinding settings to the "P" menu (Modloader only)
  - litte fix for the server parsing => improved performance in some cases
+ - other minor fixes
 
 1.6.3
  - added total k/d and total k/k
