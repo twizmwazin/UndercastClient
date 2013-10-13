@@ -74,7 +74,7 @@ public class UndercastChatHandler {
                     location = UndercastData.locationNames[1];
                     message = message.replace("[" + UndercastData.locationNames[1] + "]", "");
                 } else {
-                    //This should obviously never happens
+                    // This should obviously never happens
                     location = UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0];
                 }
 
@@ -164,7 +164,7 @@ public class UndercastChatHandler {
         else if (message.contains("You joined the")) {
             UndercastData.reloadStats();
             try {
-                UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "").replace(" Squad", "")));
+                UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "").replace(" Squad", "").replace(" Sun", "").replace(" Moon", "")));
             } catch (Exception e) {
                 // if the team set fails because of an alias, set the team to
                 // Unknown
