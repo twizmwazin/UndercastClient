@@ -1,7 +1,11 @@
 package undercast.client.internetTools;
 
+import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
@@ -12,8 +16,8 @@ import javax.swing.text.html.parser.ParserDelegator;
  *         data[11][1] will give the players on Nostalgia
  */
 public class ServerStatusHTMLParser {
-    // Function to remove the last character is it is a space
 
+    // Function to remove the last character is it is a space
     public static String stripLastSpace(String str) {
 
         if (str.length() > 0 && str.charAt(str.length() - 1) == ' ') {
@@ -25,12 +29,11 @@ public class ServerStatusHTMLParser {
     }
 
     private static String compile(String str) {
-        int occurEnd = (str.length() - str.replaceAll("</div>\n<div class='span8'>", "").length()) / "</div>\n<div class='span8'>".length();
         int index1, index2;
         int currentIndex = 0;
-        for (int i = 0; i < occurEnd; i++) {
-            index1 = str.indexOf("<div class='span4'>\n<h3>", currentIndex);
-            index2 = str.indexOf("</div>\n<div class='span8'>", currentIndex);
+        while (str.indexOf("<div class='span4'>\n<h3>Information", currentIndex) != -1) {
+            index1 = str.indexOf("<div class='span4'>\n<h3>Information", currentIndex);
+            index2 = str.indexOf("</div>\n<div class='span8'>\n<div class='row'>", currentIndex);
             currentIndex = index2 + 1;
             str = str.replace(str.substring(index1, index2), "");
         }
@@ -52,14 +55,10 @@ public class ServerStatusHTMLParser {
     }
 
     public static String[][] parse(String string) throws Exception {
-        if (string.startsWith("emergency_parser@")) {
+        if (string.startsWith("emergency_parser@"))
             return emergencyParse(string);
-        }
         String realSource = string;
-        // realSource =
-        // realSource.replace(realSource.substring(realSource.indexOf("<div class='span4'>"),
-        // realSource.indexOf("<div class='span8'>")), "");
-        realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='tab-pane active' id='main'>"), realSource.indexOf("<div class='tab-pane' id='project-ares'>")), "");
+        realSource = realSource.replace(realSource.substring(realSource.indexOf("<div class='tab-pane active' id='main'>"), realSource.indexOf("<div class='tab-pane' id='us'>")), "");
         String goodSource = compile(realSource);
         // Create 2 readers
         Reader HTMLReader = new StringReader(goodSource);
@@ -69,19 +68,17 @@ public class ServerStatusHTMLParser {
         ParserDelegator pd2 = new ParserDelegator();
         // Create our own parse handlers
         Parser p = new Parser();
-        p.rawData = goodSource;
         NextParser p2 = new NextParser();
         // Parse
         pd.parse(HTMLReader, p, false);
         pd2.parse(HTMLReader2, p2, false);
         // Make up return values
-        // Add the next map to the other data as we use two parsers
         int c = 0;
         for (int i = 0; i < p2.mapData.length; i++) {
-            if (p.mapData[i][1] != null && Integer.parseInt(p.mapData[i][1]) != 0) {
+            if (p.mapData[i][1] != null && Integer.parseInt((String) p.mapData[i][1]) != 0) {
                 p.mapData[i][3] = p2.mapData[c];
             } else {
-                p.mapData[i][3] = "";
+                p.mapData[i][3] = "Unknown";
                 c--;
             }
             c++;
@@ -92,28 +89,22 @@ public class ServerStatusHTMLParser {
 
 class Parser extends HTMLEditorKit.ParserCallback {
     // Currently in a h4 tag?
-
     private boolean inTD = false;
-    // Currently in a p tag?
-    private boolean inP = false;
     // The number of attributes already gotten (such as name, players, map)
     private int count = 0;
     // # of map currently parsing
     private int mapCount = -1;
     // Data
-    public String[][] mapData = new String[999][5];
+    public String[][] mapData = new String[999][6];
     // The current gametype
     public String gametype;
-    public String rawData;
+    public String region;
 
-    private boolean hasID(MutableAttributeSet a) {
-
-        return a.containsAttribute(HTML.Attribute.ID, "project-ares") || a.containsAttribute(HTML.Attribute.ID, "blitz") || a.containsAttribute(HTML.Attribute.ID, "ghost-squadron") || a.containsAttribute(HTML.Attribute.ID, "lobby");
+    private boolean hasID(MutableAttributeSet a, String prefix) {
+        return a.containsAttribute(HTML.Attribute.ID, prefix + "project-ares") || a.containsAttribute(HTML.Attribute.ID, prefix + "blitz") || a.containsAttribute(HTML.Attribute.ID, prefix + "ghost-squadron") || a.containsAttribute(HTML.Attribute.ID, prefix + "lobby");
     }
 
     // Function called when a tag (<tagName>) is opened
-
-    @Override
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {
         // If it is a tag we want, make sure to have a look at it
         if (t.equals(HTML.Tag.H4)) {
@@ -122,12 +113,16 @@ class Parser extends HTMLEditorKit.ParserCallback {
             mapCount++;
             return;
         }
-        if (t.equals(HTML.Tag.DIV) && this.hasID(a)) {
-            gametype = (String) a.getAttribute(HTML.Attribute.ID);
+
+        if (t.equals(HTML.Tag.DIV) && (this.hasID(a, "us-") || this.hasID(a, "eu-"))) {
+            gametype = ((String) a.getAttribute(HTML.Attribute.ID)).replace("eu-", "").replace("us-", "");
+        }
+
+        if (t.equals(HTML.Tag.DIV) && (a.containsAttribute(HTML.Attribute.ID, "us") || a.containsAttribute(HTML.Attribute.ID, "eu"))) {
+            region = (String) a.getAttribute(HTML.Attribute.ID);
         }
     }
 
-    @Override
     public void handleEndTag(HTML.Tag t, int pos) {
         // Close the tag (</tagName>)
         if (t.equals(HTML.Tag.H4)) {
@@ -137,13 +132,18 @@ class Parser extends HTMLEditorKit.ParserCallback {
 
     }
 
-    @Override
     public void handleText(char[] data, int pos) {
         // Handle the text in between tags (<tag>TEXT</tag>)
         if (inTD) {
-            // Write the data
-            mapData[mapCount][count - 1] = ServerStatusHTMLParser.stripLastSpace(new String(data).replace("Now: ", ""));
+            String str = new String(data);
+            if (str.contains("Lobby") || str.contains("Project Ares") || str.contains("Blitz") || str.contains("Ghost Squadron")) {
+                inTD = false;
+                mapCount--;
+                return;
+            }
+            mapData[mapCount][count - 1] = ServerStatusHTMLParser.stripLastSpace(str.replace("Now: ", ""));
             mapData[mapCount][4] = gametype;
+            mapData[mapCount][5] = region;
             count++;
         }
     }
@@ -151,7 +151,6 @@ class Parser extends HTMLEditorKit.ParserCallback {
 
 class NextParser extends HTMLEditorKit.ParserCallback {
     // Currently in a a tag?
-
     private boolean inTD = false;
     // # of map currently parsing
     private int mapCount = 0;
@@ -159,7 +158,6 @@ class NextParser extends HTMLEditorKit.ParserCallback {
     public String[] mapData = new String[999];
 
     // Function called when a tag (<tagName>) is opened
-    @Override
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {
         // If it is a tag we want, make sure to have a look at it
         if (t.equals(HTML.Tag.A)) {
@@ -167,7 +165,6 @@ class NextParser extends HTMLEditorKit.ParserCallback {
         }
     }
 
-    @Override
     public void handleEndTag(HTML.Tag t, int pos) {
         // Close the tag (</tagName>)
         if (t.equals(HTML.Tag.A)) {
@@ -175,7 +172,6 @@ class NextParser extends HTMLEditorKit.ParserCallback {
         }
     }
 
-    @Override
     public void handleText(char[] data, int pos) {
         // Handle the text in between tags (<tag>TEXT</tag>)
         if (inTD) {
