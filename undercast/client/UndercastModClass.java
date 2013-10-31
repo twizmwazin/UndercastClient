@@ -31,7 +31,6 @@ import undercast.client.UndercastData.Teams;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.internetTools.FriendHandler;
-import undercast.client.server.ServerLocationReader;
 import undercast.client.update.Undercast_UpdaterThread;
 
 /**
@@ -85,8 +84,6 @@ public class UndercastModClass {
         new UndercastData();
         new Undercast_UpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
-        File f = new File(ServerLocationReader.CONFIG_PATH);
-        System.out.println(f.mkdir());
     }
 
     @Mod.Init
@@ -180,7 +177,7 @@ public class UndercastModClass {
                 }
             }
             // Show next map
-            if (UndercastConfig.showNextMap && !UndercastData.isLobby && !(UndercastData.isEU && UndercastData.currentServerLocation == ServerLocation.Both)) {
+            if (UndercastConfig.showNextMap && !UndercastData.isLobby) {
                 if (UndercastData.getNextMap() != null) {
                     mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
                     height += 8;

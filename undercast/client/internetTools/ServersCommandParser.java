@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
 import undercast.client.UndercastData.MatchState;
+import undercast.client.UndercastData.ServerLocation;
 
 public class ServersCommandParser {
 
@@ -61,7 +62,7 @@ public class ServersCommandParser {
 
                     // insert the data
                     for (int c = 0; c < UndercastData.serverInformation.length; c++) {
-                        if (!(UndercastData.serverInformation[c].name == null)) {
+                        if (!(UndercastData.serverInformation[c].name == null) && ((!UndercastData.isEU && UndercastData.serverInformation[c].location == ServerLocation.US) || (UndercastData.isEU && UndercastData.serverInformation[c].location == ServerLocation.EU))) {
                             if (UndercastData.serverInformation[c].name.equals(name)) {
                                 UndercastData.serverInformation[c].currentMap = map;
                                 UndercastData.serverInformation[c].matchState = state;

@@ -31,8 +31,9 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
             UndercastServer server = UndercastData.sortedServerInformation[i];
             parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
             parent.drawString(Minecraft.getMinecraft().fontRenderer, Integer.toString(server.getPlayerCount()), j + 198, k + 1, 8421504);
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, (!UndercastData.isEU && UndercastData.locationIndex == 1 && server.location == ServerLocation.Both) ? "Unknown" : server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, (UndercastData.locationIndex == 1 && server.location == ServerLocation.Both) ? "Next: \u00A77Unknown" : "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
+            parent.drawString(Minecraft.getMinecraft().fontRenderer, server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
+            parent.drawString(Minecraft.getMinecraft().fontRenderer, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
+
 
         } catch (Exception e) {
 

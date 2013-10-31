@@ -16,11 +16,9 @@ import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.PlayerStatsHTMLParser;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
-import undercast.client.server.LocationReaderDelegate;
-import undercast.client.server.ServerLocationReader;
 import undercast.client.server.UndercastServer;
 
-public class UndercastData implements LocationReaderDelegate {
+public class UndercastData {
     // Data Varibles
 
     public static String map;
@@ -39,14 +37,11 @@ public class UndercastData implements LocationReaderDelegate {
     public static HashMap<String, String> friends = new HashMap<String, String>();
     public static String server;
     public static String previousServer = "Lobby";
-    // please note that this isn't the same as isEU. This might as well have the value "Both"
-    public static ServerLocation currentServerLocation;
     public static Teams team;
     public static boolean isOC = false;
     public static boolean isLobby;
     public static boolean update;
     public static String updateLink;
-    public static boolean emergencyParser;
     private static InformationLoaderThread mapLoader;
     private static InformationLoaderThread statsLoader;
     public static UndercastServer[] serverInformation;
@@ -87,8 +82,6 @@ public class UndercastData implements LocationReaderDelegate {
     // used for the revenge system
     public static ArrayList<String> victimList = new ArrayList<String>();
     public static ArrayList<String> killerList = new ArrayList<String>();
-    public static int localLocationCacheVersion = -1;
-    public static int remoteLocationCacheVersion = -1;
 
     public static enum Teams {
 
@@ -106,7 +99,7 @@ public class UndercastData implements LocationReaderDelegate {
     };
 
     public static enum ServerLocation {
-        Both, US, EU
+        US, EU
     };
 
     public static String[] sortNames = { "Web", "Match", "Players", "Abc" };
@@ -148,25 +141,12 @@ public class UndercastData implements LocationReaderDelegate {
         locationIndex = UndercastConfig.lastUsedLocation < locationNames.length ? UndercastConfig.lastUsedLocation : 0;
         filterIndex = 0;
         try {
-            if (!emergencyParser) {
-                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
-            } else {
-                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
-            }
+            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
             statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
         }
-        ServerLocationReader.setDelegate((LocationReaderDelegate) this);
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                new ServerLocationReader().read();
-                super.run();
-            }
-        };
-        t.start();
     }
 
     public static void reloadServerInformations(boolean getMatchState) {
@@ -174,11 +154,7 @@ public class UndercastData implements LocationReaderDelegate {
         nextMap = "Loading...";
 
         try {
-            if (!emergencyParser) {
-                mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
-            } else {
-                mapLoader = new InformationLoaderThread(new URL("http://undercast-team.netau.net"));
-            }
+            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -200,7 +176,7 @@ public class UndercastData implements LocationReaderDelegate {
     }
 
     public static void websiteLoaded(String url, String contents) {
-        if (url.equals("https://oc.tc/play") || url.contains("undercast-team.netau.net")) {
+        if (url.equals("https://oc.tc/play")) {
             updateMap(contents);
         } else {
             updateStats(contents, url);
@@ -320,10 +296,7 @@ public class UndercastData implements LocationReaderDelegate {
                 } catch (Exception e) {
                     serverInformation[c].playerCount = -1;
                 }
-                // do not overwrite the map if it isn't known
-                if (!(isEU && serverInformation[c].location == ServerLocation.Both)) {
-                    serverInformation[c].currentMap = mapData[c][2];
-                }
+                serverInformation[c].currentMap = mapData[c][2];
                 serverInformation[c].nextMap = mapData[c][3];
                 if (serverInformation[c].matchState == null || !isOC) {
                     serverInformation[c].matchState = MatchState.Unknown;
@@ -333,7 +306,7 @@ public class UndercastData implements LocationReaderDelegate {
                 } catch (Exception e) {
                     serverInformation[c].type = ServerType.Unknown;
                 }
-                serverInformation[c].location = ServerLocationReader.getLocationForServer(serverInformation[c].name);
+                serverInformation[c].location = UndercastCustomMethods.getLocationForString(mapData[c][5]);
 
             }
 
@@ -477,7 +450,6 @@ public class UndercastData implements LocationReaderDelegate {
     public static void setServer(String servers) {
         previousServer = server;
         server = servers;
-        currentServerLocation = ServerLocationReader.getLocationForServer(server);
         reloadServerInformations(false);
     }
 
@@ -505,11 +477,6 @@ public class UndercastData implements LocationReaderDelegate {
         matchTimeHours = 0;
         matchTimeMin = 0;
         matchTimeSec = 0;
-    }
-
-    @Override
-    public void locationReaderFinished() {
-        reloadServerInformations(false);
     }
 
 }

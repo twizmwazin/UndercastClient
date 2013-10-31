@@ -12,7 +12,6 @@ import java.net.URL;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastData;
 import undercast.client.UndercastModClass;
-import undercast.client.server.ServerLocationReader;
 
 
 public class Undercast_UpdaterThread extends Thread {
@@ -45,9 +44,6 @@ public class Undercast_UpdaterThread extends Thread {
             readline2 = in.readLine();
             readline3 = in.readLine();
             readline4 = in.readLine();
-            emergencyParser = Boolean.parseBoolean(in.readLine());
-            readline5 = in.readLine();
-            UndercastData.emergencyParser = emergencyParser;
             UndercastData.latestVersion = readline;
         } catch (Exception e) {
             UndercastData.setUpdate(false);
@@ -96,13 +92,6 @@ public class Undercast_UpdaterThread extends Thread {
                 UndercastData.parsedPagesEU = pagesInt;
             } catch (Exception e) {
             }
-        }
-        try {
-            UndercastData.remoteLocationCacheVersion = Integer.parseInt(readline5);
-        } catch (Exception e) {
-        }
-        if (ServerLocationReader.compareLocaleAndRemoteVersion()) {
-            ServerLocationReader.downloadTheLatestVersion();
         }
         finished = true;
     }

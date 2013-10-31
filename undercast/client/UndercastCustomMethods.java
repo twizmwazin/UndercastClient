@@ -268,7 +268,7 @@ public class UndercastCustomMethods {
             // extract the server names to an Array list
             ArrayList<String> serverNames = new ArrayList<String>(UndercastData.serverCount);
             for (int c = 0; c < UndercastData.serverCount; c++) {
-                serverNames.add(c, UndercastData.serverInformation[c].name);
+                serverNames.add(c, UndercastData.serverInformation[c].name + ":" + UndercastData.serverInformation[c].location);
             }
 
             // sort the names
@@ -277,7 +277,7 @@ public class UndercastCustomMethods {
             // put the whole server into order
             for (int c = 0; c < serverNames.size(); c++) {
                 for (int i = 0; i < UndercastData.serverCount; i++) {
-                    if (serverNames.get(c).equals(UndercastData.serverInformation[i].name)) {
+                    if (serverNames.get(c).equals(UndercastData.serverInformation[i].name + ":" + UndercastData.serverInformation[i].location)) {
                         UndercastData.sortedServerInformation[c] = UndercastData.serverInformation[i];
                         break;
                     }
@@ -302,7 +302,7 @@ public class UndercastCustomMethods {
         // extract the servers
         ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
         for(int c = 0; c < UndercastData.serverCount; c++) {
-            if((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU) || UndercastData.sortedServerInformation[c].location == ServerLocation.Both)) {
+            if((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU))) {
                 filteredServers.add(UndercastData.sortedServerInformation[c]);
             }
         }
@@ -446,5 +446,16 @@ public class UndercastCustomMethods {
         }
         return false;
     }
-
+    
+    
+    public static ServerLocation getLocationForString(String s) {
+        if(s == null) {
+            return ServerLocation.US;
+        }
+        if(s.contains("eu") || s.contains("EU") || s.contains("eU") || s.contains("Eu")) {
+            return ServerLocation.EU;
+        } else {
+            return ServerLocation.US;
+        }
+    }
 }
