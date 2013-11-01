@@ -1,5 +1,8 @@
 The changelog exists since version 1.4.0
 
+1.7.1
+ - update for the new oc.tc/play page
+
 1.7.0
 
  - full EU support (with some limitations due to lack of information at oc.tc/play)
