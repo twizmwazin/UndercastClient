@@ -20,9 +20,9 @@ public class SettingsToggleButton extends GuiButton {
 
     private void updateString() {
         if (UndercastConfig.config.get("UndercastMod", setting, false).getBoolean(false)) {
-            this.displayString = EnumChatFormatting.GREEN + enabledString;
+            this.field_146126_j = EnumChatFormatting.GREEN + enabledString;
         } else {
-            this.displayString = EnumChatFormatting.RED + disabledString;
+            this.field_146126_j = EnumChatFormatting.RED + disabledString;
         }
     }
 

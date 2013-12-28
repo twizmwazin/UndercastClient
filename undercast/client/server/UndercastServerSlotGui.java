@@ -194,13 +194,13 @@ public abstract class UndercastServerSlotGui {
     }
 
     public void actionPerformed(GuiButton par1GuiButton) {
-        if (par1GuiButton.enabled) {
-            if (par1GuiButton.id == this.scrollUpButtonID) {
+        if (par1GuiButton.field_146124_l) {
+            if (par1GuiButton.field_146127_k == this.scrollUpButtonID) {
                 this.amountScrolled -= (float) (this.slotHeight * 2 / 3);
                 this.initialClickY = -2.0F;
                 this.bindAmountScrolled();
             } else {
-                if (par1GuiButton.id == this.scrollDownButtonID) {
+                if (par1GuiButton.field_146127_k == this.scrollDownButtonID) {
                     this.amountScrolled += (float) (this.slotHeight * 2 / 3);
                     this.initialClickY = -2.0F;
                     this.bindAmountScrolled();
@@ -312,7 +312,7 @@ public abstract class UndercastServerSlotGui {
         GL11.glDisable(GL11.GL_FOG);
         Tessellator var18 = Tessellator.instance;
         if (!this.parent.inGame) {
-            Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("textures/gui/options_background.png"));
+            Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("textures/gui/options_background.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
         if (this.parent.inGame) {
@@ -461,7 +461,7 @@ public abstract class UndercastServerSlotGui {
      */
     private void overlayBackground(int par1, int par2, int par3, int par4) {
         Tessellator var5 = Tessellator.instance;
-        Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("textures/gui/options_background.png"));
+        Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("textures/gui/options_background.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float var6 = 32.0F;
         var5.startDrawingQuads();

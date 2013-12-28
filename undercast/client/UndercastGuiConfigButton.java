@@ -24,10 +24,10 @@ public class UndercastGuiConfigButton extends GuiButton {
     }
 
     @Override
-    public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
-        if (this.enabled && this.drawButton && par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height) {
-            FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(parentScreen));
+    public boolean func_146116_c(Minecraft par1Minecraft, int par2, int par3) {
+        if (this.field_146124_l && this.field_146125_m && par2 >= this.field_146128_h && par3 >= this.field_146129_i && par2 < this.field_146128_h + this.field_146120_f && par3 < this.field_146129_i + this.field_146121_g) {
+            FMLClientHandler.instance().getClient().func_147108_a(new SettingsGUI(parentScreen));
         }
-        return super.mousePressed(par1Minecraft, par2, par3);
+        return super.func_146116_c(par1Minecraft, par2, par3);
     }
 }

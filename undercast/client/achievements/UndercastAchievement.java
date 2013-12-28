@@ -1,5 +1,12 @@
 package undercast.client.achievements;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import undercast.client.UndercastConfig;
@@ -11,13 +18,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenManager;
-import aurelienribon.tweenengine.equations.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
+import aurelienribon.tweenengine.equations.Sine;
 
 public class UndercastAchievement implements TweenCallback {
 
@@ -82,7 +83,7 @@ public class UndercastAchievement implements TweenCallback {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(achievementBackground);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(achievementBackground);
         this.drawTexturedModalRect((int) posX, (int) posY, 96, 202, 160, 32);
         // Drawing text lines
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
@@ -91,18 +92,18 @@ public class UndercastAchievement implements TweenCallback {
         if (UndercastConfig.displaySkinBorder) {
             // Drawing skin border
             GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-            Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("undercast", "border.png"));
+            Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("undercast", "border.png"));
             this.drawTexturedModalRect((int) posX + 6, (int) posY + 6, 0, 0, 20, 20);
         }
         // Drawing skin
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-        ResourceLocation resourcelocation = AbstractClientPlayer.func_110311_f(this.killerName);
-        AbstractClientPlayer.func_110304_a(resourcelocation, this.killerName);
+        ResourceLocation resourcelocation = AbstractClientPlayer.getLocationSkin(this.killerName);
+        AbstractClientPlayer.getDownloadImageSkin(resourcelocation, this.killerName);
         GL11.glPushMatrix(); // New GL11 matrix to not affect other
                              // part of the gui
         TextureManager texturemanager = Minecraft.getMinecraft().renderEngine;
         if (texturemanager != null) {
-            texturemanager.func_110577_a(resourcelocation);
+            texturemanager.bindTexture(resourcelocation);
         }
         GL11.glScalef(1F / 2F, 1F / 4F, 1F);
         this.drawTexturedModalRect(((int) posX + 8) * 2, ((int) posY + 8) * 4, 32, 64, 32, 64);

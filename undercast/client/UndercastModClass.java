@@ -1,37 +1,28 @@
 package undercast.client;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.KeyBindingRegistry;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
-
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
-import net.minecraftforge.common.Configuration;
-import undercast.client.UndercastData.ServerLocation;
+import net.minecraftforge.common.config.Configuration;
+
+import org.apache.logging.log4j.Level;
+
 import undercast.client.UndercastData.ServerType;
 import undercast.client.UndercastData.Teams;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.internetTools.FriendHandler;
 import undercast.client.update.Undercast_UpdaterThread;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.FMLRelaunchLog;
 
 /**
  * @author Flv92
@@ -65,8 +56,9 @@ public class UndercastModClass {
      * @Mod.PreInit use Must be used to load config and start downloading thread if necessary.
      * @param event
      */
-    @Mod.PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	System.out.println("PREINIT. IF THIS NO WORK, ME NO HAPPY");
         // With the renaming, the config file name changed.
         // Just renaming the old one as the new one if necessary.
         File newConfig = event.getSuggestedConfigurationFile();
@@ -80,17 +72,20 @@ public class UndercastModClass {
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
         CONFIG = new Configuration(newConfig);
         new UndercastConfig(CONFIG, event.getSuggestedConfigurationFile());
-        KeyBindingRegistry.registerKeyBinding(new UndercastKeyHandling());
+        new UndercastKeyHandling();
         new UndercastData();
         new Undercast_UpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
+        
+        ((org.apache.logging.log4j.core.Logger) FMLRelaunchLog.log.getLogger()).setLevel(Level.OFF);
     }
 
-    @Mod.Init
+    @EventHandler
     public void init(FMLInitializationEvent event) {
-        TickRegistry.registerTickHandler(new UndercastTickHandler(), Side.CLIENT);
-        NetworkRegistry.instance().registerChatListener(new ChatListener());
-        NetworkRegistry.instance().registerConnectionHandler(new UndercastConnectionHandler());
+    	System.out.println("REAL INIT");
+        new UndercastTickHandler();
+        new ChatListener();
+        new UndercastConnectionHandler();
         LanguageRegistry.instance().addStringLocalization("undercast.gui", "Toggle Overcast Network mod gui");
         LanguageRegistry.instance().addStringLocalization("undercast.inGameGui", "Change server");
         LanguageRegistry.instance().addStringLocalization("undercast.fullBright", "Toggle fullbright");
@@ -107,12 +102,14 @@ public class UndercastModClass {
         // if the game over screen is active then you have died
         // if it is the first time it is active count a death
         // if it is not don't do anything
+        if (mc == null) return;
+        if (mc.currentScreen == null) return;
         if (mc.currentScreen instanceof GuiGameOver) {
             mc.currentScreen = null;
-            mc.displayGuiScreen(new UndercastGuiGameOver());
+            mc.func_147108_a(new UndercastGuiGameOver());
             // if the button is enabled and the user wants to disable it
-
         }
+        
         if (mc.currentScreen instanceof UndercastGuiGameOver && UndercastConfig.toggleTitleScreenButton) {
             ((UndercastGuiGameOver) mc.currentScreen).setTitleScreenButtonState(false);
         }
@@ -121,7 +118,7 @@ public class UndercastModClass {
         String fps = mc.debug.split(",")[0];
         int height = UndercastConfig.x;
         int width = UndercastConfig.y;
-        boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.pressed;
+        boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.func_151470_d();
         // if the gui is enabled display
         // if chat is open and config says yes then show gui
         if (isInGameGuiEmpty && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
@@ -133,7 +130,10 @@ public class UndercastModClass {
         }
         // if on OvercastNetwork server then display this info.
         // if chat is open and config says yes then show gui
-        if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
+        System.out.println("Gui empty: "+isInGameGuiEmpty);
+        System.out.println("Playing OC: "+UndercastData.isPlayingOvercastNetwork());
+        System.out.println("GUI showing: "+UndercastData.guiShowing);
+        if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && mc.inGameHasFocus) {
             // Server display
             if (UndercastConfig.showServer) {
                 mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215);

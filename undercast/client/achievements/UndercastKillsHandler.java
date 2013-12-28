@@ -1,19 +1,10 @@
 package undercast.client.achievements;
 
-import cpw.mods.fml.client.FMLClientHandler;
-
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.stats.Achievement;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastCustomMethods;
 import undercast.client.UndercastData;
@@ -80,18 +71,18 @@ public class UndercastKillsHandler {
                 int kills = (int) UndercastData.getKills() + UndercastData.stats.kills;
                 if (UndercastConfig.displaySpecialKillMessages) {
                     if (isSpecialKill(kills + 10)) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c10\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 10) + ")");
+                        sendMessage("[UndercastMod] Your are \u00A7c10\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 10) + ")");
                     } else if (isSpecialKill(kills + 5)) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c5\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 5) + ")");
+                        sendMessage("[UndercastMod] Your are \u00A7c5\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 5) + ")");
                     } else if (isSpecialKill(kills + 2)) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c2\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 2) + ")");
+                        sendMessage("[UndercastMod] Your are \u00A7c2\u00A7f kills away from a \u00A7ospecial kill\u00A7r (" + (kills + 2) + ")");
                     } else if (isSpecialKill(kills + 1)) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f kill away from a \u00A7ospecial kill\u00A7r (" + (kills + 1) + ")");
+                        sendMessage("[UndercastMod] Your are \u00A7c1\u00A7f kill away from a \u00A7ospecial kill\u00A7r (" + (kills + 1) + ")");
                     }
                 }
                 if (isSpecialKill(kills)) {
                     if (UndercastConfig.displaySpecialKillMessages) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7c" + killer);
+                        sendMessage("[UndercastMod] \u00A7lSPECIAL KILL(" + kills + "): \u00A7c" + killer);
                     }
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
@@ -148,13 +139,13 @@ public class UndercastKillsHandler {
 
     private void printFirstBloodAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username, "\u00A7agot the first Blood!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getCommandSenderName(), "\u00A7a" + client.thePlayer.getCommandSenderName(), "\u00A7agot the first Blood!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     private void printLastKillAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.username, "\u00A7a" + client.thePlayer.username, "\u00A7agot the last Kill!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getCommandSenderName(), "\u00A7a" + client.thePlayer.getCommandSenderName(), "\u00A7agot the last Kill!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
@@ -196,5 +187,11 @@ public class UndercastKillsHandler {
             }
         }
         return false;
+    }
+    
+    private void sendMessage(String text) {
+    	IChatComponent thingy = new ChatComponentText(text);
+        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        player.func_146105_b(thingy);
     }
 }

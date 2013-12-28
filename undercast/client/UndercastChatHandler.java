@@ -7,7 +7,6 @@ package undercast.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.packet.Packet3Chat;
 
 public class UndercastChatHandler {
 

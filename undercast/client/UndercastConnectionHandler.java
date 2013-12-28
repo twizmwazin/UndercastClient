@@ -1,122 +1,115 @@
 package undercast.client;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.IConnectionHandler;
-import cpw.mods.fml.common.network.Player;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.NetClientHandler;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.NetLoginHandler;
-import net.minecraft.network.packet.NetHandler;
-import net.minecraft.network.packet.Packet1Login;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.GuiDisconnected;
+import net.minecraft.client.gui.GuiDownloadTerrain;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.common.MinecraftForge;
 import undercast.client.update.Undercast_UpdaterThread;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
 /**
  * @author Flv92
  */
-public class UndercastConnectionHandler implements IConnectionHandler {
+public class UndercastConnectionHandler {
+	private boolean connected = false;
 
-    @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-    }
+	public UndercastConnectionHandler() {
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+	
+	@SubscribeEvent
+	public void onGuiShow(GuiOpenEvent event) {
+		if (event.gui instanceof GuiDownloadTerrain) {
+			connected = true;
+			onLogin(null);
+		}
+		if ((event.gui instanceof GuiDisconnected || event.gui instanceof GuiMainMenu) && connected) {
+			connected = false;
+			onLogout(null);
+		}
+	}
 
-    @Override
-    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager) {
-        return null;
-    }
+	public void onLogin(PlayerLoggedInEvent event) {
+		String ip = Minecraft.getMinecraft().func_147104_D().serverIP;
+		UndercastData.setTeam(UndercastData.Teams.Observers);
+		// if logging onto an OvercastNetwork server, then enable the main mod
+		if (ip.contains(".oc.tc") && !ip.contains("mc.oc.tc")) {
+			// What happens if logs into OvercastNetwork
+			UndercastData.isOC = true;
+			UndercastData.isLobby = true;
+			UndercastData.guiShowing = true;
+			System.out.println("Undercast Mod activated!");
+			UndercastData.setTeam(UndercastData.Teams.Observers);
+			UndercastData.setServer("Lobby");
+			UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
+			if (ip.contains("eu.oc.tc")) {
+				UndercastData.isEU = true;
+			} else {
+				UndercastData.isEU = false;
+			}
 
-    /**
-     * Fired when a remote connection is opened CLIENT SIDE
-     * 
-     * @param netClientHandler
-     * @param server
-     * @param port
-     * @param manager
-     */
-    @Override
-    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
-        UndercastData.setTeam(UndercastData.Teams.Observers);
-        // if logging onto an OvercastNetwork server, then enable the main mod
-        if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().toLowerCase().contains(".oc.tc") && !((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().toLowerCase().contains("mc.oc.tc")) {
-            // What happens if logs into OvercastNetwork
-            UndercastData.isOC = true;
-            UndercastData.isLobby = true;
-            UndercastData.guiShowing = true;
-            System.out.println("Undercast Mod activated!");
-            UndercastData.setTeam(UndercastData.Teams.Observers);
-            UndercastData.setServer("Lobby");
-            UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
-            if (((NetClientHandler) netClientHandler).getNetManager().getSocketAddress().toString().toLowerCase().contains("eu.oc.tc")) {
-                UndercastData.isEU = true;
-            } else {
-                UndercastData.isEU = false;
-            }
+		} else {
+			UndercastData.isOC = false;
+		}
+		// update notifier
+		if (!UndercastData.isUpdate()) {
+			Thread thread = new Thread() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(3000);
+						for (int c = 0; c < 10; c++) { // don't wait longer than
+							// 10 sec
+							Thread.sleep(1000);
+							if (Undercast_UpdaterThread.finished) {
+								break;
+							}
+						}
+					} catch (InterruptedException e) {
+					}
+					sendMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+					sendMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
+					sendMessage("[UndercastMod]: Link: \u00A74" + UndercastData.updateLink);
+					sendMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+				}
+			};
+			thread.start();
+		}
+	}
 
-        } else {
-            UndercastData.isOC = false;
-        }
-        // update notifier
-        if (!UndercastData.isUpdate()) {
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(3000);
-                        for (int c = 0; c < 10; c++) { // don't wait longer than
-                                                       // 10 sec
-                            Thread.sleep(1000);
-                            if (Undercast_UpdaterThread.finished) {
-                                break;
-                            }
-                        }
-                    } catch (InterruptedException e) {
-                    }
-                    Minecraft mc = FMLClientHandler.instance().getClient();
-                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-                    mc.thePlayer.addChatMessage("[UndercastMod]: A New Version of the Undercast Mod is avaliable");
-                    mc.thePlayer.addChatMessage("[UndercastMod]: Link: \u00A74" + UndercastData.updateLink);
-                    mc.thePlayer.addChatMessage("\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-                }
-            };
-            thread.start();
-        }
-    }
 
-    /**
-     * 
-     * Fired when a local connection is opened
-     * 
-     * CLIENT SIDE
-     * 
-     * @param netClientHandler
-     * @param server
-     */
-    @Override
-    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager) {
-    }
+	@SubscribeEvent
+	public void onLogout(PlayerLoggedOutEvent event) {
+		Minecraft mc = FMLClientHandler.instance().getClient();
+		UndercastData.isOC = false;
+		UndercastData.guiShowing = false;
+		UndercastData.setTeam(UndercastData.Teams.Observers);
+		UndercastData.resetKills();
+		UndercastData.resetKilled();
+		UndercastData.resetDeaths();
+		UndercastData.resetKillstreak();
+		UndercastData.resetLargestKillstreak();
+		UndercastData.resetPreviousKillstreak();
+		UndercastData.setMap("Attempting to fetch map...");
+		if (mc.gameSettings.gammaSetting >= UndercastModClass.getInstance().brightLevel) {
+			UndercastModClass.brightActive = false;
+			mc.gameSettings.gammaSetting = UndercastModClass.getInstance().defaultLevel;
+		}
+		UndercastData.welcomeMessageExpected = false;
+	}
 
-    @Override
-    public void connectionClosed(INetworkManager manager) {
-        Minecraft mc = FMLClientHandler.instance().getClient();
-        UndercastData.isOC = false;
-        UndercastData.guiShowing = false;
-        UndercastData.setTeam(UndercastData.Teams.Observers);
-        UndercastData.resetKills();
-        UndercastData.resetKilled();
-        UndercastData.resetDeaths();
-        UndercastData.resetKillstreak();
-        UndercastData.resetLargestKillstreak();
-        UndercastData.resetPreviousKillstreak();
-        UndercastData.setMap("Attempting to fetch map...");
-        if (mc.gameSettings.gammaSetting >= UndercastModClass.getInstance().brightLevel) {
-            UndercastModClass.brightActive = false;
-            mc.gameSettings.gammaSetting = UndercastModClass.getInstance().defaultLevel;
-        }
-        UndercastData.welcomeMessageExpected = false;
-    }
+	private void sendMessage(String text) {
+		IChatComponent thingy = new ChatComponentText(text);
+		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+		player.func_146105_b(thingy);
+	}
 
-    @Override
-    public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
-    }
 }

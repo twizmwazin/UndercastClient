@@ -1,73 +1,68 @@
 package undercast.client;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
-import java.util.EnumSet;
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
+import cpw.mods.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
 
 /**
  * @author Flv92
  */
-public class UndercastTickHandler implements ITickHandler {
+public class UndercastTickHandler {
 
     GuiScreen current;
     Minecraft mc;
 
     public UndercastTickHandler() {
+    	FMLCommonHandler.instance().bus().register(this);
     }
 
-    @Override
-    public void tickStart(EnumSet<TickType> type, Object... tickData) {
-    }
-
-    @Override
-    public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-        if (type.equals(EnumSet.of(TickType.CLIENT))) {
-            mc = FMLClientHandler.instance().getClient();
-            current = mc.currentScreen;
-            if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
-                mc.displayGuiScreen(new UndercastGuiMainMenu());
-            } else if (current instanceof GuiOptions) {
-                List customButtonList;
-                try {
-                    customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 3);
-                    if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
-                        UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
-                    }
-                    if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
-                        customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 60, 150, 20, "Undercast config", current));
-                    }
-                    ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 3);
-                } catch (UnableToAccessFieldException e) {
+    @SubscribeEvent
+	public void onClientTick(ClientTickEvent event) {
+    	mc = FMLClientHandler.instance().getClient();
+        current = mc.currentScreen;
+        if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
+            mc.func_147108_a(new UndercastGuiMainMenu());
+        } else if (current instanceof GuiOptions) {
+            List customButtonList;
+            try {
+                customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 4);
+                if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
+                    UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
                 }
-            }
-            boolean hasWorld = mc.theWorld != null;
-            if (hasWorld) {
-                UndercastModClass.getInstance().onGameTick(mc);
-            }
-        } else {
-            if (type.equals(EnumSet.of(TickType.RENDER))) {
-                UndercastModClass.getInstance().onGameTick(mc);
+                if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
+                    customButtonList.add(new UndercastGuiConfigButton(301, current.field_146294_l / 2 + 5, current.field_146295_m / 6 + 60, 150, 20, "Undercast config", current));
+                }
+                ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 4);
+            } catch (UnableToAccessFieldException e) {
             }
         }
+        
+        boolean hasWorld = mc.theWorld != null;
+        if (hasWorld) {
+            UndercastModClass.getInstance().onGameTick(mc);
+        }
     }
-
-    @Override
-    public EnumSet<TickType> ticks() {
-        EnumSet<TickType> tick = EnumSet.of(TickType.RENDER);
-        tick.add(TickType.CLIENT);
-        return tick;
+    
+    @SubscribeEvent
+	public void onRenderTick(RenderTickEvent event) {
+    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(mc);	
     }
-
-    @Override
-    public String getLabel() {
-        return null;
+    
+    @SubscribeEvent
+    public void onRenderPlayer(WorldTickEvent event) {
+    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(mc);	
     }
+    
 }

@@ -20,21 +20,23 @@ public class SettingsGUI extends GuiScreen {
 
     @Override
     public void initGui() {
+    	int width = this.field_146294_l;
+    	int height = this.field_146295_m;
         // Add buttons
         int x = width / 2 - 75;
         int y = height / 2;
-        this.buttonList.add(new GuiButton(1, x, y - 50, 150, 20, "Overlay Settings"));
-        this.buttonList.add(new GuiButton(2, x, y - 20, 150, 20, "General Settings"));
-        this.buttonList.add(new GuiButton(3, x, y + 10, 150, 20, "Achievement Settings"));
-        this.buttonList.add(new GuiButton(4, x, y + 60, 150, 20, "Done"));
+        this.field_146292_n.add(new GuiButton(1, x, y - 50, 150, 20, "Overlay Settings"));
+        this.field_146292_n.add(new GuiButton(2, x, y - 20, 150, 20, "General Settings"));
+        this.field_146292_n.add(new GuiButton(3, x, y + 10, 150, 20, "Achievement Settings"));
+        this.field_146292_n.add(new GuiButton(4, x, y + 60, 150, 20, "Done"));
     }
 
     @Override
     public void drawScreen(int par1, int par2, float par3) {
-        drawDefaultBackground();
+    	func_146276_q_();
 
-        int y = height / 2;
-        drawCenteredString(fontRenderer, "Undercast mod settings", width / 2, y - 80, 0x4444bb);
+        int y = field_146295_m / 2;
+        drawCenteredString(field_146289_q, "Undercast mod settings", field_146295_m / 2, y - 80, 0x4444bb);
 
         // Draw label at top of screen
 
@@ -45,23 +47,23 @@ public class SettingsGUI extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
-            mc.displayGuiScreen(null);
+        	field_146297_k.func_147108_a(null);
         }
     }
 
     @Override
-    protected void actionPerformed(GuiButton guibutton) {
-        if (guibutton.id == 1) {
-            Minecraft.getMinecraft().displayGuiScreen(new OverlaySettings(this));
+    protected void func_146284_a(GuiButton guibutton) {
+        if (guibutton.field_146127_k == 1) {
+            Minecraft.getMinecraft().func_147108_a(new OverlaySettings(this));
         }
-        if (guibutton.id == 2) {
-            Minecraft.getMinecraft().displayGuiScreen(new GeneralSettings(this));
+        if (guibutton.field_146127_k == 2) {
+            Minecraft.getMinecraft().func_147108_a(new GeneralSettings(this));
         }
-        if (guibutton.id == 3) {
-            Minecraft.getMinecraft().displayGuiScreen(new AchievementSettings(this));
+        if (guibutton.field_146127_k == 3) {
+            Minecraft.getMinecraft().func_147108_a(new AchievementSettings(this));
         }
-        if (guibutton.id == 4) {
-            mc.displayGuiScreen(parentScreen);
+        if (guibutton.field_146127_k == 4) {
+        	field_146297_k.func_147108_a(parentScreen);
         }
     }
 

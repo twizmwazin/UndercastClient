@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.text.DateFormat;
 import java.util.Date;
 
-import net.minecraft.src.ModLoader;
+import net.minecraft.client.Minecraft;
 
 public class SpecialObjectiveLogger {
 
@@ -14,7 +14,7 @@ public class SpecialObjectiveLogger {
 
     static {
         try {
-            LOG_PATH = ModLoader.getMinecraftInstance().mcDataDir.getCanonicalPath() + File.separatorChar + "logs" + File.separatorChar + "UndercastClient" + File.separatorChar;
+            LOG_PATH = Minecraft.getMinecraft().mcDataDir.getCanonicalPath() + File.separatorChar + "logs" + File.separatorChar + "UndercastClient" + File.separatorChar;
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to get log path.");
         }

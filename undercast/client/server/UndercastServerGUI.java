@@ -43,17 +43,20 @@ public class UndercastServerGUI extends GuiScreen {
      */
     @Override
     public void initGui() {
-        this.buttonList.add(new GuiButtonTooltip(0, this.width / 2 - 100, height - 52, 98, 20, I18n.func_135053_a("selectServer.select"), "Join / Swap to the selected server"));
-        this.buttonList.add(guibuttonrefresh = new GuiButtonTooltip(1, this.width / 2 + 2, height - 52, 98, 20, I18n.func_135053_a("selectServer.refresh"), "Refresh the server list"));
-        this.buttonList.add(new GuiButtonTooltip(2, this.width / 2 + 2, height - 28, 98, 20, I18n.func_135053_a("gui.cancel"), "Close the server list"));
-        this.buttonList.add(new GuiButtonTooltip(3, this.width / 2 - 100, height - 28, 98, 20, "Player Stats", "Open your player stats in the browser"));
-        this.buttonList.add(new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
-        this.buttonList.add(new GuiButtonTooltip(5, this.width / 2 + 102, height - 28, 48, 20, "Lobby", "Join / Swap to the lobby"));
-        this.buttonList.add(new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
+    	int width = this.field_146294_l;
+    	int height = this.field_146295_m;
+    	
+        this.field_146292_n.add(new GuiButton(0, width / 2 - 100, height - 52, 98, 20, I18n.getStringParams("selectServer.select")));
+        this.field_146292_n.add(guibuttonrefresh = new GuiButton(1, width / 2 + 2, height - 52, 98, 20, I18n.getStringParams("selectServer.refresh")));
+        this.field_146292_n.add(new GuiButton(2, width / 2 + 2, height - 28, 98, 20, I18n.getStringParams("gui.cancel")));
+        this.field_146292_n.add(new GuiButton(3, width / 2 - 100, height - 28, 98, 20, "Player Stats"));
+        this.field_146292_n.add(new GuiButton(4, width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex]));
+        this.field_146292_n.add(new GuiButton(5, width / 2 + 102, height - 28, 48, 20, "Lobby"));
+        this.field_146292_n.add(new GuiButton(6, width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex]));
         if (!UndercastData.isUpdate()) {
-            this.buttonList.add(new GuiButtonTooltip(7, this.width - 54, 21, 48, 20, "Update", "Opens the download website for the latest version."));
+            this.field_146292_n.add(new GuiButton(7, width - 54, 21, 48, 20, "Update"));
         }
-        this.buttonList.add(new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
+        this.field_146292_n.add(new GuiButton(8, width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex]));
         guiServerInfoSlot = new UndercastServerInfoSlotGui(this);
     }
 
@@ -61,39 +64,44 @@ public class UndercastServerGUI extends GuiScreen {
      * If a button is clicked this method gets called. The id is the number given to the button during init.
      */
     @Override
-    protected void actionPerformed(GuiButton guibutton) {
+    protected void func_146284_a(GuiButton guibutton) {
+    	int width = this.field_146294_l;
+    	int height = this.field_146295_m;
+    	
         // join button
-        if (guibutton.id == 0) {
+        if (guibutton.field_146127_k == 0) {
             joinSelectedServer();
         }
         // refresh button
-        if (guibutton.id == 1) {
+        if (guibutton.field_146127_k == 1) {
             UndercastData.reloadServerInformations(true);
-            GuiButtonTooltip refreshButton = (GuiButtonTooltip) buttonList.get(1);
-            refreshButton.enabled = false;
+            GuiButton refreshButton = (GuiButton) field_146292_n.get(1);
+            refreshButton.field_146124_l = false;
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    GuiButtonTooltip refreshButton = (GuiButtonTooltip) buttonList.get(1);
-                    refreshButton.enabled = true;
+                	GuiButton refreshButton = (GuiButton) field_146292_n.get(1);
+                    refreshButton.field_146124_l = true;
                 }
             }, 3000);
         }
         // cancel/back to main menu
-        if (guibutton.id == 2) {
+        if (guibutton.field_146127_k == 2) {
             closeGui();
         }
         // stats button
-        if (guibutton.id == 3) {
+        if (guibutton.field_146127_k == 3) {
+        	/*
             String username = Minecraft.getMinecraft().func_110432_I().func_111285_a();
             try {
                 Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
             } catch (Exception ignored) {
             }
+            */ //TODO: FIX
         }
         // sort button
-        if (guibutton.id == 4) {
+        if (guibutton.field_146127_k == 4) {
             // move sort index
             UndercastData.sortIndex++;
             // auto spill over function
@@ -101,10 +109,10 @@ public class UndercastServerGUI extends GuiScreen {
                 UndercastData.sortIndex = 0;
             }
             // update button
-            this.buttonList.set(4, new GuiButtonTooltip(4, this.width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex], "Sort the servers"));
+            this.field_146292_n.set(4, new GuiButton(4, width / 2 - 150, height - 28, 48, 20, UndercastData.sortNames[UndercastData.sortIndex]));
             UndercastCustomMethods.sortAndFilterServers();
         }
-        if (guibutton.id == 5) {
+        if (guibutton.field_146127_k == 5) {
             if (inGame && UndercastData.isPlayingOvercastNetwork() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
@@ -114,10 +122,10 @@ public class UndercastServerGUI extends GuiScreen {
                 } else {
                     joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
                 }
-                mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
+                Minecraft.getMinecraft().func_147108_a(new GuiConnecting(this, Minecraft.getMinecraft(), joinServer));
             }
         }
-        if (guibutton.id == 6) {
+        if (guibutton.field_146127_k == 6) {
             // move filter index
             UndercastData.filterIndex++;
             // auto spill over function
@@ -125,23 +133,23 @@ public class UndercastServerGUI extends GuiScreen {
                 UndercastData.filterIndex = 0;
             }
             // update the buttons
-            this.buttonList.set(6, new GuiButtonTooltip(6, this.width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex], "Filter the servers by the server type"));
+            this.field_146292_n.set(6, new GuiButton(6, width / 2 - 150, height - 52, 48, 20, UndercastData.filterNames[UndercastData.filterIndex]));
             UndercastCustomMethods.sortAndFilterServers();
             UndercastConfig.setIntProperty("lastUsedFilter", UndercastData.filterIndex);
         }
-        if (guibutton.id == 7) {
+        if (guibutton.field_146127_k == 7) {
             try {
                 Desktop.getDesktop().browse(new URI(UndercastData.updateLink));
             } catch (Exception ignored) {
             }
         }
-        if (guibutton.id == 8) {
+        if (guibutton.field_146127_k == 8) {
             if (UndercastData.locationIndex < UndercastData.locationNames.length - 1) {
                 UndercastData.locationIndex++;
             } else {
                 UndercastData.locationIndex = 0;
             }
-            this.buttonList.set(7, new GuiButtonTooltip(8, this.width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex], "Toggle between US and EU servers."));
+            this.field_146292_n.set(7, new GuiButton(8, width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex]));
             UndercastCustomMethods.sortAndFilterServers();
             UndercastConfig.setIntProperty("lastUsedLocation", UndercastData.locationIndex);
         }
@@ -153,14 +161,17 @@ public class UndercastServerGUI extends GuiScreen {
      */
     @Override
     public void drawScreen(int i, int j, float f) {
+    	int width = this.field_146294_l;
+    	
         if (!inGame) {
-            drawDefaultBackground();
+        	func_146276_q_();
         }
         this.guiServerInfoSlot.drawScreen(i, j, f);
-        this.drawCenteredString(this.fontRenderer, "Overcast Network Server List", this.width / 2, 20, 16777215);
+        this.drawCenteredString(this.field_146289_q, "Overcast Network Server List", width / 2, 20, 16777215);
+        Minecraft mc = Minecraft.getMinecraft();
         if (!UndercastData.isUpdate()) {
-            mc.fontRenderer.drawString("Used version: " + UndercastModClass.MOD_VERSION, (this.width - 4) - mc.fontRenderer.getStringWidth("Used version: " + UndercastModClass.MOD_VERSION), 3, 13369344);
-            mc.fontRenderer.drawString("Latest version: " + UndercastData.latestVersion, (this.width - 4) - mc.fontRenderer.getStringWidth("Latest version: " + UndercastData.latestVersion), 12, 255);
+            mc.fontRenderer.drawString("Used version: " + UndercastModClass.MOD_VERSION, (width - 4) - mc.fontRenderer.getStringWidth("Used version: " + UndercastModClass.MOD_VERSION), 3, 13369344);
+            mc.fontRenderer.drawString("Latest version: " + UndercastData.latestVersion, (width - 4) - mc.fontRenderer.getStringWidth("Latest version: " + UndercastData.latestVersion), 12, 255);
         }
         super.drawScreen(i, j, f);
     }
@@ -203,7 +214,7 @@ public class UndercastServerGUI extends GuiScreen {
                 } else {
                     joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
                 }
-                mc.displayGuiScreen(new GuiConnecting(this, this.mc, joinServer));
+                Minecraft.getMinecraft().func_147108_a(new GuiConnecting(this, Minecraft.getMinecraft(), joinServer));
             }
         }
     }
@@ -219,9 +230,9 @@ public class UndercastServerGUI extends GuiScreen {
 
     public void closeGui() {
         if (!inGame) {
-            this.mc.displayGuiScreen(new GuiMainMenu());
+        	Minecraft.getMinecraft().func_147108_a(new GuiMainMenu());
         } else {
-            this.mc.setIngameFocus();
+        	Minecraft.getMinecraft().setIngameFocus();
         }
     }
 

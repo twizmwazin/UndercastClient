@@ -18,16 +18,16 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
     @Override
     public void initGui() {
         super.initGui();
-        this.buttonList.remove(1);
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, 99, 20, I18n.func_135053_a("menu.multiplayer")));
-        this.buttonList.add(new GuiButtonTooltip(7, this.width / 2 + 1, this.height / 4 + 72, 99, 20, "Overcast Network", "Serverlist with Overcast Network Servers"));
+        this.field_146292_n.remove(1);
+        this.field_146292_n.add(new GuiButton(2, this.field_146294_l / 2 - 100, this.field_146295_m / 4 + 72, 99, 20, I18n.getStringParams("menu.multiplayer")));
+        this.field_146292_n.add(new GuiButton(7, this.field_146294_l / 2 + 1, this.field_146295_m / 4 + 72, 99, 20, "Overcast Network"));
     }
 
     @Override
-    protected void actionPerformed(GuiButton par1GuiButton) {
-        super.actionPerformed(par1GuiButton);
-        if (par1GuiButton.id == 7) {
-            mc.displayGuiScreen(new UndercastServerGUI(false));
+    protected void func_146284_a(GuiButton par1GuiButton) {
+        super.func_146284_a(par1GuiButton);
+        if (par1GuiButton.field_146127_k == 7) {
+        	this.field_146297_k.func_147108_a(new UndercastServerGUI(false));
         }
     }
 }

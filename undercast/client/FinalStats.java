@@ -2,6 +2,8 @@ package undercast.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 
 public class FinalStats {
     private int kills;
@@ -47,23 +49,28 @@ public class FinalStats {
     }
 
     public void showStats() {
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        player.addChatMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-        player.addChatMessage("\u00A79Final Stats:");
-        player.addChatMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
-        player.addChatMessage("Kills: \u00A7a" + this.kills + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A7a" + this.totalKills) : ""));
-        player.addChatMessage("Deaths: \u00A74" + this.deaths + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A74" + this.totalDeaths) : ""));
-        player.addChatMessage("K/D: \u00A73" + this.kd + totalKD);
-        player.addChatMessage("Kill Streak: \u00A7e" + this.killstreak);
+        sendMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+        sendMessage("\u00A79Final Stats:");
+        sendMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+        sendMessage("Kills: \u00A7a" + this.kills + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A7a" + this.totalKills) : ""));
+        sendMessage("Deaths: \u00A74" + this.deaths + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A74" + this.totalDeaths) : ""));
+        sendMessage("K/D: \u00A73" + this.kd + totalKD);
+        sendMessage("Kill Streak: \u00A7e" + this.killstreak);
         if (this.woolDifference > 0) {
-            player.addChatMessage("Wools: \u00A75+" + this.woolDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalWools) : ""));
+            sendMessage("Wools: \u00A75+" + this.woolDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalWools) : ""));
         }
         if (this.coreDifference > 0) {
-            player.addChatMessage("Cores: \u00A75+" + this.coreDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalCores) : ""));
+            sendMessage("Cores: \u00A75+" + this.coreDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalCores) : ""));
         }
         if (this.monumentDifference > 0) {
-            player.addChatMessage("Monuments: \u00A75+" + this.monumentDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalMonuments) : ""));
+            sendMessage("Monuments: \u00A75+" + this.monumentDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalMonuments) : ""));
         }
-        player.addChatMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+        sendMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
+    }
+    
+    private void sendMessage(String text) {
+    	IChatComponent thingy = new ChatComponentText(text);
+        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        player.func_146105_b(thingy);
     }
 }

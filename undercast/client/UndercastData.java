@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import undercast.client.achievements.SpecialObjectiveLogger;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.PlayerStatsHTMLParser;
@@ -142,7 +144,8 @@ public class UndercastData {
         filterIndex = 0;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
+            //TODO: Figure out username
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().thePlayer.getCommandSenderName()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -168,7 +171,7 @@ public class UndercastData {
 
     public static void reloadStats() {
         try {
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().func_110432_I().func_111285_a()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().thePlayer.getCommandSenderName()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -200,7 +203,7 @@ public class UndercastData {
                     if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.wools + i, "Wool", UndercastData.server, UndercastData.map);
                         if (UndercastConfig.displaySpecialObjectives) {
-                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL WOOL: \u00A7c" + String.valueOf(UndercastData.stats.wools + i));
+                            sendMessage("[UndercastMod] \u00A7lSPECIAL WOOL: \u00A7c" + String.valueOf(UndercastData.stats.wools + i));
                         }
                     }
                     i++;
@@ -210,7 +213,7 @@ public class UndercastData {
                     if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.cores + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.cores + i, "Core", UndercastData.server, UndercastData.map);
                         if (UndercastConfig.displaySpecialObjectives) {
-                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL CORE: \u00A7c" + String.valueOf(UndercastData.stats.cores + i));
+                            sendMessage("[UndercastMod] \u00A7lSPECIAL CORE: \u00A7c" + String.valueOf(UndercastData.stats.cores + i));
                         }
                     }
                     i++;
@@ -220,7 +223,7 @@ public class UndercastData {
                     if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.monuments + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.monuments + i, "Monument", UndercastData.server, UndercastData.map);
                         if (UndercastConfig.displaySpecialObjectives) {
-                            player.addChatMessage("[UndercastMod] \u00A7lSPECIAL MONUMENT: \u00A7c" + String.valueOf(UndercastData.stats.monuments + i));
+                            sendMessage("[UndercastMod] \u00A7lSPECIAL MONUMENT: \u00A7c" + String.valueOf(UndercastData.stats.monuments + i));
                         }
                     }
                     i++;
@@ -229,29 +232,29 @@ public class UndercastData {
                 if (UndercastConfig.displaySpecialObjectives) {
                     if (woolsDifference > 0) {
                         if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + woolsDifference + 5)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c5\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + woolsDifference + 5) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c5\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + woolsDifference + 5) + ")");
                         } else if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + woolsDifference + 2)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c2\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + woolsDifference + 2) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c2\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + woolsDifference + 2) + ")");
                         } else if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + woolsDifference + 1)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + woolsDifference + 1) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c1\u00A7f wools away from a \u00A7ospecial wool\u00A7r (" + (UndercastData.stats.wools + woolsDifference + 1) + ")");
                         }
                     }
                     if (coresDifference > 0) {
                         if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.cores + coresDifference + 5)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c5\u00A7f cores away from a \u00A7ospecial core\u00A7r (" + (UndercastData.stats.cores + coresDifference + 5) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c5\u00A7f cores away from a \u00A7ospecial core\u00A7r (" + (UndercastData.stats.cores + coresDifference + 5) + ")");
                         } else if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.cores + coresDifference + 2)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c2\u00A7f cores away from a \u00A7ospecial core\u00A7r (" + (UndercastData.stats.cores + coresDifference + 2) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c2\u00A7f cores away from a \u00A7ospecial core\u00A7r (" + (UndercastData.stats.cores + coresDifference + 2) + ")");
                         } else if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.cores + coresDifference + 1)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f cores away from a \u00A7ospecial core\u00A7r (" + (UndercastData.stats.cores + coresDifference + 1) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c1\u00A7f cores away from a \u00A7ospecial core\u00A7r (" + (UndercastData.stats.cores + coresDifference + 1) + ")");
                         }
                     }
                     if (monumentDifference > 0) {
                         if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.monuments + monumentDifference + 5)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c5\u00A7f monuments away from a \u00A7ospecial monument\u00A7r (" + (UndercastData.stats.monuments + monumentDifference + 5) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c5\u00A7f monuments away from a \u00A7ospecial monument\u00A7r (" + (UndercastData.stats.monuments + monumentDifference + 5) + ")");
                         } else if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.monuments + monumentDifference + 2)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c2\u00A7f monuments away from a \u00A7ospecial monument\u00A7r (" + (UndercastData.stats.monuments + monumentDifference + 2) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c2\u00A7f monuments away from a \u00A7ospecial monument\u00A7r (" + (UndercastData.stats.monuments + monumentDifference + 2) + ")");
                         } else if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.monuments + monumentDifference + 1)) {
-                            player.addChatMessage("[UndercastMod] Your are \u00A7c1\u00A7f monuments away from a \u00A7ospecial monument\u00A7r (" + (UndercastData.stats.monuments + monumentDifference + 1) + ")");
+                            sendMessage("[UndercastMod] Your are \u00A7c1\u00A7f monuments away from a \u00A7ospecial monument\u00A7r (" + (UndercastData.stats.monuments + monumentDifference + 1) + ")");
                         }
 
                     }
@@ -477,6 +480,12 @@ public class UndercastData {
         matchTimeHours = 0;
         matchTimeMin = 0;
         matchTimeSec = 0;
+    }
+    
+    private static void sendMessage(String text) {
+    	IChatComponent thingy = new ChatComponentText(text);
+        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        player.func_146105_b(thingy);
     }
 
 }
