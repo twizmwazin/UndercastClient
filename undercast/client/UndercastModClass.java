@@ -58,7 +58,6 @@ public class UndercastModClass {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	System.out.println("PREINIT. IF THIS NO WORK, ME NO HAPPY");
         // With the renaming, the config file name changed.
         // Just renaming the old one as the new one if necessary.
         File newConfig = event.getSuggestedConfigurationFile();
@@ -82,7 +81,6 @@ public class UndercastModClass {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-    	System.out.println("REAL INIT");
         new UndercastTickHandler();
         new ChatListener();
         new UndercastConnectionHandler();
@@ -103,7 +101,7 @@ public class UndercastModClass {
         // if it is the first time it is active count a death
         // if it is not don't do anything
         if (mc == null) return;
-        if (mc.currentScreen == null) return;
+        
         if (mc.currentScreen instanceof GuiGameOver) {
             mc.currentScreen = null;
             mc.func_147108_a(new UndercastGuiGameOver());
@@ -130,10 +128,7 @@ public class UndercastModClass {
         }
         // if on OvercastNetwork server then display this info.
         // if chat is open and config says yes then show gui
-        System.out.println("Gui empty: "+isInGameGuiEmpty);
-        System.out.println("Playing OC: "+UndercastData.isPlayingOvercastNetwork());
-        System.out.println("GUI showing: "+UndercastData.guiShowing);
-        if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && mc.inGameHasFocus) {
+        if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing /* &&  mc.inGameHasFocus */) {
             // Server display
             if (UndercastConfig.showServer) {
                 mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215);

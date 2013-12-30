@@ -27,7 +27,7 @@ public class UndercastConnectionHandler {
 	
 	@SubscribeEvent
 	public void onGuiShow(GuiOpenEvent event) {
-		if (event.gui instanceof GuiDownloadTerrain) {
+		if (event.gui instanceof GuiDownloadTerrain && !connected) {
 			connected = true;
 			onLogin(null);
 		}

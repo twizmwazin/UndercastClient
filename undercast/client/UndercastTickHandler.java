@@ -3,39 +3,34 @@ package undercast.client;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
 
 /**
  * @author Flv92
  */
 public class UndercastTickHandler {
-
-    GuiScreen current;
-    Minecraft mc;
-
     public UndercastTickHandler() {
     	FMLCommonHandler.instance().bus().register(this);
     }
 
     @SubscribeEvent
 	public void onClientTick(ClientTickEvent event) {
-    	mc = FMLClientHandler.instance().getClient();
-        current = mc.currentScreen;
+    	Minecraft mc = Minecraft.getMinecraft();
+        GuiScreen current = mc.currentScreen;
         if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
             mc.func_147108_a(new UndercastGuiMainMenu());
         } else if (current instanceof GuiOptions) {
-            List customButtonList;
+            List<GuiButton> customButtonList;
             try {
                 customButtonList = ObfuscationReflectionHelper.getPrivateValue(GuiScreen.class, (GuiOptions) current, 4);
                 if (UndercastModClass.getInstance().buttonListSizeOfGuiOptions == null) {
@@ -57,12 +52,6 @@ public class UndercastTickHandler {
     
     @SubscribeEvent
 	public void onRenderTick(RenderTickEvent event) {
-    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(mc);	
+    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(Minecraft.getMinecraft());	
     }
-    
-    @SubscribeEvent
-    public void onRenderPlayer(WorldTickEvent event) {
-    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(mc);	
-    }
-    
 }

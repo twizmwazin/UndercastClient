@@ -161,6 +161,7 @@ public class UndercastChatHandler {
 
         } // when you join a match
         else if (message.contains("You joined the")) {
+        	System.out.println("detected join team");
             UndercastData.reloadStats();
             try {
                 UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "").replace(" Squad", "").replace(" Sun", "").replace(" Moon", "")));
@@ -208,6 +209,7 @@ public class UndercastChatHandler {
             return false;
         } // redirection and lobby detection
         else if (message.contains("Welcome to the Overcast Network")) {
+        	System.out.println("Joined lobby");
             if (UndercastData.redirect) {
                 UndercastData.redirect = false;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.directionServer);
@@ -232,14 +234,17 @@ public class UndercastChatHandler {
             }
         } // server detection
         else if (message.contains("Teleporting you to ")) {
+        	System.out.print("switched server");
             // usage of the /hub or /lobby command
             if (message.contains("the lobby...")) {
+            	System.out.println(" to lobby");
                 UndercastData.setServer("Lobby");
 
                 UndercastCustomMethods.handleServerSwap();
             } else {
                 String server = message.replace("Teleporting you to ", "");
                 if (!server.equals(UndercastData.server)) {
+                	System.out.println(" to "+server);
                     UndercastData.setServer(server);
                     if (!message.toLowerCase().contains("lobby")) {
                         UndercastData.welcomeMessageExpected = true;
@@ -248,8 +253,10 @@ public class UndercastChatHandler {
                 }
             }
         } else if (message.contains("Connecting to ")) {
+        	System.out.print("connecting to: ");
             String server = message.replace("Connecting to ", "");
             if (!server.equals(UndercastData.server)) {
+            	System.out.println(server);
                 UndercastData.setServer(server);
                 if (!message.toLowerCase().contains("lobby")) {
                     UndercastData.welcomeMessageExpected = true;
