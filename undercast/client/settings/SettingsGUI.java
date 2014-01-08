@@ -35,8 +35,7 @@ public class SettingsGUI extends GuiScreen {
     public void drawScreen(int par1, int par2, float par3) {
     	func_146276_q_();
 
-        int y = field_146295_m / 2;
-        drawCenteredString(field_146289_q, "Undercast mod settings", field_146295_m / 2, y - 80, 0x4444bb);
+        drawCenteredString(field_146289_q, "Undercast mod settings", field_146294_l / 2, field_146295_m / 2 - 80, 0x4444bb);
 
         // Draw label at top of screen
 

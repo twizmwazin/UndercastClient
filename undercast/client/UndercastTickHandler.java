@@ -37,7 +37,7 @@ public class UndercastTickHandler {
                     UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
                 }
                 if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
-                    customButtonList.add(new UndercastGuiConfigButton(301, current.field_146294_l / 2 + 5, current.field_146295_m / 6 + 60, 150, 20, "Undercast config", current));
+                    customButtonList.add(new UndercastGuiConfigButton(301, current.field_146294_l / 2 + 5, current.field_146295_m / 6 + 10, 150, 20, "Undercast config", current));
                 }
                 ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 4);
             } catch (UnableToAccessFieldException e) {

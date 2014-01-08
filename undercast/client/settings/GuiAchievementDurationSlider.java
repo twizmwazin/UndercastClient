@@ -25,14 +25,14 @@ public class GuiAchievementDurationSlider extends GuiButton {
     /**
      * Returns 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over this button.
      */
-    protected int getHoverState(boolean par1) {
+    protected int func_146114_a(boolean par1) {
         return 0;
     }
 
     /**
      * Fired when the mouse button is dragged. Equivalent of MouseListener.mouseDragged(MouseEvent e).
      */
-    protected void mouseDragged(Minecraft par1Minecraft, int par2, int par3) {
+    protected void func_146119_b(Minecraft par1Minecraft, int par2, int par3) {
         if (this.field_146125_m) {
             if (this.dragging) {
                 this.sliderValue = (float) (par2 - (this.field_146128_h + 4)) / (float) (this.field_146120_f - 8);
@@ -84,7 +84,7 @@ public class GuiAchievementDurationSlider extends GuiButton {
     /**
      * Fired when the mouse button is released. Equivalent of MouseListener.mouseReleased(MouseEvent e).
      */
-    public void mouseReleased(int par1, int par2) {
+    public void func_146118_a(int par1, int par2) {
         this.dragging = false;
         UndercastConfig.setDoubleProperty("achievementAnimationDuration", ((double) (int) (sliderValue * 40)) / 10D);
         UndercastConfig.reloadConfig();
