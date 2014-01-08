@@ -314,18 +314,6 @@ public class UndercastCustomMethods {
         }
     }
 
-    public static int getOnlineFriends() {
-        int number = 0;
-        for (Iterator<String> ir = UndercastData.friends.keySet().iterator(); ir.hasNext();) {
-            String key = ir.next();
-            String value = UndercastData.friends.get(key);
-            if (!value.equals("offline")) {
-                number++;
-            }
-        }
-        return number;
-    }
-
     public static boolean isTeamkill(String unstripedMessage, String player1, String player2) {
         char colorchar1, colorchar2;
         colorchar1 = unstripedMessage.charAt(unstripedMessage.indexOf(player1) - 1);

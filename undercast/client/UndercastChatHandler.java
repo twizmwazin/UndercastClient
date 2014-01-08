@@ -54,9 +54,6 @@ public class UndercastChatHandler {
             } else {
                 server = server + (UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0]);
             }
-            if (UndercastData.friends.containsKey(name)) {
-                UndercastData.friends.put(name, server);
-            }
 
         } // friend tracking. Leaving
         else if (message.contains("left the game")) {
@@ -87,11 +84,6 @@ public class UndercastChatHandler {
                 location = UndercastData.isEU ? UndercastData.locationNames[1] : UndercastData.locationNames[0];
                 server = UndercastData.server;
             }
-            if (UndercastData.friends.containsKey(name)) {
-                if (UndercastData.friends.get(name).equals(server + location)) {
-                    UndercastData.friends.put(name, "offline");
-                }
-            }
         } // friend tracking - switching
         else if (message.contains(" changed servers")) {
             String name;
@@ -110,9 +102,6 @@ public class UndercastChatHandler {
             message = message.replace(" changed servers", "");
             name = message.substring(message.indexOf("]") + 2);
             server = message.substring(message.indexOf("» ") + 2, message.indexOf("]"));
-            if (UndercastData.friends.containsKey(name)) {
-                UndercastData.friends.put(name, server + location);
-            }
         } // update what map you are playing on
         else if (message.contains("Now playing")) {
             message = message.replace("Now playing ", "");
@@ -217,21 +206,7 @@ public class UndercastChatHandler {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
             }
-            if (UndercastConfig.showFriends && UndercastData.friends.isEmpty()) {
-                Thread t1 = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(2000);
-                            UndercastModClass.getInstance().friendHandler.isListening = true;
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage("/fr");
-                        } catch (InterruptedException ex) {
-                        }
-
-                    }
-                });
-                t1.start();
-            }
+            
         } // server detection
         else if (message.contains("Teleporting you to ")) {
         	System.out.print("switched server");
@@ -272,7 +247,7 @@ public class UndercastChatHandler {
                     UndercastCustomMethods.handleServerSwap();
                 }
             }
-        } else if (normalMessage.equals("§c§c§e§e§c§c") || message.equals("To view classes, type /classes")) { // GS servers do not send "§c§c§e§e§c§c"
+        } else if (normalMessage.equals("§c§c§e§e§c§c") || message.equals("To view classes, type /classes")) { // GS servers do not send "��c��c��e��e��c��c"
             if (!UndercastData.welcomeMessageExpected) {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");

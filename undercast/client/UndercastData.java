@@ -33,10 +33,6 @@ public class UndercastData {
     public static int largestKillstreak;
     public static int previousKillstreak;
     public static int score;
-    // redudant assignation but kept for being java 6 compatible
-    // first String is the username of the player
-    // second one is the current server (offline if the player is not connected)
-    public static HashMap<String, String> friends = new HashMap<String, String>();
     public static String server;
     public static String previousServer = "Lobby";
     public static Teams team;
