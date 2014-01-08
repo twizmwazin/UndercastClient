@@ -38,7 +38,13 @@ public class UndercastConnectionHandler {
 	}
 
 	public void onLogin(PlayerLoggedInEvent event) {
-		String ip = Minecraft.getMinecraft().func_147104_D().serverIP;
+		String ip = new String();
+		try{
+			ip = Minecraft.getMinecraft().func_147104_D().serverIP;
+		} catch(NullPointerException e){
+			//SinglePlayer
+			return;
+		}
 		UndercastData.setTeam(UndercastData.Teams.Observers);
 		// if logging onto an OvercastNetwork server, then enable the main mod
 		if (ip.contains(".oc.tc") && !ip.contains("mc.oc.tc")) {
