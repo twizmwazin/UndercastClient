@@ -128,7 +128,7 @@ public class UndercastModClass {
         }
         // if on OvercastNetwork server then display this info.
         // if chat is open and config says yes then show gui
-        if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing /* &&  mc.inGameHasFocus */) {
+        if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
             // Server display
             if (UndercastConfig.showServer) {
                 mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215);
