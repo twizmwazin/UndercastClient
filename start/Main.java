@@ -83,10 +83,8 @@ public class Main {
 			System.out.println(newArg);
 			net.minecraft.launchwrapper.Launch.main(newArg.split(" "));
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

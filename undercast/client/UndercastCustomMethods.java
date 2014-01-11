@@ -301,15 +301,15 @@ public class UndercastCustomMethods {
 
         // extract the servers
         ArrayList<UndercastServer> filteredServers = new ArrayList<UndercastServer>(UndercastData.serverCount);
-        for(int c = 0; c < UndercastData.serverCount; c++) {
-            if((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU))) {
+        for (int c = 0; c < UndercastData.serverCount; c++) {
+            if ((shownType == ServerType.Unknown || UndercastData.sortedServerInformation[c].type == shownType) && ((UndercastData.locationIndex == 0 && UndercastData.sortedServerInformation[c].location == ServerLocation.US) || (UndercastData.locationIndex == 1 && UndercastData.sortedServerInformation[c].location == ServerLocation.EU))) {
                 filteredServers.add(UndercastData.sortedServerInformation[c]);
             }
         }
 
         UndercastData.filteredServerCount = filteredServers.size();
         // and put them back to the serverList
-        for(int c = 0; c < filteredServers.size(); c++) {
+        for (int c = 0; c < filteredServers.size(); c++) {
             UndercastData.sortedServerInformation[c] = filteredServers.get(c);
         }
     }

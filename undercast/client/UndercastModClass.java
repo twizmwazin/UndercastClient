@@ -3,6 +3,7 @@ package undercast.client;
 import java.io.File;
 import java.util.Iterator;
 
+import jexxus.client.ClientConnection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
@@ -15,6 +16,7 @@ import undercast.client.UndercastData.Teams;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.update.Undercast_UpdaterThread;
+import undercast.network.client.UndercastClientConnectionListener;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -46,6 +48,8 @@ public class UndercastModClass {
     public UndercastChatHandler chatHandler;
     public UndercastKillsHandler achievementChatHandler;
     public UndercastGuiAchievement guiAchievement;
+    public ClientConnection connection;
+
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -71,8 +75,7 @@ public class UndercastModClass {
         new UndercastData();
         new Undercast_UpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
-        
-        ((org.apache.logging.log4j.core.Logger) FMLRelaunchLog.log.getLogger()).setLevel(Level.OFF);
+        connection = new ClientConnection(new UndercastClientConnectionListener(), "198.199.75.102", 15652, true);
     }
 
     @EventHandler

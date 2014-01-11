@@ -19,6 +19,8 @@ import undercast.client.internetTools.PlayerStatsHTMLParser;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
+import undercast.network.common.NetManager;
+import undercast.network.common.packet.Packet10GetServers;
 
 public class UndercastData {
     // Data Varibles
@@ -80,6 +82,8 @@ public class UndercastData {
     // used for the revenge system
     public static ArrayList<String> victimList = new ArrayList<String>();
     public static ArrayList<String> killerList = new ArrayList<String>();
+    public static String[][] mapData = null;
+
 
     public static enum Teams {
 
@@ -152,12 +156,7 @@ public class UndercastData {
         map = "Loading...";
         nextMap = "Loading...";
 
-        try {
-            mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
-        } catch (Exception e) {
-            System.out.println("[UndercastMod]: Failed to start information loaders");
-            System.out.println("[UndercastMod]: ERROR: " + e.toString());
-        }
+        NetManager.sendPacket(new Packet10GetServers());
         if (isOC && getMatchState) {
             removeNextChatMessage = true;
             ServersCommandParser.castByMod();
@@ -176,7 +175,7 @@ public class UndercastData {
 
     public static void websiteLoaded(String url, String contents) {
         if (url.equals("https://oc.tc/play")) {
-            updateMap(contents);
+            //updateMap();
         } else {
             updateStats(contents, url);
         }
@@ -284,10 +283,9 @@ public class UndercastData {
         }
     }
 
-    private static void updateMap(String cont) {
-        try {
-            String[][] mapData = ServerStatusHTMLParser.parse(cont);
-            serverCount = mapData.length - 1; // -1 for lobby exclusion
+    public static void updateMap() {
+    	try {
+            serverCount = mapData.length;
             for (int c = 0; c < mapData.length; c++) {
                 serverInformation[c].name = mapData[c][0];
                 try {
