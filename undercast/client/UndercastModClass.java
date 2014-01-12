@@ -1,12 +1,17 @@
 package undercast.client;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jexxus.client.ClientConnection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
@@ -17,6 +22,7 @@ import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.update.Undercast_UpdaterThread;
 import undercast.network.client.UndercastClientConnectionListener;
+import undercast.network.common.packet.VIPUser;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -49,7 +55,8 @@ public class UndercastModClass {
     public UndercastKillsHandler achievementChatHandler;
     public UndercastGuiAchievement guiAchievement;
     public ClientConnection connection;
-
+    public List<VIPUser> vips;
+	public static int capeCounter = 0;
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -66,6 +73,7 @@ public class UndercastModClass {
         if (oldConfig.exists() && !newConfig.exists()) {
             oldConfig.renameTo(newConfig);
         }
+        vips = new ArrayList<VIPUser>();
         chatHandler = new UndercastChatHandler();
         achievementChatHandler = new UndercastKillsHandler();
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
@@ -76,6 +84,7 @@ public class UndercastModClass {
         new Undercast_UpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
         connection = new ClientConnection(new UndercastClientConnectionListener(), "198.199.75.102", 15652, true);
+        startCapeTimer();
     }
 
     @EventHandler
@@ -95,6 +104,7 @@ public class UndercastModClass {
      * 
      */
     public void onGameTick(Minecraft mc) {
+        
         guiAchievement.updateScreen();
         // if the game over screen is active then you have died
         // if it is the first time it is active count a death
@@ -264,7 +274,20 @@ public class UndercastModClass {
                 return 0x606060;
         }
     }
+    static class CapeTimeTask extends TimerTask{
 
+		@Override
+		public void run() {
+			System.out.println(UndercastModClass.capeCounter);
+			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 25;
+		}
+    	
+    }
+
+    public static void startCapeTimer(){
+    	Timer timer = new Timer();
+        timer.schedule(new CapeTimeTask(), 0, 100);
+    }
     /**
      * get an instance of UndercastModClass
      * 

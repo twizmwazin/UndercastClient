@@ -20,7 +20,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
  */
 public class UndercastConnectionHandler {
 	private boolean connected = false;
-
+	
 	public UndercastConnectionHandler() {
 		MinecraftForge.EVENT_BUS.register(this);
 	}

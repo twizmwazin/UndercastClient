@@ -11,6 +11,8 @@ import undercast.network.common.packet.Packet03OnlinePlayersAnswer;
 import undercast.network.common.packet.Packet07KickPacket;
 import undercast.network.common.packet.Packet10GetServers;
 import undercast.network.common.packet.Packet11SendServers;
+import undercast.network.common.packet.Packet13SendVIPs;
+import undercast.network.common.packet.VIPUser;
 
 public class NetClientManager extends NetManager {
     
@@ -54,4 +56,14 @@ public class NetClientManager extends NetManager {
     public void handleOnlinePlayersAnswer(Packet03OnlinePlayersAnswer packet) {
         
     }
+
+	public void handleSendVIPs(Packet13SendVIPs packet) {
+        String users[] = packet.users_str.split("@");
+        for (int i = 0; i < users.length; i++) {
+            VIPUser u = VIPUser.fromString(users[i]);
+            if(u != null){
+            	UndercastModClass.getInstance().vips.add(u);
+            }
+        }		
+	}
 }

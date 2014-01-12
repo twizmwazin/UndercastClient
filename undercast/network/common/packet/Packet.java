@@ -30,6 +30,8 @@ public abstract class Packet {
                 return new Packet07KickPacket();
             case 11:
                 return new Packet11SendServers();
+            case 13:
+            	return new Packet13SendVIPs();
         }
         return null;
     }

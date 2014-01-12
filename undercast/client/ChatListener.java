@@ -16,9 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class ChatListener {
 
     public ChatListener() {
-    	System.out.println("Registering");
     	MinecraftForge.EVENT_BUS.register(this);
-    	System.out.println("Registered");
     }
 
     @SubscribeEvent
