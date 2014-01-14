@@ -12,8 +12,8 @@ import javax.swing.text.html.parser.ParserDelegator;
  * PlayerStatsHTMLParser,
  * a class which will try parse the given html to get the stats of a player.
  * 
- * @returns String[11]. A string array with all player data in the following order:
- * kills, deaths, friends, kdr, kkr, server joins, forum posts, forum threads, wools placed, cores broken, monuments broken
+ * @returns String[12]. A string array with all player data in the following order:
+ * kills, deaths, friends, kdr, kkr, server joins, forum posts, forum threads, raindrops, wools placed, cores broken, monuments broken
  */
 public class PlayerStatsHTMLParser {
 
@@ -40,7 +40,7 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
     private int count = 0;
     // # of map currently parsing
     // Data
-    public String[] playerData = new String[11];
+    public String[] playerData = new String[12];
 
     // Function called when a tag (<tagName>) is opened
     @Override

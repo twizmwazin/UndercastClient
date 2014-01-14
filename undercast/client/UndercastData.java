@@ -189,9 +189,9 @@ public class UndercastData {
             String[] data = PlayerStatsHTMLParser.parse(cont);
             if (UndercastData.isObjectiveReload) {
                 UndercastData.isObjectiveReload = false;
-                int woolsDifference = Integer.parseInt(data[8]) - stats.wools;
-                int coresDifference = Integer.parseInt(data[9]) - stats.cores;
-                int monumentDifference = Integer.parseInt(data[10]) - stats.monuments;
+                int woolsDifference = Integer.parseInt(data[9]) - stats.wools;
+                int coresDifference = Integer.parseInt(data[10]) - stats.cores;
+                int monumentDifference = Integer.parseInt(data[11]) - stats.monuments;
                 int i = 1;
                 EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
                 while (woolsDifference >= i) {
@@ -266,9 +266,10 @@ public class UndercastData {
                 stats.serverJoins = Integer.parseInt(data[5]);
                 stats.forumPosts = Integer.parseInt(data[6]);
                 stats.startedTopics = Integer.parseInt(data[7]);
-                stats.wools = Integer.parseInt(data[8]);
-                stats.cores = Integer.parseInt(data[9]);
-                stats.monuments = Integer.parseInt(data[10]);
+                //skip raindrops, they are not accurate if the number is too high
+                stats.wools = Integer.parseInt(data[9]);
+                stats.cores = Integer.parseInt(data[10]);
+                stats.monuments = Integer.parseInt(data[11]);
                 stats.name = url.replace("https://oc.tc/", "");
                 // only if no data relates on the current stats
                 if (UndercastData.kills == 0 && UndercastData.deaths == 0) {
