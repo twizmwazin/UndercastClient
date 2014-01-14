@@ -79,6 +79,7 @@ public class UndercastModClass {
         defaultLevel = FMLClientHandler.instance().getClient().gameSettings.gammaSetting;
         CONFIG = new Configuration(newConfig);
         new UndercastConfig(CONFIG, event.getSuggestedConfigurationFile());
+        new UndercastRenderHandler();
         new UndercastKeyHandling();
         new UndercastData();
         new Undercast_UpdaterThread();
@@ -278,15 +279,14 @@ public class UndercastModClass {
 
 		@Override
 		public void run() {
-			System.out.println(UndercastModClass.capeCounter);
-			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 25;
+			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 50;
 		}
     	
     }
 
     public static void startCapeTimer(){
     	Timer timer = new Timer();
-        timer.schedule(new CapeTimeTask(), 0, 100);
+        timer.schedule(new CapeTimeTask(), 0, 50);
     }
     /**
      * get an instance of UndercastModClass

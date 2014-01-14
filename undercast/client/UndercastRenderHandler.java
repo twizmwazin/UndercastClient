@@ -1,21 +1,56 @@
 package undercast.client;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import javax.imageio.ImageIO;
+
 import org.lwjgl.opengl.GL11;
 
 import undercast.network.common.packet.VIPUser;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Pre;
 import net.minecraftforge.common.MinecraftForge;
 
 public class UndercastRenderHandler {
+	ImageLoader il = new ImageLoader(Minecraft.getMinecraft().getResourceManager());
+	BufferedImage donator = null;
+	BufferedImage developer = null;
+	int idDev = TextureUtil.glGenTextures();
+	int idDon = TextureUtil.glGenTextures();
+
 	public UndercastRenderHandler(){
 		MinecraftForge.EVENT_BUS.register(this);
+        try {
+    		ResourceLocation rl = new ResourceLocation("undercast","donator.png");
+            IResource iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
+            InputStream inputstream = iresource.getInputStream();
+            donator = ImageIO.read(inputstream);
+			rl = new ResourceLocation("undercast","developer.png");
+            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
+            inputstream = iresource.getInputStream();
+            developer = ImageIO.read(inputstream);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@SubscribeEvent
@@ -32,16 +67,9 @@ public class UndercastRenderHandler {
         if (player != null && !evt.entityPlayer.isInvisible() && !evt.entityPlayer.getHideCape())
         {
         	if(player.getCape() == VIPUser.DEVELOPER_CAPE){
-        		/*String fileName = "developer_";
-        		if((25 - UndercastModClass.capeCounter - 1) > 9){
-        			fileName+="00" + (25 - UndercastModClass.capeCounter - 1);
-        		} else{
-        			fileName+="000" + (25 - UndercastModClass.capeCounter - 1);
-        		}
-        		fileName += "_Layer-" + (UndercastModClass.capeCounter + 1) + ".png";*/
-        		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("undercast","temp.png"));
+        		il.setupTexture(developer, idDev, 3200, 1600); //BufferedImage, unique id, width,height
         	}else{
-        		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("undercast","minecon.png"));
+        		il.setupTexture(developer, idDon, 3200, 1600); //BufferedImage, unique id, width,height
         	}
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
