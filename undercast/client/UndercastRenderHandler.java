@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -30,22 +31,28 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class UndercastRenderHandler {
 	ImageLoader il = new ImageLoader(Minecraft.getMinecraft().getResourceManager());
+	ArrayList<BufferedImage> developer = new ArrayList<BufferedImage>(11);
 	BufferedImage donator = null;
-	BufferedImage developer = null;
-	int idDev = TextureUtil.glGenTextures();
+	ArrayList<Integer> idDev = new ArrayList<Integer>(11);
 	int idDon = TextureUtil.glGenTextures();
 
 	public UndercastRenderHandler(){
 		MinecraftForge.EVENT_BUS.register(this);
+		for(int i = 0; i < 11; i++){
+			idDev.add(TextureUtil.glGenTextures());
+		}
         try {
     		ResourceLocation rl = new ResourceLocation("undercast","donator.png");
             IResource iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
             InputStream inputstream = iresource.getInputStream();
             donator = ImageIO.read(inputstream);
-			rl = new ResourceLocation("undercast","developer.png");
-            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
-            inputstream = iresource.getInputStream();
-            developer = ImageIO.read(inputstream);
+			for(int i = 0; i<11;i++){
+				rl = new ResourceLocation("undercast","developer" + i + ".png");
+	            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
+	            inputstream = iresource.getInputStream();
+	            developer.add(ImageIO.read(inputstream));
+			}
+
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -67,9 +74,14 @@ public class UndercastRenderHandler {
         if (player != null && !evt.entityPlayer.isInvisible() && !evt.entityPlayer.getHideCape())
         {
         	if(player.getCape() == VIPUser.DEVELOPER_CAPE){
-        		il.setupTexture(developer, idDev, 3200, 1600); //BufferedImage, unique id, width,height
+        		int c = 0;
+        		if((c = UndercastModClass.getInstance().capeCounter) > 10){
+        			il.setupTexture(developer.get(0), idDev.get(0), 3200, 1600); //BufferedImage, unique id, width,height
+        		} else{
+        			il.setupTexture(developer.get(c), idDev.get(c), 3200, 1600);
+        		}
         	}else{
-        		il.setupTexture(developer, idDon, 3200, 1600); //BufferedImage, unique id, width,height
+        		il.setupTexture(donator, idDon, 3200, 1600); //BufferedImage, unique id, width,height
         	}
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);

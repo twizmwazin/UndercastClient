@@ -280,6 +280,7 @@ public class UndercastModClass {
 		@Override
 		public void run() {
 			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 50;
+			//between 0 and 49
 		}
     	
     }
