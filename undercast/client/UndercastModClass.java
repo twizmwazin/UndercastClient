@@ -279,15 +279,15 @@ public class UndercastModClass {
 
 		@Override
 		public void run() {
-			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 50;
-			//between 0 and 49
+			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 200;
+			//between 0 and 199
 		}
     	
     }
 
     public static void startCapeTimer(){
     	Timer timer = new Timer();
-        timer.schedule(new CapeTimeTask(), 0, 50);
+        timer.schedule(new CapeTimeTask(), 0, 40);
     }
     /**
      * get an instance of UndercastModClass

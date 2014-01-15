@@ -46,16 +46,17 @@ public class UndercastRenderHandler {
             IResource iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
             InputStream inputstream = iresource.getInputStream();
             donator = ImageIO.read(inputstream);
+            il.setupTexture(donator, idDon, 1600, 800);
 			for(int i = 0; i<11;i++){
 				rl = new ResourceLocation("undercast","developer" + i + ".png");
 	            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
 	            inputstream = iresource.getInputStream();
 	            developer.add(ImageIO.read(inputstream));
+	            il.setupTexture(developer.get(i), idDev.get(i), 1600, 800); //preload all textures at startup to prevent lag IG
 			}
 
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -76,12 +77,12 @@ public class UndercastRenderHandler {
         	if(player.getCape() == VIPUser.DEVELOPER_CAPE){
         		int c = 0;
         		if((c = UndercastModClass.getInstance().capeCounter) > 10){
-        			il.setupTexture(developer.get(0), idDev.get(0), 3200, 1600); //BufferedImage, unique id, width,height
+        			il.setupTexture(developer.get(0), idDev.get(0), 1600, 800); //BufferedImage, unique id, width,height
         		} else{
-        			il.setupTexture(developer.get(c), idDev.get(c), 3200, 1600);
+        			il.setupTexture(developer.get(c), idDev.get(c), 1600, 800);
         		}
         	}else{
-        		il.setupTexture(donator, idDon, 3200, 1600); //BufferedImage, unique id, width,height
+        		il.setupTexture(donator, idDon, 1600, 800); //BufferedImage, unique id, width,height
         	}
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
