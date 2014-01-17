@@ -48,7 +48,7 @@ public class RaindropManager {
         int raindrops = -1;
         for(int i=0; i<obj.length + 1; i++) {
             try {
-                String rds = String.valueOf(obj[i]).replaceAll(" ", "");
+                String rds = String.valueOf(obj[i]).replaceAll(" ", "").replace(",","");
                 Integer rd = Integer.parseInt(rds);
                 raindrops = rd;
             } catch(Exception e) {
