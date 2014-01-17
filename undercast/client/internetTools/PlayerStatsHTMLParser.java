@@ -72,7 +72,15 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
                 playerData[count] = new String(data).replace(" ", "");
                 count++;
             } catch (Exception e) {
-                // Not a number, just do nothing
+                // Try to see if it isn't raindrops
+            	try{
+            		String d = new String(data).replace(" ", "").replace(".", "");
+            		d = d.substring(0, d.length()-1);
+            		Integer.parseInt(d);
+            		playerData[count] = new String(data).replace(" ", "");
+            		count++;
+            	} catch(Exception e2){
+            	}
             }
         }
     }
