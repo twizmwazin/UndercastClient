@@ -265,6 +265,8 @@ public class UndercastModClass {
                 return 0x0033FF;
             case Purple:
                 return 0x9933CC;
+            case Magenta:
+                return 0xFF00FF;
             case Cyan:
                 return 0x00AAAA;
             case Yellow:

@@ -87,7 +87,7 @@ public class UndercastData {
 
     public static enum Teams {
 
-        Red, Blue, Purple, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown
+        Red, Blue, Purple, Magenta, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown
     };
 
     public static enum MatchState {
