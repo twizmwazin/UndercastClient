@@ -359,6 +359,23 @@ public class UndercastCustomMethods {
         return str;
     }
 
+    public static String getRaindropDisplayString() {
+        String str;
+        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0) {
+            if (UndercastConfig.showTotalKills) {
+                str = (UndercastConfig.lessObstructive ? "TRD: " : "Total Raindrops: ") + "\u00A7b" + (int) (RaindropManager.TotalRaindrops);
+            } else {
+                str = (UndercastConfig.lessObstructive ? "RD: " : "Raindrops: ") + "\u00A7b" + (int) (RaindropManager.RaindropsThisMatch);
+            }
+        } else {
+            str = (UndercastConfig.lessObstructive ? "RD: " : "Raindrops: ") + "\u00A7b" + (int) RaindropManager.RaindropsThisMatch;
+            if (UndercastConfig.showTotalKills) {
+                str += "\u00A7f/\u00A7b" + (int) (RaindropManager.RaindropsThisMatch + RaindropManager.TotalRaindrops);
+            }
+        }
+        return str;
+    }
+
     public static String getKDDisplayString() {
         String str;
         if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {

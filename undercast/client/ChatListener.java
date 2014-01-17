@@ -43,6 +43,9 @@ public class ChatListener {
                     	event.message = null;
                     }
                 }
+                if (RaindropManager.manager != null && RaindropManager.manager.handleChatMessage(message)) {
+                    	event.message = null;
+                }
                 if (FMLClientHandler.instance().isGUIOpen(UndercastServerGUI.class) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
                 	event.message = null;
                 }

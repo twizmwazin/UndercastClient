@@ -206,6 +206,11 @@ public class UndercastModClass {
                 mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getDeathDisplayString(), width, height, 16777215);
                 height += 8;
             }
+            // show raindrop count
+            if (UndercastConfig.showRaindropCounter) {
+                mc.fontRenderer.drawStringWithShadow(UndercastCustomMethods.getRaindropDisplayString(), width, height, 16777215);
+                height += 8;
+            }
             // Kill Streak display
             if (UndercastConfig.showStreak && !UndercastData.isLobby) {
                 mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "K: " : "Current Killstreak: ") + "\u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);

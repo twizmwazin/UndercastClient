@@ -45,6 +45,7 @@ public class UndercastConfig {
     public static boolean showDeathAchievements;
     public static boolean showFirstBloodAchievement;
     public static boolean showLastKillAchievement;
+    public static boolean showRaindropCounter;
     public static boolean parseMatchState;
     public static boolean showScore;
     public static boolean showTotalKills;
@@ -85,6 +86,7 @@ public class UndercastConfig {
         showStreak = config.get("UndercastMod", "showStreak", true).getBoolean(true);
         showGuiChat = config.get("UndercastMod", "showGuiChat", true).getBoolean(true);
         showGuiMulti = config.get("UndercastMod", "showGuiMulti", true).getBoolean(true);
+        showRaindropCounter = config.get("UndercastMod", "showRaindropCounter", true).getBoolean(true);
         enableButtonTooltips = config.get("UndercastMod", "enableButtonTooltips", true).getBoolean(true);
         x = config.get("UndercastMod", "X", 2).getInt();
         y = config.get("UndercastMod", "Y", 2).getInt();
