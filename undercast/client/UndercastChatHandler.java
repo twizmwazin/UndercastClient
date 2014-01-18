@@ -208,6 +208,7 @@ public class UndercastChatHandler {
             } else {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
+                UndercastData.lobbyLeaveDetectionStarted = true;
             }
             
         } // server detection
@@ -250,14 +251,16 @@ public class UndercastChatHandler {
                     UndercastCustomMethods.handleServerSwap();
                 }
             }
-        } else if (normalMessage.equals("Â§cÂ§cÂ§eÂ§eÂ§cÂ§c") || message.equals("To view classes, type /classes")) { // GS servers do not send "ï¿½ï¿½cï¿½ï¿½cï¿½ï¿½eï¿½ï¿½eï¿½ï¿½cï¿½ï¿½c"
-            if (!UndercastData.welcomeMessageExpected) {
+        } else if (normalMessage.equals("§f §r§f §r§1 §r§0 §r§2 §r§f §r§f §r§2 §r§0 §r§4 §r§3 §r§9 §r§2 §r§0 §r§0 §r§3 §r§9 §r§2 §r§0 §r§0 §r§3 §r§9 §r§2 §r§0 §r§0 §r§e§r")) {
+            if (!UndercastData.welcomeMessageExpected && UndercastData.lobbyLeaveDetectionStarted) {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
             } else {
                 UndercastData.welcomeMessageExpected = false;
             }
-            if (UndercastConfig.matchOnServerJoin || UndercastConfig.showMatchTime) {
+            UndercastData.lobbyLeaveDetectionStarted = false;
+            
+            if (!UndercastData.isLobby && (UndercastConfig.matchOnServerJoin || UndercastConfig.showMatchTime)) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
             }
         } // start and sync the match timer

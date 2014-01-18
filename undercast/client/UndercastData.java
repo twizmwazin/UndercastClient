@@ -83,6 +83,7 @@ public class UndercastData {
     public static ArrayList<String> victimList = new ArrayList<String>();
     public static ArrayList<String> killerList = new ArrayList<String>();
     public static String[][] mapData = null;
+    public static boolean lobbyLeaveDetectionStarted = false;
 
 
     public static enum Teams {
