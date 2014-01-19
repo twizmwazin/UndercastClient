@@ -1,5 +1,20 @@
 The changelog exists since version 1.4.0
 
+1.7.3
+ - added raindrop counter
+ - now using our own server to get the server list and to parse maps
+ - added capes for developers :D
+ - added support for Magenta team
+ - fixed server detection
+ - fixed stats parser (wools, monuments and cores are now correct)
+ - removed friend counter
+ - fixed some glitches in the settings gui
+ - fixed setting for gui display in chat
+ - fixed mod crashing singleplayer
+
+1.7.2
+ - update to Minecraft 1.7.2
+
 1.7.1
  - update for the new oc.tc/play page
 
