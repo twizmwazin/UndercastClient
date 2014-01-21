@@ -23,7 +23,6 @@ public class UndercastConfig {
     public static boolean showTeam;
     public static boolean showKD;
     public static boolean showKK;
-    public static boolean showFriends;
     public static boolean showMap;
     public static boolean showNextMap;
     public static boolean showStreak;
@@ -80,7 +79,6 @@ public class UndercastConfig {
         showTeam = config.get("UndercastMod", "showTeam", true).getBoolean(true);
         showKD = config.get("UndercastMod", "showKD", true).getBoolean(true);
         showKK = config.get("UndercastMod", "showKK", true).getBoolean(true);
-        showFriends = config.get("UndercastMod", "showFriends", true).getBoolean(true);
         showMap = config.get("UndercastMod", "showMap", true).getBoolean(true);
         showNextMap = config.get("UndercastMod", "showNextMap", true).getBoolean(true);
         showStreak = config.get("UndercastMod", "showStreak", true).getBoolean(true);
