@@ -149,7 +149,7 @@ public class UndercastServerGUI extends GuiScreen {
             } else {
                 UndercastData.locationIndex = 0;
             }
-            this.field_146292_n.set(7, new GuiButton(8, width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex]));
+            this.field_146292_n.set(this.field_146292_n.size() - 1, new GuiButton(8, width / 2 + 102, height - 52, 48, 20, UndercastData.locationNames[UndercastData.locationIndex]));
             UndercastCustomMethods.sortAndFilterServers();
             UndercastConfig.setIntProperty("lastUsedLocation", UndercastData.locationIndex);
         }
