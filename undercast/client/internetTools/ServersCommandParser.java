@@ -37,7 +37,7 @@ public class ServersCommandParser {
 
                     name = message.substring(0, message.indexOf(": "));
                     map = message.substring(message.indexOf("Current Map: ") + 13);
-                    matchStatusColor = unstripedMessage.charAt(unstripedMessage.indexOf("Current Map§f: ") + 16);
+                    matchStatusColor = unstripedMessage.charAt(unstripedMessage.indexOf("Current Map\u00A7r\u00A7f: ") + 20);
 
                     // c == red
                     // e == yellow
