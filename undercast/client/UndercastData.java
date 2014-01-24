@@ -145,8 +145,7 @@ public class UndercastData {
         filterIndex = 0;
         try {
             mapLoader = new InformationLoaderThread(new URL("https://oc.tc/play"));
-            //TODO: Figure out username
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().thePlayer.getCommandSenderName()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().getSession().getUsername()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
