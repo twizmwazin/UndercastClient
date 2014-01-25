@@ -12,6 +12,9 @@ import undercast.network.common.packet.Packet07KickPacket;
 import undercast.network.common.packet.Packet10GetServers;
 import undercast.network.common.packet.Packet11SendServers;
 import undercast.network.common.packet.Packet13SendVIPs;
+import undercast.network.common.packet.Packet14StillAlive;
+import undercast.network.common.packet.Packet15ShowNotif;
+import undercast.network.common.packet.Packet17IsPlayerConnected;
 import undercast.network.common.packet.VIPUser;
 
 public class NetClientManager extends NetManager {
@@ -65,5 +68,16 @@ public class NetClientManager extends NetManager {
             	UndercastModClass.getInstance().vips.add(u);
             }
         }		
+	}
+
+	public void handleShowNotif(Packet15ShowNotif packet) {
+		UndercastAchievement ac = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(),packet.line1,packet.line2);
+		UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
+	}
+
+	public void handleIsPlayerConnected(Packet17IsPlayerConnected packet) {
+		UndercastAchievement ac = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(),"Received packet 17","");
+		UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
+		NetClientManager.sendPacket(new Packet14StillAlive());
 	}
 }

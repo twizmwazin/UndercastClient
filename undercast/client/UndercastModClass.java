@@ -37,7 +37,7 @@ import cpw.mods.fml.relauncher.FMLRelaunchLog;
 @Mod(modid = UndercastModClass.MOD_NAME, name = UndercastModClass.MOD_NAME, version = UndercastModClass.MOD_VERSION)
 public class UndercastModClass {
 
-    public final static String MOD_VERSION = "1.7.3";
+    public final static String MOD_VERSION = "1.7.4";
     public final static String MOD_NAME = "UndercastMod";
     public Integer buttonListSizeOfGuiOptions;
     protected String username = "Not_Found";
@@ -84,7 +84,9 @@ public class UndercastModClass {
         new UndercastData();
         new Undercast_UpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
-        connection = new ClientConnection(new UndercastClientConnectionListener(), "198.199.75.102", 15652, true);
+        //15652: v1.7.3 port
+        //25565: v1.7.4 port (ip will change)
+        connection = new ClientConnection(new UndercastClientConnectionListener(), "198.199.75.102", 25565, true);
         startCapeTimer();
     }
 

@@ -32,6 +32,10 @@ public abstract class Packet {
                 return new Packet11SendServers();
             case 13:
             	return new Packet13SendVIPs();
+            case 15:
+            	return new Packet15ShowNotif();
+            case 17:
+            	return new Packet17IsPlayerConnected();
         }
         return null;
     }

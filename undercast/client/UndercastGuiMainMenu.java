@@ -29,7 +29,7 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
                     String username = Minecraft.getMinecraft().getSession().getUsername();
                     try {
                         UndercastModClass.getInstance().connection.connect();
-                        NetManager.sendPacket(new Packet00Authentication(username));
+                        NetManager.sendPacket(new Packet00Authentication(username, "UndercastClient-v" + UndercastModClass.MOD_VERSION));
                     } catch (Exception e) {
                         UndercastAchievement a = new UndercastAchievement(username, "\u00A74Server", "\u00A74down!");
                         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(a);
