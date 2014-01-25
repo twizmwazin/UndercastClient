@@ -92,13 +92,11 @@ public class UndercastServerGUI extends GuiScreen {
         }
         // stats button
         if (guibutton.field_146127_k == 3) {
-        	/*
-            String username = Minecraft.getMinecraft().func_110432_I().func_111285_a();
+            String username = Minecraft.getMinecraft().getSession().getUsername();
             try {
                 Desktop.getDesktop().browse(new URI("http://oc.tc/" + username));
             } catch (Exception ignored) {
             }
-            */ //TODO: FIX
         }
         // sort button
         if (guibutton.field_146127_k == 4) {
