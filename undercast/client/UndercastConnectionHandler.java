@@ -45,7 +45,8 @@ public class UndercastConnectionHandler {
 			//SinglePlayer
 			return;
 		}
-		UndercastData.setTeam(UndercastData.Teams.Observers);
+		UndercastData.setTeam("Observers");
+		UndercastData.teamColor = 'b'; // b for aqua
 		// if logging onto an OvercastNetwork server, then enable the main mod
 		if (ip.contains(".oc.tc") && !ip.contains("mc.oc.tc")) {
 			// What happens if logs into OvercastNetwork
@@ -53,7 +54,8 @@ public class UndercastConnectionHandler {
 			UndercastData.isLobby = true;
 			UndercastData.guiShowing = true;
 			System.out.println("Undercast Mod activated!");
-			UndercastData.setTeam(UndercastData.Teams.Observers);
+			UndercastData.setTeam("Observers");
+			UndercastData.teamColor = 'b'; // b for aqua
 			UndercastData.setServer("Lobby");
 			UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
 			if (ip.contains("eu.oc.tc")) {
@@ -100,7 +102,8 @@ public class UndercastConnectionHandler {
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		UndercastData.isOC = false;
 		UndercastData.guiShowing = false;
-		UndercastData.setTeam(UndercastData.Teams.Observers);
+		UndercastData.setTeam("Observers");
+		UndercastData.teamColor = 'b';
 		UndercastData.resetKills();
 		UndercastData.resetKilled();
 		UndercastData.resetDeaths();

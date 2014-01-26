@@ -152,13 +152,8 @@ public class UndercastChatHandler {
         else if (message.contains("You joined the")) {
         	System.out.println("detected join team");
             UndercastData.reloadStats();
-            try {
-                UndercastData.setTeam(UndercastData.Teams.valueOf(message.replace("You joined the ", "").replace(" Team", "").replace(" team", "").replace(" Squad", "").replace(" Sun", "").replace(" Moon", "")));
-            } catch (Exception e) {
-                // if the team set fails because of an alias, set the team to
-                // Unknown
-                UndercastData.setTeam(UndercastData.Teams.Unknown);
-            }
+            // this sets the teams
+            UndercastCustomMethods.parseTeamJoinMessage(message, normalMessage);
         } else if (!message.startsWith("<") && message.toLowerCase().contains("game over")) {
             UndercastData.isGameOver = true;
             UndercastData.isNextKillFirstBlood = false;
@@ -194,7 +189,8 @@ public class UndercastChatHandler {
             UndercastData.resetKillstreak();
             UndercastData.resetLargestKillstreak();
             UndercastData.resetScore();
-            UndercastData.setTeam(UndercastData.Teams.Observers);
+            UndercastData.setTeam("Observers");
+            UndercastData.teamColor = 'b'; // b for aqua
             return false;
         } // redirection and lobby detection
         else if (message.contains("Welcome to the Overcast Network")) {
