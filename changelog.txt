@@ -1,5 +1,11 @@
 The changelog exists since version 1.4.0
 
+1.7.4
+ - fix server errors
+ - added a donator+ cape
+ - removed friend settings
+ - improved team detection
+
 1.7.3
  - added raindrop counter
  - now using our own server to get the server list and to parse maps
