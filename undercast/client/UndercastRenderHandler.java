@@ -33,8 +33,10 @@ public class UndercastRenderHandler {
 	ImageLoader il = new ImageLoader(Minecraft.getMinecraft().getResourceManager());
 	ArrayList<BufferedImage> developer = new ArrayList<BufferedImage>(11);
 	BufferedImage donator = null;
+	BufferedImage donatorPlus = null;
 	ArrayList<Integer> idDev = new ArrayList<Integer>(11);
 	int idDon = TextureUtil.glGenTextures();
+	int idDonPlus = TextureUtil.glGenTextures();
 
 	public UndercastRenderHandler(){
 		MinecraftForge.EVENT_BUS.register(this);
@@ -47,6 +49,11 @@ public class UndercastRenderHandler {
             InputStream inputstream = iresource.getInputStream();
             donator = ImageIO.read(inputstream);
             il.setupTexture(donator, idDon, 1600, 800);
+    		rl = new ResourceLocation("undercast","donator+.png");
+            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
+            inputstream = iresource.getInputStream();
+            donatorPlus = ImageIO.read(inputstream);
+            il.setupTexture(donatorPlus, idDonPlus, 1600, 800);
 			for(int i = 0; i<11;i++){
 				rl = new ResourceLocation("undercast","developer" + i + ".png");
 	            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
@@ -81,8 +88,10 @@ public class UndercastRenderHandler {
         		} else{
         			il.setupTexture(developer.get(c), idDev.get(c), 1600, 800);
         		}
-        	}else{
+        	}else if(player.getCape() == VIPUser.DONATOR_CAPE){
         		il.setupTexture(donator, idDon, 1600, 800); //BufferedImage, unique id, width,height
+        	} else if (player.getCape() == VIPUser.DONATOR_PLUS_CAPE){
+        		il.setupTexture(donatorPlus, idDonPlus, 1600, 800); //BufferedImage, unique id, width,height
         	}
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);

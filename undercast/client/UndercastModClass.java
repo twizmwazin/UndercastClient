@@ -65,6 +65,7 @@ public class UndercastModClass {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	((org.apache.logging.log4j.core.Logger) FMLRelaunchLog.log.getLogger()).setLevel(Level.OFF);
         // With the renaming, the config file name changed.
         // Just renaming the old one as the new one if necessary.
         File newConfig = event.getSuggestedConfigurationFile();
@@ -85,7 +86,7 @@ public class UndercastModClass {
         guiAchievement = new UndercastGuiAchievement(mc);
         //15652: v1.7.3 port
         //25565: v1.7.4 port (ip will change)
-        connection = new ClientConnection(new UndercastClientConnectionListener(), "198.199.75.102", 25565, true);
+        connection = new ClientConnection(new UndercastClientConnectionListener(), "107.170.28.58", 25565, true);
         startCapeTimer();
     }
 
