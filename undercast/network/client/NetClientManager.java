@@ -76,8 +76,6 @@ public class NetClientManager extends NetManager {
 	}
 
 	public void handleIsPlayerConnected(Packet17IsPlayerConnected packet) {
-		UndercastAchievement ac = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(),"Received packet 17","");
-		UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
 		NetClientManager.sendPacket(new Packet14StillAlive());
 	}
 }
