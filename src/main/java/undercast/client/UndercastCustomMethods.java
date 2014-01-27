@@ -14,7 +14,6 @@ import java.util.Iterator;
 import net.minecraft.client.Minecraft;
 import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastData.ServerType;
-import undercast.client.UndercastData.Teams;
 import undercast.client.server.UndercastServer;
 
 public class UndercastCustomMethods {
@@ -79,7 +78,8 @@ public class UndercastCustomMethods {
         if (!UndercastData.previousServer.equalsIgnoreCase("lobby")) {
             UndercastData.finalStats = new FinalStats();
         }
-        UndercastData.setTeam(UndercastData.Teams.Observers);
+        UndercastData.setTeam("Observers");
+        UndercastData.teamColor = 'b';
         UndercastData.resetDeaths();
         UndercastData.resetKills();
         UndercastData.resetKilled();
@@ -327,7 +327,7 @@ public class UndercastCustomMethods {
 
     public static String getKillDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+        if (UndercastData.team.equals("Observers") && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
                 str = (UndercastConfig.lessObstructive ? "TK: " : "Total Kills: ") + "\u00A7a" + (int) (UndercastData.getKills() + UndercastData.stats.kills);
             } else {
@@ -344,7 +344,7 @@ public class UndercastCustomMethods {
 
     public static String getDeathDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+        if (UndercastData.team.equals("Observers") && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
                 str = (UndercastConfig.lessObstructive ? "TD: " : "Total Deaths: ") + "\u00A74" + (int) (UndercastData.getDeaths() + UndercastData.stats.deaths);
             } else {
@@ -361,7 +361,7 @@ public class UndercastCustomMethods {
 
     public static String getRaindropDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0) {
+        if (UndercastData.team.equals("Observers") && UndercastData.kills == 0 && UndercastData.deaths == 0) {
             if (UndercastConfig.showTotalKills) {
                 str = (UndercastConfig.lessObstructive ? "TRD: " : "Total Raindrops: ") + "\u00A7b" + (int) (RaindropManager.TotalRaindrops);
             } else {
@@ -378,7 +378,7 @@ public class UndercastCustomMethods {
 
     public static String getKDDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+        if (UndercastData.team.equals("Observers") && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
                 str = (UndercastConfig.lessObstructive ? "TKD: " : "Total K/D: ") + "\u00A73" + (UndercastData.stats.kd);
             } else {
@@ -400,7 +400,7 @@ public class UndercastCustomMethods {
 
     public static String getKKDisplayString() {
         String str;
-        if (UndercastData.team == Teams.Observers && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
+        if (UndercastData.team.equals("Observers") && UndercastData.kills == 0 && UndercastData.deaths == 0 && UndercastConfig.realtimeStats) {
             if (UndercastConfig.showTotalKills) {
                 str = (UndercastConfig.lessObstructive ? "TKK: " : "Total K/K: ") + "\u00A73" + (UndercastData.stats.kk);
             } else {
@@ -461,6 +461,40 @@ public class UndercastCustomMethods {
             return ServerLocation.EU;
         } else {
             return ServerLocation.US;
+        }
+    }
+    
+    public static void parseTeamJoinMessage(String message, String messageWithFormattingCodes) {
+        if(!message.contains("You joined the")) {
+            return;
+        }
+
+        try {
+            // Get team name
+            String teamName = message.replace("You joined the ", "").replace(" Team", "").replace(" team", "").replace(" Squad", "").replace(" squad", "");
+
+            // If the team name contains more than one word, get the first word because there might be formatting code between the two words.
+            String firstword = teamName;
+            if(teamName.contains(" ")) {
+                firstword = teamName.substring(0, teamName.indexOf(" "));
+            }
+
+            // Get team color char
+            char colorChar = messageWithFormattingCodes.charAt(messageWithFormattingCodes.indexOf(firstword) - 1);
+            
+            UndercastData.team = teamName;
+            
+            // Check if the colorChar has a vaild value
+            if("0123456789abcdef".indexOf(colorChar) == -1) {
+                UndercastData.teamColor = '0';
+            } else {
+                UndercastData.teamColor = colorChar;
+            }
+            
+        } catch (Exception e) {
+            // this should never happen
+            UndercastData.teamColor = '0';
+            UndercastData.team = "Unknown";
         }
     }
 }

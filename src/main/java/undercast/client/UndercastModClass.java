@@ -17,7 +17,6 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 
 import undercast.client.UndercastData.ServerType;
-import undercast.client.UndercastData.Teams;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
 import undercast.client.update.Undercast_UpdaterThread;
@@ -66,6 +65,7 @@ public class UndercastModClass {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	((org.apache.logging.log4j.core.Logger) FMLRelaunchLog.log.getLogger()).setLevel(Level.OFF);
         // With the renaming, the config file name changed.
         // Just renaming the old one as the new one if necessary.
         File newConfig = event.getSuggestedConfigurationFile();
@@ -86,7 +86,7 @@ public class UndercastModClass {
         guiAchievement = new UndercastGuiAchievement(mc);
         //15652: v1.7.3 port
         //25565: v1.7.4 port (ip will change)
-        connection = new ClientConnection(new UndercastClientConnectionListener(), "198.199.75.102", 25565, true);
+        connection = new ClientConnection(new UndercastClientConnectionListener(), "107.170.28.58", 25565, true);
         startCapeTimer();
     }
 
@@ -149,7 +149,7 @@ public class UndercastModClass {
 
             // Team display (based on color)
             if (UndercastConfig.showTeam && !UndercastData.isLobby) {
-                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "T: " : "Team: ") + UndercastData.getTeam(), width, height, getTeamColors());
+                mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "T: " : "Team: ") + "\u00A7"+  UndercastData.teamColor + UndercastData.getTeam(), width, height, 16777215);
                 height += 8;
             }
             // Class display (Ghost Squadron only)
@@ -226,7 +226,7 @@ public class UndercastModClass {
         }
 
         // if you not on obs turn it off
-        if ((UndercastData.team != Teams.Observers && !UndercastData.isGameOver) || !UndercastData.isPlayingOvercastNetwork()) {
+        if ((!UndercastData.team.equals("Observers") && !UndercastData.isGameOver) || !UndercastData.isPlayingOvercastNetwork()) {
             brightActive = false;
             // if full bright is on turn it off
             if (mc.gameSettings.gammaSetting >= brightLevel) {
@@ -240,11 +240,11 @@ public class UndercastModClass {
 
         // gui display for obs if you have brightness
         if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
-            if (brightActive && UndercastConfig.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)) {
+            if (brightActive && UndercastConfig.fullBright && (UndercastData.team.equals("Observers") || UndercastData.isGameOver)) {
                 mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A72ON", width, height, 16777215);
                 height += 8;
             } else {
-                if (!brightActive && UndercastConfig.fullBright && (UndercastData.team == Teams.Observers || UndercastData.isGameOver)) {
+                if (!brightActive && UndercastConfig.fullBright && (UndercastData.team.equals("Observers") || UndercastData.isGameOver)) {
                     mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A7cOFF", width, height, 16777215);
                     height += 8;
                 }
@@ -252,38 +252,6 @@ public class UndercastModClass {
         }
     }
 
-    /**
-     * Returns the team color hex based on the team you are on
-     * 
-     * @return hex value of team color
-     */
-    public int getTeamColors() {
-        switch (UndercastData.getTeam()) {
-            case Red:
-            case Cot:
-                return 0x990000;
-            case Blue:
-            case Bot:
-                return 0x0033FF;
-            case Purple:
-                return 0x9933CC;
-            case Magenta:
-                return 0xFF00FF;
-            case Cyan:
-                return 0x00AAAA;
-            case Yellow:
-                return 0xFFFF00;
-            case Lime:
-            case Green:
-                return 0x55FF55;
-            case Orange:
-                return 0xFF9900;
-            case Observers:
-                return 0x00FFFF;
-            default:
-                return 0x606060;
-        }
-    }
     static class CapeTimeTask extends TimerTask{
 
 		@Override

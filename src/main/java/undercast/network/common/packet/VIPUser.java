@@ -2,7 +2,7 @@ package undercast.network.common.packet;
 
 public class VIPUser {
 
-    public static int DEVELOPER_CAPE = 0, DONATOR_CAPE = 1;
+    public static int DEVELOPER_CAPE = 0, DONATOR_CAPE = 1, DONATOR_PLUS_CAPE = 2;
     private String username;
     private boolean hasCape;
     private int cape;

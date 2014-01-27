@@ -37,7 +37,8 @@ public class UndercastData {
     public static int score;
     public static String server;
     public static String previousServer = "Lobby";
-    public static Teams team;
+    public static String team;
+    public static char teamColor;
     public static boolean isOC = false;
     public static boolean isLobby;
     public static boolean update;
@@ -86,11 +87,6 @@ public class UndercastData {
     public static boolean lobbyLeaveDetectionStarted = false;
 
 
-    public static enum Teams {
-
-        Red, Blue, Purple, Magenta, Cyan, Lime, Yellow, Green, Orange, Cot, Bot, Observers, Unknown
-    };
-
     public static enum MatchState {
 
         Starting, Started, Finished, Waiting, Lobby, Unknown
@@ -117,7 +113,8 @@ public class UndercastData {
         resetKilled();
         resetLargestKillstreak();
         resetScore();
-        setTeam(Teams.Observers);
+        setTeam("Observers");
+        teamColor = 'b';
         stats = new PlayerStats();
         guiShowing = true;
         serverInformation = new UndercastServer[999];
@@ -425,11 +422,11 @@ public class UndercastData {
         return isOC;
     }
 
-    public static Teams getTeam() {
+    public static String getTeam() {
         return team;
     }
 
-    public static void setTeam(Teams teams) {
+    public static void setTeam(String teams) {
         team = teams;
     }
 
