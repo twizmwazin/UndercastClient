@@ -5,11 +5,15 @@
 argo/
 net/
 org/
-
+#################
+## Gradle
+#################
+build
 #################
 ## Eclipse
 #################
 
+eclipse
 *.pydevproject
 .project
 .metadata
