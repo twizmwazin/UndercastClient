@@ -1,5 +1,9 @@
 The changelog exists since version 1.4.0
 
+1.7.5
+ - fix kill detection with highlighted deathmessages
+ - fix player stats parsing
+
 1.7.4
  - fix server errors
  - added a donator+ cape
