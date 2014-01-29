@@ -59,28 +59,36 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
         }
     }
 
+    /**
+     * Little helper to test if a string is a integer
+     * @param str string to test
+     * @return true if it's an integer
+     */
+    private boolean isInt(String str) {
+        try {
+            Integer.parseInt(str.replace(".", ""));
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
     @Override
     public void handleText(char[] data, int pos) {
         // Handle the text in between tags (<tag>TEXT</tag>)
         if (inTD) {
             try {
-                // If it is not a integer, it will stop after this line (I
-                // replace . with "" for ease, it works fine if you parse the
-                // string as a double)
-                Integer.parseInt(new String(data).replace(" ", "").replace(".", ""));
-                // It is a integer, store the string data
-                playerData[count] = new String(data).replace(" ", "");
-                count++;
+                // get the string without dots and spaces
+                String str = new String(data).replace(" ", "");
+
+                // if the string isn't an integer, skip it.
+                if(isInt(str)) {
+                    // add the integer
+                    playerData[count] = str;
+                    count++;
+                }
             } catch (Exception e) {
-                // Try to see if it isn't raindrops
-            	try{
-            		String d = new String(data).replace(" ", "").replace(".", "");
-            		d = d.substring(0, d.length()-1);
-            		Integer.parseInt(d);
-            		playerData[count] = new String(data).replace(" ", "");
-            		count++;
-            	} catch(Exception e2){
-            	}
+
             }
         }
     }

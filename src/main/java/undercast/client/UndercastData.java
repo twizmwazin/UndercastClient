@@ -261,12 +261,10 @@ public class UndercastData {
                 stats.kd = Double.parseDouble(data[3]);
                 stats.kk = Double.parseDouble(data[4]);
                 stats.serverJoins = Integer.parseInt(data[5]);
-                stats.forumPosts = Integer.parseInt(data[6]);
-                stats.startedTopics = Integer.parseInt(data[7]);
-                //skip raindrops, they are not accurate if the number is too high
-                stats.wools = Integer.parseInt(data[9]);
-                stats.cores = Integer.parseInt(data[10]);
-                stats.monuments = Integer.parseInt(data[11]);
+                //skip days played
+                stats.wools = Integer.parseInt(data[7]);
+                stats.cores = Integer.parseInt(data[8]);
+                stats.monuments = Integer.parseInt(data[9]);
                 stats.name = url.replace("https://oc.tc/", "");
                 // only if no data relates on the current stats
                 if (UndercastData.kills == 0 && UndercastData.deaths == 0) {

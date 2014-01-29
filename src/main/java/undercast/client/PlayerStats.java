@@ -9,8 +9,6 @@ public class PlayerStats {
     public double kd;
     public double kk;
     public int serverJoins;
-    public int forumPosts;
-    public int startedTopics;
     public int wools;
     public int cores;
     public int monuments;
@@ -23,8 +21,6 @@ public class PlayerStats {
         kd = 0.0D;
         kk = 0.0D;
         serverJoins = 0;
-        forumPosts = 0;
-        startedTopics = 0;
         wools = 0;
         cores = 0;
         monuments = 0;
