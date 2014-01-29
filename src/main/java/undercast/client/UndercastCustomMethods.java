@@ -316,6 +316,8 @@ public class UndercastCustomMethods {
 
     public static boolean isTeamkill(String unstripedMessage, String player1, String player2) {
         char colorchar1, colorchar2;
+        //strip underline formatting code from highlighted messages
+        unstripedMessage = unstripedMessage.replace("\u00A7n", "");
         colorchar1 = unstripedMessage.charAt(unstripedMessage.indexOf(player1) - 1);
         colorchar2 = unstripedMessage.charAt(unstripedMessage.indexOf(player2) - 1);
         if (colorchar1 == colorchar2) {
