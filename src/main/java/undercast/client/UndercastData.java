@@ -19,7 +19,9 @@ import undercast.client.internetTools.PlayerStatsHTMLParser;
 import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
+import undercast.network.client.NetClientManager;
 import undercast.network.common.NetManager;
+import undercast.network.common.packet.Packet06SendServer;
 import undercast.network.common.packet.Packet10GetServers;
 
 public class UndercastData {
@@ -443,6 +445,7 @@ public class UndercastData {
     public static void setServer(String servers) {
         previousServer = server;
         server = servers;
+        NetClientManager.sendPacket(new Packet06SendServer(server, UndercastData.isEU ? "EU" : "US"));
         reloadServerInformations(false);
     }
 
