@@ -46,7 +46,7 @@ public class UndercastGuiGameOver extends GuiScreen {
 	{
 	}
 
-	protected void func_146284_a(GuiButton p_146284_1_)
+	protected void actionPerformed(GuiButton p_146284_1_)
 	{
 		switch (p_146284_1_.id) {
 		case 0:
@@ -55,7 +55,7 @@ public class UndercastGuiGameOver extends GuiScreen {
 			break;
 		case 1:
 			GuiYesNo localGuiYesNo = new GuiYesNo(this,StatCollector.translateToLocal("deathScreen.quit.confirm"), "", StatCollector.translateToLocal("deathScreen.titleScreen"), StatCollector.translateToLocal("deathScreen.respawn"), 0);
-			//this.mc.func_147108_a(localGuiYesNo); //TODO: find new name
+			this.mc.displayGuiScreen(localGuiYesNo);
 			localGuiYesNo.func_146350_a(20);
 		}
 	}
