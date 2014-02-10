@@ -25,7 +25,7 @@ public class UndercastGuiConfigButton extends GuiButton {
 
     @Override
     public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
-        if (this.enabled /*&& this.drawButton does no longer exist TODO: find new drawButton*/ && par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height) {
+        if (this.enabled && this.visible && par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height) {
             FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(parentScreen));
         }
         return super.mousePressed(par1Minecraft, par2, par3);
