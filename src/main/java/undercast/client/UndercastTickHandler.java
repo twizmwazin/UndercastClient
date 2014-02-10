@@ -46,12 +46,12 @@ public class UndercastTickHandler {
         
         boolean hasWorld = mc.theWorld != null;
         if (hasWorld) {
-            UndercastModClass.getInstance().onGameTick(mc);
+            UndercastModClass.getInstance().onGameTick(mc,false);
         }
     }
     
     @SubscribeEvent
 	public void onRenderTick(RenderTickEvent event) {
-    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(Minecraft.getMinecraft());	
+    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(Minecraft.getMinecraft(),true);	
     }
 }

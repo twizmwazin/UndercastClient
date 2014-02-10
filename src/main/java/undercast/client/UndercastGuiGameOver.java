@@ -51,7 +51,7 @@ public class UndercastGuiGameOver extends GuiScreen {
 		switch (p_146284_1_.id) {
 		case 0:
 			this.mc.thePlayer.respawnPlayer();
-			this.mc.currentScreen = null;
+			this.mc.displayGuiScreen(null);
 			break;
 		case 1:
 			GuiYesNo localGuiYesNo = new GuiYesNo(this,StatCollector.translateToLocal("deathScreen.quit.confirm"), "", StatCollector.translateToLocal("deathScreen.titleScreen"), StatCollector.translateToLocal("deathScreen.respawn"), 0);
