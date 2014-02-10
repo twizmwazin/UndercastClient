@@ -478,7 +478,7 @@ public class UndercastData {
     private static void sendMessage(String text) {
     	IChatComponent thingy = new ChatComponentText(text);
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        player.func_146105_b(thingy);
+        player.addChatMessage(thingy);
     }
 
 }

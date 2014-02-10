@@ -28,7 +28,7 @@ public class UndercastTickHandler {
     	Minecraft mc = Minecraft.getMinecraft();
         GuiScreen current = mc.currentScreen;
         if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
-            mc.func_147108_a(new UndercastGuiMainMenu());
+            mc.displayGuiScreen(new UndercastGuiMainMenu());
         } else if (current instanceof GuiOptions) {
             List<GuiButton> customButtonList;
             try {
@@ -37,7 +37,7 @@ public class UndercastTickHandler {
                     UndercastModClass.getInstance().buttonListSizeOfGuiOptions = customButtonList.size();
                 }
                 if (customButtonList.size() == UndercastModClass.getInstance().buttonListSizeOfGuiOptions) {
-                    customButtonList.add(new UndercastGuiConfigButton(301, current.field_146294_l / 2 + 5, current.field_146295_m / 6 + 10, 150, 20, "Undercast config", current));
+                    customButtonList.add(new UndercastGuiConfigButton(301, current.width / 2 + 5, current.height / 6 + 10, 150, 20, "Undercast config", current));
                 }
                 ObfuscationReflectionHelper.setPrivateValue(GuiScreen.class, (GuiOptions) current, customButtonList, 4);
             } catch (UnableToAccessFieldException e) {

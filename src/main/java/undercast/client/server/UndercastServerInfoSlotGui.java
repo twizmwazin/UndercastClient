@@ -18,7 +18,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 	 *            list of servers
 	 */
 	public UndercastServerInfoSlotGui(UndercastServerGUI guiservers) {
-		super(guiservers, guiservers.field_146294_l, guiservers.field_146295_m, 32, guiservers.field_146295_m - 64, 36);
+		super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
 		this.parent = guiservers;
 	}
 
@@ -59,7 +59,7 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 	@Override
 	protected void drawBackground() {
 		if (!parent.inGame) {
-			parent.func_146276_q_();
+			parent.drawDefaultBackground();
 		}
 	}
 

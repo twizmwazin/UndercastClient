@@ -116,7 +116,7 @@ public class UndercastModClass {
         
         if (mc.currentScreen instanceof GuiGameOver) {
             mc.currentScreen = null;
-            mc.func_147108_a(new UndercastGuiGameOver());
+            mc.displayGuiScreen(new UndercastGuiGameOver());
             // if the button is enabled and the user wants to disable it
         }
         
@@ -128,7 +128,7 @@ public class UndercastModClass {
         String fps = mc.debug.split(",")[0];
         int height = UndercastConfig.x;
         int width = UndercastConfig.y;
-        boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.func_151470_d();
+        boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.isPressed();
         // if the gui is enabled display
         // if chat is open and config says yes then show gui
         if (isInGameGuiEmpty && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {

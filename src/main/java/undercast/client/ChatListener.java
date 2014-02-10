@@ -22,7 +22,7 @@ public class ChatListener {
     @SubscribeEvent
     public void onServerChat(ClientChatReceivedEvent event) {
         UndercastModClass UCInstance = UndercastModClass.getInstance();
-        String messageWithOutJson =	event.message.func_150254_d();
+        String messageWithOutJson = event.message.getFormattedText();
         String message = StringUtils.stripControlCodes(messageWithOutJson);
         try {
             Minecraft mc = FMLClientHandler.instance().getClient();

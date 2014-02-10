@@ -38,7 +38,7 @@ public class UndercastKeyHandling {
 			UndercastData.guiShowing = !UndercastData.guiShowing;
 		}
 		if (Keyboard.isKeyDown(keyGuiServer)) {
-			Minecraft.getMinecraft().func_147108_a(new UndercastServerGUI(true));
+			Minecraft.getMinecraft().displayGuiScreen(new UndercastServerGUI(true));
 		}
 		if (Keyboard.isKeyDown(keyGuiFullBright)) {
 			if (Minecraft.getMinecraft().inGameHasFocus) {
@@ -51,7 +51,7 @@ public class UndercastKeyHandling {
 			}
 		}
 		if (Keyboard.isKeyDown(keySettingsGui)) {
-			FMLClientHandler.instance().getClient().func_147108_a(new SettingsGUI(null));
+			FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(null));
 		}
 	}
 }

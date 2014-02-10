@@ -194,13 +194,13 @@ public abstract class UndercastServerSlotGui {
     }
 
     public void actionPerformed(GuiButton par1GuiButton) {
-        if (par1GuiButton.field_146124_l) {
-            if (par1GuiButton.field_146127_k == this.scrollUpButtonID) {
+        if (par1GuiButton.enabled) {
+            if (par1GuiButton.id == this.scrollUpButtonID) {
                 this.amountScrolled -= (float) (this.slotHeight * 2 / 3);
                 this.initialClickY = -2.0F;
                 this.bindAmountScrolled();
             } else {
-                if (par1GuiButton.field_146127_k == this.scrollDownButtonID) {
+                if (par1GuiButton.id == this.scrollDownButtonID) {
                     this.amountScrolled += (float) (this.slotHeight * 2 / 3);
                     this.initialClickY = -2.0F;
                     this.bindAmountScrolled();

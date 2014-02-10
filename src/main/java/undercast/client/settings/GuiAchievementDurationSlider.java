@@ -33,9 +33,9 @@ public class GuiAchievementDurationSlider extends GuiButton {
      * Fired when the mouse button is dragged. Equivalent of MouseListener.mouseDragged(MouseEvent e).
      */
     protected void func_146119_b(Minecraft par1Minecraft, int par2, int par3) {
-        if (this.field_146125_m) {
+        if (true /* this.drawButton doesn't exist anymore TODO: find new drawButton*/) {
             if (this.dragging) {
-                this.sliderValue = (float) (par2 - (this.field_146128_h + 4)) / (float) (this.field_146120_f - 8);
+                this.sliderValue = (float) (par2 - (this.yPosition + 4)) / (float) (this.yPosition - 8);
 
                 if (this.sliderValue < 0.0F) {
                     this.sliderValue = 0.0F;
@@ -45,21 +45,21 @@ public class GuiAchievementDurationSlider extends GuiButton {
                     this.sliderValue = 1.0F;
                 }
                 float displayedNumber = (((float) (int) (sliderValue * 40)) / 10F);
-                this.field_146126_j = "Duration: " + ((displayedNumber > 0.0F) ? displayedNumber + "sec" : "OFF");
+                this.displayString = "Duration: " + ((displayedNumber > 0.0F) ? displayedNumber + "sec" : "OFF");
             }
 
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.drawTexturedModalRect(this.field_146128_h + (int) (this.sliderValue * (float) (this.field_146120_f - 8)), this.field_146129_i, 0, 66, 4, 20);
-            this.drawTexturedModalRect(this.field_146128_h + (int) (this.sliderValue * (float) (this.field_146120_f - 8)) + 4, this.field_146129_i, 196, 66, 4, 20);
+            this.drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (float) (this.yPosition - 8)), this.yPosition, 0, 66, 4, 20);
+            this.drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (float) (this.yPosition - 8)) + 4, this.yPosition, 196, 66, 4, 20);
         }
     }
 
     /**
      * Returns true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent e).
      */
-    public boolean func_146116_c(Minecraft par1Minecraft, int par2, int par3) {
-        if (super.func_146116_c(par1Minecraft, par2, par3)) {
-            this.sliderValue = (float) (par2 - (this.field_146128_h + 4)) / (float) (this.field_146120_f - 8);
+    public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
+        if (super.mousePressed(par1Minecraft, par2, par3)) {
+            this.sliderValue = (float) (par2 - (this.xPosition + 4)) / (float) (this.width - 8);
 
             if (this.sliderValue < 0.0F) {
                 this.sliderValue = 0.0F;
@@ -69,10 +69,10 @@ public class GuiAchievementDurationSlider extends GuiButton {
                 this.sliderValue = 1.0F;
             }
             if (sliderValue > 0.0F && sliderValue < 1.0F) {
-                this.field_146126_j = "Duration: " + ((float) (int) (sliderValue * 40)) / 10F + "sec";
+                this.displayString = "Duration: " + ((float) (int) (sliderValue * 40)) / 10F + "sec";
             } else {
                 sliderValue = 0.0F;
-                this.field_146126_j = "Duration: OFF";
+                this.displayString = "Duration: OFF";
             }
             this.dragging = true;
             return true;

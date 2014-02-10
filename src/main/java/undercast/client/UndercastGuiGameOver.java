@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
@@ -21,24 +22,24 @@ public class UndercastGuiGameOver extends GuiScreen {
 
 	public void initGui()
 	{
-		this.field_146292_n.clear();
-		if (this.field_146297_k.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
-			if (this.field_146297_k.isIntegratedServerRunning())
-				this.field_146292_n.add(new GuiButton(1, this.field_146294_l / 2 - 100, this.field_146295_m / 4 + 96, I18n.getStringParams("deathScreen.deleteWorld", new Object[0])));
+		this.buttonList.clear();
+		if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
+			if (this.mc.isIntegratedServerRunning())
+				this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.deleteWorld")));
 			else
-				this.field_146292_n.add(new GuiButton(1, this.field_146294_l / 2 - 100, this.field_146295_m / 4 + 96, I18n.getStringParams("deathScreen.leaveServer", new Object[0])));
+				this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.leaveServer")));
 		}
 		else {
-			this.field_146292_n.add(new GuiButton(0, this.field_146294_l / 2 - 100, this.field_146295_m / 4 + 72, I18n.getStringParams("deathScreen.respawn", new Object[0])));
-			this.field_146292_n.add(new GuiButton(1, this.field_146294_l / 2 - 100, this.field_146295_m / 4 + 96, I18n.getStringParams("deathScreen.titleScreen", new Object[0])));
+			this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, StatCollector.translateToLocal("deathScreen.respawn")));
+			this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.titleScreen")));
 
-			if (this.field_146297_k.getSession() == null) {
-				((GuiButton)this.field_146292_n.get(1)).field_146124_l = false;
+			if (this.mc.getSession() == null) {
+				((GuiButton)this.buttonList.get(1)).enabled = false;
 			}
 		}
-		List<GuiButton> buttons = this.field_146292_n;
+		List<GuiButton> buttons = this.buttonList;
 		for (GuiButton localGuiButton : buttons)
-			localGuiButton.field_146124_l = false;
+			localGuiButton.enabled = false;
 	}
 
 	protected void keyTyped(char paramChar, int paramInt)
@@ -47,14 +48,14 @@ public class UndercastGuiGameOver extends GuiScreen {
 
 	protected void func_146284_a(GuiButton p_146284_1_)
 	{
-		switch (p_146284_1_.field_146127_k) {
+		switch (p_146284_1_.id) {
 		case 0:
-			this.field_146297_k.thePlayer.respawnPlayer();
-			this.field_146297_k.func_147108_a(null);
+			this.mc.thePlayer.respawnPlayer();
+			this.mc.currentScreen = null;
 			break;
 		case 1:
-			GuiYesNo localGuiYesNo = new GuiYesNo(this, I18n.getStringParams("deathScreen.quit.confirm", new Object[0]), "", I18n.getStringParams("deathScreen.titleScreen", new Object[0]), I18n.getStringParams("deathScreen.respawn", new Object[0]), 0);
-			this.field_146297_k.func_147108_a(localGuiYesNo);
+			GuiYesNo localGuiYesNo = new GuiYesNo(this,StatCollector.translateToLocal("deathScreen.quit.confirm"), "", StatCollector.translateToLocal("deathScreen.titleScreen"), StatCollector.translateToLocal("deathScreen.respawn"), 0);
+			//this.mc.func_147108_a(localGuiYesNo); //TODO: find new name
 			localGuiYesNo.func_146350_a(20);
 		}
 	}
@@ -62,34 +63,34 @@ public class UndercastGuiGameOver extends GuiScreen {
 	public void confirmClicked(boolean paramBoolean, int paramInt)
 	{
 		if (paramBoolean) {
-			this.field_146297_k.theWorld.sendQuittingDisconnectingPacket();
-			this.field_146297_k.loadWorld(null);
-			this.field_146297_k.func_147108_a(new GuiMainMenu());
+			this.mc.theWorld.sendQuittingDisconnectingPacket();
+			this.mc.loadWorld(null);
+			this.mc.displayGuiScreen(new GuiMainMenu());
 		} else {
-			this.field_146297_k.thePlayer.respawnPlayer();
-			this.field_146297_k.func_147108_a(null);
+			this.mc.thePlayer.respawnPlayer();
+			this.mc.displayGuiScreen(null);
 		}
 	}
 
 	public void drawScreen(int paramInt1, int paramInt2, float paramFloat)
 	{
-		drawGradientRect(0, 0, this.field_146294_l, this.field_146295_m, 1615855616, -1602211792);
+		drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
 
 		GL11.glPushMatrix();
 		GL11.glScalef(2.0F, 2.0F, 2.0F);
 
-		boolean bool = this.field_146297_k.theWorld.getWorldInfo().isHardcoreModeEnabled();
+		boolean bool = this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled();
 
-		String str = bool ? I18n.getStringParams("deathScreen.title.hardcore", new Object[0]) : I18n.getStringParams("deathScreen.title", new Object[0]);
-		drawCenteredString(this.field_146289_q, str, this.field_146294_l / 2 / 2, 30, 16777215);
+		String str = bool ? StatCollector.translateToLocal("deathScreen.title.hardcore") : StatCollector.translateToLocal("deathScreen.title");
+		drawCenteredString(this.fontRendererObj, str, this.width / 2 / 2, 30, 16777215);
 
 		GL11.glPopMatrix();
 		if (bool) {
-			drawCenteredString(this.field_146289_q, I18n.getStringParams("deathScreen.hardcoreInfo", new Object[0]), this.field_146294_l / 2, 144, 16777215);
+			drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("deathScreen.hardcoreInfo"), this.width / 2, 144, 16777215);
 		}
-		drawCenteredString(this.field_146289_q, I18n.getStringParams("deathScreen.score", new Object[0]) + ": " + EnumChatFormatting.YELLOW + this.field_146297_k.thePlayer.getScore(), this.field_146294_l / 2, 100, 16777215);
+		drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("deathScreen.score") + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
 		if (UndercastData.isOC) {
-			this.drawCenteredString(this.field_146289_q, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int) UndercastData.getPreviousKillstreak(), this.field_146294_l / 2, 110, 16777215);
+			this.drawCenteredString(this.fontRendererObj, "Killstreak" + ": " + EnumChatFormatting.YELLOW + (int) UndercastData.getPreviousKillstreak(), this.width / 2, 110, 16777215);
 		}
 		super.drawScreen(paramInt1, paramInt2, paramFloat);
 	}
@@ -102,17 +103,17 @@ public class UndercastGuiGameOver extends GuiScreen {
 	public void updateScreen()
 	{
 		super.updateScreen();
-		List<GuiButton> buttons = this.field_146292_n;
+		List<GuiButton> buttons = this.buttonList;
 		this.field_146347_a += 1;
 		if (this.field_146347_a == 20)
 			for (GuiButton localGuiButton : buttons)
-				localGuiButton.field_146124_l = true;
+				localGuiButton.enabled = true;
 	}
 
 	public void setTitleScreenButtonState(boolean activated) {
-		GuiButton titleButton = (GuiButton) this.field_146292_n.get(1);
-		titleButton.field_146124_l = activated;
-		this.field_146292_n.set(1, titleButton);
+		GuiButton titleButton = (GuiButton) this.buttonList.get(1);
+		titleButton.enabled = activated;
+		this.buttonList.set(1, titleButton);
 		updateScreen();
 	}
 }
