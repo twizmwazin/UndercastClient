@@ -9,6 +9,8 @@ import java.awt.*;
 import java.net.URI;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -109,13 +111,13 @@ public class UndercastServerGUI extends GuiScreen {
             if (inGame && UndercastData.isPlayingOvercastNetwork() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
-                ServerData joinServer;
                 if (UndercastData.locationIndex == 1) {
-                    joinServer = new ServerData("eu.oc.tc", "eu.oc.tc:25565");
+                    UndercastData.isEU = true;
+                    FMLClientHandler.instance().connectToServerAtStartup("eu.oc.tc", 25565);
                 } else {
-                    joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                    UndercastData.isEU = false;
+                    FMLClientHandler.instance().connectToServerAtStartup("us.oc.tc", 25565);
                 }
-                Minecraft.getMinecraft().displayGuiScreen(new GuiConnecting(this, Minecraft.getMinecraft(), joinServer));
             }
         }
         if (guibutton.id == 6) {
@@ -199,13 +201,13 @@ public class UndercastServerGUI extends GuiScreen {
             } else {
                 UndercastData.redirect = true;
                 UndercastData.directionServer = UndercastData.sortedServerInformation[selected].name;
-                ServerData joinServer;
                 if (UndercastData.locationIndex == 1) {
-                    joinServer = new ServerData("eu.oc.tc", "eu.oc.tc:25565");
+                    UndercastData.isEU = true;
+                    FMLClientHandler.instance().connectToServerAtStartup("eu.oc.tc", 25565);
                 } else {
-                    joinServer = new ServerData("us.oc.tc", "us.oc.tc:25565");
+                    UndercastData.isEU = false;
+                    FMLClientHandler.instance().connectToServerAtStartup("us.oc.tc", 25565);
                 }
-                Minecraft.getMinecraft().displayGuiScreen(new GuiConnecting(this, Minecraft.getMinecraft(), joinServer));
             }
         }
     }
