@@ -5,17 +5,13 @@ import jexxus.common.Connection;
 import undercast.client.UndercastData;
 import undercast.client.UndercastModClass;
 import undercast.client.achievements.UndercastAchievement;
+import undercast.network.common.ImageReader;
 import undercast.network.common.NetManager;
-import undercast.network.common.packet.Packet01IsValidAuthentication;
-import undercast.network.common.packet.Packet03OnlinePlayersAnswer;
-import undercast.network.common.packet.Packet07KickPacket;
-import undercast.network.common.packet.Packet10GetServers;
-import undercast.network.common.packet.Packet11SendServers;
-import undercast.network.common.packet.Packet13SendVIPs;
-import undercast.network.common.packet.Packet14StillAlive;
-import undercast.network.common.packet.Packet15ShowNotif;
-import undercast.network.common.packet.Packet17IsPlayerConnected;
-import undercast.network.common.packet.VIPUser;
+import undercast.network.common.packet.*;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 
 public class NetClientManager extends NetManager {
     
@@ -67,6 +63,9 @@ public class NetClientManager extends NetManager {
             if(u != null){
             	UndercastModClass.getInstance().vips.add(u);
             }
+            if(u.getCape() >= VIPUser.capes.size()){
+                NetClientManager.sendPacket(new Packet18AskForCape((byte)u.getCape()));
+            }
         }		
 	}
 
@@ -78,4 +77,13 @@ public class NetClientManager extends NetManager {
 	public void handleIsPlayerConnected(Packet17IsPlayerConnected packet) {
 		NetClientManager.sendPacket(new Packet14StillAlive());
 	}
+
+    public void handleCapeImage(Packet19CapeImage packet) {
+        try{
+            BufferedImage bi = ImageIO.read(new ByteArrayInputStream(packet.image.image));
+            ImageReader.images.add(new ImageReader.LoadedImage(bi, packet.image.id));
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

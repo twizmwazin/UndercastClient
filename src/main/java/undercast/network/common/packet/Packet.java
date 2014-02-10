@@ -36,6 +36,8 @@ public abstract class Packet {
             	return new Packet15ShowNotif();
             case 17:
             	return new Packet17IsPlayerConnected();
+            case 19:
+                return new Packet19CapeImage();
         }
         return null;
     }
@@ -58,5 +60,13 @@ public abstract class Packet {
     
     public int getSize(double d){
         return 8;
+    }
+
+    public int getSize(byte b){
+        return 1;
+    }
+
+    public int getSize(byte[] array){
+        return 4 + array.length; //first 4 bits are for the length of the array
     }
 }

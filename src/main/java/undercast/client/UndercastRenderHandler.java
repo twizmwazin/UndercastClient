@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
+import undercast.network.common.ImageReader;
 import undercast.network.common.packet.VIPUser;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -37,6 +38,12 @@ public class UndercastRenderHandler {
 	ArrayList<Integer> idDev = new ArrayList<Integer>(11);
 	int idDon = TextureUtil.glGenTextures();
 	int idDonPlus = TextureUtil.glGenTextures();
+    public static ArrayList<Integer> unusedTextures = new ArrayList<Integer>();
+    static{
+        for(int i = 0; i < 20; i++){
+            unusedTextures.add(TextureUtil.glGenTextures());
+        }
+    }
 
 	public UndercastRenderHandler(){
 		MinecraftForge.EVENT_BUS.register(this);
@@ -81,18 +88,21 @@ public class UndercastRenderHandler {
 		}
         if (player != null && !evt.entityPlayer.isInvisible() && !evt.entityPlayer.getHideCape())
         {
-        	if(player.getCape() == VIPUser.DEVELOPER_CAPE){
+        	if(player.getCape() == VIPUser.capes.get("DEVELOPER_CAPE")){
         		int c = 0;
         		if((c = UndercastModClass.getInstance().capeCounter) > 10){
         			il.setupTexture(developer.get(0), idDev.get(0), 1600, 800); //BufferedImage, unique id, width,height
         		} else{
         			il.setupTexture(developer.get(c), idDev.get(c), 1600, 800);
         		}
-        	}else if(player.getCape() == VIPUser.DONATOR_CAPE){
+        	}else if(player.getCape() == VIPUser.capes.get("DONATOR_CAPE")){
         		il.setupTexture(donator, idDon, 1600, 800); //BufferedImage, unique id, width,height
-        	} else if (player.getCape() == VIPUser.DONATOR_PLUS_CAPE){
+        	} else if (player.getCape() == VIPUser.capes.get("DONATOR_PLUS_CAPE")){
         		il.setupTexture(donatorPlus, idDonPlus, 1600, 800); //BufferedImage, unique id, width,height
-        	}
+        	} else if(ImageReader.contains(player.getCape())){
+                ImageReader.LoadedImage li = ImageReader.get(player.getCape());
+                il.setupTexture(li.image, li.textureId, li.width, li.height);
+            }
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
             double d3 = evt.entityPlayer.field_71091_bM + (evt.entityPlayer.field_71094_bP - evt.entityPlayer.field_71091_bM) * (double)evt.partialRenderTick - (evt.entityPlayer.prevPosX + (evt.entityPlayer.posX - evt.entityPlayer.prevPosX) * (double)evt.partialRenderTick);

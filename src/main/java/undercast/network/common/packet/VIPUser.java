@@ -1,8 +1,15 @@
 package undercast.network.common.packet;
 
+import java.util.HashMap;
+
 public class VIPUser {
 
-    public static int DEVELOPER_CAPE = 0, DONATOR_CAPE = 1, DONATOR_PLUS_CAPE = 2;
+    public static HashMap<String, Integer> capes = new HashMap<String, Integer>();
+    static{
+        capes.put("DEVELOPER_CAPE",0);
+        capes.put("DONATOR_CAPE",1);
+        capes.put("DONATOR_PLUS_CAPE",2);
+    }
     private String username;
     private boolean hasCape;
     private int cape;

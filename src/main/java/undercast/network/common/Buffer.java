@@ -15,14 +15,14 @@ public class Buffer {
 
     public Buffer(byte[] data) {
         /*
-         * This create a new buffer from an array of byte It also excludes the first element (packet id)
+         * This create a new buffer from an array of byte
+         * It also excludes the first element (packet id)
          */
         buffer = new byte[data.length - 1];
         for (int i = 0; i < data.length - 1; i++) {
             buffer[i] = data[i + 1];
         }
     }
-
     private byte[] buffer;
     private int readPos = 0, writePos = 0, sizePos = 0;
 
@@ -73,9 +73,19 @@ public class Buffer {
     public String getString() {
         StringBuilder bldr = new StringBuilder();
         char c;
-        while ((c = (char) buffer[readPos++]) != 0)
+        while ((c = (char) buffer[readPos++]) != 0) {
             bldr.append(c);
+        }
         return bldr.toString();
+    }
+
+    public byte[] getByteArray(){
+        int length = this.getInt();
+        byte[] returnArray = new byte[length];
+        for(int i = 0; i < length; i++){
+            returnArray[i] = (byte)get();
+        }
+        return returnArray;
     }
 
     public int readPosition() {
@@ -174,11 +184,21 @@ public class Buffer {
         return this;
     }
 
-    public Buffer putString(String s) { // cannot use character 0
+    public Buffer putString(String s) {
+        // cannot use character 0
         ensure(s.length() + 1);
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 0; i < s.length(); i++) {
             buffer[writePos++] = (byte) s.charAt(i);
+        }
         buffer[writePos++] = 0;
+        return this;
+    }
+
+    public Buffer putByteArray(byte[] array){
+        putInt(array.length);
+        for(int i = 0; i < array.length; i++){
+            buffer[writePos++] = array[i];
+        }
         return this;
     }
 
@@ -215,5 +235,4 @@ public class Buffer {
     public void skip(int n) {
         readPos += n;
     }
-
 }
