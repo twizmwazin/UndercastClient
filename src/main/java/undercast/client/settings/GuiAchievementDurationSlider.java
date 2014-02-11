@@ -37,7 +37,7 @@ public class GuiAchievementDurationSlider extends GuiButton {
     protected void mouseDragged(Minecraft par1Minecraft, int par2, int par3) {
         if (this.visible) {
             if (this.dragging) {
-                this.sliderValue = (float) (par2 - (this.yPosition + 4)) / (float) (this.yPosition - 8);
+                this.sliderValue = (float) (par2 - (this.xPosition + 4)) / (float) (this.width - 8);
 
                 if (this.sliderValue < 0.0F) {
                     this.sliderValue = 0.0F;
@@ -47,12 +47,12 @@ public class GuiAchievementDurationSlider extends GuiButton {
                     this.sliderValue = 1.0F;
                 }
                 float displayedNumber = (((float) (int) (sliderValue * 40)) / 10F);
-                this.displayString = "Duration: " + ((displayedNumber > 0.0F) ? displayedNumber + "sec" : "OFF");
+                this.displayString = "Duration: " + ((displayedNumber > 0.0F) ? displayedNumber + " sec" : " OFF");
             }
 
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (float) (this.yPosition - 8)), this.yPosition, 0, 66, 4, 20);
-            this.drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (float) (this.yPosition - 8)) + 4, this.yPosition, 196, 66, 4, 20);
+            this.drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (float) (this.width - 8)), this.yPosition, 0, 66, 4, 20);
+            this.drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (float) (this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
         }
     }
 
@@ -72,7 +72,7 @@ public class GuiAchievementDurationSlider extends GuiButton {
                 this.sliderValue = 1.0F;
             }
             if (sliderValue > 0.0F && sliderValue < 1.0F) {
-                this.displayString = "Duration: " + ((float) (int) (sliderValue * 40)) / 10F + "sec";
+                this.displayString = "Duration: " + ((float) (int) (sliderValue * 40)) / 10F + " sec";
             } else {
                 sliderValue = 0.0F;
                 this.displayString = "Duration: OFF";
