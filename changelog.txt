@@ -1,7 +1,13 @@
 The changelog exists since version 1.4.0
 
+1.7.6
+ - fixed kill detection with highlighted death messages (again)
+ - fixed connecting to Overcast with the server list
+ - updated to the recommended Forge version (10.12.0.1024)
+ - changed some networking related stuff
+
 1.7.5
- - fix kill detection with highlighted deathmessages
+ - fix kill detection with highlighted death messages
  - fix player stats parsing
 
 1.7.4
