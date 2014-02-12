@@ -49,7 +49,19 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
     protected void actionPerformed(GuiButton par1GuiButton) {
         super.actionPerformed(par1GuiButton);
         if (par1GuiButton.id == 7) {
-        	this.mc.displayGuiScreen(new UndercastServerGUI(false));
+                // Display Loading... on the button to notify the user that we're doing work
+                par1GuiButton.displayString = "\u00A7cLoading...";
+                par1GuiButton.enabled = false;
+                this.buttonList.set(7, par1GuiButton);
+                // redirect to the displayGui (using a Thread because otherwise it doesn't display the new button text)
+                Thread t = new Thread() {
+                    @Override
+                    public void run() {
+                        Minecraft.getMinecraft().displayGuiScreen(new UndercastServerGUI(false));
+                        super.run();
+                    }
+                };
+                t.start();
         }
     }
 }
