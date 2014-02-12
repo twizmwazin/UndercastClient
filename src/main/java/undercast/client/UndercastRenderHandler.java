@@ -1,43 +1,38 @@
 package undercast.client;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import org.lwjgl.opengl.GL11;
-
-import undercast.network.common.ImageReader;
-import undercast.network.common.packet.VIPUser;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResource;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Pre;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.opengl.GL11;
+import undercast.network.common.ImageReader;
+import undercast.network.common.packet.VIPUser;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 public class UndercastRenderHandler {
 	ImageLoader il = new ImageLoader(Minecraft.getMinecraft().getResourceManager());
 	ArrayList<BufferedImage> developer = new ArrayList<BufferedImage>(11);
 	BufferedImage donator = null;
 	BufferedImage donatorPlus = null;
-	ArrayList<Integer> idDev = new ArrayList<Integer>(11);
+    BufferedImage vip = null;
+    BufferedImage user = null;
+    ArrayList<Integer> idDev = new ArrayList<Integer>(11);
 	int idDon = TextureUtil.glGenTextures();
 	int idDonPlus = TextureUtil.glGenTextures();
+    int idVip = TextureUtil.glGenTextures();
+    int idUser = TextureUtil.glGenTextures();
     public static ArrayList<Integer> unusedTextures = new ArrayList<Integer>();
     static{
         for(int i = 0; i < 20; i++){
@@ -56,11 +51,24 @@ public class UndercastRenderHandler {
             InputStream inputstream = iresource.getInputStream();
             donator = ImageIO.read(inputstream);
             il.setupTexture(donator, idDon, 1600, 800);
+
     		rl = new ResourceLocation("undercast","donator+.png");
             iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
             inputstream = iresource.getInputStream();
             donatorPlus = ImageIO.read(inputstream);
             il.setupTexture(donatorPlus, idDonPlus, 1600, 800);
+
+            rl = new ResourceLocation("undercast","vip.png");
+            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
+            inputstream = iresource.getInputStream();
+            vip = ImageIO.read(inputstream);
+            il.setupTexture(vip, idVip, 1600, 800);
+
+            rl = new ResourceLocation("undercast","user.png");
+            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
+            inputstream = iresource.getInputStream();
+            user = ImageIO.read(inputstream);
+            il.setupTexture(user, idUser, 1600, 800);
 			for(int i = 0; i<11;i++){
 				rl = new ResourceLocation("undercast","developer" + i + ".png");
 	            iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
@@ -99,7 +107,11 @@ public class UndercastRenderHandler {
         		il.setupTexture(donator, idDon, 1600, 800); //BufferedImage, unique id, width,height
         	} else if (player.getCape() == VIPUser.capes.get("DONATOR_PLUS_CAPE")){
         		il.setupTexture(donatorPlus, idDonPlus, 1600, 800); //BufferedImage, unique id, width,height
-        	} else if(ImageReader.contains(player.getCape())){
+        	} else if (player.getCape() == VIPUser.capes.get("VIP_CAPE")){
+                il.setupTexture(vip, idVip, 1600, 800);
+            } else if (player.getCape() == VIPUser.capes.get("USER_CAPE")){
+                il.setupTexture(user, idUser, 1600, 800);
+            } else if(ImageReader.contains(player.getCape())){
                 ImageReader.LoadedImage li = ImageReader.get(player.getCape());
                 il.setupTexture(li.image, li.textureId, li.width, li.height);
             }

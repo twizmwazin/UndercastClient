@@ -9,6 +9,8 @@ public class VIPUser {
         capes.put("DEVELOPER_CAPE",0);
         capes.put("DONATOR_CAPE",1);
         capes.put("DONATOR_PLUS_CAPE",2);
+        capes.put("VIP_CAPE",3);
+        capes.put("USER_CAPE",4);
     }
     private String username;
     private boolean hasCape;
