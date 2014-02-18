@@ -217,7 +217,7 @@ public class UndercastModClass {
                 }
                 // Kill Streak display
                 if (UndercastConfig.showStreak && !UndercastData.isLobby) {
-                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "K: " : "Current Killstreak: ") + "\u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
+                    mc.fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "KS: " : "Current Killstreak: ") + "\u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
                     height += 8;
                 }
                 // Score display
