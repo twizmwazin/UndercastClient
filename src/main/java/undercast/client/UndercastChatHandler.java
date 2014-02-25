@@ -183,14 +183,9 @@ public class UndercastChatHandler {
 
         } // when a map is done. Display all the stats
         else if (!message.startsWith("<") && message.toLowerCase().contains("cycling to") && message.contains("1 second")) {
-            UndercastData.resetKills();
-            UndercastData.resetKilled();
-            UndercastData.resetDeaths();
-            UndercastData.resetKillstreak();
-            UndercastData.resetLargestKillstreak();
-            UndercastData.resetScore();
-            UndercastData.setTeam("Observers");
-            UndercastData.teamColor = 'b'; // b for aqua
+            // Just in case some servers are still using the old software
+            // (I'm thinking of the tm servers which had the bug with forge way longer than the public ones)
+            UndercastCustomMethods.resetAllStats();
             return false;
         } // redirection and lobby detection
         else if (message.contains("Welcome to the Overcast Network")) {

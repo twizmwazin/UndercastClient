@@ -499,4 +499,15 @@ public class UndercastCustomMethods {
             UndercastData.team = "Unknown";
         }
     }
+    
+    public static void resetAllStats() {
+        UndercastData.resetKills();
+        UndercastData.resetKilled();
+        UndercastData.resetDeaths();
+        UndercastData.resetKillstreak();
+        UndercastData.resetLargestKillstreak();
+        UndercastData.resetScore();
+        UndercastData.setTeam("Observers");
+        UndercastData.teamColor = 'b'; // b for aqua
+    }
 }

@@ -122,6 +122,7 @@ public class UndercastModClass {
             if (mc.currentScreen instanceof UndercastGuiGameOver && UndercastConfig.toggleTitleScreenButton) {
                 ((UndercastGuiGameOver) mc.currentScreen).setTitleScreenButtonState(false);
             }
+            BossBarListener.update();
         } else {
             // do all rendering tasks
             guiAchievement.updateScreen();
