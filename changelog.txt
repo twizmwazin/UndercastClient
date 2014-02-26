@@ -1,5 +1,9 @@
 The changelog exists since version 1.4.0
 
+1.7.7
+ - fixed bug in cycle detection (stats are now reset properly again)
+ - changed Killstreak to KS instead of K in less obstructive mode. (thanks TheKomputerKing)
+
 1.7.6
  - fixed kill detection with highlighted death messages (again)
  - fixed connecting to Overcast with the server list
