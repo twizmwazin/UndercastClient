@@ -3,6 +3,8 @@ The changelog exists since version 1.4.0
 1.7.7
  - fixed bug in cycle detection (stats are now reset properly again)
  - changed Killstreak to KS instead of K in less obstructive mode. (thanks TheKomputerKing)
+ - fix map display on US servers
+ - the EU/US button is now updated when you join a server using the multiplayer menu
 
 1.7.6
  - fixed kill detection with highlighted death messages (again)
