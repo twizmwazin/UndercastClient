@@ -30,7 +30,6 @@ public class BossBarListener {
     private static void onContentChanged(String newContent, String newContentWithFormattingCode) {
         // When the server cycles, reset the stats.
         if(newContent.toLowerCase().contains("cycling to") && newContent.contains(" 1 second")) {
-            System.out.println("TEST");
             UndercastCustomMethods.resetAllStats();
         }
     }

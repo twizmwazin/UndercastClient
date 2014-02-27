@@ -60,9 +60,16 @@ public class UndercastConnectionHandler {
 			UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
 			if (ip.contains("eu.oc.tc")) {
 				UndercastData.isEU = true;
+				// overwrite the location index loaded from config with the index we are actually joining
+				// this is only necessary if the player don't join using our server list
+				UndercastData.locationIndex = 1;
 			} else {
 				UndercastData.isEU = false;
+				// overwrite the location index loaded from config with the index we are actually joining
+				// this is only necessary if the player don't join using our server list
+				UndercastData.locationIndex = 0;
 			}
+			UndercastConfig.setIntProperty("lastUsedLocation", UndercastData.locationIndex);
 			// we don't want the lobby join to trigger the leave detection
 			// it will be triggered when we get the welcome message
 			UndercastData.lobbyLeaveDetectionStarted = false;

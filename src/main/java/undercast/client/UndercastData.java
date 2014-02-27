@@ -311,7 +311,6 @@ public class UndercastData {
             }
             // set the map
             for (int c = 0; c < serverInformation.length; c++) {
-                System.out.println(serverInformation[c].name.replace(" ", ""));
                 if (serverInformation[c].getServerName() == null) {
                     serverCount = c - 1;
                     break;
