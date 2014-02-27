@@ -21,6 +21,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.StringTranslate;
 import undercast.client.*;
+import undercast.client.achievements.UndercastAchievement;
+import undercast.network.common.NetManager;
+import undercast.network.common.packet.Packet00Authentication;
 
 public class UndercastServerGUI extends GuiScreen {
 
@@ -46,6 +49,9 @@ public class UndercastServerGUI extends GuiScreen {
      */
     @Override
     public void initGui() {
+        if (!UndercastModClass.getInstance().connection.isConnected()) {
+            connect();
+        }
         this.buttonList.add(new GuiButton(0, width / 2 - 100, height - 52, 98, 20, StatCollector.translateToLocal("selectServer.select")));
         this.buttonList.add(guibuttonrefresh = new GuiButton(1, width / 2 + 2, height - 52, 98, 20, StatCollector.translateToLocal("selectServer.refresh")));
         this.buttonList.add(new GuiButton(2, width / 2 + 2, height - 28, 98, 20, StatCollector.translateToLocal("gui.cancel")));
@@ -82,6 +88,10 @@ public class UndercastServerGUI extends GuiScreen {
                     refreshButton.enabled = true;
                 }
             }, 3000);
+            if (!UndercastModClass.getInstance().connection.isConnected()) {
+                connect();
+            }
+
         }
         // cancel/back to main menu
         if (guibutton.id == 2) {
@@ -159,7 +169,11 @@ public class UndercastServerGUI extends GuiScreen {
         if (!inGame) {
             drawDefaultBackground();
         }
-        this.guiServerInfoSlot.drawScreen(i, j, f);
+        try{
+            this.guiServerInfoSlot.drawScreen(i, j, f);
+        } catch(Exception e){
+
+        }
         this.drawCenteredString(this.fontRendererObj, "Overcast Network Server List", width / 2, 20, 16777215);
         Minecraft mc = Minecraft.getMinecraft();
         if (!UndercastData.isUpdate()) {
@@ -167,6 +181,24 @@ public class UndercastServerGUI extends GuiScreen {
             mc.fontRenderer.drawString("Latest version: " + UndercastData.latestVersion, (width - 4) - mc.fontRenderer.getStringWidth("Latest version: " + UndercastData.latestVersion), 12, 255);
         }
         super.drawScreen(i, j, f);
+    }
+
+    public void connect(){
+        Runnable r1 = new Runnable() {
+            @Override
+            public void run() {
+                String username = Minecraft.getMinecraft().getSession().getUsername();
+                try {
+                    UndercastModClass.getInstance().connection.connect();
+                    NetManager.sendPacket(new Packet00Authentication(username, "UndercastClient-v" + UndercastModClass.MOD_VERSION));
+                } catch (Exception e) {
+                    UndercastAchievement a = new UndercastAchievement(username, "\u00A74Server", "\u00A74down!");
+                    UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(a);
+                }
+
+            }
+        };
+        new Thread(r1).start();
     }
 
     /**
