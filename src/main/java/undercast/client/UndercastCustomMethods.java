@@ -15,6 +15,8 @@ import net.minecraft.client.Minecraft;
 import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.server.UndercastServer;
+import undercast.network.common.NetManager;
+import undercast.network.common.packet.Packet10GetServers;
 
 public class UndercastCustomMethods {
 
@@ -509,5 +511,16 @@ public class UndercastCustomMethods {
         UndercastData.resetScore();
         UndercastData.setTeam("Observers");
         UndercastData.teamColor = 'b'; // b for aqua
+        new Thread(){
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                NetManager.sendPacket(new Packet10GetServers());
+            }
+        }.start();
     }
 }

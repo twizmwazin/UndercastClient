@@ -305,25 +305,20 @@ public class UndercastData {
 
             }
 
+            ServerLocation loc = ServerLocation.US;
+            if(UndercastData.isEU){
+                loc = ServerLocation.EU;
+            }
             // set the map
             for (int c = 0; c < serverInformation.length; c++) {
+                System.out.println(serverInformation[c].name.replace(" ", ""));
                 if (serverInformation[c].getServerName() == null) {
                     serverCount = c - 1;
                     break;
                 }
-                if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server)) { // that
-                    // space
-                    // in
-                    // the
-                    // server
-                    // name
-                    // has
-                    // taken
-                    // me
-                    // a
-                    // lot
-                    // of
-                    // time
+
+                //That space in the server name took me a lot of time
+                if (serverInformation[c].name.replace(" ", "").equalsIgnoreCase(server) && serverInformation[c].location.equals(loc)) {
                     map = serverInformation[c].currentMap;
                     nextMap = serverInformation[c].nextMap;
                     currentServerType = serverInformation[c].type;
