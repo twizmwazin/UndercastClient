@@ -53,6 +53,7 @@ public class UndercastConfig {
     public static boolean displaySpecialObjectives;
     public static boolean lessObstructive;
     public static int lastUsedFilter;
+    public static int longestBowKill;
     public static boolean achievementAnimation;
     public static double achievementAnimationDuration;
     public static boolean displaySkinBorder;
@@ -104,6 +105,7 @@ public class UndercastConfig {
         parseMatchState = config.get("UndercastMod", "parseMatchState", true).getBoolean(true);
         showScore = config.get("UndercastMod", "showScore", true).getBoolean(true);
         lastUsedFilter = config.get("UndercastMod", "lastUsedFilter", 0, "0: All\n1: PA\n2: Blitz\n3: GS").getInt();
+        longestBowKill = config.get("UndercastMod", "longestBowKill", "20").getInt();
         realtimeStats = config.get("UndercastMod", "realtimeStats", true).getBoolean(true);
         showTotalKills = config.get("UndercastMod", "showTotalKills", true).getBoolean(true);
         displaySpecialKillMessages = config.get("UndercastMod", "displaySpecialKillMessages", true).getBoolean(true);

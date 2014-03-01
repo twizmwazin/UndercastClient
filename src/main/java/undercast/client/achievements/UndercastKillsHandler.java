@@ -86,6 +86,20 @@ public class UndercastKillsHandler {
                     }
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
+                // check if the kill was the longest bow kill
+                if(message.contains("blocks)")) {
+                    String length = message.substring(message.indexOf("(") + 1, message.indexOf(" blocks)"));
+                    try {
+                        int l = Integer.valueOf(length);
+                        if(l > UndercastConfig.longestBowKill) {
+                            UndercastConfig.longestBowKill = l;
+                            UndercastConfig.setIntProperty("longestBowKill", l);
+                            sendMessage("[UndercastMod] \u00A7lNEW LONGEST BOW KILL: \u00A7c" + l + " blocks");
+                            SpecialKillLogger.logLongestBowKill(length, killer, UndercastData.server, UndercastData.map);
+                        }
+                    } catch(Exception e) {
+                    }
+                }
                 boolean revengeAchievementShown = false;
                 if (UndercastConfig.showRevengeAchievement) {
                     // add the victim to the revenge list in case it takes revenge
