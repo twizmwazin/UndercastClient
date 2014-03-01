@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import jexxus.client.ClientConnection;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.entity.player.EntityPlayer;
@@ -132,6 +133,7 @@ public class UndercastModClass {
             int height = UndercastConfig.x;
             int width = UndercastConfig.y;
             boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.isPressed();
+            FontRenderer fontRenderer = mc.fontRenderer;
             // if the gui is enabled display
             // if chat is open and config says yes then show gui
             if (isInGameGuiEmpty && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
@@ -144,7 +146,6 @@ public class UndercastModClass {
             // if on OvercastNetwork server then display this info.
             // if chat is open and config says yes then show gui
             if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
-                FontRenderer fontRenderer = mc.fontRenderer;
                 // Server display
                 if (UndercastConfig.showServer) {
                     fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215);
