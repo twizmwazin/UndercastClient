@@ -49,7 +49,6 @@ public class UndercastModClass {
     public float defaultLevel = mc.gameSettings.gammaSetting;
     @Mod.Instance(UndercastModClass.MOD_NAME)
     private static UndercastModClass instance;
-    public PlayTimeCounterThread playTimeCounter;
     public static String[] lastChatLines = new String[100];
     public UndercastChatHandler chatHandler;
     public UndercastKillsHandler achievementChatHandler;

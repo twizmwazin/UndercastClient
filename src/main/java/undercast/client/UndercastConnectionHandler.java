@@ -57,7 +57,7 @@ public class UndercastConnectionHandler {
             UndercastData.setTeam("Observers");
             UndercastData.teamColor = 'b'; // b for aqua
             UndercastData.setServer("Lobby");
-            UndercastModClass.getInstance().playTimeCounter = new PlayTimeCounterThread();
+            UndercastData.playTimeStartMillis = 20000;
             if (ip.contains("eu.oc.tc")) {
                 UndercastData.isEU = true;
                 // overwrite the location index loaded from config with the index we are actually joining

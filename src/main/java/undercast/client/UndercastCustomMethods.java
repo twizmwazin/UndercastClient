@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -126,17 +126,22 @@ public class UndercastCustomMethods {
      * This is used in order to only display hours if you play at least for one
      */
     public static String getPlayingTimeString() {
-        if (UndercastData.playTimeHours == 0) {
-            if (UndercastData.playTimeMin < 10) {
-                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:0" + UndercastData.playTimeMin;
+    	long currentMilis = System.currentTimeMillis();
+    	long difference = currentMilis - UndercastData.playTimeStartMillis;
+    	int hours = (int) TimeUnit.HOURS.convert(difference, TimeUnit.MILLISECONDS);
+    	int minutes = hours == 0 ? (int) TimeUnit.MINUTES.convert(difference, TimeUnit.MILLISECONDS) : (int) TimeUnit.MINUTES.convert(difference, TimeUnit.MILLISECONDS) - 60 * hours;
+    	
+        if (hours == 0) {
+            if (minutes < 10) {
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:0" + minutes;
             } else {
-                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:" + UndercastData.playTimeMin;
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:" + minutes;
             }
         } else {
-            if (UndercastData.playTimeMin < 10) {
-                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E" + UndercastData.playTimeHours + ":0" + UndercastData.playTimeMin;
+            if (hours < 10) {
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E" + hours + ":0" + minutes;
             } else {
-                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E" + UndercastData.playTimeHours + ":" + UndercastData.playTimeMin;
+                return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E" + hours + ":" + minutes;
             }
         }
     }

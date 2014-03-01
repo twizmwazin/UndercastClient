@@ -58,8 +58,11 @@ public class UndercastData {
     public static String directionServer;
     public static boolean guiShowing;
     public static boolean isGameOver = false;
-    public static int playTimeHours;
-    public static int playTimeMin;
+    
+    public static long playTimeStartMillis;
+    //public static int playTimeHours;
+    //public static int playTimeMin;
+    
     public static int sortIndex;
     public static int filterIndex;
     public static int locationIndex;
