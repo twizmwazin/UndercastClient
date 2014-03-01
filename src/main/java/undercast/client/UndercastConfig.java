@@ -197,7 +197,7 @@ public class UndercastConfig {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public static void setStringProperty(String name, String string) {
         File tempFile = new File(configFile.getParent() + "/temporaryFile.temp.cfg");
         try {

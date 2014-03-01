@@ -41,7 +41,7 @@ public class AchievementSettings extends GuiScreen {
 
     @Override
     public void drawScreen(int par1, int par2, float par3) {
-    	drawDefaultBackground();
+        drawDefaultBackground();
         // Draw label at top of screen
         drawCenteredString(fontRendererObj, "Achievement settings", width / 2, height / 2 - 80 - 20, 0x4444bb);
 
@@ -52,7 +52,7 @@ public class AchievementSettings extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
-        	mc.displayGuiScreen(null);
+            mc.displayGuiScreen(null);
         }
     }
 

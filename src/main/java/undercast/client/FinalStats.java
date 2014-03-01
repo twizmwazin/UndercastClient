@@ -69,9 +69,9 @@ public class FinalStats {
         }
         sendMessage("\u00A76\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-\u00A7m-");
     }
-    
+
     private void sendMessage(String text) {
-    	IChatComponent thingy = new ChatComponentText(text);
+        IChatComponent thingy = new ChatComponentText(text);
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
         player.addChatMessage(thingy);
     }

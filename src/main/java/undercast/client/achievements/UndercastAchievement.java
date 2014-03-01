@@ -100,7 +100,7 @@ public class UndercastAchievement implements TweenCallback {
         ResourceLocation resourcelocation = AbstractClientPlayer.getLocationSkin(this.killerName);
         AbstractClientPlayer.getDownloadImageSkin(resourcelocation, this.killerName);
         GL11.glPushMatrix(); // New GL11 matrix to not affect other
-                             // part of the gui
+        // part of the gui
         TextureManager texturemanager = Minecraft.getMinecraft().renderEngine;
         if (texturemanager != null) {
             texturemanager.bindTexture(resourcelocation);

@@ -6,7 +6,7 @@ import undercast.network.common.Buffer;
 public class Packet07KickPacket extends ServerPacket {
     public String kickMessageL1;
     public String kickMessageL2;
-    
+
     public Packet07KickPacket(){}
     public Packet07KickPacket(String message, String message2){
         kickMessageL1 = message;

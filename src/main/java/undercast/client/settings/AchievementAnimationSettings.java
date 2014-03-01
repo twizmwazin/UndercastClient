@@ -13,7 +13,7 @@ public class AchievementAnimationSettings extends GuiScreen {
         parentGui = parent;
     }
 
-	@Override
+    @Override
     public void initGui() {
         this.buttonList.add(new GuiButton(0, width / 2 - 77, height - 35, 150, 20, "Back"));
         int x1 = width / 2 - 150;
@@ -27,7 +27,7 @@ public class AchievementAnimationSettings extends GuiScreen {
 
     @Override
     public void drawScreen(int par1, int par2, float par3) {
-    	drawDefaultBackground();
+        drawDefaultBackground();
         // Draw label at top of screen
         drawCenteredString(fontRendererObj, "Achievement settings", width / 2, height / 2 - 80 - 20, 0x4444bb);
 
@@ -45,12 +45,12 @@ public class AchievementAnimationSettings extends GuiScreen {
             return;
         }
         switch (button.id) {
-            case 1:
-                Minecraft.getMinecraft().displayGuiScreen(parentGui);
-                break;
-            default:
-                Minecraft.getMinecraft().displayGuiScreen(parentGui);
-                break;
+        case 1:
+            Minecraft.getMinecraft().displayGuiScreen(parentGui);
+            break;
+        default:
+            Minecraft.getMinecraft().displayGuiScreen(parentGui);
+            break;
         }
     }
 

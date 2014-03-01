@@ -9,7 +9,7 @@ public class Packet03OnlinePlayersAnswer extends ServerPacket {
 
     public ArrayList<String> onlinePlayers;
     public Packet03OnlinePlayersAnswer(){}
-    
+
     public Packet03OnlinePlayersAnswer(ArrayList<String> players){
         onlinePlayers = players;
     }

@@ -6,12 +6,12 @@ public class Packet02GetOnlinePlayers extends ClientPacket {
 
     @Override
     public void readPacketData(Buffer bufferIn) {
-        
+
     }
 
     @Override
     public void writePacketData(Buffer bufferOut) {
-        
+
     }
 
     @Override

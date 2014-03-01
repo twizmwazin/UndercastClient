@@ -16,7 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class ChatListener {
 
     public ChatListener() {
-    	MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
@@ -33,19 +33,19 @@ public class ChatListener {
             if (!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ") && UndercastData.isOC) {
                 addLineToChatLines(message);
                 if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson))) {
-                	event.message = null;
+                    event.message = null;
                 }
                 UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson);
                 if (UndercastConfig.parseMatchState) {
                     if (ServersCommandParser.handleChatMessage(message, messageWithOutJson) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
-                    	event.message = null;
+                        event.message = null;
                     }
                 }
                 if (RaindropManager.manager != null && RaindropManager.manager.handleChatMessage(message)) {
-                    	event.message = null;
+                    event.message = null;
                 }
                 if (FMLClientHandler.instance().isGUIOpen(UndercastServerGUI.class) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
-                	event.message = null;
+                    event.message = null;
                 }
             }
             if (message.startsWith("<") && UndercastData.isPlayingOvercastNetwork()) {
@@ -53,7 +53,7 @@ public class ChatListener {
             }
         } catch (Exception e) {
         }
-    	event.setCanceled(UndercastChatHandler.handleTip(messageWithOutJson));
+        event.setCanceled(UndercastChatHandler.handleTip(messageWithOutJson));
     }
 
     public void addLineToChatLines(String line) {

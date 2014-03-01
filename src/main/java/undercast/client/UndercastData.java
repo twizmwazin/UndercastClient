@@ -282,7 +282,7 @@ public class UndercastData {
     }
 
     public static void updateMap() {
-    	try {
+        try {
             serverCount = mapData.length;
             for (int c = 0; c < mapData.length; c++) {
                 serverInformation[c].name = mapData[c][0];
@@ -468,9 +468,9 @@ public class UndercastData {
         matchTimeMin = 0;
         matchTimeSec = 0;
     }
-    
+
     private static void sendMessage(String text) {
-    	IChatComponent thingy = new ChatComponentText(text);
+        IChatComponent thingy = new ChatComponentText(text);
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
         player.addChatMessage(thingy);
     }

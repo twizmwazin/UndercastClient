@@ -38,14 +38,14 @@ public class ImageLoader extends TextureManager {
             for (int var7 = 0; var7 < var5.length; ++var7)
             {
                 int var8 = var5[var7] >> 24 & 255;
-                int var9 = var5[var7] >> 16 & 255;
-                int var10 = var5[var7] >> 8 & 255;
-                int var11 = var5[var7] & 255;
+            int var9 = var5[var7] >> 16 & 255;
+            int var10 = var5[var7] >> 8 & 255;
+            int var11 = var5[var7] & 255;
 
-                var6[var7 * 4 + 0] = (byte) var9;
-                var6[var7 * 4 + 1] = (byte) var10;
-                var6[var7 * 4 + 2] = (byte) var11;
-                var6[var7 * 4 + 3] = (byte) var8;
+            var6[var7 * 4 + 0] = (byte) var9;
+            var6[var7 * 4 + 1] = (byte) var10;
+            var6[var7 * 4 + 2] = (byte) var11;
+            var6[var7 * 4 + 3] = (byte) var8;
             }
 
             ByteBuffer bf = GLAllocation.createDirectByteBuffer(4096*4096);

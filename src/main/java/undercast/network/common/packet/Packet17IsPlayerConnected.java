@@ -4,7 +4,7 @@ import undercast.network.client.NetClientManager;
 import undercast.network.common.Buffer;
 
 public class Packet17IsPlayerConnected extends ServerPacket {
-    
+
     @Override
     public void handlePacket(NetClientManager networkManager) {
         networkManager.handleIsPlayerConnected(this);
@@ -27,5 +27,5 @@ public class Packet17IsPlayerConnected extends ServerPacket {
     public byte getId() {
         return 17;
     }
-    
+
 }

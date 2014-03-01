@@ -21,5 +21,5 @@ public class Packet14StillAlive extends ClientPacket {
     public byte getId() {
         return 14;
     }
-    
+
 }

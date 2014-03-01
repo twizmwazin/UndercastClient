@@ -49,27 +49,27 @@ public class VIPUser {
         }
     }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public boolean hasCape() {
-		return hasCape;
-	}
+    public boolean hasCape() {
+        return hasCape;
+    }
 
-	public void setHasCape(boolean hasCape) {
-		this.hasCape = hasCape;
-	}
+    public void setHasCape(boolean hasCape) {
+        this.hasCape = hasCape;
+    }
 
-	public int getCape() {
-		return cape;
-	}
+    public int getCape() {
+        return cape;
+    }
 
-	public void setCape(int cape) {
-		this.cape = cape;
-	}
+    public void setCape(int cape) {
+        this.cape = cape;
+    }
 }

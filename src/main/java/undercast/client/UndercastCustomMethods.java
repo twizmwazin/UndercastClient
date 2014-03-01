@@ -7,11 +7,13 @@ package undercast.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import undercast.client.UndercastData.ServerLocation;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.server.UndercastServer;
@@ -424,6 +426,34 @@ public class UndercastCustomMethods {
         return str;
     }
 
+    private static Boolean a1 = false;
+    private static Boolean a = false;
+    private static int c = 0;
+    public static void init() {
+        Calendar cal = Calendar.getInstance();
+
+        if(cal.get(2) == 3 && cal.get(5) == 1) {
+            a1 = true;
+        }
+    }
+    public static FontRenderer getFontRenderer() {
+        if(!a1) {
+            return mc.fontRenderer;
+        } else {
+            c++;
+            if(c == 30) {
+                c = 0;
+                a = !a;
+            }
+            if(a) {
+                return mc.standardGalacticFontRenderer;
+            } else {
+                return mc.fontRenderer;
+            }
+        }
+    }
+
+
     public static boolean isSpecialObjective(int obj) {
         // detect special objectives like 50, 100, 150, 200, 250...
         int i1 = obj / 100;
@@ -455,8 +485,8 @@ public class UndercastCustomMethods {
         }
         return false;
     }
-    
-    
+
+
     public static ServerLocation getLocationForString(String s) {
         if(s == null) {
             return ServerLocation.US;
@@ -467,7 +497,7 @@ public class UndercastCustomMethods {
             return ServerLocation.US;
         }
     }
-    
+
     public static void parseTeamJoinMessage(String message, String messageWithFormattingCodes) {
         if(!message.contains("You joined the")) {
             return;
@@ -485,23 +515,23 @@ public class UndercastCustomMethods {
 
             // Get team color char
             char colorChar = messageWithFormattingCodes.charAt(messageWithFormattingCodes.indexOf(firstword) - 1);
-            
+
             UndercastData.team = teamName;
-            
+
             // Check if the colorChar has a vaild value
             if("0123456789abcdef".indexOf(colorChar) == -1) {
                 UndercastData.teamColor = '0';
             } else {
                 UndercastData.teamColor = colorChar;
             }
-            
+
         } catch (Exception e) {
             // this should never happen
             UndercastData.teamColor = '0';
             UndercastData.team = "Unknown";
         }
     }
-    
+
     public static void resetAllStats() {
         UndercastData.resetKills();
         UndercastData.resetKilled();

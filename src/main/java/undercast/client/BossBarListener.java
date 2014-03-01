@@ -8,8 +8,8 @@ import net.minecraft.util.StringUtils;
  */
 public class BossBarListener {
     private static String lastContent = "";
-    
-    
+
+
     /***
      * This method is called every update game tick.
      */
@@ -23,7 +23,7 @@ public class BossBarListener {
             lastContent = healthBarContent;
         }
     }
-    
+
     /**
      * This is only called when the content changed.
      */

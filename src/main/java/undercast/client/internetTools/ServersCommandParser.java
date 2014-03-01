@@ -44,20 +44,20 @@ public class ServersCommandParser {
                     // a = green
                     // f = white
                     switch (matchStatusColor) {
-                        case 'a':
-                            state = MatchState.Starting;
-                            break;
-                        case 'c':
-                            state = MatchState.Finished;
-                            break;
-                        case 'e':
-                            state = MatchState.Started;
-                            break;
-                        case 'f':
-                            state = MatchState.Waiting;
-                            break;
-                        default:
-                            state = MatchState.Unknown;
+                    case 'a':
+                        state = MatchState.Starting;
+                        break;
+                    case 'c':
+                        state = MatchState.Finished;
+                        break;
+                    case 'e':
+                        state = MatchState.Started;
+                        break;
+                    case 'f':
+                        state = MatchState.Waiting;
+                        break;
+                    default:
+                        state = MatchState.Unknown;
                     }
 
                     // insert the data
@@ -85,9 +85,9 @@ public class ServersCommandParser {
                 int page = UndercastData.isEU ? UndercastData.parsedPagesEU[c] : UndercastData.parsedPagesUS[c];
                 if (page < 0) {
                     page = pages + (page + 1); // + 1 is for not removing
-                                               // anything from pages (keep in
-                                               // mind that I'm adding a
-                                               // negative value)
+                    // anything from pages (keep in
+                    // mind that I'm adding a
+                    // negative value)
                 }
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/servers " + page);
             }

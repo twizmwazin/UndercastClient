@@ -150,7 +150,7 @@ public class UndercastChatHandler {
 
         } // when you join a match
         else if (message.contains("You joined the")) {
-        	System.out.println("detected join team");
+            System.out.println("detected join team");
             UndercastData.reloadStats();
             // this sets the teams
             UndercastCustomMethods.parseTeamJoinMessage(message, normalMessage);
@@ -189,10 +189,10 @@ public class UndercastChatHandler {
             return false;
         } // redirection and lobby detection
         else if (message.contains("Welcome to the Overcast Network")) {
-        	System.out.println("Joined lobby");
-        	if(RaindropManager.manager == null) {
-        		new RaindropManager();
-        	}
+            System.out.println("Joined lobby");
+            if(RaindropManager.manager == null) {
+                new RaindropManager();
+            }
             if (UndercastData.redirect) {
                 UndercastData.redirect = false;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.directionServer);
@@ -201,20 +201,20 @@ public class UndercastChatHandler {
                 UndercastCustomMethods.handleServerSwap();
                 UndercastData.lobbyLeaveDetectionStarted = true;
             }
-            
+
         } // server detection
         else if (message.contains("Teleporting you to ")) {
-        	System.out.print("switched server");
+            System.out.print("switched server");
             // usage of the /hub or /lobby command
             if (message.contains("the lobby...")) {
-            	System.out.println(" to lobby");
+                System.out.println(" to lobby");
                 UndercastData.setServer("Lobby");
 
                 UndercastCustomMethods.handleServerSwap();
             } else {
                 String server = message.replace("Teleporting you to ", "");
                 if (!server.equals(UndercastData.server)) {
-                	System.out.println(" to "+server);
+                    System.out.println(" to "+server);
                     UndercastData.setServer(server);
                     if (!message.toLowerCase().contains("lobby")) {
                         UndercastData.welcomeMessageExpected = true;
@@ -223,10 +223,10 @@ public class UndercastChatHandler {
                 }
             }
         } else if (message.contains("Connecting to ")) {
-        	System.out.print("connecting to: ");
+            System.out.print("connecting to: ");
             String server = message.replace("Connecting to ", "");
             if (!server.equals(UndercastData.server)) {
-            	System.out.println(server);
+                System.out.println(server);
                 UndercastData.setServer(server);
                 if (!message.toLowerCase().contains("lobby")) {
                     UndercastData.welcomeMessageExpected = true;
@@ -250,7 +250,7 @@ public class UndercastChatHandler {
                 UndercastData.welcomeMessageExpected = false;
             }
             UndercastData.lobbyLeaveDetectionStarted = false;
-            
+
             if (!UndercastData.isLobby && (UndercastConfig.matchOnServerJoin || UndercastConfig.showMatchTime)) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
             }

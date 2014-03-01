@@ -33,5 +33,5 @@ public class Packet11SendServers extends ServerPacket {
     public byte getId() {
         return 11;
     }
-    
+
 }

@@ -20,12 +20,12 @@ import cpw.mods.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
  */
 public class UndercastTickHandler {
     public UndercastTickHandler() {
-    	FMLCommonHandler.instance().bus().register(this);
+        FMLCommonHandler.instance().bus().register(this);
     }
 
     @SubscribeEvent
-	public void onClientTick(ClientTickEvent event) {
-    	Minecraft mc = Minecraft.getMinecraft();
+    public void onClientTick(ClientTickEvent event) {
+        Minecraft mc = Minecraft.getMinecraft();
         GuiScreen current = mc.currentScreen;
         if (current instanceof GuiMainMenu && !(current instanceof UndercastGuiMainMenu)) {
             mc.displayGuiScreen(new UndercastGuiMainMenu());
@@ -43,15 +43,15 @@ public class UndercastTickHandler {
             } catch (UnableToAccessFieldException e) {
             }
         }
-        
+
         boolean hasWorld = mc.theWorld != null;
         if (hasWorld) {
             UndercastModClass.getInstance().onGameTick(mc,false);
         }
     }
-    
+
     @SubscribeEvent
-	public void onRenderTick(RenderTickEvent event) {
-    	if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(Minecraft.getMinecraft(),true);	
+    public void onRenderTick(RenderTickEvent event) {
+        if (event.phase == Phase.END) UndercastModClass.getInstance().onGameTick(Minecraft.getMinecraft(),true);	
     }
 }

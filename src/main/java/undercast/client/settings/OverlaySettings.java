@@ -58,7 +58,7 @@ public class OverlaySettings extends GuiScreen {
 
     @Override
     public void drawScreen(int par1, int par2, float par3) {
-    	drawDefaultBackground();
+        drawDefaultBackground();
         // Draw label at top of screen
         drawCenteredString(fontRendererObj, "Overlay settings", width / 2, height / 2 - 80 - 20, 0x4444bb);
 

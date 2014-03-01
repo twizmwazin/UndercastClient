@@ -84,7 +84,7 @@ public class UndercastServerGUI extends GuiScreen {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                	GuiButton refreshButton = (GuiButton) buttonList.get(1);
+                    GuiButton refreshButton = (GuiButton) buttonList.get(1);
                     refreshButton.enabled = true;
                 }
             }, 3000);
@@ -255,9 +255,9 @@ public class UndercastServerGUI extends GuiScreen {
 
     public void closeGui() {
         if (!inGame) {
-        	Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
         } else {
-        	Minecraft.getMinecraft().setIngameFocus();
+            Minecraft.getMinecraft().setIngameFocus();
         }
     }
 

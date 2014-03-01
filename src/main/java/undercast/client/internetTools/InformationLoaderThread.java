@@ -32,23 +32,9 @@ public class InformationLoaderThread extends Thread {
     public void run() {
         InputStream in = null;
         try {
-            HttpURLConnection connection = (HttpURLConnection) urlToLoad.openConnection(); // I
-                                                                                           // changed
-                                                                                           // this,
-                                                                                           // because
-                                                                                           // it
-                                                                                           // gives
-                                                                                           // error
-                                                                                           // 403
-                                                                                           // (forbidden)
-                                                                                           // if
-                                                                                           // you
-                                                                                           // send
-                                                                                           // no
-                                                                                           // user
-                                                                                           // agent.
-            connection.addRequestProperty("User-Agent", "Mozilla/4.76"); // See
-                                                                         // ^^
+            // I changed this, because it gives error 403 (forbidden) if you send no user agent.
+            HttpURLConnection connection = (HttpURLConnection) urlToLoad.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.76"); // See ^^
             in = connection.getInputStream();
             // Try to get the charset
             Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");

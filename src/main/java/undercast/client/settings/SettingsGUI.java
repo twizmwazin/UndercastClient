@@ -31,7 +31,7 @@ public class SettingsGUI extends GuiScreen {
 
     @Override
     public void drawScreen(int par1, int par2, float par3) {
-    	drawDefaultBackground();
+        drawDefaultBackground();
 
         drawCenteredString(fontRendererObj, "Undercast mod settings", width / 2, height / 2 - 80, 0x4444bb);
 
@@ -44,7 +44,7 @@ public class SettingsGUI extends GuiScreen {
     @Override
     protected void keyTyped(char par1, int par2) {
         if (par2 == Keyboard.KEY_ESCAPE) {
-        	mc.displayGuiScreen(null);
+            mc.displayGuiScreen(null);
         }
     }
 
@@ -60,7 +60,7 @@ public class SettingsGUI extends GuiScreen {
             Minecraft.getMinecraft().displayGuiScreen(new AchievementSettings(this));
         }
         if (guibutton.id == 4) {
-        	mc.displayGuiScreen(parentScreen);
+            mc.displayGuiScreen(parentScreen);
         }
     }
 

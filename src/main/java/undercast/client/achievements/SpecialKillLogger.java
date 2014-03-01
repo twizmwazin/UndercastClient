@@ -46,7 +46,7 @@ public class SpecialKillLogger {
             }
         }
     }
-    
+
     public static void logLongestBowKill(String length, String name, String server, String map) {
         DateFormat df = DateFormat.getDateTimeInstance();
         String currentDate = df.format(new Date());

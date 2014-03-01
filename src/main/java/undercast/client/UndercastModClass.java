@@ -56,7 +56,7 @@ public class UndercastModClass {
     public UndercastGuiAchievement guiAchievement;
     public ClientConnection connection;
     public List<VIPUser> vips;
-	public static int capeCounter = 0;
+    public static int capeCounter = 0;
 
     /**
      * preInitialisation method automatically called by Forge with
@@ -66,7 +66,7 @@ public class UndercastModClass {
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	((org.apache.logging.log4j.core.Logger) FMLRelaunchLog.log.getLogger()).setLevel(Level.OFF);
+        ((org.apache.logging.log4j.core.Logger) FMLRelaunchLog.log.getLogger()).setLevel(Level.OFF);
         // With the renaming, the config file name changed.
         // Just renaming the old one as the new one if necessary.
         File newConfig = event.getSuggestedConfigurationFile();
@@ -85,6 +85,7 @@ public class UndercastModClass {
         new UndercastData();
         new Undercast_UpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
+        UndercastCustomMethods.init();
         //15652: v1.7.3 port
         //25565: v1.7.4 port (ip will change)
         connection = new ClientConnection(new UndercastClientConnectionListener(), "107.170.28.58", 25565, true);
@@ -133,7 +134,7 @@ public class UndercastModClass {
             int height = UndercastConfig.x;
             int width = UndercastConfig.y;
             boolean isInGameGuiEmpty = !this.mc.gameSettings.showDebugInfo && !this.mc.gameSettings.keyBindPlayerList.isPressed();
-            FontRenderer fontRenderer = mc.fontRenderer;
+            FontRenderer fontRenderer = UndercastCustomMethods.getFontRenderer();
             // if the gui is enabled display
             // if chat is open and config says yes then show gui
             if (isInGameGuiEmpty && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
@@ -260,16 +261,16 @@ public class UndercastModClass {
 
     static class CapeTimeTask extends TimerTask{
 
-		@Override
-		public void run() {
-			UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 200;
-			//between 0 and 199
-		}
-    	
+        @Override
+        public void run() {
+            UndercastModClass.capeCounter = (UndercastModClass.capeCounter + 1) % 200;
+            //between 0 and 199
+        }
+
     }
 
     public static void startCapeTimer(){
-    	Timer timer = new Timer();
+        Timer timer = new Timer();
         timer.schedule(new CapeTimeTask(), 0, 40);
     }
     /**
