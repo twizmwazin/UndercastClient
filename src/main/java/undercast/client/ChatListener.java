@@ -35,9 +35,7 @@ public class ChatListener {
                 if (!(UCInstance.chatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson))) {
                 	event.message = null;
                 }
-                if (UndercastConfig.showAchievements) {
-                    UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson);
-                }
+                UCInstance.achievementChatHandler.handleMessage(message, UndercastModClass.getInstance().username, player, messageWithOutJson);
                 if (UndercastConfig.parseMatchState) {
                     if (ServersCommandParser.handleChatMessage(message, messageWithOutJson) && (message.contains("Online: ") || message.contains("-------- Overcast Network Servers"))) {
                     	event.message = null;

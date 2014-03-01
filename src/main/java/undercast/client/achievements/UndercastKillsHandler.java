@@ -23,7 +23,7 @@ public class UndercastKillsHandler {
 
     public void handleMessage(String message, String username, EntityPlayer player, String unstripedMessage) {
         // When you die from someone
-        if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
+        if (UndercastConfig.showAchievements && UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team") && (message.contains(" by ") || message.contains(" took ") || message.contains("fury of"))) {
             if (!message.contains("fury of") && !message.contains("took ")) {
                 killer = message.substring(message.indexOf("by") + 3, message.lastIndexOf("'s") == -1 ? message.length() : message.lastIndexOf("'s"));
                 // cut the distance message
@@ -61,10 +61,10 @@ public class UndercastKillsHandler {
                 }
             }
         } // if you kill a person
-        else if (UndercastConfig.showKillAchievements && !message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
+        else if (!message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
-            if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username)) {
+            if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username) && UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
                 this.printTeamKillAchievement();
             } else {
                 // check if there is a special kill coming
@@ -100,6 +100,10 @@ public class UndercastKillsHandler {
                     } catch(Exception e) {
                     }
                 }
+                
+                if(!(UndercastConfig.showAchievements && UndercastConfig.showKillAchievements)) {
+                    return;
+                }
                 boolean revengeAchievementShown = false;
                 if (UndercastConfig.showRevengeAchievement) {
                     // add the victim to the revenge list in case it takes revenge
@@ -126,12 +130,12 @@ public class UndercastKillsHandler {
                 UndercastData.isNextKillFirstBlood = false;
             }
         } // when you die, but nobody killed you.
-        else if (UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team")) {
+        else if (UndercastConfig.showAchievements && UndercastConfig.showDeathAchievements && message.startsWith(username) && !message.toLowerCase().contains(" the game") && !message.toLowerCase().endsWith(" team")) {
             killer = username;
             killOrKilled = false;
             this.printAchievement();
         } else if (message.toLowerCase().contains("game over")) {
-            if (UndercastData.isLastKillFromPlayer && UndercastConfig.showLastKillAchievement) {
+            if (UndercastData.isLastKillFromPlayer && UndercastConfig.showLastKillAchievement && UndercastConfig.showAchievements) {
                 printLastKillAchievement();
             }
         } // When someone die
