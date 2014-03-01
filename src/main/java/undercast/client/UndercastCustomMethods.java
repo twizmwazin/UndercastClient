@@ -511,6 +511,7 @@ public class UndercastCustomMethods {
         UndercastData.resetScore();
         UndercastData.setTeam("Observers");
         UndercastData.teamColor = 'b'; // b for aqua
+        RaindropManager.manager.resetCounter();
         new Thread(){
             @Override
             public void run(){

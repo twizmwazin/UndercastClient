@@ -74,7 +74,7 @@ public class RaindropManager {
         }
         return false;
     }
-    public void onMatchEnd() {
+    public void resetCounter() {
         TotalRaindrops += RaindropsThisMatch;
         RaindropsThisMatch = 0;
     }

@@ -56,7 +56,7 @@ public class FinalStats {
         sendMessage("Deaths: \u00A74" + this.deaths + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A74" + this.totalDeaths) : ""));
         sendMessage("K/D: \u00A73" + this.kd + totalKD);
         sendMessage("Raindrops: \u00A7b" + RaindropManager.RaindropsThisMatch + "\u00A7f Total: \u00A7b" + (RaindropManager.TotalRaindrops + RaindropManager.RaindropsThisMatch));
-        RaindropManager.manager.onMatchEnd();
+        RaindropManager.manager.resetCounter();
         sendMessage("Kill Streak: \u00A7e" + this.killstreak);
         if (this.woolDifference > 0) {
             sendMessage("Wools: \u00A75+" + this.woolDifference + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A75" + this.totalWools) : ""));
