@@ -190,9 +190,6 @@ public class UndercastChatHandler {
         } // redirection and lobby detection
         else if (message.contains("Welcome to the Overcast Network")) {
             System.out.println("Joined lobby");
-            if(RaindropManager.manager == null) {
-                new RaindropManager();
-            }
             if (UndercastData.redirect) {
                 UndercastData.redirect = false;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.directionServer);

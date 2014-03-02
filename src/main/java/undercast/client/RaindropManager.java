@@ -63,7 +63,7 @@ public class RaindropManager {
     }
 
     /**
-     * @return ture if the message has to be canceled
+     * @return true if the message has to be canceled
      */
     public boolean handleChatMessage(String message) {
         if(message.startsWith("+") && message.contains("Raindrops")) {
