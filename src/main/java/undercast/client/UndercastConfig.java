@@ -36,6 +36,7 @@ public class UndercastConfig {
     public static int y;
     public static boolean toggleTitleScreenButton;
     public static boolean filterTips;
+    public static boolean filterRating;
     public static boolean fullBright;
     public static boolean matchOnServerJoin;
     public static boolean enableButtonTooltips;
@@ -91,6 +92,7 @@ public class UndercastConfig {
         y = config.get("UndercastMod", "Y", 2).getInt();
         toggleTitleScreenButton = config.get("UndercastMod", "toggleTitleScreenButton", true).getBoolean(true);
         filterTips = config.get("UndercastMod", "filterTips", true).getBoolean(true);
+        filterRating = config.get("UndercastMod", "filterRating", true).getBoolean(true);
         fullBright = config.get("UndercastMod", "fullBright", true).getBoolean(true);
         matchOnServerJoin = config.get("UndercastMod", "matchOnServerJoin", false).getBoolean(false);
         showPlayingTime = config.get("UndercastMod", "showPlayingTime", true).getBoolean(true);

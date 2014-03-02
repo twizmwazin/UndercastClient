@@ -298,9 +298,19 @@ public class UndercastChatHandler {
 
     }
 
-    public static boolean handleTip(String message) {
+    public static boolean handleTipAndRating(String message) {
         try {
-            if (message.contains("Tip") && UndercastConfig.filterTips) {
+            if (message.contains("[Tip]") && UndercastConfig.filterTips) {
+                return true;
+            } else if (message.contains("leaving a rating") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("command /rate") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("worst") && message.contains("best") && message.contains("1") && message.contains("5") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("opportunity to have your voice heard") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("improve Overcast Network") && UndercastConfig.filterRating) {
                 return true;
             }
             return false;

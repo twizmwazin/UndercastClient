@@ -53,7 +53,7 @@ public class ChatListener {
             }
         } catch (Exception e) {
         }
-        event.setCanceled(UndercastChatHandler.handleTip(messageWithOutJson));
+        event.setCanceled(UndercastChatHandler.handleTipAndRating(message));
     }
 
     public void addLineToChatLines(String line) {

@@ -10,9 +10,9 @@ import undercast.client.UndercastConfig;
 public class GeneralSettings extends GuiScreen {
 
     // Toggle settings
-    public String[] toggleSettings = new String[] { "showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState", "realtimeStats" };
-    public String[] enabledStrings = new String[] { "Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "/match on server join", "Button tooltips shown", "Match state shown", "Realtime stats" };
-    public String[] disabledStrings = new String[] { "Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden", "Game stats" }; // X
+    public String[] toggleSettings = new String[] { "showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "filterRating", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState", "realtimeStats" };
+    public String[] enabledStrings = new String[] { "Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "Rating filtered", "/match on server join", "Button tooltips shown", "Match state shown", "Realtime stats" };
+    public String[] disabledStrings = new String[] { "Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "Rating not filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden", "Game stats" }; // X
     // Offset
     // vars
     public GuiButton xPlusButton;
