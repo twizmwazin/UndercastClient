@@ -31,6 +31,13 @@ public class UndercastCustomMethods {
         d = d / 100;
         return d;
     }
+    
+    private static double roundT(double d) {
+        d = d * 1000;
+        d = Math.round(d);
+        d = d / 1000;
+        return d;
+    }
 
     /**
      * Calculates the KD Ratio
@@ -50,6 +57,18 @@ public class UndercastCustomMethods {
             return round(k / d);
         }
     }
+    
+    public static double getTotalKD() {
+        double k = UndercastData.getKills() + UndercastData.stats.kills;
+        double d = UndercastData.getDeaths() + UndercastData.stats.deaths;
+        if (k == d && k == 0) {
+            return 0D;
+        } else if (k > 0 && d == 0) {
+            return k;
+        } else {
+            return roundT(k / d);
+        }
+    }
 
     /**
      * Calculates the KK Ratio
@@ -67,6 +86,18 @@ public class UndercastCustomMethods {
             return 1D;
         } else {
             return round(k / kk);
+        }
+    }
+    
+    public static double getTotalKK() {
+        double k = UndercastData.getKills() + UndercastData.stats.kills;
+        double kk = UndercastData.getKilled() + UndercastData.stats.getKilled();
+        if (k == kk && k == 0) {
+            return 0D;
+        } else if (k > 0 && kk == 0) {
+            return k;
+        } else {
+            return roundT(k / kk);
         }
     }
 
@@ -398,12 +429,7 @@ public class UndercastCustomMethods {
         } else {
             str = (UndercastConfig.lessObstructive ? "KD: " : "K/D: ") + "\u00A73" + getKD();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
-                str += "\u00A7f/\u00A73" + ((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.deaths + UndercastData.stats.deaths));
-                try {
-                    // cut the kd, throws an exception if it's shorter
-                    str = str.substring(0, str.lastIndexOf('.') + 4);
-                } catch (Exception e) {
-                }
+                str += "\u00A7f/\u00A73" + getTotalKD();
             }
         }
         return str;
@@ -420,12 +446,7 @@ public class UndercastCustomMethods {
         } else {
             str = (UndercastConfig.lessObstructive ? "KK: " : "K/K: ") + "\u00A73" + getKK();
             if (UndercastConfig.showTotalKills && UndercastConfig.realtimeStats) {
-                str += "\u00A7f/\u00A73" + (((UndercastData.kills + UndercastData.stats.kills) / (UndercastData.killed + UndercastData.stats.getKilled())));
-                try {
-                    // cut the kd, throws an exception if it's shorter
-                    str = str.substring(0, str.lastIndexOf('.') + 4);
-                } catch (Exception e) {
-                }
+                str += "\u00A7f/\u00A73" + getTotalKK();
             }
         }
         return str;
