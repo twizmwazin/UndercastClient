@@ -67,7 +67,7 @@ public class UndercastGuiMainMenu extends GuiMainMenu {
 			};
 			t.start();
 		} else if (par1GuiButton.id == 8) {
-			openWebpage("http://beastnode.com");
+			openWebpage("https://www.beastnode.com/portal/aff.php?aff=3151");
 		}
 	}
 
