@@ -87,7 +87,7 @@ public class UndercastModClass {
         UndercastCustomMethods.init();
         //15652: v1.7.3 port
         //25565: v1.7.4 port (ip will change)
-        connection = new ClientConnection(new UndercastClientConnectionListener(), "107.170.28.58", 25565, true);
+        connection = new ClientConnection(new UndercastClientConnectionListener(), "69.175.123.173", 25565, true);
         startCapeTimer();
     }
 
