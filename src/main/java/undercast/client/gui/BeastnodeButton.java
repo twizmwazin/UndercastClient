@@ -22,12 +22,17 @@ public class BeastnodeButton extends GuiButton {
 
 	public void drawButton(Minecraft par1Minecraft, int par2, int par3) {
 		if (this.visible) {
-			boolean hovered = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
+            int realWidth = width / 4;
+            int realHeight = height / 4;
+            int realX = (int)(2F * (this.xPosition + realWidth));
+            int realY = (int)(2F * (this.yPosition + realHeight));
+            boolean hovered = par2 >= this.xPosition + realWidth && par3 >= this.yPosition + realHeight && par2 < this.xPosition + 3 * realWidth && par3 < this.yPosition + 3 * realHeight;
+			GL11.glPushMatrix();
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glScalef(0.5F,0.5F,1.0F);
 			par1Minecraft.getTextureManager().bindTexture(BACKGROUND);
-			this.drawTexturedModalRect(this.xPosition, this.yPosition, hovered ? 0 : 45, 0, 45, 51);
-
+			this.drawTexturedModalRect(realX, realY, hovered ? 0 : 45, 0, 45, 51);
+            GL11.glPopMatrix();
 			if (hovered)
 				drawHoveringText(Arrays.asList(EnumChatFormatting.AQUA+"Undercast Client "+EnumChatFormatting.WHITE+"is sponsored by "+EnumChatFormatting.BLUE+EnumChatFormatting.BOLD+"Beastnode"), par2, par3, Minecraft.getMinecraft().fontRenderer);
 		} 
