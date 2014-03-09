@@ -1,5 +1,16 @@
 The changelog exists since version 1.4.0
 
+1.7.8
+ - the mod is now tracking your longest bow kills
+ - added the option to filter rating notifications (after the match)
+ - show a test achievement when you change animation settings
+ - added a beastnode button to the main menu (part of our partership deal)
+ - fixed tracking of special kills with achievements disabled
+ - total KD and KK are now rounded mathematically
+ - fixed lobby detection with missing unique message
+ - removed the "Server down!" notifications
+ - rewritten the playing timer
+
 1.7.7
  - fixed bug in cycle detection (stats are now reset properly again)
  - changed Killstreak to KS instead of K in less obstructive mode. (thanks TheKomputerKing)

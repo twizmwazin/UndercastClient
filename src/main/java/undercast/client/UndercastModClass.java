@@ -37,7 +37,7 @@ import cpw.mods.fml.relauncher.FMLRelaunchLog;
 @Mod(modid = UndercastModClass.MOD_NAME, name = UndercastModClass.MOD_NAME, version = UndercastModClass.MOD_VERSION)
 public class UndercastModClass {
 
-    public final static String MOD_VERSION = "1.7.7";
+    public final static String MOD_VERSION = "1.7.8";
     public final static String MOD_NAME = "UndercastMod";
     public Integer buttonListSizeOfGuiOptions;
     protected String username = "Not_Found";
