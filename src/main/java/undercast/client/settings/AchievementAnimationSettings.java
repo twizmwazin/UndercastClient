@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import undercast.client.UndercastConfig;
+import undercast.client.UndercastModClass;
+import undercast.client.achievements.UndercastAchievement;
 
 @SuppressWarnings("unchecked")
 public class AchievementAnimationSettings extends GuiScreen {
@@ -39,6 +41,8 @@ public class AchievementAnimationSettings extends GuiScreen {
     public void actionPerformed(GuiButton button) {
         if (button instanceof SettingsToggleButton) {
             ((SettingsToggleButton) button).buttonPressed();
+            UndercastAchievement achievement = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(), "Settings","updated");
+            UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(achievement);
             return;
         }
         if (button instanceof GuiAchievementDurationSlider) {

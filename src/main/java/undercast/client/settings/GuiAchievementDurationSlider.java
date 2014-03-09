@@ -8,6 +8,8 @@ import org.lwjgl.opengl.GL11;
 import undercast.client.UndercastConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import undercast.client.UndercastModClass;
+import undercast.client.achievements.UndercastAchievement;
 
 @SideOnly(Side.CLIENT)
 public class GuiAchievementDurationSlider extends GuiButton {
@@ -92,5 +94,7 @@ public class GuiAchievementDurationSlider extends GuiButton {
         this.dragging = false;
         UndercastConfig.setDoubleProperty("achievementAnimationDuration", ((double) (int) (sliderValue * 40)) / 10D);
         UndercastConfig.reloadConfig();
+        UndercastAchievement achievement = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(), "Settings","updated");
+        UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(achievement);
     }
 }
