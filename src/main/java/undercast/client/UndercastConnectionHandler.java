@@ -73,6 +73,8 @@ public class UndercastConnectionHandler {
             // we don't want the lobby join to trigger the leave detection
             // it will be triggered when we get the welcome message
             UndercastData.lobbyLeaveDetectionStarted = false;
+            // we are expecting to get to a lobby
+            UndercastData.lobbyJoinExpected = true;
 
         } else {
             UndercastData.isOC = false;

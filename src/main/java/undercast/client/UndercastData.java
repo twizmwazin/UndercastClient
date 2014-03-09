@@ -90,6 +90,7 @@ public class UndercastData {
     public static ArrayList<String> killerList = new ArrayList<String>();
     public static String[][] mapData = null;
     public static boolean lobbyLeaveDetectionStarted = false;
+    public static boolean lobbyJoinExpected = false;
 
 
     public static enum MatchState {
