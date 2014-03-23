@@ -205,6 +205,7 @@ public class UndercastChatHandler {
             if (message.contains("the lobby...")) {
                 UndercastData.setServer("Lobby");
                 UndercastCustomMethods.handleServerSwap();
+                UndercastData.lobbyJoinExpected = true;
             } else {
                 String server = message.replace("Teleporting you to ", "");
                 if (!server.equals(UndercastData.server)) {
