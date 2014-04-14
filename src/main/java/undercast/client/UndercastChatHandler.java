@@ -142,7 +142,7 @@ public class UndercastChatHandler {
             }
             UndercastData.addScore(score);
         }// if you kill a person
-        else if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
+        else if ((message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ") && !message.toLowerCase().contains("created by")) {
             if (!UndercastCustomMethods.isTeamkill(normalMessage, username, message.substring(0, message.indexOf(" ")))) {
                 UndercastData.addKills(1);
                 UndercastData.addKillstreak(1);

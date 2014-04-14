@@ -61,7 +61,7 @@ public class UndercastKillsHandler {
                 }
             }
         } // if you kill a person
-        else if (!message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ")) {
+        else if (!message.toLowerCase().contains(" the game") && (message.contains("by " + username) || message.contains("took " + username) || message.contains("fury of " + username)) && !message.toLowerCase().contains(" destroyed by ") && !message.toLowerCase().contains("created by")) {
             killer = message.substring(0, message.indexOf(" "));
             killOrKilled = true;
             if (UndercastCustomMethods.isTeamkill(unstripedMessage, killer, username) && UndercastConfig.showAchievements && UndercastConfig.showKillAchievements) {
