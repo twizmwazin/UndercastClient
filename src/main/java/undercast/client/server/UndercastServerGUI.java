@@ -17,6 +17,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.StringTranslate;
@@ -121,6 +122,11 @@ public class UndercastServerGUI extends GuiScreen {
             if (inGame && UndercastData.isPlayingOvercastNetwork() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
+                // Disconnect the player to prevent duplication
+                if(this.mc.theWorld != null) {
+                    this.mc.theWorld.sendQuittingDisconnectingPacket();
+                    this.mc.loadWorld((WorldClient)null);
+                }
                 if (UndercastData.locationIndex == 1) {
                     UndercastData.isEU = true;
                     FMLClientHandler.instance().connectToServerAtStartup("eu.oc.tc", 25565);
@@ -229,6 +235,12 @@ public class UndercastServerGUI extends GuiScreen {
             if (inGame && UndercastData.isPlayingOvercastNetwork() && this.isRightLocation()) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.sortedServerInformation[selected].name);
             } else {
+                // Disconnect the player to prevent duplication
+                if(this.mc.theWorld != null) {
+                    this.mc.theWorld.sendQuittingDisconnectingPacket();
+                    this.mc.loadWorld((WorldClient)null);
+                }
+                
                 UndercastData.redirect = true;
                 UndercastData.directionServer = UndercastData.sortedServerInformation[selected].name;
                 if (UndercastData.locationIndex == 1) {
