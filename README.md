@@ -15,7 +15,7 @@ __Current features__
 * Observer full bright mode
 * Online Friend List (buggy)
 * FPS ingame display
-* Disabled Title Menu Button on death screen
+* Confirmation screen on hitting disconnect
 * Option to filter "tips" messages
 * Shows the current and the next Map
 * Team detection
@@ -25,25 +25,11 @@ __Current features__
 
 __Installing__
 * Download Latest ZIP from https://oc.tc/forums/topics/514fa995ba6087bdca000186
-* Download Minecraft Forge or Modloader - Only one.
-    * Forge: http://files.minecraftforge.net/
-    * Modloader: http://www.minecraftforum.net/topic/75440-v152-risugamis-mods-updated/
+* Download Minecraft Forge: http://files.minecraftforge.net/
 * Installing with forge:
-    * Download recommended universal package.
-    * Open the downloaded file.
-    * Open your minecraft.jar
-    * Delete Meta-inf file that contain the word, "mojang."
-    * Drag all Minecraft forge files into the jar.
-    * Drag all files from the Undercast Mod ZIP into the mods folder.
+    * Download and run the recommended installer.
+    * Drag the Undercast Mod ZIP into the mods folder.
     * Start Minecraft!
-* Installing with Modloader:
-    * Download Modloader.
-    * Open downloaded ZIP.
-    * Open your minecraft.jar.
-    * Delete all Meta-inf files.
-    * Drag all Modloader files into the jar.
-    * Start Minecraft.
-    * In your .minecraft, a mods folder was created, drag the Undercast Mod ZIP into that folder.
          
 * * *
 
@@ -63,5 +49,5 @@ __How to contribute__
 * Clone the repo. 
 * Make your code changes
     * Please use normal java coding conventions
-* Make a pull request to one branch (if we pull the changes and they apply for both version we'll translate them)
+* Make a pull request
 
