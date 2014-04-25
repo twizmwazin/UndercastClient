@@ -3,6 +3,7 @@ package undercast.client;
 import java.awt.image.BufferedImage;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 
 import org.lwjgl.input.Keyboard;
 
@@ -18,40 +19,51 @@ import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
  */
 public class UndercastKeyHandling {
 
-    public static int keyGuiHide = Keyboard.KEY_F6;
-    public static int keyGuiServer = Keyboard.KEY_L;
-    public static int keyGuiFullBright = Keyboard.KEY_G;
-    public static int keySettingsGui = Keyboard.KEY_P;
-    public BufferedImage killerBuffer;
-    public double x, y, z;
+	public static int keyGuiHide = Keyboard.KEY_F6;
+	public static int keyGuiServer = Keyboard.KEY_L;
+	public static int keyGuiFullBright = Keyboard.KEY_G;
+	public static int keySettingsGui = Keyboard.KEY_P;
+	public static int keyGlobalChat = Keyboard.KEY_Y;
+	public BufferedImage killerBuffer;
+	public double x, y, z;
 
-    public UndercastKeyHandling() {
-        // the first value is an array of KeyBindings, the second is whether or
-        // not the call
-        // keyDown should repeat as long as the key is down
-        FMLCommonHandler.instance().bus().register(this);
-    }
+	public UndercastKeyHandling() {
+		// the first value is an array of KeyBindings, the second is whether or
+		// not the call
+		// keyDown should repeat as long as the key is down
+		FMLCommonHandler.instance().bus().register(this);
+	}
 
-    @SubscribeEvent
-    public void onKeyPress(KeyInputEvent event) {
-        if (Keyboard.isKeyDown(keyGuiHide)) {
-            UndercastData.guiShowing = !UndercastData.guiShowing;
-        }
-        if (Keyboard.isKeyDown(keyGuiServer)) {
-            Minecraft.getMinecraft().displayGuiScreen(new UndercastServerGUI(true));
-        }
-        if (Keyboard.isKeyDown(keyGuiFullBright)) {
-            if (Minecraft.getMinecraft().inGameHasFocus) {
-                UndercastModClass.brightActive = !UndercastModClass.brightActive;
-                if (UndercastModClass.brightActive) {
-                    Minecraft.getMinecraft().gameSettings.gammaSetting = UndercastModClass.getInstance().brightLevel;
-                } else {
-                    Minecraft.getMinecraft().gameSettings.gammaSetting = UndercastModClass.getInstance().defaultLevel;
-                }
-            }
-        }
-        if (Keyboard.isKeyDown(keySettingsGui)) {
-            FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(null));
-        }
-    }
+	@SubscribeEvent
+	public void onKeyPress(KeyInputEvent event) {
+		if (Keyboard.isKeyDown(keyGuiHide)) {
+			UndercastData.guiShowing = !UndercastData.guiShowing;
+		}
+		if (Keyboard.isKeyDown(keyGuiServer)) {
+			Minecraft.getMinecraft().displayGuiScreen(
+					new UndercastServerGUI(true));
+		}
+		if (Keyboard.isKeyDown(keyGuiFullBright)) {
+			if (Minecraft.getMinecraft().inGameHasFocus) {
+				UndercastModClass.brightActive = !UndercastModClass.brightActive;
+				if (UndercastModClass.brightActive) {
+					Minecraft.getMinecraft().gameSettings.gammaSetting = UndercastModClass
+							.getInstance().brightLevel;
+				} else {
+					Minecraft.getMinecraft().gameSettings.gammaSetting = UndercastModClass
+							.getInstance().defaultLevel;
+				}
+			}
+		}
+		if (Keyboard.isKeyDown(keySettingsGui)) {
+			FMLClientHandler.instance().getClient()
+					.displayGuiScreen(new SettingsGUI(null));
+		}
+		if (Keyboard.isKeyDown(keyGlobalChat)) {
+			if (Minecraft.getMinecraft().inGameHasFocus) {
+				FMLClientHandler.instance().getClient()
+						.displayGuiScreen(new GuiChat("/g "));
+			}
+		}
+	}
 }
