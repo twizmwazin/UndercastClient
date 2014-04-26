@@ -53,7 +53,7 @@ public class UndercastKeyHandling {
         if (Keyboard.isKeyDown(keySettingsGui)) {
             FMLClientHandler.instance().getClient().displayGuiScreen(new SettingsGUI(null));
         }
-        if (Keyboard.isKeyDown(keyGlobalChat) && Minecraft.getMinecraft().inGameHasFocus) {
+        if (Keyboard.isKeyDown(keyGlobalChat) && Minecraft.getMinecraft().inGameHasFocus && UndercastData.isPlayingOvercastNetwork()) {
 				FMLClientHandler.instance().getClient().displayGuiScreen(new GuiChat("/g "));
 		}
     }
