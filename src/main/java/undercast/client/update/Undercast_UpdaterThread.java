@@ -38,7 +38,7 @@ public class Undercast_UpdaterThread extends Thread {
         errorOccured = false;
         try {
             // download link
-            URL data = new URL("https://raw.github.com/UndercastTeam/UndercastClient/forge/version.txt");
+            URL data = new URL("https://raw.githubusercontent.com/UndercastTeam/UndercastClient/forge/version.txt");
             final BufferedReader in = new BufferedReader(new InputStreamReader(data.openStream()));
             readline = in.readLine();
             readline2 = in.readLine();
