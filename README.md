@@ -15,7 +15,7 @@ __Current features__
 * Observer full bright mode
 * Online Friend List (buggy)
 * FPS ingame display
-* Confirmation screen on hitting disconnect
+* Disabled Title Menu Button on death screen
 * Option to filter "tips" messages
 * Shows the current and the next Map
 * Team detection
