@@ -42,7 +42,7 @@ public class UndercastKeyHandling {
         if (Keyboard.isKeyDown(keyGuiServer)) {
             Minecraft.getMinecraft().displayGuiScreen(new UndercastServerGUI(true));
         }
-        if (Keyboard.isKeyDown(keyGuiFullBright) && Minecraft.getMinecraft().inGameHasFocus) {
+        if (Keyboard.isKeyDown(keyGuiFullBright) && Minecraft.getMinecraft().inGameHasFocus && UndercastConfig.fullBright && UndercastData.isPlayingOvercastNetwork() && (UndercastData.team.equals("Observers") || UndercastData.isGameOver)) {
             UndercastModClass.brightActive = !UndercastModClass.brightActive;
             if (UndercastModClass.brightActive) {
             	Minecraft.getMinecraft().gameSettings.gammaSetting = UndercastModClass.getInstance().brightLevel;

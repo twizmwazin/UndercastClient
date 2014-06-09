@@ -46,7 +46,7 @@ public class UndercastModClass {
     public static Configuration CONFIG;
     public static boolean brightActive;
     public float brightLevel = (float) 20.0D;
-    public float defaultLevel = mc.gameSettings.gammaSetting;
+    public float defaultLevel;
     @Mod.Instance(UndercastModClass.MOD_NAME)
     private static UndercastModClass instance;
     public static String[] lastChatLines = new String[100];
@@ -236,9 +236,11 @@ public class UndercastModClass {
                 // if full bright is on turn it off
                 if (mc.gameSettings.gammaSetting >= brightLevel) {
                     mc.gameSettings.gammaSetting = defaultLevel;
+                    // if the defaultLevel gets mixed up, reset to bright, not to moody
+                    // bright is for sure more common than moody
                     if (defaultLevel >= brightLevel) {
-                        mc.gameSettings.gammaSetting = (float) 0.0D;
-                        defaultLevel = (float) 0.0D;
+                        mc.gameSettings.gammaSetting = (float) 1.0D;
+                        defaultLevel = (float) 1.0D;
                     }
                 }
             }
