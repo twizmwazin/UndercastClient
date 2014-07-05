@@ -1,5 +1,10 @@
 The changelog exists since version 1.4.0
 
+1.7.9
+ - added a key for opening the chat interface with "/g " already typed. Press Y. Thanks to SkepticalTech
+ - made keys rebindable from the controls screen
+ - a couple of minor but important fixes
+
 1.7.8
  - the mod is now tracking your longest bow kills
  - added the option to filter rating notifications (after the match)
