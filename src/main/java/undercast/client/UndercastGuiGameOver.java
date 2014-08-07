@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
+import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -54,7 +55,7 @@ public class UndercastGuiGameOver extends GuiScreen {
             this.mc.displayGuiScreen(null);
             break;
         case 1:
-            GuiYesNo localGuiYesNo = new GuiYesNo(this,StatCollector.translateToLocal("deathScreen.quit.confirm"), "", StatCollector.translateToLocal("deathScreen.titleScreen"), StatCollector.translateToLocal("deathScreen.respawn"), 0);
+            GuiYesNo localGuiYesNo = new GuiYesNo((GuiYesNoCallback)this, I18n.format("deathScreen.quit.confirm", new Object[0]), "", I18n.format("deathScreen.titleScreen", new Object[0]), I18n.format("deathScreen.respawn", new Object[0]), 0);
             this.mc.displayGuiScreen(localGuiYesNo);
             localGuiYesNo.func_146350_a(20);
         }

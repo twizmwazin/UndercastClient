@@ -22,7 +22,7 @@ public class UndercastGuiAchievement extends GuiScreen {
     private Minecraft client;
     public ArrayList<UndercastAchievement> achievements = new ArrayList();
     private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
-    ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+    ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
     private ArrayList<Integer> usedRank = new ArrayList();
 
     public UndercastGuiAchievement(Minecraft mc) {

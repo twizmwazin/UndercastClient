@@ -41,7 +41,7 @@ public class UndercastAchievement implements TweenCallback {
 
     public UndercastAchievement(String name, String l1, String l2) {
         manager = new TweenManager();
-        ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+        ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
         killerName = name;
         line1 = l1;
         line2 = l2;
