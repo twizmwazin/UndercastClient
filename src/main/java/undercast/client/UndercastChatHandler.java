@@ -240,7 +240,7 @@ public class UndercastChatHandler {
                     UndercastCustomMethods.handleServerSwap();
                 }
             }
-        } else if (normalMessage.equals("\u00A7f \u00A7r\u00A7f \u00A7r\u00A71 \u00A7r\u00A70 \u00A7r\u00A72 \u00A7r\u00A7f \u00A7r\u00A7f \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A74 \u00A7r\u00A73 \u00A7r\u00A79 \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A70 \u00A7r\u00A73 \u00A7r\u00A79 \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A70 \u00A7r\u00A73 \u00A7r\u00A79 \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A70 \u00A7r\u00A7e\u00A7r")) {
+        } else if (normalMessage.equals("\u00A7r\u00A7f \u00A7r\u00A7f \u00A7r\u00A71 \u00A7r\u00A70 \u00A7r\u00A72 \u00A7r\u00A7f \u00A7r\u00A7f \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A74 \u00A7r\u00A73 \u00A7r\u00A79 \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A70 \u00A7r\u00A73 \u00A7r\u00A79 \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A70 \u00A7r\u00A73 \u00A7r\u00A79 \u00A7r\u00A72 \u00A7r\u00A70 \u00A7r\u00A70 \u00A7r")) {
             if (!UndercastData.welcomeMessageExpected && UndercastData.lobbyLeaveDetectionStarted) {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
