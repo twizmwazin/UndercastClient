@@ -1,5 +1,10 @@
 The changelog exists since version 1.4.0
 
+1.8.0
+ - Updated to Minecraft 1.7.10 using Forge 10.13.0.1180
+ - tweaked capes so we'll comply with a future EULA
+ - fixed server detection using lobby signs
+
 1.7.9
  - added a key for opening the chat interface with "/g " already typed. Press Y. Thanks to SkepticalTech
  - made keys rebindable from the controls screen

@@ -196,7 +196,7 @@ public class UndercastServerGUI extends GuiScreen {
                 String username = Minecraft.getMinecraft().getSession().getUsername();
                 try {
                     UndercastModClass.getInstance().connection.connect();
-                    NetManager.sendPacket(new Packet00Authentication(username, "UndercastClient-v" + UndercastModClass.MOD_VERSION));
+                    NetManager.sendPacket(new Packet00Authentication(username, "UndercastClient-v" + "1.7.9"/*UndercastModClass.MOD_VERSION*/));
                 } catch (Exception e) {
                 }
 
