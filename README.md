@@ -1,5 +1,7 @@
 #Undercast Mod (Unofficial Client Mod for the Overcast Network)
 ### Created by the community for the community
+__*This mod has been discontinued. We could not find the motivation to keep updating this horrible code base. If you feel like you have the motivation, feel free to fork it! - palechip, flv and molenzwiebel*__
+
 * * *
 This is a client side mod that is made to enhance your experience on the Overcast Network servers. We have already included great features and look forward to adding many more. Above all we try our best to take what the community wants and make it happen. This is a community made mod and will continue to be so. Feel free to express any and all opinions on it and/or ideas on how to make it better.
 
