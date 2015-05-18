@@ -5,13 +5,15 @@ import java.util.HashMap;
 public class VIPUser {
 
     public static HashMap<String, Integer> capes = new HashMap<String, Integer>();
-    static{
-        capes.put("DEVELOPER_CAPE",0);
-        capes.put("DONATOR_CAPE",1);
-        capes.put("DONATOR_PLUS_CAPE",2);
-        capes.put("VIP_CAPE",3);
-        capes.put("USER_CAPE",4);
+
+    static {
+        capes.put("DEVELOPER_CAPE", 0);
+        capes.put("DONATOR_CAPE", 1);
+        capes.put("DONATOR_PLUS_CAPE", 2);
+        capes.put("VIP_CAPE", 3);
+        capes.put("USER_CAPE", 4);
     }
+
     private String username;
     private boolean hasCape;
     private int cape;
@@ -20,10 +22,6 @@ public class VIPUser {
         this.username = username;
         this.hasCape = hasCape;
         this.cape = cape;
-    }
-
-    public String toString() {
-        return this.username + ";" + this.hasCape + ";" + this.cape;
     }
 
     public static VIPUser fromString(String str) {
@@ -47,6 +45,10 @@ public class VIPUser {
             }
             return new VIPUser(username, Boolean.parseBoolean(hasCape), capeType);
         }
+    }
+
+    public String toString() {
+        return this.username + ";" + this.hasCape + ";" + this.cape;
     }
 
     public String getUsername() {

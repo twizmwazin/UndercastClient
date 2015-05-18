@@ -6,15 +6,15 @@ public class Packet06SendServer extends ClientPacket {
 
     public String server;
     public Location loc;
-    public Packet06SendServer(){}
-    public enum Location {
-        US, EU, UNKNOWN
+
+    public Packet06SendServer() {
     }
-    public Packet06SendServer(String server, String loc){
+
+    public Packet06SendServer(String server, String loc) {
         this.server = server;
-        try{
+        try {
             this.loc = Enum.valueOf(Location.class, loc);
-        } catch(Exception e){
+        } catch (Exception e) {
             this.loc = Location.UNKNOWN;
         }
     }
@@ -23,8 +23,8 @@ public class Packet06SendServer extends ClientPacket {
     public void readPacketData(Buffer bufferIn) {
         this.server = bufferIn.getString();
         String loc = bufferIn.getString();
-        for (Location l : Location.values()){
-            if(l.name().equals(loc)){
+        for (Location l : Location.values()) {
+            if (l.name().equals(loc)) {
                 this.loc = l;
                 return;
             }
@@ -46,5 +46,9 @@ public class Packet06SendServer extends ClientPacket {
     @Override
     public byte getId() {
         return 6;
+    }
+
+    public enum Location {
+        US, EU, UNKNOWN
     }
 }

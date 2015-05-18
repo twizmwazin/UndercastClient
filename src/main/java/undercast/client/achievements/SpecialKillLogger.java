@@ -1,15 +1,16 @@
 package undercast.client.achievements;
 
+import net.minecraft.client.Minecraft;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
 import java.util.Date;
-import net.minecraft.client.Minecraft;
 
 public class SpecialKillLogger {
 
-    private static String LOG_PATH;
     private final static String LOG_FILE_NAME = "SpecialKills.log";
+    private static String LOG_PATH;
 
     static {
         try {

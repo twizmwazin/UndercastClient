@@ -1,32 +1,35 @@
 package undercast.client;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
-
 import org.lwjgl.opengl.GL11;
-
 import undercast.network.common.ImageReader;
 import undercast.network.common.packet.VIPUser;
 
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 public class UndercastRenderHandler {
+    public static ArrayList<Integer> unusedTextures = new ArrayList<Integer>();
+
+    static {
+        for (int i = 0; i < 20; i++) {
+            unusedTextures.add(TextureUtil.glGenTextures());
+        }
+    }
+
     ImageLoader il = new ImageLoader(Minecraft.getMinecraft().getResourceManager());
     BufferedImage donator = null;
     BufferedImage donatorPlus = null;
@@ -34,30 +37,24 @@ public class UndercastRenderHandler {
     int idDon = TextureUtil.glGenTextures();
     int idDonPlus = TextureUtil.glGenTextures();
     int idDev = TextureUtil.glGenTextures();
-    public static ArrayList<Integer> unusedTextures = new ArrayList<Integer>();
-    ModelRenderer model; 
-    static{
-        for(int i = 0; i < 20; i++){
-            unusedTextures.add(TextureUtil.glGenTextures());
-        }
-    }
+    ModelRenderer model;
 
-    public UndercastRenderHandler(){
+    public UndercastRenderHandler() {
         MinecraftForge.EVENT_BUS.register(this);
         try {
-            ResourceLocation rl = new ResourceLocation("undercast","donator.png");
+            ResourceLocation rl = new ResourceLocation("undercast", "donator.png");
             IResource iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
             InputStream inputstream = iresource.getInputStream();
             donator = ImageIO.read(inputstream);
             il.setupTexture(donator, idDon, 1600, 800);
 
-            rl = new ResourceLocation("undercast","donator+.png");
+            rl = new ResourceLocation("undercast", "donator+.png");
             iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
             inputstream = iresource.getInputStream();
             donatorPlus = ImageIO.read(inputstream);
             il.setupTexture(donatorPlus, idDonPlus, 1600, 800);
 
-            rl = new ResourceLocation("undercast","developer.png");
+            rl = new ResourceLocation("undercast", "developer.png");
             iresource = Minecraft.getMinecraft().getResourceManager().getResource(rl);
             inputstream = iresource.getInputStream();
             dev = ImageIO.read(inputstream);
@@ -69,32 +66,32 @@ public class UndercastRenderHandler {
     }
 
     @SubscribeEvent
-    public void renderEvent(RenderPlayerEvent.Specials.Pre evt){
+    public void renderEvent(RenderPlayerEvent.Specials.Pre evt) {
         VIPUser player = null;
-        for(VIPUser u : UndercastModClass.getInstance().vips){
-            if (u.getUsername().equals(evt.entityPlayer.getDisplayName())){
+        for (VIPUser u : UndercastModClass.getInstance().vips) {
+            if (u.getUsername().equals(evt.entityPlayer.getDisplayName())) {
                 player = u;
-                if(!player.hasCape()){
+                if (!player.hasCape()) {
                     return;
                 }
             }
         }
-        if (player != null && !evt.entityPlayer.isInvisible() && !evt.entityPlayer.getHideCape())
-        {
-            if(player.getCape() == VIPUser.capes.get("DONATOR_CAPE") || player.getCape() == VIPUser.capes.get("USER_CAPE")){
+//        TODO: Reimplement the cape thing
+        if (player != null && !evt.entityPlayer.isInvisible()/* && !evt.entityPlayer.getHideCape()*/) {
+            if (player.getCape() == VIPUser.capes.get("DONATOR_CAPE") || player.getCape() == VIPUser.capes.get("USER_CAPE")) {
                 il.setupTexture(donator, idDon, 1600, 800); //BufferedImage, unique id, width,height
-            } else if (player.getCape() == VIPUser.capes.get("DONATOR_PLUS_CAPE") || player.getCape() == VIPUser.capes.get("VIP_CAPE")){
+            } else if (player.getCape() == VIPUser.capes.get("DONATOR_PLUS_CAPE") || player.getCape() == VIPUser.capes.get("VIP_CAPE")) {
                 il.setupTexture(donatorPlus, idDonPlus, 1600, 800); //BufferedImage, unique id, width,height
-            } else if (player.getCape() == VIPUser.capes.get("DEVELOPER_CAPE")){
+            } else if (player.getCape() == VIPUser.capes.get("DEVELOPER_CAPE")) {
                 il.setupTexture(dev, idDev, 1600, 800);
-            } else if(ImageReader.contains(player.getCape())){
+            } else if (ImageReader.contains(player.getCape())) {
                 ImageReader.LoadedImage li = ImageReader.get(player.getCape());
                 il.setupTexture(li.image, li.textureId, li.width, li.height);
             }
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
-            if(model == null) {
-                model = new ModelRenderer((ModelBase)ReflectionHelper.getPrivateValue(RenderPlayer.class, evt.renderer, 1), 0, 0);
+            if (model == null) {
+                model = new ModelRenderer((ModelBase) ReflectionHelper.getPrivateValue(RenderPlayer.class, evt.renderer, 1), 0, 0);
 
                 float x = -3.0f; // original cape value: -5.0f
                 float y = 1.0f; // original cape value: 0.0f

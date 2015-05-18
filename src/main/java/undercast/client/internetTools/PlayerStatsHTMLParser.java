@@ -1,11 +1,11 @@
 package undercast.client.internetTools;
 
-import java.io.Reader;
-import java.io.StringReader;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
+import java.io.Reader;
+import java.io.StringReader;
 
 /*
  * @author molenzwiebel
@@ -35,12 +35,12 @@ public class PlayerStatsHTMLParser {
 class PlayerParser extends HTMLEditorKit.ParserCallback {
     // Currently in a h4 tag?
 
-    private boolean inTD = false;
-    // The number of attributes already gotten (such as name, players, map)
-    private int count = 0;
     // # of map currently parsing
     // Data
     public String[] playerData = new String[12];
+    private boolean inTD = false;
+    // The number of attributes already gotten (such as name, players, map)
+    private int count = 0;
 
     // Function called when a tag (<tagName>) is opened
     @Override
@@ -61,6 +61,7 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
 
     /**
      * Little helper to test if a string is a integer
+     *
      * @param str string to test
      * @return true if it's an integer
      */
@@ -68,7 +69,7 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
         try {
             Integer.parseInt(str.replace(".", ""));
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -82,7 +83,7 @@ class PlayerParser extends HTMLEditorKit.ParserCallback {
                 String str = new String(data).replace(" ", "");
 
                 // if the string isn't an integer, skip it.
-                if(isInt(str)) {
+                if (isInt(str)) {
                     // add the integer
                     playerData[count] = str;
                     count++;

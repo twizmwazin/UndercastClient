@@ -27,7 +27,7 @@ public class SettingsToggleButton extends GuiButton {
     }
 
     public void buttonPressed() {
-        System.out.println("Setting "+setting+" to "+(!UndercastConfig.config.get("UndercastMod", setting, false).getBoolean(false)));
+        System.out.println("Setting " + setting + " to " + (!UndercastConfig.config.get("UndercastMod", setting, false).getBoolean(false)));
         boolean current = !UndercastConfig.config.get("UndercastMod", setting, false).getBoolean(false);
         UndercastConfig.setBooleanProperty(setting, current ? true : false);
         UndercastConfig.reloadConfig();

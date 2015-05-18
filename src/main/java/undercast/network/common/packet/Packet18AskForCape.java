@@ -6,14 +6,16 @@ import undercast.network.common.Buffer;
 public class Packet18AskForCape extends ClientPacket {
     public byte id;
 
-    public Packet18AskForCape(){}
-    public Packet18AskForCape(byte id){
+    public Packet18AskForCape() {
+    }
+
+    public Packet18AskForCape(byte id) {
         this.id = id;
     }
 
     @Override
     public void readPacketData(Buffer bufferIn) {
-        this.id = (byte)bufferIn.get();
+        this.id = (byte) bufferIn.get();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package undercast.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 
@@ -56,7 +56,7 @@ public class FinalStats {
         sendMessage("Deaths: \u00A74" + this.deaths + ((UndercastConfig.realtimeStats) ? ("\u00A7f Total: \u00A74" + this.totalDeaths) : ""));
         sendMessage("K/D: \u00A73" + this.kd + totalKD);
         sendMessage("Raindrops: \u00A7b" + RaindropManager.RaindropsThisMatch + "\u00A7f Total: \u00A7b" + (RaindropManager.TotalRaindrops + RaindropManager.RaindropsThisMatch));
-        if(RaindropManager.manager != null) {
+        if (RaindropManager.manager != null) {
             RaindropManager.manager.resetCounter();
         }
         sendMessage("Kill Streak: \u00A7e" + this.killstreak);
@@ -74,7 +74,7 @@ public class FinalStats {
 
     private void sendMessage(String text) {
         IChatComponent thingy = new ChatComponentText(text);
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         player.addChatMessage(thingy);
     }
 }

@@ -1,7 +1,11 @@
 package undercast.client;
 
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -10,10 +14,6 @@ import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import undercast.client.update.Undercast_UpdaterThread;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
 /**
  * @author Flv92
@@ -39,9 +39,9 @@ public class UndercastConnectionHandler {
 
     public void onLogin(PlayerLoggedInEvent event) {
         String ip = new String();
-        try{
-            ip = Minecraft.getMinecraft().func_147104_D().serverIP;
-        } catch(NullPointerException e){
+        try {
+            ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
+        } catch (NullPointerException e) {
             //SinglePlayer
             return;
         }
@@ -129,7 +129,7 @@ public class UndercastConnectionHandler {
 
     private void sendMessage(String text) {
         IChatComponent thingy = new ChatComponentText(text);
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         player.addChatMessage(thingy);
     }
 

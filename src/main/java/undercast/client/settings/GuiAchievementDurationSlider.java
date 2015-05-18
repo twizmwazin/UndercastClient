@@ -1,22 +1,24 @@
 package undercast.client.settings;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-
 import org.lwjgl.opengl.GL11;
-
 import undercast.client.UndercastConfig;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import undercast.client.UndercastModClass;
 import undercast.client.achievements.UndercastAchievement;
 
 @SideOnly(Side.CLIENT)
 public class GuiAchievementDurationSlider extends GuiButton {
-    /** The value of this slider control. */
+    /**
+     * The value of this slider control.
+     */
     public float sliderValue = 1.0F;
 
-    /** Is this slider control being dragged. */
+    /**
+     * Is this slider control being dragged.
+     */
     public boolean dragging;
 
     public GuiAchievementDurationSlider(int par1, int par2, int par3, String par5Str, float par6) {
@@ -94,7 +96,7 @@ public class GuiAchievementDurationSlider extends GuiButton {
         this.dragging = false;
         UndercastConfig.setDoubleProperty("achievementAnimationDuration", ((double) (int) (sliderValue * 40)) / 10D);
         UndercastConfig.reloadConfig();
-        UndercastAchievement achievement = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(), "Settings","updated");
+        UndercastAchievement achievement = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(), "Settings", "updated");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(achievement);
     }
 }

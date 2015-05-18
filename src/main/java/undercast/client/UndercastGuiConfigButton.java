@@ -4,14 +4,13 @@
  */
 package undercast.client;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import undercast.client.settings.SettingsGUI;
 
 /**
- * 
  * @author Florian
  */
 public class UndercastGuiConfigButton extends GuiButton {

@@ -7,11 +7,14 @@ public class Packet07KickPacket extends ServerPacket {
     public String kickMessageL1;
     public String kickMessageL2;
 
-    public Packet07KickPacket(){}
-    public Packet07KickPacket(String message, String message2){
+    public Packet07KickPacket() {
+    }
+
+    public Packet07KickPacket(String message, String message2) {
         kickMessageL1 = message;
         kickMessageL2 = message2;
     }
+
     @Override
     public void handlePacket(NetClientManager networkManager) {
         networkManager.handleKick(this);

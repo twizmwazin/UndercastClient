@@ -1,6 +1,6 @@
 package undercast.client.settings;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -14,9 +14,9 @@ public class OverlaySettings extends GuiScreen {
     public int pageIndex = 0;
     public int buttonPerPage = 14;
     public GuiScreen parentScreen;
-    public String[] toggleSettings = new String[] { "showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showMap", "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds", "showGSClass", "showScore", "showTotalKills", "showRaindropCounter", "lessObstructive" };
-    public String[] enabledStrings = new String[] { "FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Current map shown", "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled", "Match Time shown", "Match time seconds shown", "Ghost Squadron class shown", "Score shown", "Total Kills shown","Raindrop Counter shown","Less Obstructive mode" };
-    public String[] disabledStrings = new String[] { "FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Current map hidden", "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled", "Match time hidden", "Match time seconds hidden", "Ghost Squadron class hidden", "Score hidden", "Total Kills hidden","Raindrop Counter hidden", "Normal display mode" };
+    public String[] toggleSettings = new String[]{"showFPS", "showKills", "showDeaths", "showKilled", "showServer", "showTeam", "showKD", "showKK", "showMap", "showNextMap", "showStreak", "showPlayingTime", "fullBright", "showMatchTime", "showMatchTimeSeconds", "showGSClass", "showScore", "showTotalKills", "showRaindropCounter", "lessObstructive"};
+    public String[] enabledStrings = new String[]{"FPS Shown", "Kills shown", "Deaths shown", "Killed shown", "Server shown", "Team shown", "KD Shown", "KK Shown", "Current map shown", "Next map shown", "Killstreak shown", "Playing time shown", "Full bright enabled", "Match Time shown", "Match time seconds shown", "Ghost Squadron class shown", "Score shown", "Total Kills shown", "Raindrop Counter shown", "Less Obstructive mode"};
+    public String[] disabledStrings = new String[]{"FPS Hidden", "Kills hidden", "Deaths hidden", "Killed hidden", "Server hidden", "Team hidden", "KD Hidden", "KK Hidden", "Current map hidden", "Next map hidden", "Killstreak hidden", "Playing time hidden", "Full bright disabled", "Match time hidden", "Match time seconds hidden", "Ghost Squadron class hidden", "Score hidden", "Total Kills hidden", "Raindrop Counter hidden", "Normal display mode"};
 
     public OverlaySettings(GuiScreen gs) {
         super();

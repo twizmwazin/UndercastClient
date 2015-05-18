@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 public class Buffer {
 
+    private byte[] buffer;
+    private int readPos = 0, writePos = 0, sizePos = 0;
+
     public Buffer() {
         this(128);
     }
@@ -12,7 +15,6 @@ public class Buffer {
     public Buffer(int size) {
         buffer = new byte[size];
     }
-
     public Buffer(byte[] data) {
         /*
          * This create a new buffer from an array of byte
@@ -23,8 +25,6 @@ public class Buffer {
             buffer[i] = data[i + 1];
         }
     }
-    private byte[] buffer;
-    private int readPos = 0, writePos = 0, sizePos = 0;
 
     public byte[] array() {
         return Arrays.copyOf(buffer, writePos);
@@ -79,11 +79,11 @@ public class Buffer {
         return bldr.toString();
     }
 
-    public byte[] getByteArray(){
+    public byte[] getByteArray() {
         int length = this.getInt();
         byte[] returnArray = new byte[length];
-        for(int i = 0; i < length; i++){
-            returnArray[i] = (byte)get();
+        for (int i = 0; i < length; i++) {
+            returnArray[i] = (byte) get();
         }
         return returnArray;
     }
@@ -194,9 +194,9 @@ public class Buffer {
         return this;
     }
 
-    public Buffer putByteArray(byte[] array){
+    public Buffer putByteArray(byte[] array) {
         putInt(array.length);
-        for(int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             buffer[writePos++] = array[i];
         }
         return this;

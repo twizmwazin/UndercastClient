@@ -1,28 +1,20 @@
 package undercast.client.achievements;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.lwjgl.opengl.GL11;
-
-import undercast.client.achievements.animation.UndercastAchievementAccessor;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
-import aurelienribon.tweenengine.equations.Bounce;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import undercast.client.achievements.animation.UndercastAchievementAccessor;
+
+import java.util.ArrayList;
 
 public class UndercastGuiAchievement extends GuiScreen {
 
-    private Minecraft client;
-    public ArrayList<UndercastAchievement> achievements = new ArrayList();
     private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
+    public ArrayList<UndercastAchievement> achievements = new ArrayList();
     ScaledResolution scr = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+    private Minecraft client;
     private ArrayList<Integer> usedRank = new ArrayList();
 
     public UndercastGuiAchievement(Minecraft mc) {
@@ -43,13 +35,15 @@ public class UndercastGuiAchievement extends GuiScreen {
             achievements.get(i).draw();
         }
     }
-    public void removeAchievement(UndercastAchievement achievement){
+
+    public void removeAchievement(UndercastAchievement achievement) {
         usedRank.remove(new Integer(achievement.getRank()));
         achievements.remove(achievement);
     }
+
     public int getFirstAvailableRank() {
         for (int i = 0; i < 20; i++) {
-            if(!usedRank.contains(i)){
+            if (!usedRank.contains(i)) {
                 return i;
             }
         }

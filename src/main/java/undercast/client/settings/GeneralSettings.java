@@ -1,18 +1,20 @@
 package undercast.client.settings;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import org.lwjgl.input.Keyboard;
 import undercast.client.UndercastConfig;
 
+import java.io.IOException;
+
 public class GeneralSettings extends GuiScreen {
 
     // Toggle settings
-    public String[] toggleSettings = new String[] { "showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "filterRating", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState", "realtimeStats" };
-    public String[] enabledStrings = new String[] { "Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "Rating filtered", "/match on server join", "Button tooltips shown", "Match state shown", "Realtime stats" };
-    public String[] disabledStrings = new String[] { "Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "Rating not filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden", "Game stats" }; // X
+    public String[] toggleSettings = new String[]{"showGuiChat", "showGuiMulti", "toggleTitleScreenButton", "filterTips", "filterRating", "matchOnServerJoin", "enableButtonTooltips", "parseMatchState", "realtimeStats"};
+    public String[] enabledStrings = new String[]{"Chat gui shown", "Overcast Button shown", "Death screen cleared", "Tips filtered", "Rating filtered", "/match on server join", "Button tooltips shown", "Match state shown", "Realtime stats"};
+    public String[] disabledStrings = new String[]{"Chat gui hidden", "Overcast Button hidden", " Default death screen", "No tips filtered", "Rating not filtered", "No /match on server join", "Button tooltips hidden", "Match state hidden", "Game stats"}; // X
     // Offset
     // vars
     public GuiButton xPlusButton;
@@ -62,9 +64,9 @@ public class GeneralSettings extends GuiScreen {
         this.buttonList.add(yPlusButton);
         this.buttonList.add(xMinusButton);
         this.buttonList.add(yMinusButton);
-        xTextField = new GuiTextField(fontRendererObj, x1 + 20, y - 35, 35, 20);
+        xTextField = new GuiTextField(1, fontRendererObj, x1 + 20, y - 35, 35, 20);
         xTextField.setText(Integer.toString(UndercastConfig.x));
-        yTextField = new GuiTextField(fontRendererObj, x2 + 20, y - 35, 35, 20);
+        yTextField = new GuiTextField(1, fontRendererObj, x2 + 20, y - 35, 35, 20);
         yTextField.setText(Integer.toString(UndercastConfig.y));
 
         // Back button
@@ -170,7 +172,7 @@ public class GeneralSettings extends GuiScreen {
     }
 
     @Override
-    protected void mouseClicked(int par1, int par2, int par3) {
+    protected void mouseClicked(int par1, int par2, int par3) throws IOException {
         super.mouseClicked(par1, par2, par3);
         xTextField.mouseClicked(par1, par2, par3);
         yTextField.mouseClicked(par1, par2, par3);

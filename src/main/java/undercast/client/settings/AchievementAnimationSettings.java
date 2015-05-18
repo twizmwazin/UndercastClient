@@ -41,7 +41,7 @@ public class AchievementAnimationSettings extends GuiScreen {
     public void actionPerformed(GuiButton button) {
         if (button instanceof SettingsToggleButton) {
             ((SettingsToggleButton) button).buttonPressed();
-            UndercastAchievement achievement = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(), "Settings","updated");
+            UndercastAchievement achievement = new UndercastAchievement(Minecraft.getMinecraft().getSession().getUsername(), "Settings", "updated");
             UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(achievement);
             return;
         }
@@ -49,12 +49,12 @@ public class AchievementAnimationSettings extends GuiScreen {
             return;
         }
         switch (button.id) {
-        case 1:
-            Minecraft.getMinecraft().displayGuiScreen(parentGui);
-            break;
-        default:
-            Minecraft.getMinecraft().displayGuiScreen(parentGui);
-            break;
+            case 1:
+                Minecraft.getMinecraft().displayGuiScreen(parentGui);
+                break;
+            default:
+                Minecraft.getMinecraft().displayGuiScreen(parentGui);
+                break;
         }
     }
 

@@ -1,5 +1,7 @@
 package undercast.client;
 
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StringUtils;
@@ -7,8 +9,6 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServerGUI;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * @author Flv92
@@ -27,7 +27,7 @@ public class ChatListener {
         try {
             Minecraft mc = FMLClientHandler.instance().getClient();
             EntityPlayer player = mc.thePlayer;
-            UCInstance.username = mc.thePlayer.getDisplayName();
+            UCInstance.username = mc.thePlayer.getDisplayName().getFormattedText();
             // stop global msg and team chat and whispered messages to go
             // through
             if (!message.startsWith("<") && !message.startsWith("[Team]") && !message.startsWith("(From ") && !message.startsWith("(To ") && UndercastData.isOC) {
@@ -41,7 +41,7 @@ public class ChatListener {
                         event.message = null;
                     }
                 }
-                if(RaindropManager.manager == null) {
+                if (RaindropManager.manager == null) {
                     new RaindropManager();
                 }
                 if (RaindropManager.manager.handleChatMessage(message)) {

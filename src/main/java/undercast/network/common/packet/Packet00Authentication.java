@@ -7,12 +7,14 @@ public class Packet00Authentication extends ClientPacket {
     public String username;
     public String version;
 
-    public Packet00Authentication(){}
+    public Packet00Authentication() {
+    }
 
-    public Packet00Authentication(String name, String version){
+    public Packet00Authentication(String name, String version) {
         this.username = name;
         this.version = version;
     }
+
     @Override
     public void readPacketData(Buffer bufferIn) {
         username = bufferIn.getString();

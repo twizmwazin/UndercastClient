@@ -1,7 +1,7 @@
 package undercast.client.achievements;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
@@ -19,6 +19,41 @@ public class UndercastKillsHandler {
     private boolean killOrKilled;
 
     public UndercastKillsHandler() {
+    }
+
+    public static boolean isSpecialKill(int kill) {
+        if (kill > 99) {
+            if (kill < 1000) {
+                // detect special kills like 100, 200, 300, 500, 900
+                int i = kill / 100;
+                if (i * 100 == kill) {
+                    return true;
+                }
+            } else {
+                // detect special kills like 1000m 5000, 7500, 10500
+                int i1 = kill / 1000;
+                int i2 = (kill + 500) / 1000;
+                if ((i1 * 1000 == kill) || (i2 * 1000 == kill + 500)) {
+                    return true;
+                }
+            }
+            // detect special kills like 3333, 5555, 16666
+            String s = String.valueOf(kill);
+            char c1, c2, c3, c4;
+            c1 = s.charAt(s.length() - 1);
+            c2 = s.charAt(s.length() - 2);
+            c3 = s.charAt(s.length() - 3);
+            if (s.length() > 3) {
+                c4 = s.charAt(s.length() - 4);
+            } else {
+                c4 = c3;
+            }
+
+            if (c1 == c2 && c1 == c3 && c1 == c4) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void handleMessage(String message, String username, EntityPlayer player, String unstripedMessage) {
@@ -87,21 +122,21 @@ public class UndercastKillsHandler {
                     SpecialKillLogger.logSpecialKill(kills, killer, UndercastData.server, UndercastData.map);
                 }
                 // check if the kill was the longest bow kill
-                if(message.contains("blocks)")) {
+                if (message.contains("blocks)")) {
                     String length = message.substring(message.indexOf("(") + 1, message.indexOf(" blocks)"));
                     try {
                         int l = Integer.valueOf(length);
-                        if(l > UndercastConfig.longestBowKill) {
+                        if (l > UndercastConfig.longestBowKill) {
                             UndercastConfig.longestBowKill = l;
                             UndercastConfig.setIntProperty("longestBowKill", l);
                             sendMessage("[UndercastMod] \u00A7lNEW LONGEST BOW KILL: \u00A7c" + l + " blocks");
                             SpecialKillLogger.logLongestBowKill(length, killer, UndercastData.server, UndercastData.map);
                         }
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                     }
                 }
 
-                if(!(UndercastConfig.showAchievements && UndercastConfig.showKillAchievements)) {
+                if (!(UndercastConfig.showAchievements && UndercastConfig.showKillAchievements)) {
                     return;
                 }
                 boolean revengeAchievementShown = false;
@@ -157,13 +192,13 @@ public class UndercastKillsHandler {
 
     private void printFirstBloodAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getCommandSenderName(), "\u00A7a" + client.thePlayer.getCommandSenderName(), "\u00A7agot the first Blood!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getName(), "\u00A7a" + client.thePlayer.getName(), "\u00A7agot the first Blood!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     private void printLastKillAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getCommandSenderName(), "\u00A7a" + client.thePlayer.getCommandSenderName(), "\u00A7agot the last Kill!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getName(), "\u00A7a" + client.thePlayer.getName(), "\u00A7agot the last Kill!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
@@ -172,44 +207,9 @@ public class UndercastKillsHandler {
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
-    public static boolean isSpecialKill(int kill) {
-        if (kill > 99) {
-            if (kill < 1000) {
-                // detect special kills like 100, 200, 300, 500, 900
-                int i = kill / 100;
-                if (i * 100 == kill) {
-                    return true;
-                }
-            } else {
-                // detect special kills like 1000m 5000, 7500, 10500
-                int i1 = kill / 1000;
-                int i2 = (kill + 500) / 1000;
-                if ((i1 * 1000 == kill) || (i2 * 1000 == kill + 500)) {
-                    return true;
-                }
-            }
-            // detect special kills like 3333, 5555, 16666
-            String s = String.valueOf(kill);
-            char c1, c2, c3, c4;
-            c1 = s.charAt(s.length() - 1);
-            c2 = s.charAt(s.length() - 2);
-            c3 = s.charAt(s.length() - 3);
-            if (s.length() > 3) {
-                c4 = s.charAt(s.length() - 4);
-            } else {
-                c4 = c3;
-            }
-
-            if (c1 == c2 && c1 == c3 && c1 == c4) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void sendMessage(String text) {
         IChatComponent thingy = new ChatComponentText(text);
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         player.addChatMessage(thingy);
     }
 }

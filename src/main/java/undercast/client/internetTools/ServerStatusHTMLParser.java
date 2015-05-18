@@ -1,15 +1,11 @@
 package undercast.client.internetTools;
 
-import java.io.PrintStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * @author molenzwiebel ServerStatusHTMLParser, a class which will try parse the given html to get the current map, name, players and next map. Returns: A String[][] with as first value the server (0 = alpha, 11 = nostalgia) and as second value the thing you want. 0 = Name, 1 = Players, 2 = Now playing map, 3 = Next map, 4 = Gametype So, data[0][2] will give the now playing map on Alpha and
@@ -88,17 +84,17 @@ public class ServerStatusHTMLParser {
 }
 
 class Parser extends HTMLEditorKit.ParserCallback {
+    // Data
+    public String[][] mapData = new String[999][6];
+    // The current gametype
+    public String gametype;
+    public String region;
     // Currently in a h4 tag?
     private boolean inTD = false;
     // The number of attributes already gotten (such as name, players, map)
     private int count = 0;
     // # of map currently parsing
     private int mapCount = -1;
-    // Data
-    public String[][] mapData = new String[999][6];
-    // The current gametype
-    public String gametype;
-    public String region;
 
     private boolean hasID(MutableAttributeSet a, String prefix) {
         return a.containsAttribute(HTML.Attribute.ID, prefix + "project-ares") || a.containsAttribute(HTML.Attribute.ID, prefix + "blitz") || a.containsAttribute(HTML.Attribute.ID, prefix + "ghost-squadron") || a.containsAttribute(HTML.Attribute.ID, prefix + "lobby");
@@ -150,12 +146,12 @@ class Parser extends HTMLEditorKit.ParserCallback {
 }
 
 class NextParser extends HTMLEditorKit.ParserCallback {
+    // Data
+    public String[] mapData = new String[999];
     // Currently in a a tag?
     private boolean inTD = false;
     // # of map currently parsing
     private int mapCount = 0;
-    // Data
-    public String[] mapData = new String[999];
 
     // Function called when a tag (<tagName>) is opened
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos) {

@@ -8,11 +8,11 @@ import undercast.client.UndercastData.ServerLocation;
 
 public class ServersCommandParser {
 
-    private static boolean isListening = false;
     // is set to true if the mod casts /servers in order to delete the messages
     public static boolean castedByMod = false;
     public static boolean nextCastedByMod = true;
     public static int pages = 0;
+    private static boolean isListening = false;
 
     public static boolean handleChatMessage(String message, String unstripedMessage) {
         if (isListening) {
@@ -44,20 +44,20 @@ public class ServersCommandParser {
                     // a = green
                     // f = white
                     switch (matchStatusColor) {
-                    case 'a':
-                        state = MatchState.Starting;
-                        break;
-                    case 'c':
-                        state = MatchState.Finished;
-                        break;
-                    case 'e':
-                        state = MatchState.Started;
-                        break;
-                    case 'f':
-                        state = MatchState.Waiting;
-                        break;
-                    default:
-                        state = MatchState.Unknown;
+                        case 'a':
+                            state = MatchState.Starting;
+                            break;
+                        case 'c':
+                            state = MatchState.Finished;
+                            break;
+                        case 'e':
+                            state = MatchState.Started;
+                            break;
+                        case 'f':
+                            state = MatchState.Waiting;
+                            break;
+                        default:
+                            state = MatchState.Unknown;
                     }
 
                     // insert the data

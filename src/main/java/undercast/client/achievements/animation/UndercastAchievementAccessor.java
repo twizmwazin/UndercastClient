@@ -1,7 +1,7 @@
 package undercast.client.achievements.animation;
 
-import undercast.client.achievements.UndercastAchievement;
 import aurelienribon.tweenengine.TweenAccessor;
+import undercast.client.achievements.UndercastAchievement;
 
 public class UndercastAchievementAccessor implements TweenAccessor<UndercastAchievement> {
 
@@ -14,30 +14,30 @@ public class UndercastAchievementAccessor implements TweenAccessor<UndercastAchi
     @Override
     public int getValues(UndercastAchievement target, int tweenType, float[] returnValues) {
         switch (tweenType) {
-        case POSITION_X:
-            returnValues[0] = target.posX;
-            return 1;
-        case ALPHA:
-            returnValues[0] = target.alpha;
-            return 1;
-        default:
-            assert false;
-            return -1;
+            case POSITION_X:
+                returnValues[0] = target.posX;
+                return 1;
+            case ALPHA:
+                returnValues[0] = target.alpha;
+                return 1;
+            default:
+                assert false;
+                return -1;
         }
     }
 
     @Override
     public void setValues(UndercastAchievement target, int tweenType, float[] newValues) {
         switch (tweenType) {
-        case POSITION_X:
-            target.posX = newValues[0];
-            break;
-        case ALPHA:
-            target.alpha = newValues[0];
-            break;
-        default:
-            assert false;
-            break;
+            case POSITION_X:
+                target.posX = newValues[0];
+                break;
+            case ALPHA:
+                target.alpha = newValues[0];
+                break;
+            default:
+                assert false;
+                break;
         }
     }
 }

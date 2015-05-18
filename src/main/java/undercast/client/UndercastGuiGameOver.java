@@ -1,7 +1,7 @@
 package undercast.client;
 
-import java.util.List;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,32 +10,28 @@ import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
-
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class UndercastGuiGameOver extends GuiScreen {
     private int field_146347_a;
     private boolean field_146346_f = false;
 
-    public void initGui()
-    {
+    public void initGui() {
         this.buttonList.clear();
         if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
             if (this.mc.isIntegratedServerRunning())
                 this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.deleteWorld")));
             else
                 this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.leaveServer")));
-        }
-        else {
+        } else {
             this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, StatCollector.translateToLocal("deathScreen.respawn")));
             this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.titleScreen")));
 
             if (this.mc.getSession() == null) {
-                ((GuiButton)this.buttonList.get(1)).enabled = false;
+                ((GuiButton) this.buttonList.get(1)).enabled = false;
             }
         }
         List<GuiButton> buttons = this.buttonList;
@@ -43,26 +39,23 @@ public class UndercastGuiGameOver extends GuiScreen {
             localGuiButton.enabled = false;
     }
 
-    protected void keyTyped(char paramChar, int paramInt)
-    {
+    protected void keyTyped(char paramChar, int paramInt) {
     }
 
-    protected void actionPerformed(GuiButton p_146284_1_)
-    {
+    protected void actionPerformed(GuiButton p_146284_1_) {
         switch (p_146284_1_.id) {
-        case 0:
-            this.mc.thePlayer.respawnPlayer();
-            this.mc.displayGuiScreen(null);
-            break;
-        case 1:
-            GuiYesNo localGuiYesNo = new GuiYesNo((GuiYesNoCallback)this, I18n.format("deathScreen.quit.confirm", new Object[0]), "", I18n.format("deathScreen.titleScreen", new Object[0]), I18n.format("deathScreen.respawn", new Object[0]), 0);
-            this.mc.displayGuiScreen(localGuiYesNo);
-            localGuiYesNo.func_146350_a(20);
+            case 0:
+                this.mc.thePlayer.respawnPlayer();
+                this.mc.displayGuiScreen(null);
+                break;
+            case 1:
+                GuiYesNo localGuiYesNo = new GuiYesNo((GuiYesNoCallback) this, I18n.format("deathScreen.quit.confirm", new Object[0]), "", I18n.format("deathScreen.titleScreen", new Object[0]), I18n.format("deathScreen.respawn", new Object[0]), 0);
+                this.mc.displayGuiScreen(localGuiYesNo);
+                localGuiYesNo.setButtonDelay(20);
         }
     }
 
-    public void confirmClicked(boolean paramBoolean, int paramInt)
-    {
+    public void confirmClicked(boolean paramBoolean, int paramInt) {
         if (paramBoolean) {
             this.mc.theWorld.sendQuittingDisconnectingPacket();
             this.mc.loadWorld(null);
@@ -73,8 +66,7 @@ public class UndercastGuiGameOver extends GuiScreen {
         }
     }
 
-    public void drawScreen(int paramInt1, int paramInt2, float paramFloat)
-    {
+    public void drawScreen(int paramInt1, int paramInt2, float paramFloat) {
         drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
 
         GL11.glPushMatrix();
@@ -96,13 +88,11 @@ public class UndercastGuiGameOver extends GuiScreen {
         super.drawScreen(paramInt1, paramInt2, paramFloat);
     }
 
-    public boolean doesGuiPauseGame()
-    {
+    public boolean doesGuiPauseGame() {
         return false;
     }
 
-    public void updateScreen()
-    {
+    public void updateScreen() {
         super.updateScreen();
         List<GuiButton> buttons = this.buttonList;
         this.field_146347_a += 1;

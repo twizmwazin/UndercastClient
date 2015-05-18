@@ -5,13 +5,6 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.concurrent.TimeUnit;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import undercast.client.UndercastData.ServerLocation;
@@ -20,9 +13,19 @@ import undercast.client.server.UndercastServer;
 import undercast.network.common.NetManager;
 import undercast.network.common.packet.Packet10GetServers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
+
 public class UndercastCustomMethods {
 
     private static Minecraft mc = Minecraft.getMinecraft();
+    private static Boolean a1 = false;
+    private static Boolean a = false;
+    private static int c = 0;
 
     // simple rounding method
     private static double round(double d) {
@@ -31,7 +34,7 @@ public class UndercastCustomMethods {
         d = d / 100;
         return d;
     }
-    
+
     private static double roundT(double d) {
         d = d * 1000;
         d = Math.round(d);
@@ -41,7 +44,7 @@ public class UndercastCustomMethods {
 
     /**
      * Calculates the KD Ratio
-     * 
+     *
      * @return KD double rounded
      */
     public static double getKD() {
@@ -57,7 +60,7 @@ public class UndercastCustomMethods {
             return round(k / d);
         }
     }
-    
+
     public static double getTotalKD() {
         double k = UndercastData.getKills() + UndercastData.stats.kills;
         double d = UndercastData.getDeaths() + UndercastData.stats.deaths;
@@ -72,7 +75,7 @@ public class UndercastCustomMethods {
 
     /**
      * Calculates the KK Ratio
-     * 
+     *
      * @return KK double rounded
      */
     public static double getKK() {
@@ -88,7 +91,7 @@ public class UndercastCustomMethods {
             return round(k / kk);
         }
     }
-    
+
     public static double getTotalKK() {
         double k = UndercastData.getKills() + UndercastData.stats.kills;
         double kk = UndercastData.getKilled() + UndercastData.stats.getKilled();
@@ -157,11 +160,11 @@ public class UndercastCustomMethods {
      * This is used in order to only display hours if you play at least for one
      */
     public static String getPlayingTimeString() {
-    	long currentMilis = System.currentTimeMillis();
-    	long difference = currentMilis - UndercastData.playTimeStartMillis;
-    	int hours = (int) TimeUnit.HOURS.convert(difference, TimeUnit.MILLISECONDS);
-    	int minutes = hours == 0 ? (int) TimeUnit.MINUTES.convert(difference, TimeUnit.MILLISECONDS) : (int) TimeUnit.MINUTES.convert(difference, TimeUnit.MILLISECONDS) - 60 * hours;
-    	
+        long currentMilis = System.currentTimeMillis();
+        long difference = currentMilis - UndercastData.playTimeStartMillis;
+        int hours = (int) TimeUnit.HOURS.convert(difference, TimeUnit.MILLISECONDS);
+        int minutes = hours == 0 ? (int) TimeUnit.MINUTES.convert(difference, TimeUnit.MILLISECONDS) : (int) TimeUnit.MINUTES.convert(difference, TimeUnit.MILLISECONDS) - 60 * hours;
+
         if (hours == 0) {
             if (minutes < 10) {
                 return (UndercastConfig.lessObstructive ? "PT: " : "Playing Time: ") + "\u00A7E0:0" + minutes;
@@ -452,29 +455,27 @@ public class UndercastCustomMethods {
         return str;
     }
 
-    private static Boolean a1 = false;
-    private static Boolean a = false;
-    private static int c = 0;
     public static void init() {
         Calendar cal = Calendar.getInstance();
 
-        if(cal.get(2) == 3 && cal.get(5) == 1) {
+        if (cal.get(2) == 3 && cal.get(5) == 1) {
             a1 = true;
         }
     }
+
     public static FontRenderer getFontRenderer() {
-        if(!a1) {
-            return mc.fontRenderer;
+        if (!a1) {
+            return mc.fontRendererObj;
         } else {
             c++;
-            if(c == 30) {
+            if (c == 30) {
                 c = 0;
                 a = !a;
             }
-            if(a) {
+            if (a) {
                 return mc.standardGalacticFontRenderer;
             } else {
-                return mc.fontRenderer;
+                return mc.fontRendererObj;
             }
         }
     }
@@ -514,10 +515,10 @@ public class UndercastCustomMethods {
 
 
     public static ServerLocation getLocationForString(String s) {
-        if(s == null) {
+        if (s == null) {
             return ServerLocation.US;
         }
-        if(s.contains("eu") || s.contains("EU") || s.contains("eU") || s.contains("Eu")) {
+        if (s.contains("eu") || s.contains("EU") || s.contains("eU") || s.contains("Eu")) {
             return ServerLocation.EU;
         } else {
             return ServerLocation.US;
@@ -525,7 +526,7 @@ public class UndercastCustomMethods {
     }
 
     public static void parseTeamJoinMessage(String message, String messageWithFormattingCodes) {
-        if(!message.contains("You joined the")) {
+        if (!message.contains("You joined the")) {
             return;
         }
 
@@ -535,7 +536,7 @@ public class UndercastCustomMethods {
 
             // If the team name contains more than one word, get the first word because there might be formatting code between the two words.
             String firstword = teamName;
-            if(teamName.contains(" ")) {
+            if (teamName.contains(" ")) {
                 firstword = teamName.substring(0, teamName.indexOf(" "));
             }
 
@@ -545,7 +546,7 @@ public class UndercastCustomMethods {
             UndercastData.team = teamName;
 
             // Check if the colorChar has a vaild value
-            if("0123456789abcdef".indexOf(colorChar) == -1) {
+            if ("0123456789abcdef".indexOf(colorChar) == -1) {
                 UndercastData.teamColor = '0';
             } else {
                 UndercastData.teamColor = colorChar;
@@ -567,12 +568,12 @@ public class UndercastCustomMethods {
         UndercastData.resetScore();
         UndercastData.setTeam("Observers");
         UndercastData.teamColor = 'b'; // b for aqua
-        if(RaindropManager.manager != null) {
+        if (RaindropManager.manager != null) {
             RaindropManager.manager.resetCounter();
         }
-        new Thread(){
+        new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {

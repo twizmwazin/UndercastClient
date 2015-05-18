@@ -13,19 +13,37 @@ public class UndercastChatHandler {
     public UndercastChatHandler() {
     }
 
+    public static boolean handleTipAndRating(String message) {
+        try {
+            if (message.contains("[Tip]") && UndercastConfig.filterTips) {
+                return true;
+            } else if (message.contains("leaving a rating") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("command /rate") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("worst") && message.contains("best") && message.contains("1") && message.contains("5") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("opportunity to have your voice heard") && UndercastConfig.filterRating) {
+                return true;
+            } else if (message.contains("improve Overcast Network") && UndercastConfig.filterRating) {
+                return true;
+            }
+            return false;
+        } catch (NullPointerException e) {
+            return true;
+        }
+    }
+
     public boolean handleMessage(String message, String username, EntityPlayer player) {
         return handleMessage(message, username, player, message);
     }
 
     /**
      * handle a chat message received by the playe
-     * 
-     * @param message
-     *            The message received
-     * @param username
-     *            The player's username receiving the message
-     * @param player
-     *            an EntityPlayer instance linking to the client-player
+     *
+     * @param message  The message received
+     * @param username The player's username receiving the message
+     * @param player   an EntityPlayer instance linking to the client-player
      * @return true if the message should be displayed to the user
      */
     public boolean handleMessage(String message, String username, EntityPlayer player, String normalMessage) {
@@ -245,7 +263,7 @@ public class UndercastChatHandler {
                 UndercastData.serverDetectionCommandExecuted = true;
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server");
                 UndercastData.lobbyLeaveDetectionStarted = false;
-            } else if(UndercastData.lobbyJoinExpected){
+            } else if (UndercastData.lobbyJoinExpected) {
                 UndercastData.lobbyJoinExpected = false;
                 if (UndercastData.redirect) {
                     UndercastData.redirect = false;
@@ -258,7 +276,7 @@ public class UndercastChatHandler {
                 }
             }
             UndercastData.welcomeMessageExpected = false;
-            
+
             if (!UndercastData.isLobby && (UndercastConfig.matchOnServerJoin || UndercastConfig.showMatchTime)) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/match");
             }
@@ -304,26 +322,5 @@ public class UndercastChatHandler {
         }
         return returnStatement;
 
-    }
-
-    public static boolean handleTipAndRating(String message) {
-        try {
-            if (message.contains("[Tip]") && UndercastConfig.filterTips) {
-                return true;
-            } else if (message.contains("leaving a rating") && UndercastConfig.filterRating) {
-                return true;
-            } else if (message.contains("command /rate") && UndercastConfig.filterRating) {
-                return true;
-            } else if (message.contains("worst") && message.contains("best") && message.contains("1") && message.contains("5") && UndercastConfig.filterRating) {
-                return true;
-            } else if (message.contains("opportunity to have your voice heard") && UndercastConfig.filterRating) {
-                return true;
-            } else if (message.contains("improve Overcast Network") && UndercastConfig.filterRating) {
-                return true;
-            }
-            return false;
-        } catch (NullPointerException e) {
-            return true;
-        }
     }
 }

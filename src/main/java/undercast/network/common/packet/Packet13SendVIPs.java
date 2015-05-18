@@ -1,6 +1,4 @@
 package undercast.network.common.packet;
-import java.util.ArrayList;
-import java.util.List;
 
 import undercast.network.client.NetClientManager;
 import undercast.network.common.Buffer;

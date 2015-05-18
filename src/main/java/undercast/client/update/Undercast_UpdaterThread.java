@@ -5,18 +5,18 @@ package undercast.client.update;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-
 import undercast.client.UndercastConfig;
 import undercast.client.UndercastData;
 import undercast.client.UndercastModClass;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 
 public class Undercast_UpdaterThread extends Thread {
-    boolean errorOccured;
     public static boolean finished = false;
+    boolean errorOccured;
 
     public Undercast_UpdaterThread() {
         errorOccured = false;

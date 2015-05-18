@@ -1,9 +1,8 @@
 package undercast.network.common;
 
+import jexxus.common.Delivery;
 import undercast.client.UndercastModClass;
 import undercast.network.common.packet.Packet;
-import jexxus.common.Connection;
-import jexxus.common.Delivery;
 
 public abstract class NetManager {
 
@@ -13,7 +12,7 @@ public abstract class NetManager {
             buff.put(packet.getId());
             packet.writePacketData(buff);
             UndercastModClass.getInstance().connection.send(buff.array(), Delivery.RELIABLE);
-        } else{
+        } else {
             System.out.println("Cannot send packet while not connected");
         }
     }

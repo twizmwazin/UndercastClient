@@ -1,17 +1,5 @@
 package undercast.client.achievements;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
-import undercast.client.UndercastConfig;
-import undercast.client.UndercastModClass;
-import undercast.client.achievements.animation.UndercastAchievementAccessor;
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
@@ -19,6 +7,16 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Sine;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import undercast.client.UndercastConfig;
+import undercast.client.UndercastModClass;
+import undercast.client.achievements.animation.UndercastAchievementAccessor;
 
 public class UndercastAchievement implements TweenCallback {
 
@@ -31,13 +29,13 @@ public class UndercastAchievement implements TweenCallback {
     public float posX;
     public float posY;
     public long lastRenderTime = -1;
-    TweenManager manager;
-    private int rank = 0;
     public float alpha = 0.0F;
     // Only used for non animated achievement
     // Just delete the achievement when animationTime reached UndercastConfig.achievementAnimationDuration
     public long animationTime = 0;
     public TweenEquation easeEquation;
+    TweenManager manager;
+    private int rank = 0;
 
     public UndercastAchievement(String name, String l1, String l2) {
         manager = new TweenManager();
@@ -87,8 +85,8 @@ public class UndercastAchievement implements TweenCallback {
         this.drawTexturedModalRect((int) posX, (int) posY, 96, 202, 160, 32);
         // Drawing text lines
         GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
-        Minecraft.getMinecraft().fontRenderer.drawString(this.line1, (int) posX + 30, (int) posY + 7, 16777215);
-        Minecraft.getMinecraft().fontRenderer.drawString(this.line2, (int) posX + 30, (int) posY + 18, 16777215);
+        Minecraft.getMinecraft().fontRendererObj.drawString(this.line1, (int) posX + 30, (int) posY + 7, 16777215);
+        Minecraft.getMinecraft().fontRendererObj.drawString(this.line2, (int) posX + 30, (int) posY + 18, 16777215);
         if (UndercastConfig.displaySkinBorder) {
             // Drawing skin border
             GL11.glColor4f(1.0F, 1.0F, 1.0F, alpha);
@@ -122,13 +120,15 @@ public class UndercastAchievement implements TweenCallback {
     public void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6) {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
+        /* TODO: Reimplement
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + par6), 0.0D, (double) ((float) (par3 + 0) * f), (double) ((float) (par4 + par6) * f1));
         tessellator.addVertexWithUV((double) (par1 + par5), (double) (par2 + par6), 0.0D, (double) ((float) (par3 + par5) * f), (double) ((float) (par4 + par6) * f1));
         tessellator.addVertexWithUV((double) (par1 + par5), (double) (par2 + 0), 0.0D, (double) ((float) (par3 + par5) * f), (double) ((float) (par4 + 0) * f1));
         tessellator.addVertexWithUV((double) (par1 + 0), (double) (par2 + 0), 0.0D, (double) ((float) (par3 + 0) * f), (double) ((float) (par4 + 0) * f1));
         tessellator.draw();
+        */
     }
 
     @Override
@@ -138,12 +138,12 @@ public class UndercastAchievement implements TweenCallback {
         }
     }
 
+    public int getRank() {
+        return rank;
+    }
+
     public void setRank(int i) {
         posY = 10 + i * 36;
         rank = i;
-    }
-
-    public int getRank() {
-        return rank;
     }
 }

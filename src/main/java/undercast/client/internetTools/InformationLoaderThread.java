@@ -1,5 +1,7 @@
 package undercast.client.internetTools;
 
+import undercast.client.UndercastData;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -7,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import undercast.client.UndercastData;
 
 /**
  * InformationLoaderThread by molenzwiebel This class will take a url and load the contents in an other thread. A link that might be interesting to fetch: http://api.thijsmolendijk.nl/mod/servers.php -> Server:Players:Current map:Next map And player stats: http://api.thijsmolendijk.nl/user/parse.php?para1=<user> -> YAML with player data (I can change it to a different format, just poke me) Or, use

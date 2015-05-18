@@ -1,14 +1,11 @@
 package undercast.network.client;
 
-import net.minecraft.client.Minecraft;
-import undercast.client.UndercastModClass;
-import undercast.client.achievements.UndercastAchievement;
-import undercast.network.common.Buffer;
-import undercast.network.common.packet.Packet;
-import undercast.network.common.packet.ServerPacket;
 import jexxus.common.Connection;
 import jexxus.common.ConnectionListener;
 import jexxus.server.ServerConnection;
+import undercast.network.common.Buffer;
+import undercast.network.common.packet.Packet;
+import undercast.network.common.packet.ServerPacket;
 
 public class UndercastClientConnectionListener implements ConnectionListener {
 

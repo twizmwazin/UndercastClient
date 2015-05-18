@@ -1,18 +1,21 @@
 package undercast.network.common.packet;
 
-import java.util.ArrayList;
-
 import undercast.network.client.NetClientManager;
 import undercast.network.common.Buffer;
+
+import java.util.ArrayList;
 
 public class Packet03OnlinePlayersAnswer extends ServerPacket {
 
     public ArrayList<String> onlinePlayers;
-    public Packet03OnlinePlayersAnswer(){}
 
-    public Packet03OnlinePlayersAnswer(ArrayList<String> players){
+    public Packet03OnlinePlayersAnswer() {
+    }
+
+    public Packet03OnlinePlayersAnswer(ArrayList<String> players) {
         onlinePlayers = players;
     }
+
     @Override
     public void handlePacket(NetClientManager networkManager) {
         networkManager.handleOnlinePlayersAnswer(this);
@@ -25,9 +28,9 @@ public class Packet03OnlinePlayersAnswer extends ServerPacket {
         // As a username is +- 9/10 characters, it should be a good approximation :p
         onlinePlayers = new ArrayList<String>(onlinePlayersString.length() / 10);
         String currentUsername = "";
-        for (int i = 0; i < onlinePlayersString.length(); i++){
-            if(onlinePlayersString.charAt(i) != ':'){
-                currentUsername += onlinePlayersString.charAt(i); 
+        for (int i = 0; i < onlinePlayersString.length(); i++) {
+            if (onlinePlayersString.charAt(i) != ':') {
+                currentUsername += onlinePlayersString.charAt(i);
             } else {
                 onlinePlayers.add(currentUsername);
                 currentUsername = "";
@@ -38,7 +41,7 @@ public class Packet03OnlinePlayersAnswer extends ServerPacket {
     @Override
     public void writePacketData(Buffer bufferOut) {
         String onlinePlayersString = "";
-        for(String str : onlinePlayers){
+        for (String str : onlinePlayers) {
             onlinePlayersString += str + ":";
         }
         bufferOut.putString(onlinePlayersString);
@@ -47,7 +50,7 @@ public class Packet03OnlinePlayersAnswer extends ServerPacket {
     @Override
     public int getPacketSize() {
         String onlinePlayersString = "";
-        for(String str : onlinePlayers){
+        for (String str : onlinePlayers) {
             onlinePlayersString += ":" + str + ":";
         }
         onlinePlayersString.substring(1); //Remove the first ':'

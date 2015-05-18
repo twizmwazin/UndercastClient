@@ -5,40 +5,38 @@ package undercast.client.server;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import java.awt.*;
-import java.net.URI;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.StringTranslate;
-import undercast.client.*;
-import undercast.client.achievements.UndercastAchievement;
+import undercast.client.UndercastConfig;
+import undercast.client.UndercastCustomMethods;
+import undercast.client.UndercastData;
+import undercast.client.UndercastModClass;
 import undercast.network.common.NetManager;
 import undercast.network.common.packet.Packet00Authentication;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class UndercastServerGUI extends GuiScreen {
 
+    public Boolean inGame;
     private UndercastServerInfoSlotGui guiServerInfoSlot;
     private UndercastServer selectedServer;
     private int selected = -1;
     private GuiButton guibuttonrefresh;
-    public Boolean inGame;
 
     /**
      * Default constructor
-     * 
-     * @param inGame
-     *            Boolean if you are on a server or not
+     *
+     * @param inGame Boolean if you are on a server or not
      */
     public UndercastServerGUI(boolean inGame) {
         this.inGame = inGame;
@@ -123,9 +121,9 @@ public class UndercastServerGUI extends GuiScreen {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server lobby");
             } else {
                 // Disconnect the player to prevent duplication
-                if(this.mc.theWorld != null) {
+                if (this.mc.theWorld != null) {
                     this.mc.theWorld.sendQuittingDisconnectingPacket();
-                    this.mc.loadWorld((WorldClient)null);
+                    this.mc.loadWorld((WorldClient) null);
                 }
                 if (UndercastData.locationIndex == 1) {
                     UndercastData.isEU = true;
@@ -175,21 +173,21 @@ public class UndercastServerGUI extends GuiScreen {
         if (!inGame) {
             drawDefaultBackground();
         }
-        try{
+        try {
             this.guiServerInfoSlot.drawScreen(i, j, f);
-        } catch(Exception e){
+        } catch (Exception e) {
 
         }
         this.drawCenteredString(this.fontRendererObj, "Overcast Network Server List", width / 2, 20, 16777215);
         Minecraft mc = Minecraft.getMinecraft();
         if (!UndercastData.isUpdate()) {
-            mc.fontRenderer.drawString("Used version: " + UndercastModClass.MOD_VERSION, (width - 4) - mc.fontRenderer.getStringWidth("Used version: " + UndercastModClass.MOD_VERSION), 3, 13369344);
-            mc.fontRenderer.drawString("Latest version: " + UndercastData.latestVersion, (width - 4) - mc.fontRenderer.getStringWidth("Latest version: " + UndercastData.latestVersion), 12, 255);
+            mc.fontRendererObj.drawString("Used version: " + UndercastModClass.MOD_VERSION, (width - 4) - mc.fontRendererObj.getStringWidth("Used version: " + UndercastModClass.MOD_VERSION), 3, 13369344);
+            mc.fontRendererObj.drawString("Latest version: " + UndercastData.latestVersion, (width - 4) - mc.fontRendererObj.getStringWidth("Latest version: " + UndercastData.latestVersion), 12, 255);
         }
         super.drawScreen(i, j, f);
     }
 
-    public void connect(){
+    public void connect() {
         Runnable r1 = new Runnable() {
             @Override
             public void run() {
@@ -207,9 +205,8 @@ public class UndercastServerGUI extends GuiScreen {
 
     /**
      * Gets the current selected server
-     * 
-     * @param var1
-     *            gets the server based on passed index
+     *
+     * @param var1 gets the server based on passed index
      */
     public void selectServerIndex(int var1) {
         this.selected = var1;
@@ -236,11 +233,11 @@ public class UndercastServerGUI extends GuiScreen {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/server " + UndercastData.sortedServerInformation[selected].name);
             } else {
                 // Disconnect the player to prevent duplication
-                if(this.mc.theWorld != null) {
+                if (this.mc.theWorld != null) {
                     this.mc.theWorld.sendQuittingDisconnectingPacket();
-                    this.mc.loadWorld((WorldClient)null);
+                    this.mc.loadWorld((WorldClient) null);
                 }
-                
+
                 UndercastData.redirect = true;
                 UndercastData.directionServer = UndercastData.sortedServerInformation[selected].name;
                 if (UndercastData.locationIndex == 1) {
@@ -255,7 +252,7 @@ public class UndercastServerGUI extends GuiScreen {
     }
 
     @Override
-    protected void keyTyped(char par1, int par2) {
+    protected void keyTyped(char par1, int par2) throws IOException {
         if (par2 == 1) // Escape button
         {
             closeGui();

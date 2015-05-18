@@ -3,7 +3,6 @@ package undercast.client.server;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import undercast.client.UndercastData;
-import undercast.client.UndercastData.ServerLocation;
 
 class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
@@ -11,11 +10,8 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
 
     /**
      * Default constructor to create list
-     * 
-     * @param guiservers
-     *            Main server gui screen
-     * @param servers
-     *            list of servers
+     *
+     * @param guiservers Main server gui screen
      */
     public UndercastServerInfoSlotGui(UndercastServerGUI guiservers) {
         super(guiservers, guiservers.width, guiservers.height, 32, guiservers.height - 64, 36);
@@ -29,10 +25,10 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
     protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator) {
         try {
             UndercastServer server = UndercastData.sortedServerInformation[i];
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, getServerName(server), j + 2, k + 1, 16777215);
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, Integer.toString(server.getPlayerCount()), j + 198, k + 1, 8421504);
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
-            parent.drawString(Minecraft.getMinecraft().fontRenderer, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
+            parent.drawString(Minecraft.getMinecraft().fontRendererObj, getServerName(server), j + 2, k + 1, 16777215);
+            parent.drawString(Minecraft.getMinecraft().fontRendererObj, Integer.toString(server.getPlayerCount()), j + 198, k + 1, 8421504);
+            parent.drawString(Minecraft.getMinecraft().fontRendererObj, server.getCurrentMap(), j + 2, k + 12, getMatchColor(server));
+            parent.drawString(Minecraft.getMinecraft().fontRendererObj, "Next: \u00A73" + server.getNextMap(), j + 2, k + 12 + 11, 8421504);
 
 
         } catch (Exception e) {
@@ -84,16 +80,16 @@ class UndercastServerInfoSlotGui extends UndercastServerSlotGui {
         }
 
         switch (server.matchState) {
-        case Started:
-            return 0xFFFF00; // yellow
-        case Starting:
-            return 0x00FF00; // actually Lime
-        case Finished:
-            return 0x990000; // red
-        case Waiting:
-            return 0x0000A0; // blue like on the signs
-        default:
-            return 0xF87431; // Sienna1 = orange
+            case Started:
+                return 0xFFFF00; // yellow
+            case Starting:
+                return 0x00FF00; // actually Lime
+            case Finished:
+                return 0x990000; // red
+            case Waiting:
+                return 0x0000A0; // blue like on the signs
+            default:
+                return 0xF87431; // Sienna1 = orange
         }
     }
 }

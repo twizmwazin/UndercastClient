@@ -6,11 +6,14 @@ import undercast.network.common.ImageReader;
 
 public class Packet19CapeImage extends ServerPacket {
     public ImageReader.Image image;
-    public Packet19CapeImage(){}
 
-    public Packet19CapeImage(ImageReader.Image i){
+    public Packet19CapeImage() {
+    }
+
+    public Packet19CapeImage(ImageReader.Image i) {
         image = i;
     }
+
     @Override
     public void handlePacket(NetClientManager networkManager) {
         networkManager.handleCapeImage(this);
@@ -18,7 +21,7 @@ public class Packet19CapeImage extends ServerPacket {
 
     @Override
     public void readPacketData(Buffer bufferIn) {
-        image = new ImageReader.Image(bufferIn.getByteArray(), (byte)bufferIn.get());
+        image = new ImageReader.Image(bufferIn.getByteArray(), (byte) bufferIn.get());
     }
 
     @Override

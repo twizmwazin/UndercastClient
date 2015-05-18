@@ -5,24 +5,22 @@ package undercast.client;
 //You may not claim this to be your own
 //You may not remove these comments
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import undercast.client.achievements.SpecialObjectiveLogger;
 import undercast.client.internetTools.InformationLoaderThread;
 import undercast.client.internetTools.PlayerStatsHTMLParser;
-import undercast.client.internetTools.ServerStatusHTMLParser;
 import undercast.client.internetTools.ServersCommandParser;
 import undercast.client.server.UndercastServer;
 import undercast.network.client.NetClientManager;
 import undercast.network.common.NetManager;
 import undercast.network.common.packet.Packet06SendServer;
 import undercast.network.common.packet.Packet10GetServers;
+
+import java.net.URL;
+import java.util.ArrayList;
 
 public class UndercastData {
     // Data Varibles
@@ -45,8 +43,6 @@ public class UndercastData {
     public static boolean isLobby;
     public static boolean update;
     public static String updateLink;
-    private static InformationLoaderThread mapLoader;
-    private static InformationLoaderThread statsLoader;
     public static UndercastServer[] serverInformation;
     public static UndercastServer[] sortedServerInformation;
     public static int serverCount;
@@ -58,13 +54,11 @@ public class UndercastData {
     public static String directionServer;
     public static boolean guiShowing;
     public static boolean isGameOver = false;
-    
     public static long playTimeStartMillis;
-    //public static int playTimeHours;
-    //public static int playTimeMin;
-    
     public static int sortIndex;
     public static int filterIndex;
+    //public static int playTimeHours;
+    //public static int playTimeMin;
     public static int locationIndex;
     // saves if a /server command (without argument) was executed, if it's
     // false, the user executed it
@@ -91,25 +85,17 @@ public class UndercastData {
     public static String[][] mapData = null;
     public static boolean lobbyLeaveDetectionStarted = false;
     public static boolean lobbyJoinExpected = false;
+    public static String[] sortNames = {"Web", "Match", "Players", "Abc"};
+    public static String[] filterNames = {"All", "PA", "Blitz", "GS"};
+    public static String[] locationNames = {"US", "EU"};
 
+    ;
+    private static InformationLoaderThread mapLoader;
 
-    public static enum MatchState {
+    ;
+    private static InformationLoaderThread statsLoader;
 
-        Starting, Started, Finished, Waiting, Lobby, Unknown
-    };
-
-    public static enum ServerType {
-
-        lobby, blitz, projectares, ghostsquadron, Unknown
-    };
-
-    public static enum ServerLocation {
-        US, EU
-    };
-
-    public static String[] sortNames = { "Web", "Match", "Players", "Abc" };
-    public static String[] filterNames = { "All", "PA", "Blitz", "GS" };
-    public static String[] locationNames = { "US", "EU" };
+    ;
 
     public UndercastData() {
         update = true;
@@ -169,7 +155,7 @@ public class UndercastData {
 
     public static void reloadStats() {
         try {
-            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().thePlayer.getCommandSenderName()));
+            statsLoader = new InformationLoaderThread(new URL("https://oc.tc/" + Minecraft.getMinecraft().thePlayer.getName()));
         } catch (Exception e) {
             System.out.println("[UndercastMod]: Failed to start information loaders");
             System.out.println("[UndercastMod]: ERROR: " + e.toString());
@@ -196,7 +182,7 @@ public class UndercastData {
                 int coresDifference = Integer.parseInt(data[10]) - stats.cores;
                 int monumentDifference = Integer.parseInt(data[11]) - stats.monuments;
                 int i = 1;
-                EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+                EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
                 while (woolsDifference >= i) {
                     if (UndercastCustomMethods.isSpecialObjective(UndercastData.stats.wools + i)) {
                         SpecialObjectiveLogger.logSpecialObjective(UndercastData.stats.wools + i, "Wool", UndercastData.server, UndercastData.map);
@@ -310,7 +296,7 @@ public class UndercastData {
             }
 
             ServerLocation loc = ServerLocation.US;
-            if(UndercastData.isEU){
+            if (UndercastData.isEU) {
                 loc = ServerLocation.EU;
             }
             // set the map
@@ -400,12 +386,12 @@ public class UndercastData {
         return previousKillstreak;
     }
 
-    public static void resetPreviousKillstreak() {
-        previousKillstreak = 0;
-    }
-
     public static void setPreviousKillstreak(int i) {
         previousKillstreak = i;
+    }
+
+    public static void resetPreviousKillstreak() {
+        previousKillstreak = 0;
     }
 
     public static void resetLargestKillstreak() {
@@ -440,15 +426,15 @@ public class UndercastData {
         return nextMap;
     }
 
+    public static String getServer() {
+        return server;
+    }
+
     public static void setServer(String servers) {
         previousServer = server;
         server = servers;
         NetClientManager.sendPacket(new Packet06SendServer(server, UndercastData.isEU ? "EU" : "US"));
         reloadServerInformations(false);
-    }
-
-    public static String getServer() {
-        return server;
     }
 
     public static boolean isUpdate() {
@@ -475,8 +461,22 @@ public class UndercastData {
 
     private static void sendMessage(String text) {
         IChatComponent thingy = new ChatComponentText(text);
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         player.addChatMessage(thingy);
+    }
+
+    public static enum MatchState {
+
+        Starting, Started, Finished, Waiting, Lobby, Unknown
+    }
+
+    public static enum ServerType {
+
+        lobby, blitz, projectares, ghostsquadron, Unknown
+    }
+
+    public static enum ServerLocation {
+        US, EU
     }
 
 }

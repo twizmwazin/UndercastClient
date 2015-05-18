@@ -1,8 +1,6 @@
 package undercast.client.server;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import java.nio.DoubleBuffer;
-import java.util.List;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,16 +9,16 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import java.nio.DoubleBuffer;
+import java.util.List;
+
+// TODO: Reimplement
 public abstract class UndercastServerSlotGui {
 
     /**
-     * The width of the GuiScreen. Affects the container rendering, but not the overlays.
+     * The height of a slot.
      */
-    private int width;
-    /**
-     * The height of the GuiScreen. Affects the container rendering, but not the overlays or the scrolling.
-     */
-    private int height;
+    protected final int slotHeight;
     /**
      * The top of the slot container. Affects the overlays and scrolling.
      */
@@ -29,20 +27,6 @@ public abstract class UndercastServerSlotGui {
      * The bottom of the slot container. Affects the overlays and scrolling.
      */
     protected int bottom;
-    private int right;
-    private int left;
-    /**
-     * The height of a slot.
-     */
-    protected final int slotHeight;
-    /**
-     * button id of the button used to scroll up
-     */
-    private int scrollUpButtonID;
-    /**
-     * the buttonID of the button used to scroll down
-     */
-    private int scrollDownButtonID;
     /**
      * X axis position of the mouse
      */
@@ -51,6 +35,24 @@ public abstract class UndercastServerSlotGui {
      * Y axis position of the mouse
      */
     protected int mouseY;
+    /**
+     * The width of the GuiScreen. Affects the container rendering, but not the overlays.
+     */
+    private int width;
+    /**
+     * The height of the GuiScreen. Affects the container rendering, but not the overlays or the scrolling.
+     */
+    private int height;
+    private int right;
+    private int left;
+    /**
+     * button id of the button used to scroll up
+     */
+    private int scrollUpButtonID;
+    /**
+     * the buttonID of the button used to scroll down
+     */
+    private int scrollDownButtonID;
     /**
      * where the mouse was in the window when you first clicked to scroll
      */
@@ -310,7 +312,7 @@ public abstract class UndercastServerSlotGui {
         }
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
-        Tessellator var18 = Tessellator.instance;
+        Tessellator var18 = Tessellator.getInstance();
         if (!this.parent.inGame) {
             Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("textures/gui/options_background.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -321,6 +323,7 @@ public abstract class UndercastServerSlotGui {
             GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.5F);
         }
         float var17 = 32.0F;
+        /*
         var18.startDrawingQuads();
         if (!this.parent.inGame) {
             var18.setColorOpaque_I(2105376);
@@ -329,6 +332,7 @@ public abstract class UndercastServerSlotGui {
         var18.addVertexWithUV((double) this.right, (double) this.bottom, 0.0D, (double) ((float) this.right / var17), (double) ((float) (this.bottom + (int) this.amountScrolled) / var17));
         var18.addVertexWithUV((double) this.right, (double) this.top, 0.0D, (double) ((float) this.right / var17), (double) ((float) (this.top + (int) this.amountScrolled) / var17));
         var18.addVertexWithUV((double) this.left, (double) this.top, 0.0D, (double) ((float) this.left / var17), (double) ((float) (this.top + (int) this.amountScrolled) / var17));
+        */
         var18.draw();
         if (this.parent.inGame) {
             GL11.glDisable(GL11.GL_BLEND);
@@ -353,6 +357,7 @@ public abstract class UndercastServerSlotGui {
                     int var15 = this.width / 2 + 110;
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
+                    /*
                     var18.startDrawingQuads();
                     var18.setColorOpaque_I(8421504);
                     var18.addVertexWithUV((double) var14, (double) (var19 + var13 + 2), 0.0D, 0.0D, 1.0D);
@@ -364,6 +369,7 @@ public abstract class UndercastServerSlotGui {
                     var18.addVertexWithUV((double) (var15 - 1), (double) (var19 + var13 + 1), 0.0D, 1.0D, 1.0D);
                     var18.addVertexWithUV((double) (var15 - 1), (double) (var19 - 1), 0.0D, 1.0D, 0.0D);
                     var18.addVertexWithUV((double) (var14 + 1), (double) (var19 - 1), 0.0D, 0.0D, 0.0D);
+                    */
                     var18.draw();
                     GL11.glEnable(GL11.GL_TEXTURE_2D);
                 }
@@ -383,6 +389,7 @@ public abstract class UndercastServerSlotGui {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
+        /*
         var18.startDrawingQuads();
         var18.setColorRGBA_I(0, 0);
         var18.addVertexWithUV((double) this.left, (double) (this.top + var20), 0.0D, 0.0D, 1.0D);
@@ -390,7 +397,9 @@ public abstract class UndercastServerSlotGui {
         var18.setColorRGBA_I(0, 255);
         var18.addVertexWithUV((double) this.right, (double) this.top, 0.0D, 1.0D, 0.0D);
         var18.addVertexWithUV((double) this.left, (double) this.top, 0.0D, 0.0D, 0.0D);
+        */
         var18.draw();
+        /*
         var18.startDrawingQuads();
         var18.setColorRGBA_I(0, 255);
         var18.addVertexWithUV((double) this.left, (double) this.bottom, 0.0D, 0.0D, 1.0D);
@@ -398,6 +407,7 @@ public abstract class UndercastServerSlotGui {
         var18.setColorRGBA_I(0, 0);
         var18.addVertexWithUV((double) this.right, (double) (this.bottom - var20), 0.0D, 1.0D, 0.0D);
         var18.addVertexWithUV((double) this.left, (double) (this.bottom - var20), 0.0D, 0.0D, 0.0D);
+        */
         var18.draw();
         var19 = this.func_77209_d();
 
@@ -417,27 +427,32 @@ public abstract class UndercastServerSlotGui {
             if (var14 < this.top) {
                 var14 = this.top;
             }
-
+            /*
             var18.startDrawingQuads();
             var18.setColorRGBA_I(0, 255);
             var18.addVertexWithUV((double) var5, (double) this.bottom, 0.0D, 0.0D, 1.0D);
             var18.addVertexWithUV((double) var6, (double) this.bottom, 0.0D, 1.0D, 1.0D);
             var18.addVertexWithUV((double) var6, (double) this.top, 0.0D, 1.0D, 0.0D);
             var18.addVertexWithUV((double) var5, (double) this.top, 0.0D, 0.0D, 0.0D);
+            */
             var18.draw();
+            /*
             var18.startDrawingQuads();
             var18.setColorRGBA_I(8421504, 255);
             var18.addVertexWithUV((double) var5, (double) (var14 + var13), 0.0D, 0.0D, 1.0D);
             var18.addVertexWithUV((double) var6, (double) (var14 + var13), 0.0D, 1.0D, 1.0D);
             var18.addVertexWithUV((double) var6, (double) var14, 0.0D, 1.0D, 0.0D);
             var18.addVertexWithUV((double) var5, (double) var14, 0.0D, 0.0D, 0.0D);
+            */
             var18.draw();
+            /*
             var18.startDrawingQuads();
             var18.setColorRGBA_I(12632256, 255);
             var18.addVertexWithUV((double) var5, (double) (var14 + var13 - 1), 0.0D, 0.0D, 1.0D);
             var18.addVertexWithUV((double) (var6 - 1), (double) (var14 + var13 - 1), 0.0D, 1.0D, 1.0D);
             var18.addVertexWithUV((double) (var6 - 1), (double) var14, 0.0D, 1.0D, 0.0D);
             var18.addVertexWithUV((double) var5, (double) var14, 0.0D, 0.0D, 0.0D);
+            */
             var18.draw();
         }
 
@@ -460,10 +475,11 @@ public abstract class UndercastServerSlotGui {
      * Overlays the background to hide scrolled items
      */
     private void overlayBackground(int par1, int par2, int par3, int par4) {
-        Tessellator var5 = Tessellator.instance;
+        Tessellator var5 = Tessellator.getInstance();
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("textures/gui/options_background.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float var6 = 32.0F;
+        /*
         var5.startDrawingQuads();
         var5.setColorRGBA_I(4210752, par4);
         var5.addVertexWithUV(0.0D, (double) par2, 0.0D, 0.0D, (double) ((float) par2 / var6));
@@ -471,6 +487,7 @@ public abstract class UndercastServerSlotGui {
         var5.setColorRGBA_I(4210752, par3);
         var5.addVertexWithUV((double) this.width, (double) par1, 0.0D, (double) ((float) this.width / var6), (double) ((float) par1 / var6));
         var5.addVertexWithUV(0.0D, (double) par1, 0.0D, 0.0D, (double) ((float) par1 / var6));
+        */
         var5.draw();
     }
 

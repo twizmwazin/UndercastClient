@@ -1,9 +1,9 @@
 package undercast.client;
 
-import java.util.Collection;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Scoreboard;
+
+import java.util.Collection;
 
 public class RaindropManager {
     public static int TotalRaindrops;
@@ -20,10 +20,10 @@ public class RaindropManager {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                for(int i=0;i<60;i++) {
+                for (int i = 0; i < 60; i++) {
                     Scoreboard sb = Minecraft.getMinecraft().thePlayer.getWorldScoreboard();
                     Collection obj = sb.getObjectiveNames();
-                    if(!obj.isEmpty()) {
+                    if (!obj.isEmpty()) {
                         readScoreboard();
                         return;
                     }
@@ -46,16 +46,16 @@ public class RaindropManager {
         Object[] obj = new Object[1];
         obj = sb.getObjectiveNames().toArray(obj);
         int raindrops = -1;
-        for(int i=0; i<obj.length + 1; i++) {
+        for (int i = 0; i < obj.length + 1; i++) {
             try {
-                String rds = String.valueOf(obj[i]).replaceAll(" ", "").replace(",","");
+                String rds = String.valueOf(obj[i]).replaceAll(" ", "").replace(",", "");
                 Integer rd = Integer.parseInt(rds);
                 raindrops = rd;
-            } catch(Exception e) {
+            } catch (Exception e) {
                 //ignore this. It'll happen for each non number in the collection
             }
         }
-        if(raindrops == -1) {
+        if (raindrops == -1) {
             System.out.println("[UndercastMod]: Failed to read the raindrop count");
             raindrops = 0;
         }
@@ -66,14 +66,15 @@ public class RaindropManager {
      * @return true if the message has to be canceled
      */
     public boolean handleChatMessage(String message) {
-        if(message.startsWith("+") && message.contains("Raindrops")) {
+        if (message.startsWith("+") && message.contains("Raindrops")) {
             try {
-                RaindropsThisMatch += Integer.parseInt(message.substring(1,message.indexOf(" R")));
-            } catch(Exception e) {
+                RaindropsThisMatch += Integer.parseInt(message.substring(1, message.indexOf(" R")));
+            } catch (Exception e) {
             }
         }
         return false;
     }
+
     public void resetCounter() {
         TotalRaindrops += RaindropsThisMatch;
         RaindropsThisMatch = 0;

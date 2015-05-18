@@ -4,10 +4,10 @@ import jexxus.server.ServerConnection;
 
 public interface ConnectionListener {
 
-	public void connectionBroken(Connection broken, boolean forced);
+    void connectionBroken(Connection broken, boolean forced);
 
-	public void receive(byte[] data, Connection from);
+    void receive(byte[] data, Connection from);
 
-	public void clientConnected(ServerConnection conn);
+    void clientConnected(ServerConnection conn);
 
 }

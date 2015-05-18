@@ -1,20 +1,16 @@
 package undercast.client;
 
-import java.awt.image.BufferedImage;
-
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
-
 import org.lwjgl.input.Keyboard;
-
 import undercast.client.server.UndercastServerGUI;
 import undercast.client.settings.SettingsGUI;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 /**
  * @author Flv92
@@ -34,7 +30,7 @@ public class UndercastKeyHandling {
         // not the call
         // keyDown should repeat as long as the key is down
         FMLCommonHandler.instance().bus().register(this);
-        
+
         // register keybindings
         ClientRegistry.registerKeyBinding(keyGuiHide);
         ClientRegistry.registerKeyBinding(keyGuiServer);
