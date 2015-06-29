@@ -15,8 +15,10 @@ apply plugin: 'forge'
 group = 'undercast'
 version = '1.9.0-SNAPSHOT'
 archivesBaseName = 'UndercastMod'
-ext.mc_version = '1.8'
-ext.forge_version = '11.14.3.1450'
+
+configurations {
+    compile.extendsFrom shade
+}
 
 repositories {
     mavenCentral()
@@ -25,12 +27,12 @@ repositories {
 }
 
 dependencies {
-    compile 'org.kevoree.corelibrary.javase:org.kevoree.library.javase.jexxus:2.0.5'
-    compile fileTree('lib')
+    shade 'org.kevoree.corelibrary.javase:org.kevoree.library.javase.jexxus:2.0.5'
+    shade fileTree('lib')
 }
 
 minecraft {
-    version = "$mc_version-$forge_version"
+    version = '1.8-11.14.3.1450'
     mappings = "snapshot_20150629"
 }
 
@@ -48,5 +50,9 @@ processResources {
 }
 
 jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from {
+        configurations.shade.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
