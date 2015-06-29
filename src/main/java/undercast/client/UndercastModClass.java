@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Level;
 import undercast.client.UndercastData.ServerType;
 import undercast.client.achievements.UndercastGuiAchievement;
 import undercast.client.achievements.UndercastKillsHandler;
-import undercast.client.update.Undercast_UpdaterThread;
+import undercast.client.update.UndercastUpdaterThread;
 import undercast.network.client.UndercastClientConnectionListener;
 import undercast.network.common.packet.VIPUser;
 
@@ -92,7 +92,7 @@ public class UndercastModClass {
         new UndercastRenderHandler();
         new UndercastKeyHandling();
         new UndercastData();
-        new Undercast_UpdaterThread();
+        new UndercastUpdaterThread();
         guiAchievement = new UndercastGuiAchievement(mc);
         UndercastCustomMethods.init();
         //15652: v1.7.3 port
@@ -148,7 +148,7 @@ public class UndercastModClass {
             if (isInGameGuiEmpty && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
                 // show fps
                 if (UndercastConfig.showFPS) {
-                    mc.fontRendererObj.func_175065_a(fps, width, height, 0xffff, true);
+                    mc.fontRendererObj.drawStringWithShadow(fps, width, height, 0xffff);
                     height += 8;
                 }
             }
@@ -157,84 +157,84 @@ public class UndercastModClass {
             if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
                 // Server display
                 if (UndercastConfig.showServer) {
-                    fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "S: " : "Server: ") + "\u00A76" + UndercastData.getServer(), width, height, 16777215);
                     height += 8;
                 }
 
                 // Team display (based on color)
                 if (UndercastConfig.showTeam && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "T: " : "Team: ") + "\u00A7" + UndercastData.teamColor + UndercastData.getTeam(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "T: " : "Team: ") + "\u00A7" + UndercastData.teamColor + UndercastData.getTeam(), width, height, 16777215);
                     height += 8;
                 }
                 // Class display (Ghost Squadron only)
                 if (UndercastConfig.showGSClass && UndercastData.currentServerType == ServerType.ghostsquadron) {
-                    fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "Cl: " : "Class: ") + UndercastData.currentGSClass, width, height, 2446535, true);
+                    fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "Cl: " : "Class: ") + UndercastData.currentGSClass, width, height, 2446535);
                     height += 8;
                 }
                 // Playing Time display:
                 if (UndercastConfig.showPlayingTime) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getPlayingTimeString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getPlayingTimeString(), width, height, 16777215);
                     height += 8;
                 }
                 // Match Time display:
                 if (UndercastConfig.showMatchTime && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getMatchTimeString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getMatchTimeString(), width, height, 16777215);
                     height += 8;
                 }
                 // Map fetcher:
                 if (UndercastConfig.showMap && !UndercastData.isLobby) {
                     if (UndercastData.getMap() != null) {
-                        fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "M: " : "Current Map: ") + "\u00A7d" + UndercastData.getMap(), width, height, 16777215, true);
+                        fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "M: " : "Current Map: ") + "\u00A7d" + UndercastData.getMap(), width, height, 16777215);
                         height += 8;
                     } else {
                         UndercastData.setMap("Fetching...");
-                        fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "M: " : "Current Map: ") + "\u00A78" + UndercastData.getMap(), width, height, 16777215, true);
+                        fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "M: " : "Current Map: ") + "\u00A78" + UndercastData.getMap(), width, height, 16777215);
                         height += 8;
                     }
                 }
                 // Show next map
                 if (UndercastConfig.showNextMap && !UndercastData.isLobby) {
                     if (UndercastData.getNextMap() != null) {
-                        fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A7d" + UndercastData.getNextMap(), width, height, 16777215, true);
+                        fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A7d" + UndercastData.getNextMap(), width, height, 16777215);
                         height += 8;
                     } else {
-                        fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A78Loading...", width, height, 16777215, true);
+                        fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "N: " : "Next Map: ") + "\u00A78Loading...", width, height, 16777215);
                         height += 8;
                     }
                 }
                 // Show KD Ratio
                 if (UndercastConfig.showKD && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getKDDisplayString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getKDDisplayString(), width, height, 16777215);
                     height += 8;
                 }
                 // show KK Ratio
                 if (UndercastConfig.showKK && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getKKDisplayString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getKKDisplayString(), width, height, 16777215);
                     height += 8;
                 }
                 // show amount of kills
                 if (UndercastConfig.showKills && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getKillDisplayString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getKillDisplayString(), width, height, 16777215);
                     height += 8;
                 }
                 // show amount of deaths
                 if (UndercastConfig.showDeaths && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getDeathDisplayString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getDeathDisplayString(), width, height, 16777215);
                     height += 8;
                 }
                 // show raindrop count
                 if (UndercastConfig.showRaindropCounter) {
-                    fontRenderer.func_175065_a(UndercastCustomMethods.getRaindropDisplayString(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow(UndercastCustomMethods.getRaindropDisplayString(), width, height, 16777215);
                     height += 8;
                 }
                 // Kill Streak display
                 if (UndercastConfig.showStreak && !UndercastData.isLobby) {
-                    fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "KS: " : "Current Killstreak: ") + "\u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "KS: " : "Current Killstreak: ") + "\u00A75" + (int) UndercastData.getKillstreak() + "\u00A7f/\u00A75" + (int) UndercastData.getLargestKillstreak(), width, height, 16777215);
                     height += 8;
                 }
                 // Score display
                 if (UndercastConfig.showScore && !UndercastData.isLobby && UndercastData.score != 0) {
-                    fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "Sc: " : "Score: ") + "\u00A79" + UndercastData.score, width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "Sc: " : "Score: ") + "\u00A79" + UndercastData.score, width, height, 16777215);
                     height += 8;
                 }
             }
@@ -257,11 +257,11 @@ public class UndercastModClass {
             // gui display for obs if you have brightness
             if (isInGameGuiEmpty && UndercastData.isPlayingOvercastNetwork() && UndercastData.guiShowing && (mc.inGameHasFocus || UndercastConfig.showGuiChat && mc.currentScreen instanceof GuiChat)) {
                 if (brightActive && UndercastConfig.fullBright && (UndercastData.team.equals("Observers") || UndercastData.isGameOver)) {
-                    fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A72ON", width, height, 16777215, true);
+                    fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A72ON", width, height, 16777215);
                     height += 8;
                 } else {
                     if (!brightActive && UndercastConfig.fullBright && (UndercastData.team.equals("Observers") || UndercastData.isGameOver)) {
-                        fontRenderer.func_175065_a((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A7cOFF", width, height, 16777215, true);
+                        fontRenderer.drawStringWithShadow((UndercastConfig.lessObstructive ? "FB: " : "Full Bright: ") + "\u00A7cOFF", width, height, 16777215);
                         height += 8;
                     }
                 }

@@ -13,7 +13,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import undercast.client.update.Undercast_UpdaterThread;
+import undercast.client.update.UndercastUpdaterThread;
 
 /**
  * @author Flv92
@@ -89,7 +89,7 @@ public class UndercastConnectionHandler {
                         for (int c = 0; c < 10; c++) { // don't wait longer than
                             // 10 sec
                             Thread.sleep(1000);
-                            if (Undercast_UpdaterThread.finished) {
+                            if (UndercastUpdaterThread.finished) {
                                 break;
                             }
                         }

@@ -1,53 +1,52 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
+        jcenter()
+        maven { url "http://files.minecraftforge.net/maven" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
-ext.configFile = file "build.properties"      
-configFile.withReader {
-    def prop = new Properties()  
-    prop.load(it)   
-    ext.config = new ConfigSlurper().parse prop
-}
-
 apply plugin: 'forge'
 
-group= "undercast"      
-version = config.mod_version      
-archivesBaseName = "UndercastMod"
+group = 'undercast'
+version = '1.9.0-SNAPSHOT'
+archivesBaseName = 'UndercastMod'
+ext.mc_version = '1.8'
+ext.forge_version = '11.14.3.1450'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+    compile 'org.kevoree.corelibrary.javase:org.kevoree.library.javase.jexxus:2.0.5'
+    compile fileTree('lib')
+}
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version
-    assetDir = "eclipse/assets"
+    version = "$mc_version-$forge_version"
+    mappings = "snapshot_20150629"
 }
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
+processResources {
+    inputs.property "version", version
+
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
-        // replace version and mcversion
         expand 'version':project.version, 'mcversion':project.minecraft.version
     }
-        
-    // copy everything else, thats not the mcmod.info
+
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }

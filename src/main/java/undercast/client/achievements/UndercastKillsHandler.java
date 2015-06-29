@@ -192,13 +192,13 @@ public class UndercastKillsHandler {
 
     private void printFirstBloodAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getName(), "\u00A7a" + client.thePlayer.getName(), "\u00A7agot the first Blood!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getDisplayNameString(), "\u00A7a" + client.thePlayer.getDisplayNameString(), "\u00A7agot the first Blood!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 
     private void printLastKillAchievement() {
         Minecraft client = Minecraft.getMinecraft();
-        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getName(), "\u00A7a" + client.thePlayer.getName(), "\u00A7agot the last Kill!");
+        UndercastAchievement ac = new UndercastAchievement(client.thePlayer.getDisplayNameString(), "\u00A7a" + client.thePlayer.getDisplayNameString(), "\u00A7agot the last Kill!");
         UndercastModClass.getInstance().guiAchievement.queueTakenAchievement(ac);
     }
 

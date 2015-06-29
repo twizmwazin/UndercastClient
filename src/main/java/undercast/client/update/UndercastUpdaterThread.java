@@ -14,11 +14,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 
-public class Undercast_UpdaterThread extends Thread {
+public class UndercastUpdaterThread extends Thread {
     public static boolean finished = false;
     boolean errorOccured;
 
-    public Undercast_UpdaterThread() {
+    public UndercastUpdaterThread() {
         errorOccured = false;
         try {
             start();
